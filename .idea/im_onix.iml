@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="RUBY_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="bundler (v1.3.5, RVM: ruby-1.9.3-p429) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="git (v1.2.5, RVM: ruby-1.9.3-p429) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="jeweler (v1.8.4, RVM: ruby-1.9.3-p429) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.5.9, RVM: ruby-1.9.3-p429) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rake (v10.0.4, RVM: ruby-1.9.3-p429) [gem]" level="application" />
+  </component>
+</module>
+

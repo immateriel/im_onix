@@ -1,0 +1,106 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>ONIX Code List 71 [Issue 21]</title><style type="text/css">
+						BODY {
+							font-family: Arial, Helvetica, sanserif;
+						}
+						.listHeading {
+							font-size: 16pt;
+							font-weight: bold;
+							margin-top: 12pt;
+						}
+					</style></head>
+   <body>
+      <div class="listHeading">ONIX Code Lists Issue 21, April 2013<br>List 71: Sales restriction type code
+      </div>
+      <table width="100%">
+         <tr>
+            <td colspan="3">
+               <hr>
+            </td>
+         </tr>
+         <tr align="left">
+            <th width="10%">Value</th>
+            <th width="30%">Description</th>
+            <th width="60%">Notes</th>
+         </tr>
+         <tr>
+            <td colspan="3">
+               <hr>
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>00</td>
+            <td>Unspecified &#8211; see text</td>
+            <td>Restriction must be described in &lt;SalesRestrictionDetail&gt; (ONIX 2.1) or &lt;SalesRestrictionNote&gt; (ONIX 3.0).</td>
+         </tr>
+         <tr valign="top">
+            <td>01</td>
+            <td>Retailer exclusive / own brand</td>
+            <td>For sale only through designated retailer. Retailer must be identified or named in an instance of the &lt;SalesOutlet&gt; composite.
+               Use only when it is not possible to assign the more explicit code 04 or 05.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>02</td>
+            <td>Office supplies edition</td>
+            <td>For editions sold only though office supplies wholesalers. Retailer(s) and/or distributor(s) may be identified or named in
+               an instance of the &lt;SalesOutlet&gt; composite.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>03</td>
+            <td>Internal publisher use only: do not list</td>
+            <td>For an ISBN that is assigned for a publisher&#8217;s internal purposes.</td>
+         </tr>
+         <tr valign="top">
+            <td>04</td>
+            <td>Retailer exclusive</td>
+            <td>For sale only through designated retailer, though not under retailer&#8217;s own brand/imprint. Retailer must be identified or named
+               in an instance of the &lt;SalesOutlet&gt; composite.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>05</td>
+            <td>Retailer own brand</td>
+            <td>For sale only through designated retailer under retailer&#8217;s own brand/imprint. Retailer must be identified or named in an instance
+               of the &lt;SalesOutlet&gt; composite.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>06</td>
+            <td>Library edition</td>
+            <td>For sale to libraries only; not for sale through retail trade.</td>
+         </tr>
+         <tr valign="top">
+            <td>07</td>
+            <td>Schools only edition</td>
+            <td>For sale directly to schools only; not for sale through retail trade.</td>
+         </tr>
+         <tr valign="top">
+            <td>08</td>
+            <td>Indiziert</td>
+            <td>Indexed for the German market &#8211; in Deutschland indiziert.</td>
+         </tr>
+         <tr valign="top">
+            <td>09</td>
+            <td>Not for sale to libraries</td>
+            <td>Expected to apply in particular to digital products for consumer sale where the publisher does not permit the product to be
+               supplied to libraries who provide an ebook loan service.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>10</td>
+            <td>News outlet edition</td>
+            <td>For editions sold only through newsstands/newsagents.</td>
+         </tr>
+         <tr>
+            <td colspan="3">
+               <hr>
+            </td>
+         </tr>
+      </table>
+   </body>
+</html>

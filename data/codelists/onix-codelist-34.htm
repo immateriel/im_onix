@@ -1,0 +1,128 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>ONIX Code List 34 [Issue 21]</title><style type="text/css">
+						BODY {
+							font-family: Arial, Helvetica, sanserif;
+						}
+						.listHeading {
+							font-size: 16pt;
+							font-weight: bold;
+							margin-top: 12pt;
+						}
+					</style></head>
+   <body>
+      <div class="listHeading">ONIX Code Lists Issue 21, April 2013<br>List 34: Text format code
+      </div>
+      <table width="100%">
+         <tr>
+            <td colspan="3">
+               <hr>
+            </td>
+         </tr>
+         <tr align="left">
+            <th width="10%">Value</th>
+            <th width="30%">Description</th>
+            <th width="60%">Notes</th>
+         </tr>
+         <tr>
+            <td colspan="3">
+               <hr>
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>00</td>
+            <td>ASCII text</td>
+            <td>DEPRECATED: use code 06 or 07 as appropriate.</td>
+         </tr>
+         <tr valign="top">
+            <td>01</td>
+            <td>SGML</td>
+            <td></td>
+         </tr>
+         <tr valign="top">
+            <td>02</td>
+            <td>HTML</td>
+            <td>Other than XHTML.</td>
+         </tr>
+         <tr valign="top">
+            <td>03</td>
+            <td>XML</td>
+            <td>Other than XHTML.</td>
+         </tr>
+         <tr valign="top">
+            <td>04</td>
+            <td>PDF</td>
+            <td>DEPRECATED: was formerly assigned both to PDF and to XHTML.</td>
+         </tr>
+         <tr valign="top">
+            <td>05</td>
+            <td>XHTML</td>
+            <td></td>
+         </tr>
+         <tr valign="top">
+            <td>06</td>
+            <td>Default text format</td>
+            <td>Default: text in the encoding declared at the head of the message or in the XML default (UTF-8 or UTF-16) if there is no explicit
+               declaration.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>07</td>
+            <td>Basic ASCII text</td>
+            <td>Plain text containing no tags of any kind, except for the tags &amp;amp; and &amp;lt; that XML insists must be used to represent ampersand
+               and less-than characters in text; and with the character set limited to the ASCII range, i.e. valid UTF-8 characters whose
+               character number lies between 32 (space) and 126 (tilde).
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>08</td>
+            <td>PDF</td>
+            <td>Replaces 04 for the &lt;TextFormat&gt; element, but cannot of course be used as a textformat attribute.</td>
+         </tr>
+         <tr valign="top">
+            <td>09</td>
+            <td>Microsoft rich text format (RTF)</td>
+            <td></td>
+         </tr>
+         <tr valign="top">
+            <td>10</td>
+            <td>Microsoft Word binary format (DOC)</td>
+            <td></td>
+         </tr>
+         <tr valign="top">
+            <td>11</td>
+            <td>ECMA 376 WordprocessingML</td>
+            <td>Office Open XML file format / OOXML / DOCX.</td>
+         </tr>
+         <tr valign="top">
+            <td>12</td>
+            <td>ISO 26300 ODF</td>
+            <td>ISO Open Document Format.</td>
+         </tr>
+         <tr valign="top">
+            <td>13</td>
+            <td>Corel Wordperfect binary format (DOC)</td>
+            <td></td>
+         </tr>
+         <tr valign="top">
+            <td>14</td>
+            <td>EPUB</td>
+            <td>The Open Publication Structure / OPS Container Format standard of the International Digital Publishing Forum (IDPF) [File
+               extension .epub].
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>15</td>
+            <td>XPS</td>
+            <td>XML Paper Specification.</td>
+         </tr>
+         <tr>
+            <td colspan="3">
+               <hr>
+            </td>
+         </tr>
+      </table>
+   </body>
+</html>

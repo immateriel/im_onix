@@ -1,0 +1,150 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>ONIX Code List 68 [Issue 21]</title><style type="text/css">
+						BODY {
+							font-family: Arial, Helvetica, sanserif;
+						}
+						.listHeading {
+							font-size: 16pt;
+							font-weight: bold;
+							margin-top: 12pt;
+						}
+					</style></head>
+   <body>
+      <div class="listHeading">ONIX Code Lists Issue 21, April 2013<br>List 68: Market publishing status
+      </div>
+      <table width="100%">
+         <tr>
+            <td colspan="3">
+               <hr>
+            </td>
+         </tr>
+         <tr align="left">
+            <th width="10%">Value</th>
+            <th width="30%">Description</th>
+            <th width="60%">Notes</th>
+         </tr>
+         <tr>
+            <td colspan="3">
+               <hr>
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>00</td>
+            <td>Unspecified</td>
+            <td>Status is not specified (as distinct from unknown): the default if the &lt;MarketPublishingStatus&gt; element is not sent.</td>
+         </tr>
+         <tr valign="top">
+            <td>01</td>
+            <td>Cancelled</td>
+            <td>The product was announced for publication in this market, and subsequently abandoned.</td>
+         </tr>
+         <tr valign="top">
+            <td>02</td>
+            <td>Forthcoming</td>
+            <td>Not yet published in this market, should be accompanied by expected local publication date..</td>
+         </tr>
+         <tr valign="top">
+            <td>03</td>
+            <td>Postponed indefinitely</td>
+            <td>The product was announced for publication in this market, and subsequently postponed with no expected local publication date.</td>
+         </tr>
+         <tr valign="top">
+            <td>04</td>
+            <td>Active</td>
+            <td>The product was published in this market, and is still active in the sense that the publisher will accept orders for it, though
+               it may or may not be immediately available, for which see &lt;SupplyDetail&gt;.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>05</td>
+            <td>No longer our product</td>
+            <td>Responsibility for the product in this market has been transferred elsewhere.</td>
+         </tr>
+         <tr valign="top">
+            <td>06</td>
+            <td>Out of stock indefinitely</td>
+            <td>The product was active, but is now inactive in the sense that (a) no further stock is expected to be made available in this
+               market, though stock may still be available elsewhere in the supply chain, and (b) there are no current plans to bring it
+               back into stock.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>07</td>
+            <td>Out of print</td>
+            <td>The product was active, but is now permanently inactive in the sense that (a) no further stock is expected to be made available
+               in this market, though stock may still be available elsewhere in the supply chain, and (b) the product will not be made available
+               again under the same ISBN.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>08</td>
+            <td>Inactive</td>
+            <td>The product was active, but is now permanently or indefinitely inactive in the sense that no further stock is expected to
+               be made available in this market, though stock may still be available elsewhere in the supply chain. Code 08 covers both of
+               codes 06 and 07, and may be used where the distinction between those values is either unnecessary or meaningless.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>09</td>
+            <td>Unknown</td>
+            <td>The sender of the ONIX record does not know the current publishing status in this market.</td>
+         </tr>
+         <tr valign="top">
+            <td>10</td>
+            <td>Remaindered</td>
+            <td>The product is no longer available in this market from the local publisher, under the current ISBN, at the current price.
+               It may be available to be traded through another channel, usually at a reduced price.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>11</td>
+            <td>Withdrawn from sale</td>
+            <td>Withdrawn from sale in this market, typically for legal reasons.</td>
+         </tr>
+         <tr valign="top">
+            <td>12</td>
+            <td>Not available in this market</td>
+            <td>Either no rights are held for the product in this market, or for other reasons the publisher has decided not to make it available
+               in this market.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>13</td>
+            <td>Active, but not sold separately</td>
+            <td>The product is published in this market and active but, as a publishing decision, it is not sold separately &#8211; only in an assembly
+               or as part of a package.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>14</td>
+            <td>Active, with market restrictions</td>
+            <td>The product is published in this market and active, but is not available to all customer types, typically because the market
+               is split between exclusive sales agents for different market segments. In ONIX 2.1, should be accompanied by a free-text statement
+               in &lt;MarketRestrictionDetail&gt; describing the nature of the restriction. In ONIX 3.0, the &lt;SalesRestriction&gt; composite in Group
+               P.24 should be used.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>15</td>
+            <td>Recalled</td>
+            <td>Recalled in this market for reasons of consumer safety.</td>
+         </tr>
+         <tr valign="top">
+            <td>16</td>
+            <td>Temporarily withdrawn from sale</td>
+            <td>Temporarily withdrawn from sale in this market, typically for quality or technical reasons. In ONIX 3.0, must be accompanied
+               by expected availability date coded &#8216;22&#8217; within the &lt;MarketPublishingDate&gt; composite, except in exceptional circumstances
+               where no date is known.
+            </td>
+         </tr>
+         <tr>
+            <td colspan="3">
+               <hr>
+            </td>
+         </tr>
+      </table>
+   </body>
+</html>

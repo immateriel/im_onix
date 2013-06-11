@@ -1,0 +1,105 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>ONIX Code List 59 [Issue 21]</title><style type="text/css">
+						BODY {
+							font-family: Arial, Helvetica, sanserif;
+						}
+						.listHeading {
+							font-size: 16pt;
+							font-weight: bold;
+							margin-top: 12pt;
+						}
+					</style></head>
+   <body>
+      <div class="listHeading" style="color: red;">ONIX Code Lists Issue 21, April 2013<br>List 59: Price type qualifier
+      </div>
+      <table width="100%">
+         <tr>
+            <td colspan="3">
+               <hr>
+            </td>
+         </tr>
+         <tr align="left">
+            <th width="10%">Value</th>
+            <th width="30%">Description</th>
+            <th width="60%">Notes</th>
+         </tr>
+         <tr>
+            <td colspan="3">
+               <hr>
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>00</td>
+            <td>Unqualified price</td>
+            <td>Price applies to all customers that do not fall within any other group with a specified group-specific qualified price.</td>
+         </tr>
+         <tr valign="top">
+            <td>01</td>
+            <td>Member/subscriber price</td>
+            <td>Price applies to a designated group membership.</td>
+         </tr>
+         <tr valign="top">
+            <td>02</td>
+            <td>Export price</td>
+            <td>Price applies to sales outside the territory in which the supplier is located.</td>
+         </tr>
+         <tr valign="top">
+            <td>03</td>
+            <td>Reduced price applicable when the item is purchased as part of a set (or series, or collection)</td>
+            <td>Use in cases where there is no combined price, but a lower price is offered for each part if the whole set / series / collection
+               is purchased (either at one time, as part of a continuing commitment, or in a single purchase).
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>04</td>
+            <td>Voucher price</td>
+            <td>In the Netherlands (or any other market where similar arrangements exist): a reduced fixed price available for a limited time
+               on presentation of a voucher or coupon published in a specified medium, eg a newspaper. Should be accompanied by Price Type
+               code 13 and additional detail in &lt;PriceTypeDescription&gt;, and by validity dates in &lt;PriceEffectiveFrom&gt; and &lt;PriceEffectiveUntil&gt;
+               (ONIX 2.1) or in the &lt;PriceDate&gt; composite (ONIX 3.0).
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>05</td>
+            <td>Consumer price</td>
+            <td>Price for individual consumer sale only.</td>
+         </tr>
+         <tr valign="top">
+            <td>06</td>
+            <td>Corporate price</td>
+            <td>Price for sale to libraries or other corporate or institutional customers.</td>
+         </tr>
+         <tr valign="top">
+            <td>07</td>
+            <td>Reservation order price</td>
+            <td>Price valid for a specified period prior to publication. Orders placed prior to the end of the period are guaranteed to be
+               delivered to the retailer before the nominal publication date. The price may or may not be different from the &#8216;normal&#8217; price,
+               which carries no such delivery guarantee. Must be accompanied by a &lt;PriceEffectiveUntil&gt; date (or equivalent &lt;PriceDate&gt; composite
+               in ONIX 3), and should also be accompanied by a &#8216;normal&#8217; price.
+            </td>
+         </tr>
+         <tr valign="top">
+            <td>08</td>
+            <td>Promotional offer price</td>
+            <td>Temporary &#8216;Special offer&#8217; price. Must be accompanied by &lt;PriceEffectiveFrom&gt; and &lt;PriceEffectiveUntil&gt; dates (or equivalent
+               &lt;PriceDate&gt; composites in ONIX 3), and may also be accompanied by a &#8216;normal&#8217; price.
+            </td>
+         </tr>
+         <tr valign="top" style="color: red;">
+            <td>09</td>
+            <td>Linked price</td>
+            <td>Price requires purchase with, or proof of ownership of another product. Further details of purchase or ownership requirements
+               must be given in &lt;PriceTypeDescription&gt;.
+            </td>
+         </tr>
+         <tr>
+            <td colspan="3">
+               <hr>
+            </td>
+         </tr>
+      </table>
+   </body>
+</html>
