@@ -29,8 +29,6 @@ module ONIX
     def onix
       @code
     end
-
-
   end
 
   class CodeFromHtml < Code
@@ -94,30 +92,21 @@ module ONIX
     end
   end
 
-  class AgentIDType < Code
-    def self.hash
-      {
-          "01"=>"Proprietary",
-          "06"=>"GLN"
-      }
+  class AgentIDType < CodeFromHtml
+    def self.code_ident
+      92
     end
   end
 
-  class PublisherIDType < Code
-    def self.hash
-      {
-          "01"=>"Proprietary",
-          "06"=>"GLN"
-      }
+  class PublisherIDType < CodeFromHtml
+    def self.code_ident
+      44
     end
   end
 
-  class ImprintIDType < Code
-    def self.hash
-      {
-          "01"=>"Proprietary",
-          "06"=>"GLN"
-      }
+  class ImprintIDType < CodeFromHtml
+    def self.code_ident
+      44
     end
   end
 
@@ -127,29 +116,15 @@ module ONIX
     end
   end
 
-  class EpubTechnicalProtection < Code
-    def self.hash
-      {
-      "00"=>"None",
-      "01"=>"DRM",
-      "02"=>"DigitalWatermarking",
-      "03"=>"AdobeDRM",
-      # WTF?
-      "04"=>"AppleDRM",
-      "05"=>"OMADRM"
-      }
+  class EpubTechnicalProtection < CodeFromHtml
+    def self.code_ident
+      144
     end
   end
 
-  class TitleType < Code
-    def self.hash
-      {
-          "00" => "Undefined",
-          "01" => "DistinctiveTitle",
-          "03" => "TitleInOriginalLanguage",
-          "05" => "AbbreviatedTitle",
-          "08" => "FormerTitle"
-      }
+  class TitleType < CodeFromHtml
+    def self.code_ident
+      15
     end
   end
 
@@ -225,22 +200,15 @@ module ONIX
     end
   end
 
-  class PriceDateRole < Code
-    def self.hash
-      {
-          "14"=>"FromDate",
-          "15"=>"UntilDate",
-          "24"=>"FromUntilDate"
-      }
+  class PriceDateRole < CodeFromHtml
+    def self.code_ident
+      173
     end
   end
 
-  class SupplyDateRole < Code
-    def self.hash
-      {
-          "02"=>"EmbargoDate",
-          "08"=>"ExpectedAvailabilityDate"
-      }
+  class SupplyDateRole < CodeFromHtml
+    def self.code_ident
+      166
     end
   end
 
