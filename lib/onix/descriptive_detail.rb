@@ -83,11 +83,11 @@ class DescriptiveDetail < Subset
   end
 
   def title
-    @title_details.select{|td| td.type.human=="DistinctiveTitle"}.first.title_elements.first.title
+    @title_details.select{|td| td.type.human=~/DistinctiveTitle/}.first.title_elements.first.title
   end
 
   def subtitle
-    @title_details.select{|td| td.type.human=="DistinctiveTitle"}.first.title_elements.first.subtitle
+    @title_details.select{|td| td.type.human=~/DistinctiveTitle/}.first.title_elements.first.subtitle
   end
 
 

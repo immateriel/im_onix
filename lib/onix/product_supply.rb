@@ -24,6 +24,10 @@ module ONIX
       @suppliers.select{|s| s.role.human=~/Distributor/}.uniq
     end
 
+    def available?
+      @availability.human=="Available"
+    end
+
     def parse(supply)
 
       @suppliers = Supplier.parse_entities(supply, "./Supplier")
@@ -55,6 +59,17 @@ module ONIX
       @supply_details.map{|sd| sd.distributors}.flatten.uniq{|d| d.name}
     end
 
+    def available_supply_details
+      @supply_details.select{|sd| sd.available?}
+    end
+
+    def unavailable_supply_details
+      @supply_details.delete_if{|sd| sd.available?}
+    end
+
+    def available?
+      self.available_supply_details.length > 0
+    end
 
     def parse(product_supply)
       product_supply.search("./SupplyDetail").each do |sd|

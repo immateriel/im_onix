@@ -39,7 +39,7 @@ module ONIX
 
     # from rails
     def self.rename(term)
-      term.gsub(/\(|\)|\,|\-|’/,"").split(" ").map{|t| t.capitalize}.join("")
+      term.gsub(/\(|\)|\,|\-|’/,"").gsub(/\;/," Or ").gsub(/\s+/," ").split(" ").map{|t| t.capitalize}.join("")
     end
 
     def self.list

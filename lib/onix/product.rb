@@ -141,7 +141,8 @@ module ONIX
       # add territories if missing
       if @product_supplies
         @product_supplies.each do |ps|
-          ps.supply_details.each do |sd|
+          # without unavailable
+          ps.available_supply_details.each do |sd|
             sd.prices.each do |p|
               cp=p.dup
               if !cp.territory or cp.territory.countries.length==0
@@ -228,6 +229,18 @@ module ONIX
       self.prices.select{|p| p.including_tax?}
     end
 
+    def available_product_supplies
+      @product_supplies.select{|ps| ps.available?}
+    end
+
+    def available?
+      self.available_product_supplies.length > 0 and not self.delete?
+    end
+
+
+    def delete?
+      self.notification_type.human=="Delete"
+    end
 
     def parse(p)
       if p.at("./NotificationType")
