@@ -42,6 +42,24 @@ module ONIX
     end
   end
 
+  class Collection < Subset
+    attr_accessor :type, :identifiers, :title_details
+
+    def initialize
+      @identifiers=[]
+      @title_details=[]
+    end
+
+    def parse(col)
+      @type=CollectionType.from_code(col.at("./CollectionType"))
+      @identifiers=Identifier.parse_identifiers(col,"Collection")
+
+      col.search("./TitleDetail").each do |title_detail|
+        @title_details << TitleDetail.from_xml(title_detail)
+      end
+    end
+  end
+
   class ProductPart < Subset
     attr_accessor :identifiers, :form, :form_detail, :form_description,
                   :product
@@ -72,7 +90,8 @@ class DescriptiveDetail < Subset
                 :composition,
                 :form, :form_detail, :form_description, :parts,
                 :contributors,
-                :subjects
+                :subjects,
+                :collections
 
   def initialize
     @title_details=[]
@@ -80,6 +99,7 @@ class DescriptiveDetail < Subset
     @parts=[]
     @contributors=[]
     @subjects=[]
+    @collections=[]
   end
 
   def title
@@ -101,10 +121,8 @@ class DescriptiveDetail < Subset
       @contributors << Contributor.from_xml(c)
     end
 
-    if collection=descriptive.at("./Collection")
-      if td=collection.at("./TitleDetail")
-        @collection=td.at("./TitleElement/TitleText").text
-      end
+    descriptive.search("./Collection").each do |collection|
+      @collections << Collection.from_xml(collection)
     end
 
     # TODO

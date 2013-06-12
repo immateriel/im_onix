@@ -260,4 +260,10 @@ module ONIX
     end
   end
 
+  class CollectionType < CodeFromHtml
+    def self.code_ident
+      148
+    end
+  end
+
 end
