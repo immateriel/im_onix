@@ -6,13 +6,17 @@ filename=ARGV[0]
 msg=ONIX::ONIXMessage.new
 msg.parse(filename)
 msg.products.each do |product|
-  pp product
+#  pp product
   puts "---"
   puts " EAN: #{product.ean}"
   puts " Title: #{product.title}"
-  puts " Subtitle: #{product.subtitle}"
+  if product.subtitle
+    puts " Subtitle: #{product.subtitle}"
+  end
   puts " Publication date: #{product.publication_date}"
-  puts " Pages: #{product.pages}"
+  if product.pages
+    puts " Pages: #{product.pages}"
+  end
   puts " Description: #{product.raw_description}"
 
   puts " Publisher: #{product.publisher_name}"
@@ -23,7 +27,9 @@ msg.products.each do |product|
     puts " Contributors:"
     puts "  Name: #{c.name}"
     puts "  Role: #{c.role.human}"
-    puts "  Biography: #{c.raw_biography}"
+    if c.biography
+      puts "  Biography: #{c.raw_biography}"
+    end
   end
 
   if product.digital?

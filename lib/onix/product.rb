@@ -144,11 +144,15 @@ module ONIX
     end
 
     def paper_linking
-      @related_material.paper_linking
+      if @related_material
+        @related_material.paper_linking
+      end
     end
 
     def publication_date
-      @publishing_detail.publication_date
+      if @publishing_detail
+        @publishing_detail.publication_date
+      end
     end
 
     def countries_rights
