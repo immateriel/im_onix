@@ -49,6 +49,36 @@ module ONIX
       end
     end
 
+    ## digital
+
+    def protection_type
+      @descriptive_detail.protection_type
+    end
+
+    def digital?
+      @descriptive_detail.digital?
+    end
+
+    def bundle?
+        @descriptive_detail.bundle?
+    end
+
+    def filesize
+      @descriptive_detail.filesize
+    end
+
+    def file_format
+      @descriptive_detail.file_format
+    end
+
+    def file_description
+      @descriptive_detail.file_description
+    end
+
+    def pages
+      @descriptive_detail.pages
+    end
+
     def raw_description
       if self.description
         self.description.gsub(/\s+/," ")

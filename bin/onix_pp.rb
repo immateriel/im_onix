@@ -8,13 +8,11 @@ msg.parse(filename)
 msg.products.each do |product|
   pp product
   puts "---"
-  if product.paper_linking
-    puts " Paper EAN: #{product.paper_linking.ean}"
-  end
   puts " EAN: #{product.ean}"
   puts " Title: #{product.title}"
   puts " Subtitle: #{product.subtitle}"
   puts " Publication date: #{product.publication_date}"
+  puts " Pages: #{product.pages}"
   puts " Description: #{product.raw_description}"
 
   puts " Publisher: #{product.publisher_name}"
@@ -26,6 +24,31 @@ msg.products.each do |product|
     puts "  Name: #{c.name}"
     puts "  Role: #{c.role.human}"
     puts "  Biography: #{c.raw_biography}"
+  end
+
+  if product.digital?
+    puts " ---"
+    puts " Digital product"
+
+    if product.bundle?
+      puts " Multiple files bundle"
+      if product.file_description
+        puts " Description: #{product.file_description}"
+      end
+    else
+      puts " Format: #{product.file_format}"
+      if product.file_description
+        puts " Description: #{product.file_description}"
+      end
+      puts " Protection: #{product.protection_type}"
+      if product.filesize
+        puts " Filesize: #{product.filesize} bytes"
+      end
+    end
+
+    if product.paper_linking
+      puts " Paper EAN: #{product.paper_linking.ean}"
+    end
   end
 
   puts " Available: #{product.available?}"

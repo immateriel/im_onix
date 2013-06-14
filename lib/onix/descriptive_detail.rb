@@ -52,7 +52,7 @@ module ONIX
 
     def parse(col)
       @type=CollectionType.from_code(col.at("./CollectionType"))
-      @identifiers=Identifier.parse_identifiers(col,"Collection")
+      @identifiers=Identifier.parse_identifiers(col, "Collection")
 
       col.search("./TitleDetail").each do |title_detail|
         @title_details << TitleDetail.from_xml(title_detail)
@@ -68,7 +68,7 @@ module ONIX
     include EanMethods
 
     def parse(ppart)
-      @identifiers=Identifier.parse_identifiers(ppart,"Product")
+      @identifiers=Identifier.parse_identifiers(ppart, "Product")
 
       if ppart.at("./ProductForm")
         @form=ProductForm.from_code(ppart.at("./ProductForm").text)
@@ -85,138 +85,209 @@ module ONIX
     end
   end
 
-class DescriptiveDetail < Subset
-  attr_accessor :title_details, :collection, :language,
-                :composition,
-                :form, :form_detail, :form_description, :parts,
-                :contributors,
-                :subjects,
-                :collections
+  class Extent < Subset
+    attr_accessor :type, :value, :unit
 
-  def initialize
-    @title_details=[]
-    @text_contents=[]
-    @parts=[]
-    @contributors=[]
-    @subjects=[]
-    @collections=[]
+    def bytes
+      case @unit.human
+        when "Bytes"
+          @value.to_i
+        when "Kbytes"
+          (@value.to_f*1024).to_i
+        when "Mbytes"
+          (@value.to_f*1024*1024).to_i
+        else
+          nil
+      end
+    end
+
+    def pages
+      if @unit.human=="Pages"
+        @value.to_i
+      else
+        nil
+      end
+    end
+
+    def parse(e)
+      @type=ExtentType.from_code(e.at("./ExtentType").text)
+      @unit=ExtentUnit.from_code(e.at("./ExtentUnit").text)
+      @value=Helper.text_at(e, "./ExtentValue")
+    end
+
   end
 
-  def title
-    @title_details.select{|td| td.type.human=~/DistinctiveTitle/}.first.title_elements.first.title
+  class EpubUsageLimit < Subset
+    attr_accessor :quantity, :unit
+
+    def parse(eul)
+      @unit=EpubUsageUnit.from_code(eul.at("./EpubUsageUnit").text)
+      @quantity=eul.at("./Quantity").text.to_i
+    end
   end
 
-  def subtitle
-    @title_details.select{|td| td.type.human=~/DistinctiveTitle/}.first.title_elements.first.subtitle
+  class EpubUsageConstraint < Subset
+    attr_accessor :type, :status, :limits
+
+    def initialize
+      @limits=[]
+    end
+
+    def parse(drm)
+      @type=EpubUsageType.from_code(drm.at("./EpubUsageType").text)
+      @status=EpubUsageStatus.from_code(drm.at("./EpubUsageStatus").text)
+      drm.search("./EpubUsageLimit").each do |l|
+        @limits << EpubUsageLimit.from_xml(l)
+      end
+    end
   end
 
+  class DescriptiveDetail < Subset
+    attr_accessor :title_details, :collection, :language,
+                  :composition,
+                  :form, :form_detail, :form_description, :parts,
+                  :contributors,
+                  :subjects,
+                  :collections,
+                  :extents,
+                  :epub_technical_protections
 
-  def parse(descriptive)
+    def initialize
+      @title_details=[]
+      @text_contents=[]
+      @parts=[]
+      @contributors=[]
+      @subjects=[]
+      @collections=[]
+      @extents=[]
+      @epub_technical_protections=[]
+      @epub_usage_constraints=[]
 
-    descriptive.search("./TitleDetail").each do |title_detail|
-      @title_details << TitleDetail.from_xml(title_detail)
     end
 
-    descriptive.search("./Contributor").each do |c|
-      @contributors << Contributor.from_xml(c)
+    def title
+      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.first.title
     end
 
-    descriptive.search("./Collection").each do |collection|
-      @collections << Collection.from_xml(collection)
+    def subtitle
+      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.first.subtitle
     end
 
-    # TODO
-    e_page_count=nil
-    e_filesize=nil
-    descriptive.search("./Extent").each do |e|
-      case e.at("./ExtentType").text
-        when "00", "03"
-          e_page_count=e.at("./ExtentValue").text.to_i
-        when "22"
-          case e.at("./ExtentUnit").text
-            when "17"
-              e_filesize=e.at("./ExtentValue").text.to_i
-            when "18"
-              e_filesize=(e.at("./ExtentValue").text.to_f*1024).to_i
-            when "19"
-              e_filesize=(e.at("./ExtentValue").text.to_f*1024*1024).to_i
-          end
+    def pages_extent
+      @extents.select{|e| e.type.human=~/PageCount/ || e.type.human=~/NumberOfPage/}.first
+    end
+
+    def pages
+      if pages_extent
+        pages_extent.pages
+      else
+        nil
       end
     end
 
-    if descriptive.at("./Language/LanguageCode")
-      @language=descriptive.at("./Language/LanguageCode").text
+    def filesize_extent
+      @extents.select{|e| e.type.human=="Filesize"}.first
     end
 
-    if descriptive.at("./ProductComposition")
-      # mono-format
-      if descriptive.at("./ProductForm")
-        @form=ProductForm.from_code(descriptive.at("./ProductForm").text)
+    def filesize
+      if filesize_extent
+        filesize_extent.bytes
+      else
+        nil
+      end
+    end
+
+    def digital?
+      if @form.human=~/Digital/
+        true
+      else
+        false
+      end
+    end
+
+    def bundle?
+      @composition.human=="MultipleitemRetailProduct"
+    end
+
+    def file_format
+      if @form_detail
+        @form_detail.human
+      else
+        nil
+      end
+    end
+
+    def file_description
+      @form_description
+    end
+
+    def protection_type
+      if @epub_technical_protections.length > 0
+        if @epub_technical_protections.length == 1
+          @epub_technical_protections.first.human
+        else
+          raise ExpectsOneButHasSeveral, @epub_technical_protections.map(&:type)
+        end
+      else
+        "Undefined"
+      end
+    end
+
+    def parse(descriptive)
+
+      descriptive.search("./TitleDetail").each do |title_detail|
+        @title_details << TitleDetail.from_xml(title_detail)
       end
 
-      if descriptive.at("./ProductFormDescription")
-        @form_description=descriptive.at("./ProductFormDescription").text
+      descriptive.search("./Contributor").each do |c|
+        @contributors << Contributor.from_xml(c)
       end
 
-      if descriptive.at("./ProductFormDetail")
-        @form_detail=ProductFormDetail.from_code(descriptive.at("./ProductFormDetail").text)
+      descriptive.search("./Collection").each do |collection|
+        @collections << Collection.from_xml(collection)
       end
 
-      if false
-        e_protection_definition={}
-        e_protection=nil
+      descriptive.search("./Extent").each do |e|
+        @extents << Extent.from_xml(e)
+      end
 
-        if descriptive.at("./EpubTechnicalProtection")
-          e_protection=EpubTechnicalProtection.from_code(descriptive.at("./EpubTechnicalProtection").text)
+      if descriptive.at("./Language/LanguageCode")
+        @language=descriptive.at("./Language/LanguageCode").text
+      end
+
+      if descriptive.at("./ProductComposition")
+        if descriptive.at("./ProductForm")
+          @form=ProductForm.from_code(descriptive.at("./ProductForm").text)
         end
 
-        descriptive.search("./EpubUsageConstraint").each do |drm|
-          definition=nil
-          case drm.at("./EpubUsageType").text
-            when "01"
-              # preview
-            when "02"
-              # print
-              definition= :print
-            when "03"
-              # copy/paste
-              definition= :excerpt
-            when "04"
-              # share
-              definition= :copy
+        if descriptive.at("./ProductFormDescription")
+          @form_description=descriptive.at("./ProductFormDescription").text
+        end
+
+        if descriptive.at("./ProductFormDetail")
+          @form_detail=ProductFormDetail.from_code(descriptive.at("./ProductFormDetail").text)
+        end
+
+          if descriptive.search("./EpubTechnicalProtection").each do |etp|
+            @epub_technical_protections << EpubTechnicalProtection.from_code(etp.text)
           end
 
-          case drm.at("./EpubUsageStatus").text
-            when "01"
-              # unlimited
-              e_protection_definition[definition]=1001
-            when "02"
-              # limited
-              if drm_limit=drm.at("./EpubUsageLimit")
-                e_protection_definition[definition]=drm_limit.at("./Quantity").text.to_i
-              else
-                e_protection_definition[definition]=0
-              end
+            descriptive.search("./EpubUsageConstraint").each do |euc|
+              @epub_usage_constraints << EpubUsageConstraint.from_xml(euc)
+            end
+          end
 
-            when "03"
-              # prohibited
-              e_protection_definition[definition]=0
+          @composition=ProductComposition.from_code(descriptive.at("./ProductComposition").text)
+
+          descriptive.search("./ProductPart").each do |product_part|
+            @parts << ProductPart.from_xml(product_part)
           end
 
         end
+
+        descriptive.search("./Subject").each do |subj|
+          @subjects << Subject.from_xml(subj)
+        end
       end
-
-      @composition=ProductComposition.from_code(descriptive.at("./ProductComposition").text)
-
-      descriptive.search("./ProductPart").each do |product_part|
-        @parts << ProductPart.from_xml(product_part)
-      end
-
-    end
-
-    descriptive.search("./Subject").each do |subj|
-      @subjects << Subject.from_xml(subj)
     end
   end
-end
-end

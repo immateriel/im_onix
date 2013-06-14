@@ -266,4 +266,47 @@ module ONIX
     end
   end
 
+  class ExtentType < CodeFromHtml
+    def self.code_ident
+      23
+    end
+  end
+
+  class ExtentUnit < CodeFromHtml
+    def self.code_ident
+      24
+    end
+  end
+
+  class EpubTechnicalProtections < CodeFromHtml
+    def self.code_ident
+      144
+    end
+  end
+
+  class EpubUsageType < CodeFromHtml
+    def self.code_ident
+      145
+    end
+  end
+
+  class EpubUsageStatus < CodeFromHtml
+    def self.code_ident
+      146
+    end
+  end
+
+  class EpubUsageUnit < CodeFromHtml
+    def self.code_ident
+      147
+    end
+  end
+
+  class CollectionIDType < CodeFromHtml
+    def self.code_ident
+      13
+    end
+  end
+
+
 end
