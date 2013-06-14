@@ -63,6 +63,10 @@ module ONIX
         @descriptive_detail.bundle?
     end
 
+    def parts
+      @descriptive_detail.parts
+    end
+
     def filesize
       @descriptive_detail.filesize
     end

@@ -308,5 +308,22 @@ module ONIX
     end
   end
 
+  class ResourceFeatureType < CodeFromHtml
+    def self.code_ident
+      160
+    end
+  end
+
+  class ResourceVersionFeatureType < CodeFromHtml
+    def self.code_ident
+      162
+    end
+  end
+
+  class SupportingResourceFileFormat < CodeFromHtml
+    def self.code_ident
+      178
+    end
+  end
 
 end

@@ -6,7 +6,7 @@ filename=ARGV[0]
 msg=ONIX::ONIXMessage.new
 msg.parse(filename)
 msg.products.each do |product|
-#  pp product
+#  pp product.collateral_detail.supporting_resources
   puts "---"
   puts " EAN: #{product.ean}"
   puts " Title: #{product.title}"
@@ -33,15 +33,32 @@ msg.products.each do |product|
   end
 
   if product.digital?
-    puts " ---"
-    puts " Digital product"
+    puts " -- Digital product"
 
     if product.bundle?
       puts " Multiple files bundle"
       if product.file_description
         puts " Description: #{product.file_description}"
       end
+
+
+      product.parts.each do |part|
+        puts "  -- Part"
+        puts "  EAN: #{part.ean}"
+        puts "  Format: #{part.file_format}"
+        puts "  Description: #{part.file_description}"
+        if part.product
+          puts "  Protection: #{part.product.protection_type}"
+          if part.product.filesize
+            puts "  Filesize: #{part.product.filesize} bytes"
+          end
+
+        end
+
+      end
+
     else
+      puts " Single file"
       puts " Format: #{product.file_format}"
       if product.file_description
         puts " Description: #{product.file_description}"

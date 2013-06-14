@@ -67,6 +67,19 @@ module ONIX
 
     include EanMethods
 
+
+    def file_format
+      if @form_detail
+        @form_detail.human
+      else
+        "Undefined"
+      end
+    end
+
+    def file_description
+      @form_description
+    end
+
     def parse(ppart)
       @identifiers=Identifier.parse_identifiers(ppart, "Product")
 
@@ -213,7 +226,7 @@ module ONIX
       if @form_detail
         @form_detail.human
       else
-        nil
+        "Undefined"
       end
     end
 
