@@ -7,6 +7,7 @@ msg=ONIX::ONIXMessage.new
 msg.parse(filename)
 msg.products.each do |product|
 #  pp product.collateral_detail.supporting_resources
+#  pp product.product_supplies
   puts "---"
   puts " EAN: #{product.ean}"
   puts " Title: #{product.title}"
@@ -38,7 +39,7 @@ msg.products.each do |product|
     if product.bundle?
       puts " Multiple files bundle"
       if product.file_description
-        puts " Description: #{product.file_description}"
+        puts " Description: #{product.raw_file_description}"
       end
 
 
@@ -46,7 +47,7 @@ msg.products.each do |product|
         puts "  -- Part"
         puts "  EAN: #{part.ean}"
         puts "  Format: #{part.file_format}"
-        puts "  Description: #{part.file_description}"
+        puts "  Description: #{part.raw_file_description}"
         if part.product
           puts "  Protection: #{part.product.protection_type}"
           if part.product.filesize
@@ -75,22 +76,28 @@ msg.products.each do |product|
   end
 
   puts " Available: #{product.available?}"
-  puts " Prices:"
-  product.prices_including_tax.each do |price|
-    output=""
-    output+="  #{price.amount} #{price.currency} for "
+#  pp product.supplies
 
-    if price.territory.worldwide?
+  current_price=product.current_price_amount_for('EUR')
+  if current_price
+    puts " Current price: #{current_price/100.0} EUR"
+  end
+  puts " Prices:"
+  product.supplies_including_tax.each do |supply|
+    output=""
+    output+="  #{supply[:price]} #{supply[:currency]} for "
+
+    if ONIX::Territory.worldwide?(supply[:territory])
       output+="WORLD"
     else
-      output+=price.territory.countries.join(", ")
+      output+=supply[:territory].join(", ")
     end
 
-    if price.from_date
-      output+=" from #{price.from_date}"
+    if supply[:from_date]
+      output+=" from #{supply[:from_date]}"
     end
-    if price.until_date
-      output+=" until #{price.until_date}"
+    if supply[:until_date]
+      output+=" until #{supply[:until_date]}"
     end
 
     puts  output

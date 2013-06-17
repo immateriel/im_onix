@@ -79,13 +79,21 @@ module ONIX
       @descriptive_detail.file_description
     end
 
+    def raw_file_description
+      if @descriptive_detail.file_description
+        @descriptive_detail.file_description.gsub(/\s+/," ").strip
+      else
+        nil
+      end
+    end
+
     def pages
       @descriptive_detail.pages
     end
 
     def raw_description
       if self.description
-        self.description.gsub(/\s+/," ")
+        self.description.gsub(/\s+/," ").strip
       else
         nil
       end
@@ -184,106 +192,115 @@ module ONIX
       countries.uniq
     end
 
-    # flattened prices
-    def prices
-      prices=[]
+    # flattened prices/supplies
+    def supplies
+      supplies=[]
 
       # add territories if missing
       if @product_supplies
         @product_supplies.each do |ps|
           # without unavailable
-          ps.available_supply_details.each do |sd|
+          ps.supply_details.each do |sd|
             sd.prices.each do |p|
-              cp=p.dup
-              if !cp.territory or cp.territory.countries.length==0
-                cp.territory=Territory.new
+              supply={}
+              supply[:available]=sd.available?
+              supply[:availability_date]=sd.availability_date
+              supply[:price]=p.amount
+              supply[:including_tax]=p.including_tax?
+              if !p.territory or p.territory.countries.length==0
+                supply[:territory]=Territory.new
                 if ps.markets
-                  cp.territory.countries=ps.markets.map{|m| m.territory.countries}.flatten.uniq
+                  supply[:territory]=ps.markets.map{|m| m.territory.countries}.flatten.uniq
                 end
-                if cp.territory.countries.length==0
+                if supply[:territory].length==0
                   if @publishing_detail
-                    cp.territory.countries=self.countries_rights
+                    supply[:territory]=self.countries_rights
                   end
                 end
+              else
+                supply[:territory]=p.territory.countries
               end
-              prices << cp
+              supply[:from_date]=p.from_date
+              supply[:until_date]=p.until_date
+              supply[:currency]=p.currency
+              supplies << supply
             end
           end
         end
       end
 
       # merge territories
-      grouped_prices={}
-      prices.each do |pr|
-        pr_key="#{pr.type.code}#{pr.from_date}#{pr.until_date}#{pr.currency}#{pr.amount}"
-        grouped_prices[pr_key]||=pr
-        grouped_prices[pr_key].territory.countries+=pr.territory.countries
+      grouped_supplies={}
+      supplies.each do |supply|
+        pr_key="#{supply[:including_tax]}#{supply[:from_date]}#{supply[:until_date]}#{supply[:currency]}#{supply[:amount]}"
+        grouped_supplies[pr_key]||=supply
+        grouped_supplies[pr_key][:territory]+=supply[:territory]
+        grouped_supplies[pr_key][:territory].uniq!
+
       end
 
-      prices=grouped_prices.to_a.map{|h| h.last}
+      supplies=grouped_supplies.to_a.map{|h| h.last}
 
-      grouped_prices={}
-      prices.each do |pr|
-        pr_key="#{pr.type.code}#{pr.currency}#{pr.territory.countries.join(',')}"
-        grouped_prices[pr_key]||=[]
-        grouped_prices[pr_key] << pr
+      grouped_supplies={}
+      supplies.each do |supply|
+        pr_key="#{supply[:including_tax]}#{supply[:currency]}#{supply[:territory].join(',')}"
+        grouped_supplies[pr_key]||=[]
+        grouped_supplies[pr_key] << supply
       end
 
       # render prices sequentially with dates
-      grouped_prices.each do |kpr, pr|
-        if pr.length > 1
+      grouped_supplies.each do |ksup, supply|
+        if supply.length > 1
 #          puts "MULTIPRICES"
-          global_price=pr.select{|p| not p.from_date and not p.until_date}
+          global_price=supply.select{|p| not p[:from_date] and not p[:until_date]}
 #          pp global_price
           global_price=global_price.first
           if global_price
 #            puts "FOUND GLOBAL"
-            pr.each do |p|
+            supply.each do |p|
               if p!=global_price
-                if p.from_date
-                  pd=PriceDate.new
-                  pd.role=PriceDateRole.from_human("UntilDate")
-                  pd.date=p.from_date
-                  global_price.dates << pd
-#                  puts "GLOBAL"
-#                  pp global_price
+                if p[:from_date]
+                  global_price[:until_date]=p[:from_date]
                 end
 
-                if p.until_date
+                if p[:until_date]
                   np=global_price.dup
-                  pd=PriceDate.new
-                  pd.role=PriceDateRole.from_human("FromDate")
-                  pd.date=p.until_date
-                  np.dates << pd
-                  pr << np
+                  np[:from_date]=p[:until_date]
+                  supply << np
                 end
 
               end
             end
           else
             # remove explicit from date
-            explicit_from=pr.select{|p| p.from_date and not pr.select{|sp| sp.until_date==p.from_date}.first}.first
+            explicit_from=supply.select{|p| p[:from_date] and not supply.select{|sp| sp[:until_date]==p[:from_date]}.first}.first
             if explicit_from
-              explicit_from.dates=explicit_from.dates.delete_if{|p| p.role.human=="FromDate"}
+              explicit_from[:from_date]=nil
             end
           end
         end
       end
 
-      prices=grouped_prices.to_a.map{|h| h.last}.flatten
+      supplies=grouped_supplies.to_a.map{|h| h.last}.flatten
 
-      prices
+      supplies
+    end
+
+
+    def supplies_including_tax
+      self.supplies.select{|p| p[:including_tax]}
     end
 
     def current_price_amount_for(currency)
-      prices.select{|p| p.currency==currency}.select{|p|
-        (!p.from_date or p.from_date <= Date.today) and
-        (!p.until_date or p.until_date > Date.today)
-      }.first.amount
-    end
-
-    def prices_including_tax
-      self.prices.select{|p| p.including_tax?}
+      sup=supplies_including_tax.select{|p| p[:currency]==currency}.select{|p|
+        (!p[:from_date] or p[:from_date].to_time <= Time.now) and
+            (!p[:until_date] or p[:until_date].to_time > Time.now)
+      }.first
+      if sup
+        sup[:price]
+      else
+        nil
+      end
     end
 
     def available_product_supplies

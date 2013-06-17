@@ -11,6 +11,14 @@ module ONIX
     end
   end
 
+  class SupplyDate < Subset
+    attr_accessor :role, :date
+    def parse(supply_date)
+      @role = SupplyDateRole.from_code(supply_date.at("./SupplyDateRole").text)
+      @date = Helper.parse_date(supply_date)
+    end
+  end
+
   class SupplyDetail < Subset
     attr_accessor :availability, :suppliers, :supply_dates, :prices
 
@@ -28,6 +36,15 @@ module ONIX
       @availability.human=="Available"
     end
 
+    def availability_date
+      av=@supply_dates.select{|sd| sd.role.human=="ExpectedAvailabilityDate" || sd.role.human=="EmbargoDate"}.first
+      if av
+        av.date
+      else
+        nil
+      end
+    end
+
     def parse(supply)
 
       @suppliers = Supplier.parse_entities(supply, "./Supplier")
@@ -37,7 +54,7 @@ module ONIX
       end
 
       supply.search("./SupplyDate").each do |supply_date|
-        @supply_dates << {:role => SupplyDateRole.from_code(supply_date.at("./SupplyDateRole").text), :date => Helper.parse_date(supply_date)}
+        @supply_dates << SupplyDate.from_xml(supply_date)
       end
 
       supply.search("./Price").each do |pr|

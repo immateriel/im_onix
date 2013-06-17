@@ -27,7 +27,11 @@ module ONIX
     end
 
     def worldwide?
-      (self.countries & CountryCode.list).length==CountryCode.list.length
+      self.class.worldwide?(self.countries)
+    end
+
+    def self.worldwide?(countries)
+      (countries & CountryCode.list).length==CountryCode.list.length
     end
 
     def countries=v

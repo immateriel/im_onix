@@ -80,6 +80,14 @@ module ONIX
       @form_description
     end
 
+    def raw_file_description
+      if @form_description
+        @form_description.gsub(/\s+/," ").strip
+      else
+        nil
+      end
+    end
+
     def parse(ppart)
       @identifiers=Identifier.parse_identifiers(ppart, "Product")
 

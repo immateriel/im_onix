@@ -42,7 +42,11 @@ module ONIX
     end
 
     def including_tax?
-      self.type.human=~/IncludingTax/
+      if self.type.human=~/IncludingTax/
+        true
+      else
+        false
+      end
     end
 
     def parse(pr)
