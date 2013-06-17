@@ -107,6 +107,12 @@ module ONIX
       end
     end
 
+    def publisher_gln
+      if self.publisher
+        self.publisher.gln
+      end
+    end
+
     def imprint
       if @publishing_detail
         @publishing_detail.publisher
@@ -120,6 +126,12 @@ module ONIX
         self.imprint.name
       else
         nil
+      end
+    end
+
+    def imprint_gln
+      if self.imprint
+        self.imprint.gln
       end
     end
 
@@ -261,6 +273,13 @@ module ONIX
       prices=grouped_prices.to_a.map{|h| h.last}.flatten
 
       prices
+    end
+
+    def current_price_amount_for(currency)
+      prices.select{|p| p.currency==currency}.select{|p|
+        (!p.from_date or p.from_date <= Date.today) and
+        (!p.until_date or p.until_date > Date.today)
+      }.first.amount
     end
 
     def prices_including_tax
