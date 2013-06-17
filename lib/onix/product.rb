@@ -49,6 +49,14 @@ module ONIX
       end
     end
 
+    def language_of_text
+      @descriptive_detail.language_of_text
+    end
+
+    def bisac_categories
+      @descriptive_detail.bisac_categories
+    end
+
     ## digital
 
     def protection_type

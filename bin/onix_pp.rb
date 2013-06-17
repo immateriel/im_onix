@@ -6,11 +6,13 @@ filename=ARGV[0]
 msg=ONIX::ONIXMessage.new
 msg.parse(filename)
 msg.products.each do |product|
+  pp product
 #  pp product.collateral_detail.supporting_resources
 #  pp product.product_supplies
   puts "---"
   puts " EAN: #{product.ean}"
   puts " Title: #{product.title}"
+  puts " Language: #{product.language_of_text}"
   if product.subtitle
     puts " Subtitle: #{product.subtitle}"
   end
@@ -41,7 +43,6 @@ msg.products.each do |product|
       if product.file_description
         puts " Description: #{product.raw_file_description}"
       end
-
 
       product.parts.each do |part|
         puts "  -- Part"

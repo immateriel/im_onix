@@ -326,4 +326,16 @@ module ONIX
     end
   end
 
+  class LanguageRole < CodeFromHtml
+    def self.code_ident
+      22
+    end
+  end
+
+  class LanguageCode < CodeFromHtml
+    def self.code_ident
+      74
+    end
+  end
+
 end

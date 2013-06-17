@@ -163,8 +163,17 @@ module ONIX
     end
   end
 
+  class Language < Subset
+    attr_accessor :role, :code
+    def parse(l)
+      @role=LanguageRole.from_code(l.at("./LanguageRole").text)
+      @code=LanguageCode.from_code(l.at("./LanguageCode").text)
+    end
+  end
+
   class DescriptiveDetail < Subset
-    attr_accessor :title_details, :collection, :language,
+    attr_accessor :title_details, :collection,
+                  :languages,
                   :composition,
                   :form, :form_detail, :form_description, :parts,
                   :contributors,
@@ -183,6 +192,7 @@ module ONIX
       @extents=[]
       @epub_technical_protections=[]
       @epub_usage_constraints=[]
+      @languages=[]
 
     end
 
@@ -254,6 +264,17 @@ module ONIX
       end
     end
 
+    def language_of_text
+      l=@languages.select{|l| l.role.human=="LanguageOfText"}.first
+      if l
+        l.code.code
+      end
+    end
+
+    def bisac_categories
+      @subjects.select{|s| s.scheme_identifier.human=="BisacSubjectHeading"}
+    end
+
     def parse(descriptive)
 
       descriptive.search("./TitleDetail").each do |title_detail|
@@ -273,8 +294,9 @@ module ONIX
       end
 
       # TODO
-      if descriptive.at("./Language/LanguageCode")
-        @language=descriptive.at("./Language/LanguageCode").text
+
+      descriptive.search("./Language").each do |l|
+        @languages << Language.from_xml(l)
       end
 
       if descriptive.at("./ProductComposition")
