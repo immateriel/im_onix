@@ -53,8 +53,16 @@ module ONIX
       @descriptive_detail.language_of_text
     end
 
+    def publisher_collection_title
+      @descriptive_detail.publisher_collection_title
+    end
+
     def bisac_categories
       @descriptive_detail.bisac_categories
+    end
+
+    def keywords
+      @descriptive_detail.keywords
     end
 
     ## digital
@@ -107,6 +115,14 @@ module ONIX
       end
     end
 
+    def publishers
+      if @publishing_detail
+        @publishing_detail.publishers
+      else
+        []
+      end
+    end
+
     def publisher
       if @publishing_detail
         @publishing_detail.publisher
@@ -131,7 +147,7 @@ module ONIX
 
     def imprint
       if @publishing_detail
-        @publishing_detail.publisher
+        @publishing_detail.imprint
       else
         nil
       end

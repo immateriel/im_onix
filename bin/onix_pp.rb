@@ -16,18 +16,35 @@ msg.products.each do |product|
   if product.subtitle
     puts " Subtitle: #{product.subtitle}"
   end
-  puts " Publication date: #{product.publication_date}"
+  if product.publication_date
+    puts " Publication date: #{product.publication_date}"
+  end
   if product.pages
     puts " Pages: #{product.pages}"
   end
+  if product.publisher_collection_title
+    puts " Collection: #{product.publisher_collection_title}"
+  end
   puts " Description: #{product.raw_description}"
 
-  puts " Publisher: #{product.publisher_name}"
-  puts " Imprint: #{product.imprint_name}"
+  if product.keywords.length > 0
+    puts " Keywords: #{product.keywords.join(', ')}"
+  end
+
+  if product.publishers.length > 0
+  product.publishers.each do |publisher|
+    puts " Publisher: #{publisher.name}"
+  end
+  end
+
+#  puts " Publisher: #{product.publisher_name}"
+  if product.imprint_name
+    puts " Imprint: #{product.imprint_name}"
+  end
   puts " Distributor: #{product.distributor_name}"
 
   product.contributors.each do |c|
-    puts " Contributors:"
+    puts " Contributor:"
     puts "  Name: #{c.name}"
     puts "  Role: #{c.role.human}"
     if c.biography
@@ -46,17 +63,19 @@ msg.products.each do |product|
 
       product.parts.each do |part|
         puts "  -- Part"
-        puts "  EAN: #{part.ean}"
-        puts "  Format: #{part.file_format}"
-        puts "  Description: #{part.raw_file_description}"
-        if part.product
-          puts "  Protection: #{part.product.protection_type}"
-          if part.product.filesize
-            puts "  Filesize: #{part.product.filesize} bytes"
-          end
-
+        if part.ean
+          puts "  EAN: #{part.ean}"
         end
-
+        puts "  Format: #{part.file_format}"
+        if part.file_description
+          puts "  Description: #{part.raw_file_description}"
+        end
+        if part.protection_type
+          puts "  Protection: #{part.protection_type}"
+        end
+        if part.filesize
+          puts "  Filesize: #{part.filesize} bytes"
+        end
       end
 
     else
@@ -85,8 +104,12 @@ msg.products.each do |product|
   end
   puts " Prices:"
   product.supplies_including_tax.each do |supply|
+#    if supply[:availability_date]
+#      puts " Availability date : #{supply[:availability_date]}"
+#    end
+
     output=""
-    output+="  #{supply[:price]} #{supply[:currency]} for "
+    output+="  #{supply[:price].to_f/100.0} #{supply[:currency]} for "
 
     if ONIX::Territory.worldwide?(supply[:territory])
       output+="WORLD"

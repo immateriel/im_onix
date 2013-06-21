@@ -50,8 +50,17 @@ module ONIX
       @title_details=[]
     end
 
+    def title
+      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.first.title
+    end
+
+    def subtitle
+      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.first.subtitle
+    end
+
+
     def parse(col)
-      @type=CollectionType.from_code(col.at("./CollectionType"))
+      @type=CollectionType.from_code(col.at("./CollectionType").text)
       @identifiers=Identifier.parse_identifiers(col, "Collection")
 
       col.search("./TitleDetail").each do |title_detail|
@@ -62,7 +71,7 @@ module ONIX
 
   class ProductPart < Subset
     attr_accessor :identifiers, :form, :form_detail, :form_description,
-                  :product
+                  :product, :part_of
 
 
     include EanMethods
@@ -104,6 +113,27 @@ module ONIX
       end
 
     end
+
+    def protection_type
+      if product
+        product.protection_type
+      else
+        if part_of
+          part_of.protection_type
+        else
+          nil
+        end
+      end
+    end
+
+    def filesize
+      if product
+        product.filesize
+      else
+        nil
+      end
+    end
+
   end
 
   class Extent < Subset
@@ -264,15 +294,39 @@ module ONIX
       end
     end
 
-    def language_of_text
+
+    def language_code_of_text
       l=@languages.select{|l| l.role.human=="LanguageOfText"}.first
       if l
         l.code.code
       end
     end
 
+    def language_of_text
+      l=@languages.select{|l| l.role.human=="LanguageOfText"}.first
+      if l
+        l.code.human
+      end
+    end
+
+    def publisher_collection
+      @collections.select{|c| c.type.human=="PublisherCollection"}.first
+    end
+
+    def publisher_collection_title
+      if self.publisher_collection
+        self.publisher_collection.title
+      end
+
+    end
+
     def bisac_categories
       @subjects.select{|s| s.scheme_identifier.human=="BisacSubjectHeading"}
+    end
+
+    def keywords
+      kws=@subjects.select{|s| s.scheme_identifier.human=="Keywords"}.map{|kw| kw.heading_text}
+      kws.map{|kw| kw.split(/;|,|\n/)}.flatten.map{|kw| kw.strip}
     end
 
     def parse(descriptive)
@@ -324,7 +378,9 @@ module ONIX
           @composition=ProductComposition.from_code(descriptive.at("./ProductComposition").text)
 
           descriptive.search("./ProductPart").each do |product_part|
-            @parts << ProductPart.from_xml(product_part)
+            part=ProductPart.from_xml(product_part)
+            part.part_of=self
+            @parts << part
           end
 
         end

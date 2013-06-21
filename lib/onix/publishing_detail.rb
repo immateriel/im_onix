@@ -27,18 +27,26 @@ module ONIX
     end
 
     def publisher
+      if @publishers.length > 0
       if @publishers.length==1
         @publishers.first
       else
         raise ExpectsOneButHasSeveral, Publisher
       end
+      else
+        nil
+      end
     end
 
     def imprint
+      if @imprints.length > 0
       if @imprints.length==1
         @imprints.first
       else
         raise ExpectsOneButHasSeveral, Imprint
+      end
+      else
+        nil
       end
     end
 
