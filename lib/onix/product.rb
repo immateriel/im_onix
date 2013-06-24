@@ -315,7 +315,21 @@ module ONIX
         end
       end
 
-      supplies=grouped_supplies.to_a.map{|h| h.last}.flatten
+      supplies=[]
+      grouped_supplies.each do |ksup,supply|
+        fsupply=supply.first
+        supplies << {:including_tax=>fsupply[:including_tax],:currency=>fsupply[:currency],:territory=>fsupply[:territory],:available=>fsupply[:available], :availability_date=>fsupply[:availability_date],
+                     :prices=>supply.map{|s|
+                       s[:amount]=s[:price]
+                       s.delete(:price)
+                       s.delete(:available)
+                       s.delete(:availability_date)
+                       s.delete(:including_tax)
+                       s
+                     }}
+      end
+
+#      supplies=grouped_supplies.to_a.map{|h| h.last}.flatten
 
       supplies
     end

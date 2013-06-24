@@ -142,32 +142,34 @@ msg.products.each do |product|
       end
 
       if supply[:availability_date]
-      xml.OnSaleDate(supply[:availability_date].strftime("%Y%m%d"))
+        xml.OnSaleDate(supply[:availability_date].strftime("%Y%m%d"))
       else
         xml.OnSaleDate(product.publication_date.strftime("%Y%m%d"))
-
       end
 
-
+        supply[:prices].each do |price|
           xml.Price {
             if supply[:including_tax]
               xml.PriceTypeCode("04")
             else
               xml.PriceTypeCode("03")
             end
-            xml.PriceAmount(supply[:price])
+            xml.PriceAmount(price[:amount]/100.0)
             xml.CurrencyCode(supply[:currency])
-            xml.CountryCode(supply[:territory].join(" "))
-
+            supply[:territory].each do |t|
+              xml.CountryCode(t)
+            end
 
             if supply[:from_date] then
-              xml.PriceEffectiveFrom(supply[:from_date].strftime("%Y%m%d"))
+              xml.PriceEffectiveFrom(price[:from_date].strftime("%Y%m%d"))
             end
             if supply[:until_date]
-              xml.PriceEffectiveUntil(supply[:until_date].strftime("%Y%m%d"))
+              xml.PriceEffectiveUntil(price[:until_date].strftime("%Y%m%d"))
             end
 
           }
+        end
+
     }
     end
 

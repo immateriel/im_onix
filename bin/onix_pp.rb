@@ -102,14 +102,19 @@ msg.products.each do |product|
   if current_price
     puts " Current price: #{current_price/100.0} EUR"
   end
-  puts " Prices:"
+  puts " Supplies:"
   product.supplies_including_tax.each do |supply|
 #    if supply[:availability_date]
 #      puts " Availability date : #{supply[:availability_date]}"
 #    end
 
-    output=""
-    output+="  #{supply[:price].to_f/100.0} #{supply[:currency]} for "
+    output="  "
+
+    if supply[:available]
+      output+="Available in "
+    else
+      output+="Not available in "
+    end
 
     if ONIX::Territory.worldwide?(supply[:territory])
       output+="WORLD"
@@ -117,14 +122,30 @@ msg.products.each do |product|
       output+=supply[:territory].join(", ")
     end
 
-    if supply[:from_date]
-      output+=" from #{supply[:from_date]}"
-    end
-    if supply[:until_date]
-      output+=" until #{supply[:until_date]}"
+    if supply[:availability_date]
+      output+=" starting #{supply[:availability_date]}"
     end
 
-    puts  output
+    puts output
+
+    puts "  Prices:"
+
+
+    supply[:prices].each do |price|
+      output="   "
+
+      output+="#{price[:amount].to_f/100.0} #{supply[:currency]}"
+
+    if price[:from_date]
+      output+=" from #{price[:from_date]}"
+    end
+    if price[:until_date]
+      output+=" until #{price[:until_date]}"
+    end
+      puts  output
+
+    end
+
   end
 
 end
