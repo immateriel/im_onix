@@ -49,8 +49,18 @@ module ONIX
       end
     end
 
+    def frontcover_url
+      if @collateral_detail
+        @collateral_detail.frontcover_url
+      end
+    end
+
     def language_of_text
       @descriptive_detail.language_of_text
+    end
+
+    def language_code_of_text
+      @descriptive_detail.language_code_of_text
     end
 
     def publisher_collection_title

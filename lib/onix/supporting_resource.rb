@@ -58,6 +58,26 @@ module ONIX
       end
     end
 
+    def image_width_feature
+      @features.select{|i| i.type.human=="ImageWidthInPixels"}.first
+    end
+
+    def image_height_feature
+      @features.select{|i| i.type.human=="ImageHeightInPixels"}.first
+    end
+
+    def image_width
+      if self.image_width_feature
+        self.image_width_feature.value.to_i
+      end
+    end
+
+    def image_height
+      if self.image_height_feature
+        self.image_height_feature.value.to_i
+      end
+    end
+
 
       def parse(rv)
       @form=ResourceForm.from_code(Helper.mandatory_text_at(rv,"./ResourceForm"))

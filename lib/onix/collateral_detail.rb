@@ -24,6 +24,25 @@ module ONIX
       end
     end
 
+    # largest frontcover if multiple
+    def frontcover_resource
+      fc=@supporting_resources.select { |sr| sr.type.human=="FrontCover" }
+      if fc.length > 0
+        if fc.length > 1
+        else
+          fc.first.versions.last
+        end
+        fc.sort { |c1, c2| c2.versions.last.image_width <=> c1.versions.last.image_width }.first.versions.last
+      end
+    end
+
+    def frontcover_url
+      if self.frontcover_resource
+        self.frontcover_resource.links.first.strip
+      end
+    end
+
+
     def parse(collateral)
       collateral.search("./TextContent").each do |txt|
         @text_contents << TextContent.from_xml(txt)

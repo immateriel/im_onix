@@ -6,9 +6,7 @@ filename=ARGV[0]
 msg=ONIX::ONIXMessage.new
 msg.parse(filename)
 msg.products.each do |product|
-  pp product
-#  pp product.collateral_detail.supporting_resources
-#  pp product.product_supplies
+#  pp product
   puts "---"
   puts " EAN: #{product.ean}"
   puts " Title: #{product.title}"
@@ -26,6 +24,8 @@ msg.products.each do |product|
     puts " Collection: #{product.publisher_collection_title}"
   end
   puts " Description: #{product.raw_description}"
+
+  puts " Frontcover: #{product.frontcover_url}"
 
   if product.keywords.length > 0
     puts " Keywords: #{product.keywords.join(', ')}"
