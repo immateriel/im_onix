@@ -71,6 +71,18 @@ module ONIX
       @descriptive_detail.bisac_categories
     end
 
+    def bisac_categories_codes
+      self.bisac_categories.map{|c| c.code}.uniq
+    end
+
+    def clil_categories
+      @descriptive_detail.clil_categories
+    end
+
+    def clil_categories_codes
+      self.clil_categories.map{|c| c.code}.uniq
+    end
+
     def keywords
       @descriptive_detail.keywords
     end
@@ -340,12 +352,13 @@ module ONIX
     end
 
     def current_price_amount_for(currency)
-      sup=supplies_including_tax.select{|p| p[:currency]==currency}.select{|p|
+      sup=supplies_including_tax.select{|p| p[:currency]==currency}.first[:prices].select{|p|
         (!p[:from_date] or p[:from_date].to_time <= Time.now) and
             (!p[:until_date] or p[:until_date].to_time > Time.now)
       }.first
+
       if sup
-        sup[:price]
+        sup[:amount]
       else
         nil
       end

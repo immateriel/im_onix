@@ -5,17 +5,19 @@
 
 Gem::Specification.new do |s|
   s.name = "im_onix"
-  s.version = ""
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["julbouln"]
-  s.date = "2013-06-11"
+  s.date = "2013-06-25"
   s.description = "immat\u{e9}riel.fr onix parser"
   s.email = "jboulnois@immateriel.fr"
+  s.executables = ["onix3_to_onix2.rb", "onix_pp.rb"]
   s.extra_rdoc_files = [
     "README.md"
   ]
   s.files = [
+    "bin/onix3_to_onix2.rb",
     "bin/onix_pp.rb",
     "data/codelists/onix-codelist-1.htm",
     "data/codelists/onix-codelist-10.htm",

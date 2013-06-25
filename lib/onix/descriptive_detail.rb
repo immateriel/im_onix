@@ -324,6 +324,10 @@ module ONIX
       @subjects.select{|s| s.scheme_identifier.human=="BisacSubjectHeading"}
     end
 
+    def clil_categories
+      @subjects.select{|s| s.scheme_identifier.human=="Clil"}
+    end
+
     def keywords
       kws=@subjects.select{|s| s.scheme_identifier.human=="Keywords"}.map{|kw| kw.heading_text}
       kws.map{|kw| kw.split(/;|,|\n/)}.flatten.map{|kw| kw.strip}

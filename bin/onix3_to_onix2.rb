@@ -160,10 +160,10 @@ msg.products.each do |product|
               xml.CountryCode(t)
             end
 
-            if supply[:from_date] then
+            if price[:from_date] then
               xml.PriceEffectiveFrom(price[:from_date].strftime("%Y%m%d"))
             end
-            if supply[:until_date]
+            if price[:until_date]
               xml.PriceEffectiveUntil(price[:until_date].strftime("%Y%m%d"))
             end
 
