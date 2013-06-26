@@ -370,13 +370,20 @@ module ONIX
     end
 
     def current_price_amount_for(currency)
-      sup=supplies_including_tax.select{|p| p[:currency]==currency}.first[:prices].select{|p|
-        (!p[:from_date] or p[:from_date].to_time <= Time.now) and
-            (!p[:until_date] or p[:until_date].to_time > Time.now)
-      }.first
+      sups=self.supplies_with_default_tax.select { |p| p[:currency]==currency }
+      if sups.length > 0
+#        pp sups
+        sup=sups.first[:prices].select { |p|
+          (!p[:from_date] or p[:from_date].to_time <= Time.now) and
+              (!p[:until_date] or p[:until_date].to_time > Time.now)
+        }.first
 
-      if sup
-        sup[:amount]
+        if sup
+          sup[:amount]
+        else
+          nil
+        end
+
       else
         nil
       end
@@ -392,15 +399,11 @@ module ONIX
 
     def supplies_for_country(country)
       self.supplies.select{|s|
-        if s[:territory]==["WORLD"]
-          true
-        else
           if s[:territory].include?(country)
             true
           else
             false
           end
-        end
       }
     end
 
