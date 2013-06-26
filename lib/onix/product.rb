@@ -391,7 +391,7 @@ module ONIX
           end
         end
       end
-      av
+      av and self.available?
     end
 
 

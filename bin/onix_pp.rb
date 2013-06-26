@@ -112,7 +112,7 @@ msg.products.each do |product|
     puts " Current price: #{current_price/100.0} EUR"
   end
   puts " Supplies:"
-  product.supplies_including_tax.each do |supply|
+  product.supplies_with_default_tax.each do |supply|
 #    if supply[:availability_date]
 #      puts " Availability date : #{supply[:availability_date]}"
 #    end
