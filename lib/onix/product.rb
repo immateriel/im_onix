@@ -278,7 +278,7 @@ module ONIX
       # merge territories
       grouped_supplies={}
       supplies.each do |supply|
-        pr_key="#{supply[:including_tax]}#{supply[:from_date]}#{supply[:until_date]}#{supply[:currency]}#{supply[:amount]}"
+        pr_key="#{supply[:available]}#{supply[:including_tax]}#{supply[:from_date]}#{supply[:until_date]}#{supply[:currency]}#{supply[:amount]}"
         grouped_supplies[pr_key]||=supply
         grouped_supplies[pr_key][:territory]+=supply[:territory]
         grouped_supplies[pr_key][:territory].uniq!
@@ -289,7 +289,7 @@ module ONIX
 
       grouped_supplies={}
       supplies.each do |supply|
-        pr_key="#{supply[:including_tax]}#{supply[:currency]}#{supply[:territory].join(',')}"
+        pr_key="#{supply[:available]}#{supply[:including_tax]}#{supply[:currency]}#{supply[:territory].join(',')}"
         grouped_supplies[pr_key]||=[]
         grouped_supplies[pr_key] << supply
       end
@@ -351,6 +351,14 @@ module ONIX
       self.supplies.select{|p| p[:including_tax]}
     end
 
+    def supplies_excluding_tax
+      self.supplies.select{|p| not p[:including_tax]}
+    end
+
+    def supplies_with_default_tax
+      self.supplies_including_tax + self.supplies_excluding_tax.select{|s| ["CAD","USD"].include?(s[:currency])}
+    end
+
     def current_price_amount_for(currency)
       sup=supplies_including_tax.select{|p| p[:currency]==currency}.first[:prices].select{|p|
         (!p[:from_date] or p[:from_date].to_time <= Time.now) and
@@ -370,6 +378,20 @@ module ONIX
 
     def available?
       self.available_product_supplies.length > 0 and not self.delete?
+    end
+
+    def available_for_country?(country)
+      av=false
+      self.supplies.select{|s| s[:available]}.each do |s|
+        if s[:territory]==["WORLD"]
+          av=true
+        else
+          if s[:territory].include?(country)
+            true
+          end
+        end
+      end
+      av
     end
 
 
