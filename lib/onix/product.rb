@@ -390,18 +390,22 @@ module ONIX
       self.available_product_supplies.length > 0 and not self.delete?
     end
 
-    def available_for_country?(country)
-      av=false
-      self.supplies.select{|s| s[:available]}.each do |s|
+    def supplies_for_country(country)
+      self.supplies.select{|s|
         if s[:territory]==["WORLD"]
-          av=true
+          true
         else
           if s[:territory].include?(country)
             true
+          else
+            false
           end
         end
-      end
-      av and self.available?
+      }
+    end
+
+    def available_for_country?(country)
+      self.supplies_for_country(country).select{|s| s[:available]}.length > 0 and self.available?
     end
 
 
