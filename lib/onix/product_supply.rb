@@ -2,13 +2,51 @@ require 'onix/price'
 
 module ONIX
 
+  class MarketDate < Subset
+    attr_accessor :role, :date
+    def parse(market_date)
+      @role = MarketDateRole.from_code(market_date.at("./MarketDateRole").text)
+      @date = Helper.parse_date(market_date)
+    end
+  end
+
   class Market < Subset
     attr_accessor :territory
+
+
     def parse(market)
       if market.at("./Territory")
         @territory=Territory.from_xml(market.at("./Territory"))
       end
     end
+  end
+
+  class MarketPublishingDetail < Subset
+    attr_accessor :publisher_representatives, :market_dates
+
+    def initialize
+      @publisher_representatives=[]
+      @market_dates = []
+    end
+
+    def availability_date
+      av=@market_dates.select{|sd| sd.role.human=="PublicationDate" || sd.role.human=="EmbargoDate"}.first
+      if av
+        av.date
+      else
+        nil
+      end
+    end
+
+    def parse(market_publishing)
+
+        @publisher_representatives=Agent.parse_entities(market_publishing,"./PublisherRepresentative")
+
+        market_publishing.search("./MarketDate").each do |market_date|
+        @market_dates << MarketDate.from_xml(market_date)
+      end
+    end
+
   end
 
   class SupplyDate < Subset
@@ -64,10 +102,9 @@ module ONIX
   end
 
   class ProductSupply < Subset
-    attr_accessor :supply_details, :markets, :publisher_representatives
+    attr_accessor :supply_details, :markets, :market_publishing_detail
 
     def initialize
-      @publisher_representatives=[]
       @supply_details=[]
       @markets=[]
     end
@@ -97,10 +134,11 @@ module ONIX
         @markets << Market.from_xml(mk)
       end
 
+
       market_publishing = product_supply.at("./MarketPublishingDetail")
 
       if market_publishing
-        @publisher_representatives=Agent.parse_entities(market_publishing,"./PublisherRepresentative")
+        @market_publishing_detail = MarketPublishingDetail.from_xml(market_publishing)
       end
 #      market = product_supply.at("./Market")
 #      market_publishing = product_supply.at("./MarketPublishingDetail")

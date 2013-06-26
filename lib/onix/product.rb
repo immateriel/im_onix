@@ -245,16 +245,23 @@ module ONIX
       # add territories if missing
       if @product_supplies
         @product_supplies.each do |ps|
-          # without unavailable
           ps.supply_details.each do |sd|
             sd.prices.each do |p|
               supply={}
               supply[:available]=sd.available?
               supply[:availability_date]=sd.availability_date
+
+              unless supply[:availability_date]
+                if ps.market_publishing_detail
+                  if ps.market_publishing_detail.availability_date
+                    supply[:availability_date]=ps.market_publishing_detail.availability_date
+                  end
+                end
+              end
               supply[:price]=p.amount
               supply[:including_tax]=p.including_tax?
               if !p.territory or p.territory.countries.length==0
-                supply[:territory]=Territory.new
+                supply[:territory]=[]
                 if ps.markets
                   supply[:territory]=ps.markets.map{|m| m.territory.countries}.flatten.uniq
                 end
@@ -271,6 +278,9 @@ module ONIX
               supply[:currency]=p.currency
               supplies << supply
             end
+
+
+
           end
         end
       end

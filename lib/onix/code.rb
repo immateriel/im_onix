@@ -338,4 +338,10 @@ module ONIX
     end
   end
 
+  class MarketDateRole < CodeFromHtml
+    def self.code_ident
+      163
+    end
+  end
+
 end
