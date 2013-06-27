@@ -24,11 +24,6 @@ module ONIX
 
     include EanMethods
 
-    def initialize
-      @identifiers=[]
-      @product_supplies=[]
-    end
-
     def contributors
       @descriptive_detail.contributors
     end
@@ -276,11 +271,13 @@ module ONIX
               supply[:from_date]=p.from_date
               supply[:until_date]=p.until_date
               supply[:currency]=p.currency
+
+              unless supply[:availability_date]
+                supply[:availability_date]=@publishing_detail.publication_date
+              end
+
               supplies << supply
             end
-
-
-
           end
         end
       end
@@ -347,6 +344,7 @@ module ONIX
                        s.delete(:available)
                        s.delete(:availability_date)
                        s.delete(:including_tax)
+                       s.delete(:territory)
                        s
                      }}
       end
@@ -411,9 +409,13 @@ module ONIX
       self.supplies_for_country(country).select{|s| s[:available]}.length > 0 and self.available?
     end
 
-
     def delete?
       self.notification_type.human=="Delete"
+    end
+
+    def initialize
+      @identifiers=[]
+      @product_supplies=[]
     end
 
     def parse(p)

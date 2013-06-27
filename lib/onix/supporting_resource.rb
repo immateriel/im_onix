@@ -66,6 +66,11 @@ module ONIX
       @features.select{|i| i.type.human=="ImageHeightInPixels"}.first
     end
 
+    def md5_hash_feature
+      @features.select{|i| i.type.human=="Md5HashValue"}.first
+    end
+
+
     def image_width
       if self.image_width_feature
         self.image_width_feature.value.to_i
@@ -78,11 +83,17 @@ module ONIX
       end
     end
 
+    def md5_hash
+      if self.md5_hash
+        self.md5_hash.value
+      end
+    end
+
 
       def parse(rv)
       @form=ResourceForm.from_code(Helper.mandatory_text_at(rv,"./ResourceForm"))
           rv.search("./ResourceLink").each do |l|
-            @links << l.text
+            @links << l.text.strip
           end
       rv.search("./ContentDate").each do |d|
         @content_dates << ContentDate.from_xml(d)

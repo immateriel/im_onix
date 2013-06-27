@@ -51,7 +51,7 @@ module ONIX
     end
 
     def publication_date
-      pub=@publishing_dates.select{|pd| pd.role.human=="PublicationDate" || pd.role.human=="EmbargoDate"}.first
+      pub=@publishing_dates.select{|pd| pd.role.human=="PublicationDate" or pd.role.human=="PublicationDateOfPrintCounterpart" or pd.role.human=="EmbargoDate"}.first
       if pub
         pub.date
       else

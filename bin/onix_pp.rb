@@ -139,13 +139,18 @@ msg.products.each do |product|
 
     puts "  Prices:"
 
-
     supply[:prices].each do |price|
       output="   "
 
       output+="#{price[:amount].to_f/100.0} #{supply[:currency]}"
 
-    if price[:from_date]
+      if supply[:including_tax]
+        output+=" tax included"
+      else
+        output+=" tax excluded"
+      end
+
+      if price[:from_date]
       output+=" from #{price[:from_date]}"
     end
     if price[:until_date]

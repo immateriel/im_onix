@@ -2,7 +2,7 @@ require 'onix/subset'
 
 module ONIX
   class Contributor < Subset
-    attr_accessor :name_before_key, :key_names, :person_name, :role, :biography_note
+    attr_accessor :name_before_key, :key_names, :person_name, :role, :biography_note, :sequence_number
 
     def name
       if @person_name
@@ -31,7 +31,11 @@ module ONIX
     end
 
     def parse(c)
-      if c.at("./NamesBeforeKey")
+      if c.at("./SequenceNumber")
+        @sequence_number=c.at("./SequenceNumber").text.to_i
+      end
+
+        if c.at("./NamesBeforeKey")
         @name_before_key = c.at("./NamesBeforeKey").text
       end
       if c.at("./KeyNames")
