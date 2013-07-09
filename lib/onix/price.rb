@@ -1,11 +1,18 @@
 module ONIX
 
   class Tax < Subset
-    attr_accessor :amount, :rate_percent
+    attr_accessor :amount, :rate_code, :rate_percent
     def parse(tx)
-      @amount=(tx.at("./TaxAmount").text.to_f * 100).round
+      if tx.at("./TaxAmount")
+        @amount=(tx.at("./TaxAmount").text.to_f * 100).round
+      end
       @rate_percent=tx.at("./TaxRatePercent").text.to_f
+
+      if tx.at("./TaxRateCode")
+        @rate_code=TaxRateCode.from_code(tx.at("./TaxRateCode").text)
+      end
     end
+
   end
 
   class PriceDate < Subset

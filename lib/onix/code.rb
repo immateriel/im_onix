@@ -344,4 +344,10 @@ module ONIX
     end
   end
 
+  class TaxRateCode < CodeFromHtml
+    def self.code_ident
+      62
+    end
+  end
+
 end

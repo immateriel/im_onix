@@ -70,19 +70,26 @@ module ONIX
   end
 
   class ProductPart < Subset
-    attr_accessor :identifiers, :form, :form_detail, :form_description,
+    attr_accessor :identifiers, :form, :form_details, :form_description,
                   :product, :part_of
 
 
     include EanMethods
 
+    def initialize
+      @form_details = []
+    end
 
     def file_format
-      if @form_detail
-        @form_detail.human
+      if self.file_formats.first
+        self.file_formats.first.human
       else
         "Undefined"
       end
+    end
+
+    def file_formats
+      @form_details.select{|fd| fd.code =~ /^E1.*/}
     end
 
     def file_description
@@ -108,8 +115,8 @@ module ONIX
         @form_description=ppart.at("./ProductFormDescription").text
       end
 
-      if ppart.at("./ProductFormDetail")
-        @form_detail=ProductFormDetail.from_code(ppart.at("./ProductFormDetail").text)
+      ppart.search("./ProductFormDetail").each do |d|
+        @form_details << ProductFormDetail.from_code(d.text)
       end
 
     end
@@ -205,7 +212,7 @@ module ONIX
     attr_accessor :title_details, :collection,
                   :languages,
                   :composition,
-                  :form, :form_detail, :form_description, :parts,
+                  :form, :form_details, :form_description, :parts,
                   :contributors,
                   :subjects,
                   :collections,
@@ -223,6 +230,7 @@ module ONIX
       @epub_technical_protections=[]
       @epub_usage_constraints=[]
       @languages=[]
+      @form_details=[]
 
     end
 
@@ -271,11 +279,15 @@ module ONIX
     end
 
     def file_format
-      if @form_detail
-        @form_detail.human
+      if self.file_formats.first
+        self.file_formats.first.human
       else
         "Undefined"
       end
+    end
+
+    def file_formats
+      @form_details.select{|fd| fd.code =~ /^E1.*/}
     end
 
     def file_description
@@ -366,8 +378,8 @@ module ONIX
           @form_description=descriptive.at("./ProductFormDescription").text
         end
 
-        if descriptive.at("./ProductFormDetail")
-          @form_detail=ProductFormDetail.from_code(descriptive.at("./ProductFormDetail").text)
+        descriptive.search("./ProductFormDetail").each do |d|
+          @form_details << ProductFormDetail.from_code(d.text)
         end
 
           if descriptive.search("./EpubTechnicalProtection").each do |etp|
