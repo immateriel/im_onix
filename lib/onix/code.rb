@@ -350,4 +350,10 @@ module ONIX
     end
   end
 
+  class ProductFormFeatureType < CodeFromHtml
+    def self.code_ident
+      79
+    end
+  end
+
 end

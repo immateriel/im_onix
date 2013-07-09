@@ -208,11 +208,34 @@ module ONIX
     end
   end
 
+  class ProductFormFeature < Subset
+    attr_accessor :type, :value, :descriptions
+
+    def initialize
+      @descriptions
+    end
+
+    def parse(pff)
+      if pff.at("./ProductFormFeatureType")
+        @type=ProductFormFeatureType.from_code(pff.at("./ProductFormFeatureType").text)
+      end
+
+      if pff.at("./ProductFormFeatureValue")
+        @value=pff.at("./ProductFormFeatureValue").text
+      end
+
+      pff.search("./ProductFormFeatureDescription").each do |pfd|
+        @descriptions << pfd.text
+      end
+
+    end
+
+  end
   class DescriptiveDetail < Subset
     attr_accessor :title_details, :collection,
                   :languages,
                   :composition,
-                  :form, :form_details, :form_description, :parts,
+                  :form, :form_details, :form_features, :form_description, :parts,
                   :contributors,
                   :subjects,
                   :collections,
@@ -231,6 +254,7 @@ module ONIX
       @epub_usage_constraints=[]
       @languages=[]
       @form_details=[]
+      @form_features=[]
 
     end
 
@@ -372,6 +396,10 @@ module ONIX
       if descriptive.at("./ProductComposition")
         if descriptive.at("./ProductForm")
           @form=ProductForm.from_code(descriptive.at("./ProductForm").text)
+        end
+
+        descriptive.search("./ProductFormFeature").each do |pff|
+          @form_features << ProductFormFeature.from_xml(pff)
         end
 
         if descriptive.at("./ProductFormDescription")
