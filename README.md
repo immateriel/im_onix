@@ -11,9 +11,7 @@ pp message.products.first
 pp message.products.first.identifiers.first
 ```
 
-Ruby elements variables are underscored, lowercase of ONIX tags (Product -> product, DescriptiveDetail -> descriptive_details)
-
-And pluralized in case of array (ProductSupply -> product_supplies)
+Ruby elements variables are underscored, lowercase of ONIX tags (Product -> product, DescriptiveDetail -> descriptive_details) and pluralized in case of array (ProductSupply -> product_supplies)
 
 ### High level
 See onix_pp.rb sample in bin/
