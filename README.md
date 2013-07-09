@@ -1,6 +1,25 @@
 ## Pragmatic ONIX 3.0 parser for Ruby
 
-WIP
+### Low level
+Whole structure is accessible through ONIX::ONIXMessage object :
+```ruby
+message=ONIX::ONIXMessage.new
+message.parse("onix_file.xml")
+# first product
+pp message.products.first
+# first identifier of first product
+pp message.products.first.identifiers.first
+```
+
+Ruby elements variables are underscored, lowercase of ONIX tags :
+Product -> product
+DescriptiveDetail -> descriptive_details
+
+And pluralized in case of array :
+ProductSupply -> product_supplies
+
+### High level
+See onix_pp.rb sample in bin/
 
 ### License
 Copyright (C) 2013 immatériel.fr
