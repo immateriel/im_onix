@@ -1,6 +1,6 @@
 ## Pragmatic ONIX 3.0 parser for Ruby
 
-### Low level
+### Low level API
 Whole structure is accessible through ONIX::ONIXMessage object :
 ```ruby
 message=ONIX::ONIXMessage.new
@@ -11,10 +11,11 @@ pp message.products.first
 pp message.products.first.identifiers.first
 ```
 
-Ruby elements variables are underscored, lowercase of ONIX tags (Product -> product, DescriptiveDetail -> descriptive_details) and pluralized in case of array (ProductSupply -> product_supplies)
+Ruby elements variables are underscored, lowercase of ONIX tags (Product -> product, DescriptiveDetail -> descriptive_details) and pluralized in case of array (ProductSupply -> product_supplies).
 
-### High level
-See onix_pp.rb sample in bin/
+### High level API
+High level methods give abstracted and simplified access to the most important data.
+See onix_pp.rb and onix3_to_onix2.rb sample in bin/
 
 ### License
 Copyright (C) 2013 immatériel.fr
