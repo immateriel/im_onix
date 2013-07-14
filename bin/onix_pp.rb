@@ -6,7 +6,7 @@ filename=ARGV[0]
 msg=ONIX::ONIXMessage.new
 msg.parse(filename)
 msg.products.each do |product|
-  pp product
+#  pp product
   puts "---"
   puts " EAN: #{product.ean}"
   puts " Title: #{product.title}"

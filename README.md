@@ -11,7 +11,7 @@ pp message.products.first
 pp message.products.first.identifiers.first
 ```
 
-Ruby elements variables are underscored, lowercase of ONIX tags (Product -> product, DescriptiveDetail -> descriptive_details) and pluralized in case of array (ProductSupply -> product_supplies).
+Ruby elements variables are underscored, lowercase of ONIX tags (Product -> product, DescriptiveDetail -> descriptive_detail) and pluralized in case of array (ProductSupply -> product_supplies).
 
 ### High level API
 High level methods give abstracted and simplified access to the most important data.
