@@ -3,7 +3,7 @@ module ONIX
     attr_accessor :code
     # product Identifier array
     attr_accessor :identifiers
-    # complete Product
+    # full Product if referenced in ONIXMessage
     attr_accessor :product
 
     include EanMethods

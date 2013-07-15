@@ -12,6 +12,8 @@ module ONIX
       @subtitle=Helper.text_at(title_element, "./Subtitle")
     end
 
+    # :category: High level
+    # flatten title string
     def title
       if @title_text
         @title_text
@@ -50,10 +52,14 @@ module ONIX
       @title_details=[]
     end
 
+    # :category: High level
+    # collection title string
     def title
       @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.first.title
     end
 
+    # :category: High level
+    # collection subtitle string
     def subtitle
       @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.first.subtitle
     end
@@ -69,10 +75,13 @@ module ONIX
     end
   end
 
+  # product part use full Product to provide file protection and file size
   class ProductPart < Subset
-    attr_accessor :identifiers, :form, :form_details, :form_description,
-                  :product, :part_of
-
+    attr_accessor :identifiers, :form, :form_details, :form_description
+    # full Product if referenced in ONIXMessage
+    attr_accessor :product
+    # this ProductPart is part of Product
+    attr_accessor :part_of
 
     include EanMethods
 
@@ -80,6 +89,8 @@ module ONIX
       @form_details = []
     end
 
+    # :category: High level
+    # digital file format string (Epub,Pdf,AmazonKindle)
     def file_format
       if self.file_formats.first
         self.file_formats.first.human
@@ -92,10 +103,14 @@ module ONIX
       @form_details.select{|fd| fd.code =~ /^E1.*/}
     end
 
+    # :category: High level
+    # part file description string
     def file_description
       @form_description
     end
 
+    # :category: High level
+    # raw part file description string without HTML
     def raw_file_description
       if @form_description
         Helper.strip_html(@form_description).gsub(/\s+/," ").strip
@@ -121,6 +136,8 @@ module ONIX
 
     end
 
+    # :category: High level
+    # Protection type string (None, Watermarking, DRM, AdobeDRM)
     def protection_type
       if product
         product.protection_type
@@ -133,6 +150,8 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # digital file filesize in bytes
     def filesize
       if product
         product.filesize

@@ -152,7 +152,8 @@ module ONIX
       @descriptive_detail.bundle?
     end
 
-    # parts of product
+    # :category: High level
+    # bundle ProductPart array
     def parts
       @descriptive_detail.parts
     end
