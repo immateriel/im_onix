@@ -34,8 +34,13 @@ msg.products.each do |product|
 
   puts " Description: #{product.raw_description}"
 
-  puts " Frontcover: #{product.frontcover_url}"
-  puts " Sample: #{product.epub_sample_url}"
+  if product.frontcover_url
+    puts " Frontcover: #{product.frontcover_url}"
+  end
+
+  if product.epub_sample_url
+    puts " Sample: #{product.epub_sample_url}"
+  end
 
   if product.keywords.length > 0
     puts " Keywords: #{product.keywords.join(', ')}"
