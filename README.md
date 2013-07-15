@@ -17,8 +17,9 @@ Ruby elements variables are underscored, lowercase of ONIX tags (Product -> prod
 High level methods give abstracted and simplified access to the most important data.
 See onix_pp.rb and onix3_to_onix2.rb sample in bin/
 
-Usage:
-```onix_pp.rb onix.xml
+Usage :
+```shell
+onix_pp.rb onix.xml
 onix3_to_onix2.rb onix.xml
 ```
 
