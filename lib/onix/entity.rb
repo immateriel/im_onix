@@ -3,18 +3,16 @@ require 'onix/identifier'
 
 module ONIX
   class Entity
-    attr_accessor :name, :role, :identifiers
+    # entity name
+    attr_accessor :name
+    # entity role
+    attr_accessor :role
+    # entity Identifier list
+    attr_accessor :identifiers
 
     include GlnMethods
 
-    def self.from_hash(h)
-      o=self.new
-      o.name=h[:name]
-      o.role=h[:role]
-      o.identifiers=h[:identifiers]
-      o
-    end
-
+    # create Entity array from Nokogiri:XML::Node
     def self.parse_entities(node,list_tag)
       entities=[]
       node.search(list_tag).each do |n|
@@ -26,9 +24,23 @@ module ONIX
 
     end
 
+    private
+    def self.prefix
+    end
+    def self.role_class
+      nil
+    end
+    def self.from_hash(h)
+      o=self.new
+      o.name=h[:name]
+      o.role=h[:role]
+      o.identifiers=h[:identifiers]
+      o
+    end
   end
 
   class Agent < Entity
+    private
     def self.prefix
       "Agent"
     end
@@ -39,6 +51,7 @@ module ONIX
   end
 
   class Publisher < Entity
+    private
     def self.prefix
       "Publisher"
     end
@@ -49,6 +62,7 @@ module ONIX
   end
 
   class Imprint < Entity
+    private
     def self.prefix
       "Imprint"
     end
@@ -59,6 +73,7 @@ module ONIX
   end
 
   class Supplier < Entity
+    private
     def self.prefix
       "Supplier"
     end

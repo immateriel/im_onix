@@ -5,7 +5,7 @@ module ONIX
     # IDValue string value
     attr_accessor :value
 
-    # parse identifiers from Nokogiri:XML::Node
+    # create Identifier array from Nokogiri:XML::Node
     def self.parse_identifiers(node,prefix_tag)
       identifiers=[]
       node.search("./#{prefix_tag}Identifier").each do |id|

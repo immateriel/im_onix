@@ -2,7 +2,10 @@
 
 module ONIX
   class Code
-    attr_accessor :code, :human
+    # code as defined in ONIX documentation codelist
+    attr_accessor :code
+    # humanized string (eg: "Digital watermarking" become DigitalWatermarking, "PDF" become Pdf, "BISAC Subject Heading" become BisacSubjectHeading, etc)
+    attr_accessor :human
 
     # create Code from string ONIX code
     def self.from_code(code)
@@ -322,13 +325,6 @@ module ONIX
     private
     def self.code_ident
       24
-    end
-  end
-
-  class EpubTechnicalProtections < CodeFromHtml
-    private
-    def self.code_ident
-      144
     end
   end
 
