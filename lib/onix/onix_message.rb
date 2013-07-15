@@ -21,7 +21,9 @@ module ONIX
     end
   end
   class ONIXMessage
-    attr_accessor :sender, :sent_date_time, :default_language_of_text, :default_currency_code, :products, :vault
+    attr_accessor :sender, :sent_date_time,
+                  :default_language_of_text, :default_currency_code,
+                  :products, :vault
 
     def initialize
       @products=[]
@@ -44,7 +46,7 @@ module ONIX
         end
 
         if header.at("./DefaultLanguageOfText")
-          @default_language_of_text=header.at("./DefaultLanguageOfText").text
+          @default_language_of_text=LanguageCode.from_code(header.at("./DefaultLanguageOfText").text)
         end
 
         if header.at("./DefaultCurrencyCode")
@@ -58,6 +60,8 @@ module ONIX
 #      puts "ONIXMessage : parse XML"
       xml.search("//Product").each do |p|
         product=Product.from_xml(p)
+        product.default_language_of_text=@default_language_of_text
+        product.default_currency_code=@default_currency_code
 #        product.message=self
         @products << product
       end

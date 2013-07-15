@@ -20,7 +20,11 @@ module ONIX
                   :descriptive_detail,
                   :publishing_detail,
                   :collateral_detail,
-                  :product_supplies
+                  :product_supplies,
+
+
+                  :default_language_of_text, :default_currency_code
+
 
     include EanMethods
 
@@ -51,11 +55,23 @@ module ONIX
     end
 
     def language_of_text
-      @descriptive_detail.language_of_text
+      @descriptive_detail.language_of_text || @default_language_of_text
     end
 
     def language_code_of_text
-      @descriptive_detail.language_code_of_text
+      if self.language_of_text
+        self.language_of_text.code
+      else
+        nil
+      end
+    end
+
+    def language_name_of_text
+      if self.language_of_text
+        self.language_of_text.human
+      else
+        nil
+      end
     end
 
     def publisher_collection_title

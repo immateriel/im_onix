@@ -10,7 +10,7 @@ msg.products.each do |product|
   puts "---"
   puts " EAN: #{product.ean}"
   puts " Title: #{product.title}"
-  puts " Language: #{product.language_of_text}"
+  puts " Language: #{product.language_name_of_text}"
   if product.subtitle
     puts " Subtitle: #{product.subtitle}"
   end

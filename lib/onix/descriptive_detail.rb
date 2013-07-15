@@ -212,7 +212,7 @@ module ONIX
     attr_accessor :type, :value, :descriptions
 
     def initialize
-      @descriptions
+      @descriptions=[]
     end
 
     def parse(pff)
@@ -330,18 +330,12 @@ module ONIX
       end
     end
 
-
-    def language_code_of_text
-      l=@languages.select{|l| l.role.human=="LanguageOfText"}.first
-      if l
-        l.code.code
-      end
-    end
-
     def language_of_text
       l=@languages.select{|l| l.role.human=="LanguageOfText"}.first
       if l
-        l.code.human
+        l.code
+      else
+        nil
       end
     end
 
