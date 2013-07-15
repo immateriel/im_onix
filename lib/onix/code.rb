@@ -356,4 +356,11 @@ module ONIX
     end
   end
 
+
+  class SenderIDType < CodeFromHtml
+    def self.code_ident
+      44
+    end
+  end
+
 end

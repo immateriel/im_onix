@@ -13,6 +13,20 @@ module ONIX
       self.text_at(n,xpath)
     end
 
+    def self.to_date(date_format,date_str)
+      date_str_f=date_str.gsub(/\-/, "").gsub(/\:/, "")
+      case date_format
+        when "00"
+          Date.strptime(date_str_f, "%Y%m%d")
+        when "01"
+          Date.strptime(date_str_f, "%Y%m")
+        when "14"
+          Time.strptime(date_str_f, "%Y%m%dT%H%M%S")
+        else
+          nil
+      end
+    end
+
     def self.parse_date(pd)
       date=nil
       if pd and pd.at("./Date")
@@ -23,17 +37,10 @@ module ONIX
             date_format=pd.at("./DateFormat").text
           end
           # devrait être dans le convertisseur auto de date
-          date=date_str
-          date_str_f=date_str.gsub(/\-/, "").gsub(/\:/, "")
-          case date_format
-            when "00"
-              date=Date.strptime(date_str_f, "%Y%m%d")
-            when "01"
-              date=Date.strptime(date_str_f, "%Y%m")
-            when "14"
-              date=Time.strptime(date_str_f, "%Y%m%dT%H%M%S")
-          end
-
+            date=self.to_date(date_format,date_str)
+            unless date
+              date=date_str
+            end
         rescue
           date=nil
         end

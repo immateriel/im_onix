@@ -14,7 +14,11 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
   )
   xml.ONIXMessage {
     xml.Header {
-      xml.FromCompany("Any")
+      if msg.sender and msg.sender.name
+        xml.FromCompany(msg.sender.name)
+      else
+        xml.FromCompany("Any")
+      end
       xml.ToCompany("Any")
     }
 
