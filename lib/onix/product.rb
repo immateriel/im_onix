@@ -14,16 +14,25 @@ require 'onix/error'
 
 module ONIX
   class Product < Subset
-    attr_accessor :notification_type,
-                  :identifiers,
-                  :related_material,
-                  :descriptive_detail,
-                  :publishing_detail,
-                  :collateral_detail,
-                  :product_supplies,
+    # NotificationType object
+    attr_accessor :notification_type
+    # product Identifier object array
+    attr_accessor :identifiers
+    # RelatedMaterial object
+    attr_accessor :related_material
+    # DescriptiveDetail object
+    attr_accessor :descriptive_detail
+    # PublishingDetail object
+    attr_accessor :publishing_detail
+    # CollateralDetail object
+    attr_accessor :collateral_detail
+    # ProductSupply object array
+    attr_accessor :product_supplies
 
-
-                  :default_language_of_text, :default_currency_code
+    # default LanguageCode from ONIXMessage
+    attr_accessor :default_language_of_text
+    # default code from ONIXMessage
+    attr_accessor :default_currency_code
 
 
     include EanMethods
@@ -97,7 +106,7 @@ module ONIX
       @descriptive_detail.publisher_collection_title
     end
 
-    # BISAC categories ONIX::Subject
+    # BISAC categories Subject
     def bisac_categories
       @descriptive_detail.bisac_categories
     end
@@ -108,7 +117,7 @@ module ONIX
       self.bisac_categories.map{|c| c.code}.uniq
     end
 
-    # CLIL categories ONIX::Subject
+    # CLIL categories Subject
     def clil_categories
       @descriptive_detail.clil_categories
     end

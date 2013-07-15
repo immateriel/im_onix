@@ -1,7 +1,10 @@
 module ONIX
   class RelatedProduct < Subset
-    attr_accessor :code, :identifiers,
-                  :product
+    attr_accessor :code
+    # product Identifier array
+    attr_accessor :identifiers
+    # complete Product
+    attr_accessor :product
 
     include EanMethods
 

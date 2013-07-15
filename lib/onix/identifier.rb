@@ -1,14 +1,11 @@
 module ONIX
   class Identifier
-    attr_accessor :type, :value
+    # IDType code object
+    attr_accessor :type
+    # IDValue string value
+    attr_accessor :value
 
-    def self.from_hash(h)
-      o=self.new
-      o.type=h[:type]
-      o.value=h[:value]
-      o
-    end
-
+    # parse identifiers from Nokogiri:XML::Node
     def self.parse_identifiers(node,prefix_tag)
       identifiers=[]
       node.search("./#{prefix_tag}Identifier").each do |id|
@@ -17,9 +14,19 @@ module ONIX
       identifiers
     end
 
+    private
+    # identifier from hash
+    def self.from_hash(h)
+      o=self.new
+      o.type=h[:type]
+      o.value=h[:value]
+      o
+    end
+
   end
 
   module EanMethods
+    # EAN string identifier from identifiers
     def ean
       if ean_identifier
         ean_identifier.value
@@ -28,12 +35,14 @@ module ONIX
       end
     end
 
+    private
     def ean_identifier
       @identifiers.select{|id| id.type.human=="Gtin13"}.first || @identifiers.select{|id| id.type.human=="Isbn13"}.first
     end
   end
 
   module GlnMethods
+    # GLN string identifier from identifiers
     def gln
       if gln_identifier
         gln_identifier.value
@@ -41,7 +50,7 @@ module ONIX
         nil
       end
     end
-
+    # private
     def gln_identifier
       @identifiers.select{|id| id.type.human=="Gln"}.first
     end

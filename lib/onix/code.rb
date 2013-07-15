@@ -4,7 +4,7 @@ module ONIX
   class Code
     attr_accessor :code, :human
 
-    # Code from string ONIX code
+    # create Code from string ONIX code
     def self.from_code(code)
       o=self.new
       o.code=code
@@ -12,7 +12,7 @@ module ONIX
       o
     end
 
-    # Code from humanized string code
+    # create Code from humanized string code
     def self.from_human(human)
       o=self.new
       o.human=human

@@ -9,6 +9,7 @@ module ONIX
       @regions_excluded=Helper.text_at(t,"./RegionsExcluded")
     end
 
+    # all countries array
     def countries
       countries=[]
       if @countries_included
@@ -26,12 +27,9 @@ module ONIX
       countries.uniq.sort
     end
 
+    # has worldwide rights ?
     def worldwide?
       self.class.worldwide?(self.countries)
-    end
-
-    def self.worldwide?(countries)
-      (countries & CountryCode.list).length==CountryCode.list.length
     end
 
     def countries=v
@@ -52,6 +50,10 @@ module ONIX
         else
           []
       end
+    end
+
+    def self.worldwide?(countries)
+      (countries & CountryCode.list).length==CountryCode.list.length
     end
 
   end
