@@ -42,6 +42,18 @@ module ONIX
       end
     end
 
+    def epub_sample_resource
+      es=@supporting_resources.select { |sr| sr.type.human=="SampleContent" }.select{|sr| sr.versions.last.file_format=="Epub"}.first
+      if es
+        es.versions.last
+      end
+    end
+
+    def epub_sample_url
+      if self.epub_sample_resource
+        self.epub_sample_resource.links.first.strip
+      end
+    end
 
     def parse(collateral)
       collateral.search("./TextContent").each do |txt|

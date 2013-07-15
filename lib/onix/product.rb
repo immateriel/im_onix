@@ -54,6 +54,12 @@ module ONIX
       end
     end
 
+    def epub_sample_url
+      if @collateral_detail
+        @collateral_detail.epub_sample_url
+      end
+    end
+
     def language_of_text
       @descriptive_detail.language_of_text || @default_language_of_text
     end
