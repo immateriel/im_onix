@@ -13,6 +13,10 @@ module ONIX
       self.text_at(n,xpath)
     end
 
+    def self.strip_html(html)
+      html.gsub(/&nbsp;/," ").gsub(/<[^>]*(>+|\s*\z)/m, '')
+    end
+
     def self.to_date(date_format,date_str_f)
       case date_format
         when "00"

@@ -97,7 +97,7 @@ msg.products.each do |product|
       puts " Single file"
       puts " Format: #{product.file_format}"
       if product.file_description
-        puts " Description: #{product.file_description}"
+        puts " Description: #{product.raw_file_description}"
       end
       puts " Protection: #{product.protection_type}"
       if product.filesize

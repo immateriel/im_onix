@@ -136,7 +136,7 @@ module ONIX
 
     def raw_file_description
       if @descriptive_detail.file_description
-        @descriptive_detail.file_description.gsub(/\s+/," ").strip
+        Helper.strip_html(@descriptive_detail.file_description).gsub(/\s+/," ").strip
       else
         nil
       end
@@ -148,7 +148,7 @@ module ONIX
 
     def raw_description
       if self.description
-        self.description.gsub(/\s+/," ").strip
+        Helper.strip_html(self.description).gsub(/\s+/," ").strip
       else
         nil
       end

@@ -98,7 +98,7 @@ module ONIX
 
     def raw_file_description
       if @form_description
-        @form_description.gsub(/\s+/," ").strip
+        Helper.strip_html(@form_description).gsub(/\s+/," ").strip
       else
         nil
       end
