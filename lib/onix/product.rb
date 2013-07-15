@@ -28,18 +28,20 @@ module ONIX
 
     include EanMethods
 
-    def contributors
-      @descriptive_detail.contributors
-    end
-
+    # :category: High level
+    # product title string
     def title
       @descriptive_detail.title
     end
 
+    # :category: High level
+    # product subtitle string
     def subtitle
       @descriptive_detail.subtitle
     end
 
+    # :category: High level
+    # product description string including HTML
     def description
       if @collateral_detail
         @collateral_detail.description
@@ -48,22 +50,29 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # product larger front cover URL string
     def frontcover_url
       if @collateral_detail
         @collateral_detail.frontcover_url
       end
     end
 
+    # :category: High level
+    # ePub sample URL string
     def epub_sample_url
       if @collateral_detail
         @collateral_detail.epub_sample_url
       end
     end
 
+    # product LanguageCode of text
     def language_of_text
       @descriptive_detail.language_of_text || @default_language_of_text
     end
 
+    # :category: High level
+    # product language code string of text (eg: fre)
     def language_code_of_text
       if self.language_of_text
         self.language_of_text.code
@@ -72,6 +81,8 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # product language name string of text (eg: French)
     def language_name_of_text
       if self.language_of_text
         self.language_of_text.human
@@ -80,60 +91,83 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # publisher collection title
     def publisher_collection_title
       @descriptive_detail.publisher_collection_title
     end
 
+    # BISAC categories ONIX::Subject
     def bisac_categories
       @descriptive_detail.bisac_categories
     end
 
+    # :category: High level
+    # BISAC categories identifiers string array (eg: FIC000000)
     def bisac_categories_codes
       self.bisac_categories.map{|c| c.code}.uniq
     end
 
+    # CLIL categories ONIX::Subject
     def clil_categories
       @descriptive_detail.clil_categories
     end
 
+    # :category: High level
+    # CLIL categories identifier string array
     def clil_categories_codes
       self.clil_categories.map{|c| c.code}.uniq
     end
 
+    # :category: High level
+    # keywords string array
     def keywords
       @descriptive_detail.keywords
     end
 
-    ## digital
-
+    # :category: High level
+    # Protection type string (None, Watermarking, DRM, AdobeDRM)
     def protection_type
       @descriptive_detail.protection_type
     end
 
+    # :category: High level
+    # is product digital ?
     def digital?
       @descriptive_detail.digital?
     end
 
+    # :category: High level
+    # is product a bundle of multiple parts ?
     def bundle?
-        @descriptive_detail.bundle?
+      @descriptive_detail.bundle?
     end
 
+    # parts of product
     def parts
       @descriptive_detail.parts
     end
 
+    # :category: High level
+    # digital file filesize in bytes
     def filesize
       @descriptive_detail.filesize
     end
 
+    # :category: High level
+    # digital file format string (Epub,Pdf,AmazonKindle)
     def file_format
       @descriptive_detail.file_format
     end
 
+    # :category: High level
+    # digital file description string
     def file_description
       @descriptive_detail.file_description
     end
 
+    # :category: High level
+    # raw file description string without HTML
     def raw_file_description
       if @descriptive_detail.file_description
         Helper.strip_html(@descriptive_detail.file_description).gsub(/\s+/," ").strip
@@ -142,10 +176,14 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # page count
     def pages
       @descriptive_detail.pages
     end
 
+    # :category: High level
+    # raw book description string without HTML
     def raw_description
       if self.description
         Helper.strip_html(self.description).gsub(/\s+/," ").strip
@@ -170,6 +208,8 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # publisher name string
     def publisher_name
       if self.publisher
         self.publisher.name
@@ -178,6 +218,8 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # publisher GLN string
     def publisher_gln
       if self.publisher
         self.publisher.gln
@@ -192,6 +234,8 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # imprint name string
     def imprint_name
       if self.imprint
         self.imprint.name
@@ -200,6 +244,8 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # imprint GLN string
     def imprint_gln
       if self.imprint
         self.imprint.gln
@@ -210,6 +256,7 @@ module ONIX
       @product_supplies.map{|ps| ps.distributors}.flatten.uniq{|d| d.name}
     end
 
+    # product distributor
     def distributor
       if self.distributors.length > 0
       if self.distributors.length==1
@@ -222,6 +269,8 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # product distributor name string
     def distributor_name
       if self.distributor
         self.distributor.name
@@ -230,18 +279,24 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # paper linking RelatedProduct
     def paper_linking
       if @related_material
         @related_material.paper_linking
       end
     end
 
+    # :category: High level
+    # date of publication
     def publication_date
       if @publishing_detail
         @publishing_detail.publication_date
       end
     end
 
+    # :category: High level
+    # product countries rights string array
     def countries_rights
       countries=[]
       if @publishing_detail
@@ -255,7 +310,18 @@ module ONIX
       countries.uniq
     end
 
-    # flattened prices/supplies
+    # :category: High level
+    # flattened supplies with prices
+    #
+    # supplies is a hash symbol array in the form :
+    #   [{:available=>bool,
+    #     :availability_date=>date,
+    #     :including_tax=>bool,
+    #     :currency=>string,
+    #     :territory=>string,
+    #     :prices=>[{:amount=>int,
+    #                :from_date=>date,
+    #                :until_date=>date}]}]
     def supplies
       supplies=[]
 
@@ -376,19 +442,38 @@ module ONIX
       supplies
     end
 
-
+    # :category: High level
+    # flattened supplies only including taxes
     def supplies_including_tax
       self.supplies.select{|p| p[:including_tax]}
     end
 
+    # :category: High level
+    # flattened supplies only excluding taxes
     def supplies_excluding_tax
       self.supplies.select{|p| not p[:including_tax]}
     end
 
+    # :category: High level
+    # flattened supplies with default tax (excluding tax for US and CA, including otherwise)
     def supplies_with_default_tax
       self.supplies_including_tax + self.supplies_excluding_tax.select{|s| ["CAD","USD"].include?(s[:currency])}
     end
 
+    # :category: High level
+    # flattened supplies for country
+    def supplies_for_country(country)
+      self.supplies.select{|s|
+        if s[:territory].include?(country)
+          true
+        else
+          false
+        end
+      }
+    end
+
+    # :category: High level
+    # current price amount for given +currency+
     def current_price_amount_for(currency)
       sups=self.supplies_with_default_tax.select { |p| p[:currency]==currency }
       if sups.length > 0
@@ -413,27 +498,30 @@ module ONIX
       @product_supplies.select{|ps| ps.available?}
     end
 
+    # :category: High level
+    # is product available ?
     def available?
       self.available_product_supplies.length > 0 and not self.delete?
     end
 
-    def supplies_for_country(country)
-      self.supplies.select{|s|
-          if s[:territory].include?(country)
-            true
-          else
-            false
-          end
-      }
-    end
-
+    # :category: High level
+    # is product available for given +country+ ?
     def available_for_country?(country)
       self.supplies_for_country(country).select{|s| s[:available]}.length > 0 and self.available?
     end
 
+    # :category: High level
+    # is a deletion notification ?
     def delete?
       self.notification_type.human=="Delete"
     end
+
+    # :category: High level
+    # Contributor array
+    def contributors
+      @descriptive_detail.contributors
+    end
+
 
     def initialize
       @identifiers=[]

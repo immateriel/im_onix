@@ -4,6 +4,8 @@ module ONIX
   class Contributor < Subset
     attr_accessor :name_before_key, :key_names, :person_name, :role, :biography_note, :sequence_number
 
+    # :category: High level
+    # flatten person name (firstname lastname)
     def name
       if @person_name
         @person_name
@@ -18,13 +20,17 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # biography string with HTML
     def biography
       @biography_note
     end
 
+    # :category: High level
+    # raw biography string without HTML
     def raw_biography
       if self.biography
-        self.biography.gsub(/\s+/," ")
+        Helper.strip_html(self.biography).gsub(/\s+/," ")
       else
         nil
       end

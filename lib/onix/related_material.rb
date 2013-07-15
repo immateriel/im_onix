@@ -32,6 +32,8 @@ module ONIX
       @related_works=[]
     end
 
+    # :category: High level
+    # paper linking RelatedProduct
     def paper_linking
       papers=@related_products.select{|rp| rp.code.human=="EpublicationBasedOnPrintProduct"}
       if papers.length > 0

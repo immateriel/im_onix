@@ -30,6 +30,7 @@ module ONIX
       @vault={}
     end
 
+    # parse filename
     def parse(file)
       xml=Nokogiri::XML.parse(File.open(file))
       xml.remove_namespaces!
