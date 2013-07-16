@@ -37,25 +37,25 @@ module ONIX
     end
 
     def parse(c)
-      if c.at("./SequenceNumber")
-        @sequence_number=c.at("./SequenceNumber").text.to_i
+      if c.at_xpath("./SequenceNumber")
+        @sequence_number=c.at_xpath("./SequenceNumber").text.to_i
       end
 
-        if c.at("./NamesBeforeKey")
-        @name_before_key = c.at("./NamesBeforeKey").text
+        if c.at_xpath("./NamesBeforeKey")
+        @name_before_key = c.at_xpath("./NamesBeforeKey").text
       end
-      if c.at("./KeyNames")
-        @key_names =  c.at("./KeyNames").text
-      end
-
-      if c.at("./PersonName")
-        @person_name = c.at("./PersonName").text
+      if c.at_xpath("./KeyNames")
+        @key_names =  c.at_xpath("./KeyNames").text
       end
 
-      @role=ContributorRole.from_code(c.at("./ContributorRole").text)
+      if c.at_xpath("./PersonName")
+        @person_name = c.at_xpath("./PersonName").text
+      end
 
-      if c.at("./BiographicalNote")
-        @biography_note=c.at("./BiographicalNote").text.strip
+      @role=ContributorRole.from_code(c.at_xpath("./ContributorRole").text)
+
+      if c.at_xpath("./BiographicalNote")
+        @biography_note=c.at_xpath("./BiographicalNote").text.strip
       end
     end
   end

@@ -37,8 +37,8 @@ module ONIX
     end
 
     def parse(title_detail)
-      @type=TitleType.from_code(title_detail.at("./TitleType").text)
-      title_detail.search("./TitleElement").each do |title_element|
+      @type=TitleType.from_code(title_detail.at_xpath("./TitleType").text)
+      title_detail.xpath("./TitleElement").each do |title_element|
         @title_elements << TitleElement.from_xml(title_element)
       end
     end
@@ -66,10 +66,10 @@ module ONIX
 
 
     def parse(col)
-      @type=CollectionType.from_code(col.at("./CollectionType").text)
+      @type=CollectionType.from_code(col.at_xpath("./CollectionType").text)
       @identifiers=Identifier.parse_identifiers(col, "Collection")
 
-      col.search("./TitleDetail").each do |title_detail|
+      col.xpath("./TitleDetail").each do |title_detail|
         @title_details << TitleDetail.from_xml(title_detail)
       end
     end
@@ -122,15 +122,15 @@ module ONIX
     def parse(ppart)
       @identifiers=Identifier.parse_identifiers(ppart, "Product")
 
-      if ppart.at("./ProductForm")
-        @form=ProductForm.from_code(ppart.at("./ProductForm").text)
+      if ppart.at_xpath("./ProductForm")
+        @form=ProductForm.from_code(ppart.at_xpath("./ProductForm").text)
       end
 
-      if ppart.at("./ProductFormDescription")
-        @form_description=ppart.at("./ProductFormDescription").text
+      if ppart.at_xpath("./ProductFormDescription")
+        @form_description=ppart.at_xpath("./ProductFormDescription").text
       end
 
-      ppart.search("./ProductFormDetail").each do |d|
+      ppart.xpath("./ProductFormDetail").each do |d|
         @form_details << ProductFormDetail.from_code(d.text)
       end
 
@@ -187,8 +187,8 @@ module ONIX
     end
 
     def parse(e)
-      @type=ExtentType.from_code(e.at("./ExtentType").text)
-      @unit=ExtentUnit.from_code(e.at("./ExtentUnit").text)
+      @type=ExtentType.from_code(e.at_xpath("./ExtentType").text)
+      @unit=ExtentUnit.from_code(e.at_xpath("./ExtentUnit").text)
       @value=Helper.text_at(e, "./ExtentValue")
     end
 
@@ -198,8 +198,8 @@ module ONIX
     attr_accessor :quantity, :unit
 
     def parse(eul)
-      @unit=EpubUsageUnit.from_code(eul.at("./EpubUsageUnit").text)
-      @quantity=eul.at("./Quantity").text.to_i
+      @unit=EpubUsageUnit.from_code(eul.at_xpath("./EpubUsageUnit").text)
+      @quantity=eul.at_xpath("./Quantity").text.to_i
     end
   end
 
@@ -211,9 +211,9 @@ module ONIX
     end
 
     def parse(drm)
-      @type=EpubUsageType.from_code(drm.at("./EpubUsageType").text)
-      @status=EpubUsageStatus.from_code(drm.at("./EpubUsageStatus").text)
-      drm.search("./EpubUsageLimit").each do |l|
+      @type=EpubUsageType.from_code(drm.at_xpath("./EpubUsageType").text)
+      @status=EpubUsageStatus.from_code(drm.at_xpath("./EpubUsageStatus").text)
+      drm.xpath("./EpubUsageLimit").each do |l|
         @limits << EpubUsageLimit.from_xml(l)
       end
     end
@@ -235,15 +235,15 @@ module ONIX
     end
 
     def parse(pff)
-      if pff.at("./ProductFormFeatureType")
-        @type=ProductFormFeatureType.from_code(pff.at("./ProductFormFeatureType").text)
+      if pff.at_xpath("./ProductFormFeatureType")
+        @type=ProductFormFeatureType.from_code(pff.at_xpath("./ProductFormFeatureType").text)
       end
 
-      if pff.at("./ProductFormFeatureValue")
-        @value=pff.at("./ProductFormFeatureValue").text
+      if pff.at_xpath("./ProductFormFeatureValue")
+        @value=pff.at_xpath("./ProductFormFeatureValue").text
       end
 
-      pff.search("./ProductFormFeatureDescription").each do |pfd|
+      pff.xpath("./ProductFormFeatureDescription").each do |pfd|
         @descriptions << pfd.text
       end
 
@@ -384,57 +384,55 @@ module ONIX
 
     def parse(descriptive)
 
-      descriptive.search("./TitleDetail").each do |title_detail|
+      descriptive.xpath("./TitleDetail").each do |title_detail|
         @title_details << TitleDetail.from_xml(title_detail)
       end
 
-      descriptive.search("./Contributor").each do |c|
+      descriptive.xpath("./Contributor").each do |c|
         @contributors << Contributor.from_xml(c)
       end
 
-      descriptive.search("./Collection").each do |collection|
+      descriptive.xpath("./Collection").each do |collection|
         @collections << Collection.from_xml(collection)
       end
 
-      descriptive.search("./Extent").each do |e|
+      descriptive.xpath("./Extent").each do |e|
         @extents << Extent.from_xml(e)
       end
 
-      # TODO
-
-      descriptive.search("./Language").each do |l|
+      descriptive.xpath("./Language").each do |l|
         @languages << Language.from_xml(l)
       end
 
-      if descriptive.at("./ProductComposition")
-        if descriptive.at("./ProductForm")
-          @form=ProductForm.from_code(descriptive.at("./ProductForm").text)
+      if descriptive.at_xpath("./ProductComposition")
+        if descriptive.at_xpath("./ProductForm")
+          @form=ProductForm.from_code(descriptive.at_xpath("./ProductForm").text)
         end
 
-        descriptive.search("./ProductFormFeature").each do |pff|
+        descriptive.xpath("./ProductFormFeature").each do |pff|
           @form_features << ProductFormFeature.from_xml(pff)
         end
 
-        if descriptive.at("./ProductFormDescription")
-          @form_description=descriptive.at("./ProductFormDescription").text
+        if descriptive.at_xpath("./ProductFormDescription")
+          @form_description=descriptive.at_xpath("./ProductFormDescription").text
         end
 
-        descriptive.search("./ProductFormDetail").each do |d|
+        descriptive.xpath("./ProductFormDetail").each do |d|
           @form_details << ProductFormDetail.from_code(d.text)
         end
 
-          if descriptive.search("./EpubTechnicalProtection").each do |etp|
+          if descriptive.xpath("./EpubTechnicalProtection").each do |etp|
             @epub_technical_protections << EpubTechnicalProtection.from_code(etp.text)
           end
 
-            descriptive.search("./EpubUsageConstraint").each do |euc|
+            descriptive.xpath("./EpubUsageConstraint").each do |euc|
               @epub_usage_constraints << EpubUsageConstraint.from_xml(euc)
             end
           end
 
-          @composition=ProductComposition.from_code(descriptive.at("./ProductComposition").text)
+          @composition=ProductComposition.from_code(descriptive.at_xpath("./ProductComposition").text)
 
-          descriptive.search("./ProductPart").each do |product_part|
+          descriptive.xpath("./ProductPart").each do |product_part|
             part=ProductPart.from_xml(product_part)
             part.part_of=self
             @parts << part
@@ -442,7 +440,7 @@ module ONIX
 
         end
 
-        descriptive.search("./Subject").each do |subj|
+        descriptive.xpath("./Subject").each do |subj|
           @subjects << Subject.from_xml(subj)
         end
       end

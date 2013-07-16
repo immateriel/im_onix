@@ -9,7 +9,7 @@ module ONIX
     include EanMethods
 
     def parse(rp)
-      @code=ProductRelationCode.from_code(rp.at("./ProductRelationCode").text)
+      @code=ProductRelationCode.from_code(rp.at_xpath("./ProductRelationCode").text)
       @identifiers=Identifier.parse_identifiers(rp,"Product")
     end
 
@@ -22,7 +22,7 @@ module ONIX
     include EanMethods
 
     def parse(rw)
-      @code=WorkRelationCode.from_code(rw.at("./WorkRelationCode").text)
+      @code=WorkRelationCode.from_code(rw.at_xpath("./WorkRelationCode").text)
       @identifiers=Identifier.parse_identifiers(rw,"Work")
     end
 
@@ -47,11 +47,11 @@ module ONIX
     end
 
     def parse(related)
-      related.search("./RelatedProduct").each do |rp|
+      related.xpath("./RelatedProduct").each do |rp|
         @related_products << RelatedProduct.from_xml(rp)
       end
 
-      related.search("./RelatedWork").each do |rw|
+      related.xpath("./RelatedWork").each do |rw|
         @related_works << RelatedWork.from_xml(rw)
       end
     end

@@ -45,6 +45,7 @@ module ONIX
     private
     def self.parse_codelist(codelist)
       h={}
+#      puts "PARSE CODELIST #{codelist}"
       html=Nokogiri::HTML.parse(File.open(codelist))
       html.search("//tr").each do |tr|
 #        pp tr

@@ -5,7 +5,7 @@ module ONIX
   class MarketDate < Subset
     attr_accessor :role, :date
     def parse(market_date)
-      @role = MarketDateRole.from_code(market_date.at("./MarketDateRole").text)
+      @role = MarketDateRole.from_code(market_date.at_xpath("./MarketDateRole").text)
       @date = Helper.parse_date(market_date)
     end
   end
@@ -42,7 +42,7 @@ module ONIX
 
         @publisher_representatives=Agent.parse_entities(market_publishing,"./PublisherRepresentative")
 
-        market_publishing.search("./MarketDate").each do |market_date|
+        market_publishing.xpath("./MarketDate").each do |market_date|
         @market_dates << MarketDate.from_xml(market_date)
       end
     end
@@ -52,7 +52,7 @@ module ONIX
   class SupplyDate < Subset
     attr_accessor :role, :date
     def parse(supply_date)
-      @role = SupplyDateRole.from_code(supply_date.at("./SupplyDateRole").text)
+      @role = SupplyDateRole.from_code(supply_date.at_xpath("./SupplyDateRole").text)
       @date = Helper.parse_date(supply_date)
     end
   end
@@ -87,15 +87,15 @@ module ONIX
 
       @suppliers = Supplier.parse_entities(supply, "./Supplier")
 
-      if supply.at("./ProductAvailability")
-        @availability=ProductAvailability.from_code(supply.at("./ProductAvailability").text)
+      if supply.at_xpath("./ProductAvailability")
+        @availability=ProductAvailability.from_code(supply.at_xpath("./ProductAvailability").text)
       end
 
-      supply.search("./SupplyDate").each do |supply_date|
+      supply.xpath("./SupplyDate").each do |supply_date|
         @supply_dates << SupplyDate.from_xml(supply_date)
       end
 
-      supply.search("./Price").each do |pr|
+      supply.xpath("./Price").each do |pr|
         @prices << Price.from_xml(pr)
       end
     end
@@ -126,31 +126,20 @@ module ONIX
     end
 
     def parse(product_supply)
-      product_supply.search("./SupplyDetail").each do |sd|
+      product_supply.xpath("./SupplyDetail").each do |sd|
         @supply_details << SupplyDetail.from_xml(sd)
       end
 
-      product_supply.search("./Market").each do |mk|
+      product_supply.xpath("./Market").each do |mk|
         @markets << Market.from_xml(mk)
       end
 
 
-      market_publishing = product_supply.at("./MarketPublishingDetail")
+      market_publishing = product_supply.at_xpath("./MarketPublishingDetail")
 
       if market_publishing
         @market_publishing_detail = MarketPublishingDetail.from_xml(market_publishing)
       end
-#      market = product_supply.at("./Market")
-#      market_publishing = product_supply.at("./MarketPublishingDetail")
-
-#      if market_publishing
-#        market_publishing.search("./PublisherRepresentative").each do |representative|
-#          @publisher_representatives << Agent.from_hash({:name => representative.at("./AgentName").text,
-#                                        :role => AgentRole.from_code(representative.at("./AgentRole").text),
-#                                        :identifiers => Identifier.parse_identifiers(representative, "Agent")})
-#        end
-#      end
-#      {:type => status, :publisher_representatives => publisher_representatives, :suppliers => suppliers, :supply_dates => supply_dates, :prices => prices}
     end
 
 

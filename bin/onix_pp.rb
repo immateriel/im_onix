@@ -5,6 +5,17 @@ filename=ARGV[0]
 
 msg=ONIX::ONIXMessage.new
 msg.parse(filename)
+
+if msg.sender
+  puts "Sender: #{msg.sender.name}"
+end
+if msg.sent_date_time
+  puts "Sent date: #{msg.sent_date_time}"
+end
+if msg.sent_date_time
+  puts "Number of products: #{msg.products.count}"
+end
+
 msg.products.each do |product|
 #  pp product
   puts "---"

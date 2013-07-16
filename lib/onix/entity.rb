@@ -15,9 +15,9 @@ module ONIX
     # create Entity array from Nokogiri:XML::Node
     def self.parse_entities(node,list_tag)
       entities=[]
-      node.search(list_tag).each do |n|
-        entities << self.from_hash({:name => n.at("./#{self.prefix}Name").text,
-                          :role => if self.role_class then self.role_class.from_code(n.at("./#{self.prefix}Role").text) else nil end,
+      node.xpath(list_tag).each do |n|
+        entities << self.from_hash({:name => n.at_xpath("./#{self.prefix}Name").text,
+                          :role => if self.role_class then self.role_class.from_code(n.at_xpath("./#{self.prefix}Role").text) else nil end,
                           :identifiers => Identifier.parse_identifiers(n, prefix)})
       end
       entities

@@ -3,13 +3,13 @@ module ONIX
   class Tax < Subset
     attr_accessor :amount, :rate_code, :rate_percent
     def parse(tx)
-      if tx.at("./TaxAmount")
-        @amount=(tx.at("./TaxAmount").text.to_f * 100).round
+      if tx.at_xpath("./TaxAmount")
+        @amount=(tx.at_xpath("./TaxAmount").text.to_f * 100).round
       end
-      @rate_percent=tx.at("./TaxRatePercent").text.to_f
+      @rate_percent=tx.at_xpath("./TaxRatePercent").text.to_f
 
-      if tx.at("./TaxRateCode")
-        @rate_code=TaxRateCode.from_code(tx.at("./TaxRateCode").text)
+      if tx.at_xpath("./TaxRateCode")
+        @rate_code=TaxRateCode.from_code(tx.at_xpath("./TaxRateCode").text)
       end
     end
 
@@ -18,7 +18,7 @@ module ONIX
   class PriceDate < Subset
     attr_accessor :role, :date
     def parse(prd)
-      @role = PriceDateRole.from_code(prd.at("./PriceDateRole").text)
+      @role = PriceDateRole.from_code(prd.at_xpath("./PriceDateRole").text)
       @date = Helper.parse_date(prd)
     end
   end
@@ -57,23 +57,23 @@ module ONIX
     end
 
     def parse(pr)
-      pr.search("./PriceDate").each do |prd|
+      pr.xpath("./PriceDate").each do |prd|
         @dates << PriceDate.from_xml(prd)
       end
 
-      if pr.at("./CurrencyCode")
-        @currency=pr.at("./CurrencyCode").text
+      if pr.at_xpath("./CurrencyCode")
+        @currency=pr.at_xpath("./CurrencyCode").text
       end
 
-      if pr.at("./Territory")
-        @territory=Territory.from_xml(pr.at("./Territory"))
+      if pr.at_xpath("./Territory")
+        @territory=Territory.from_xml(pr.at_xpath("./Territory"))
       end
 
       @type=PriceType.from_code(pr.at("./PriceType").text)
-      @amount=(pr.at("./PriceAmount").text.to_f * 100).round
+      @amount=(pr.at_xpath("./PriceAmount").text.to_f * 100).round
 
-      if pr.at("./Tax")
-        @tax=Tax.from_xml(pr.at("./Tax"))
+      if pr.at_xpath("./Tax")
+        @tax=Tax.from_xml(pr.at_xpath("./Tax"))
       end
 
     end

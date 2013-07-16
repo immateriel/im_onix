@@ -85,8 +85,6 @@ module ONIX
     def language_code_of_text
       if self.language_of_text
         self.language_of_text.code
-      else
-        nil
       end
     end
 
@@ -95,8 +93,6 @@ module ONIX
     def language_name_of_text
       if self.language_of_text
         self.language_of_text.human
-      else
-        nil
       end
     end
 
@@ -539,7 +535,7 @@ module ONIX
     end
 
     def parse(p)
-      if p.at("./NotificationType")
+      if p.at_xpath("./NotificationType")
         @notification_type=NotificationType.from_code(p.at("./NotificationType").text)
       end
 
@@ -547,31 +543,31 @@ module ONIX
 
       # RelatedMaterial
 
-      related=p.at("./RelatedMaterial")
+      related=p.at_xpath("./RelatedMaterial")
       if related
         @related_material=RelatedMaterial.from_xml(related)
       end
 
       # DescriptiveDetail
-      descriptive=p.at("./DescriptiveDetail")
+      descriptive=p.at_xpath("./DescriptiveDetail")
       if descriptive
         @descriptive_detail=DescriptiveDetail.from_xml(descriptive)
       end
 
       # CollateralDetail
-      collateral=p.at("./CollateralDetail")
+      collateral=p.at_xpath("./CollateralDetail")
       if collateral
         @collateral_detail=CollateralDetail.from_xml(collateral)
       end
 
       # PublishingDetail
-      publishing = p.at("./PublishingDetail")
+      publishing = p.at_xpath("./PublishingDetail")
       if publishing
         @publishing_detail=PublishingDetail.from_xml(publishing)
       end
 
       # ProductSupply
-      p.search("./ProductSupply").each do |ps|
+      p.xpath("./ProductSupply").each do |ps|
         @product_supplies << ProductSupply.from_xml(ps)
       end
     end

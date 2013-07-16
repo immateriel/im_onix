@@ -8,8 +8,8 @@ module ONIX
     # create Identifier array from Nokogiri:XML::Node
     def self.parse_identifiers(node,prefix_tag)
       identifiers=[]
-      node.search("./#{prefix_tag}Identifier").each do |id|
-        identifiers << Identifier.from_hash({:type=>ONIX.const_get("#{prefix_tag}IDType").from_code(id.at("./#{prefix_tag}IDType").text), :value=>id.at("./IDValue").text})
+      node.xpath("./#{prefix_tag}Identifier").each do |id|
+        identifiers << Identifier.from_hash({:type=>ONIX.const_get("#{prefix_tag}IDType").from_code(id.at_xpath("./#{prefix_tag}IDType").text), :value=>id.at_xpath("./IDValue").text})
       end
       identifiers
     end

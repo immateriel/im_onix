@@ -2,8 +2,8 @@ module ONIX
   class Helper
 
     def self.text_at(n,xpath)
-      if n.at(xpath)
-        n.at(xpath).text.strip
+      if n.at_xpath(xpath)
+        n.at_xpath(xpath).text.strip
       else
         nil
       end

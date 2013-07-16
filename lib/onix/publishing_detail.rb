@@ -3,7 +3,7 @@ module ONIX
     attr_accessor :type, :territory
     def parse(sr)
       @type=SalesRightsType.from_code(Helper.mandatory_text_at(sr,"./SalesRightsType"))
-      @territory=Territory.from_xml(sr.at("./Territory"))
+      @territory=Territory.from_xml(sr.at_xpath("./Territory"))
     end
   end
 
@@ -11,7 +11,7 @@ module ONIX
     attr_accessor :role, :date
 
     def parse(pd)
-      @role=PublishingDateRole.from_code(pd.at("./PublishingDateRole").text)
+      @role=PublishingDateRole.from_code(pd.at_xpath("./PublishingDateRole").text)
       @date=Helper.parse_date(pd)
     end
   end
@@ -63,11 +63,11 @@ module ONIX
 
       @status=PublishingStatus.from_code(Helper.text_at(publishing,"./PublishingStatus"))
 
-      publishing.search("./SalesRights").each do |sr|
+      publishing.xpath("./SalesRights").each do |sr|
         @sales_rights << SalesRights.from_xml(sr)
       end
 
-      publishing.search("./PublishingDate").each do |pd|
+      publishing.xpath("./PublishingDate").each do |pd|
         @publishing_dates << PublishingDate.from_xml(pd)
       end
 

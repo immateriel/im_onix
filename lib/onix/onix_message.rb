@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'pp'
 require 'time'
+require 'benchmark'
 
 require 'onix/helper'
 require 'onix/code'
@@ -35,23 +36,23 @@ module ONIX
       xml=Nokogiri::XML.parse(File.open(file))
       xml.remove_namespaces!
 
-      header=xml.at("//Header")
+      header=xml.at_xpath("//Header")
       if header
-        if header.at("./Sender")
-          @sender=Sender.from_xml(header.at("./Sender"))
+        if header.at_xpath("./Sender")
+          @sender=Sender.from_xml(header.at_xpath("./Sender"))
         end
 
-        if header.at("./SentDateTime")
-          tm=header.at("./SentDateTime").text
+        if header.at_xpath("./SentDateTime")
+          tm=header.at_xpath("./SentDateTime").text
           @sent_date_time=Time.strptime(tm,"%Y%m%dT%H%M%S") rescue Time.strptime(tm,"%Y%m%dT%H%M") rescue Time.strptime(tm,"%Y%m%d") rescue nil
         end
 
-        if header.at("./DefaultLanguageOfText")
-          @default_language_of_text=LanguageCode.from_code(header.at("./DefaultLanguageOfText").text)
+        if header.at_xpath("./DefaultLanguageOfText")
+          @default_language_of_text=LanguageCode.from_code(header.at_xpath("./DefaultLanguageOfText").text)
         end
 
-        if header.at("./DefaultCurrencyCode")
-          @default_currency_code=header.at("./DefaultCurrencyCode").text
+        if header.at_xpath("./DefaultCurrencyCode")
+          @default_currency_code=header.at_xpath("./DefaultCurrencyCode").text
         end
 
         end
@@ -59,12 +60,18 @@ module ONIX
 #      pp @sender.identifiers
 
 #      puts "ONIXMessage : parse XML"
-      xml.search("//Product").each do |p|
+      xml.xpath("//Product").each do |p|
+        product=nil
+#        tm=Benchmark.measure do
         product=Product.from_xml(p)
         product.default_language_of_text=@default_language_of_text
         product.default_currency_code=@default_currency_code
 #        product.message=self
         @products << product
+#        end
+#        GC.start
+#        puts "#{product.ean} #{GC.count} #{tm}"
+
       end
 
 #      puts "ONIXMessage : produce vault"

@@ -16,7 +16,7 @@ module ONIX
     end
 
     def parse(f)
-      @type=ResourceVersionFeatureType.from_code(f.at("./ResourceVersionFeatureType").text)
+      @type=ResourceVersionFeatureType.from_code(f.at_xpath("./ResourceVersionFeatureType").text)
 
       @value=Helper.text_at(f,"./FeatureValue")
 
@@ -24,7 +24,7 @@ module ONIX
         @value=SupportingResourceFileFormat.from_code(@value)
       end
 
-      f.search("./FeatureNote").each do |fn|
+      f.xpath("./FeatureNote").each do |fn|
         @notes << fn.text
       end
 
@@ -92,14 +92,14 @@ module ONIX
 
       def parse(rv)
       @form=ResourceForm.from_code(Helper.mandatory_text_at(rv,"./ResourceForm"))
-          rv.search("./ResourceLink").each do |l|
+          rv.xpath("./ResourceLink").each do |l|
             @links << l.text.strip
           end
-      rv.search("./ContentDate").each do |d|
+      rv.xpath("./ContentDate").each do |d|
         @content_dates << ContentDate.from_xml(d)
       end
 
-      rv.search("./ResourceVersionFeature").each do |rvf|
+      rv.xpath("./ResourceVersionFeature").each do |rvf|
         @features << ResourceVersionFeature.from_xml(rvf)
       end
 
@@ -117,7 +117,7 @@ module ONIX
 
       @value=Helper.text_at(f,"./FeatureValue")
 
-      f.search("./FeatureNote").each do |fn|
+      f.xpath("./FeatureNote").each do |fn|
         @notes << fn.text
       end
 
@@ -135,10 +135,10 @@ module ONIX
       @type=ResourceContentType.from_code(Helper.mandatory_text_at(sr,"./ResourceContentType"))
       @target_audience=ContentAudience.from_code(Helper.mandatory_text_at(sr,"./ContentAudience"))
       @mode=ResourceMode.from_code(Helper.mandatory_text_at(sr,"./ResourceMode"))
-      sr.search("./ResourceVersion").each do |rv|
+      sr.xpath("./ResourceVersion").each do |rv|
         @versions << ResourceVersion.from_xml(rv)
       end
-      sr.search("./ResourceFeature").each do |rf|
+      sr.xpath("./ResourceFeature").each do |rf|
         @features << ResourceFeature.from_xml(rf)
       end
 
