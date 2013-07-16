@@ -534,42 +534,26 @@ module ONIX
       @product_supplies=[]
     end
 
-    def parse(p)
-      if p.at_xpath("./NotificationType")
-        @notification_type=NotificationType.from_code(p.at("./NotificationType").text)
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "ProductIdentifier"
+            @identifiers << Identifier.parse_identifier(t, "Product")
+          when "NotificationType"
+            @notification_type=NotificationType.from_code(t.text)
+          when "RelatedMaterial"
+            @related_material=RelatedMaterial.from_xml(t)
+          when "DescriptiveDetail"
+            @descriptive_detail=DescriptiveDetail.from_xml(t)
+          when "CollateralDetail"
+            @collateral_detail=CollateralDetail.from_xml(t)
+          when "PublishingDetail"
+            @publishing_detail=PublishingDetail.from_xml(t)
+          when "ProductSupply"
+            @product_supplies << ProductSupply.from_xml(t)
+        end
       end
 
-      @identifiers=Identifier.parse_identifiers(p,"Product")
-
-      # RelatedMaterial
-
-      related=p.at_xpath("./RelatedMaterial")
-      if related
-        @related_material=RelatedMaterial.from_xml(related)
-      end
-
-      # DescriptiveDetail
-      descriptive=p.at_xpath("./DescriptiveDetail")
-      if descriptive
-        @descriptive_detail=DescriptiveDetail.from_xml(descriptive)
-      end
-
-      # CollateralDetail
-      collateral=p.at_xpath("./CollateralDetail")
-      if collateral
-        @collateral_detail=CollateralDetail.from_xml(collateral)
-      end
-
-      # PublishingDetail
-      publishing = p.at_xpath("./PublishingDetail")
-      if publishing
-        @publishing_detail=PublishingDetail.from_xml(publishing)
-      end
-
-      # ProductSupply
-      p.xpath("./ProductSupply").each do |ps|
-        @product_supplies << ProductSupply.from_xml(ps)
-      end
     end
   end
 end

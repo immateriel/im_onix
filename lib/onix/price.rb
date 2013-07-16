@@ -2,24 +2,32 @@ module ONIX
 
   class Tax < Subset
     attr_accessor :amount, :rate_code, :rate_percent
-    def parse(tx)
-      if tx.at_xpath("./TaxAmount")
-        @amount=(tx.at_xpath("./TaxAmount").text.to_f * 100).round
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "TaxAmount"
+            @amount=(t.text.to_f * 100).round
+          when "TaxRatePercent"
+            @rate_percent=t.text.to_f
+          when "TaxRateCode"
+            @rate_code=TaxRateCode.from_code(t.text)
+        end
       end
-      @rate_percent=tx.at_xpath("./TaxRatePercent").text.to_f
 
-      if tx.at_xpath("./TaxRateCode")
-        @rate_code=TaxRateCode.from_code(tx.at_xpath("./TaxRateCode").text)
-      end
     end
 
   end
 
   class PriceDate < Subset
     attr_accessor :role, :date
-    def parse(prd)
-      @role = PriceDateRole.from_code(prd.at_xpath("./PriceDateRole").text)
-      @date = Helper.parse_date(prd)
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "PriceDateRole"
+            @role = PriceDateRole.from_code(t.text)
+        end
+      end
+      @date = Helper.parse_date(n)
     end
   end
 
@@ -56,26 +64,23 @@ module ONIX
       end
     end
 
-    def parse(pr)
-      pr.xpath("./PriceDate").each do |prd|
-        @dates << PriceDate.from_xml(prd)
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "PriceDate"
+            @dates << PriceDate.from_xml(t)
+          when "CurrencyCode"
+            @currency=t.text.strip
+          when "Territory"
+            @territory=Territory.from_xml(t)
+          when "PriceType"
+            @type=PriceType.from_code(t.text)
+          when "PriceAmount"
+            @amount=(t.text.to_f * 100).round
+          when "Tax"
+            @tax=Tax.from_xml(t)
+        end
       end
-
-      if pr.at_xpath("./CurrencyCode")
-        @currency=pr.at_xpath("./CurrencyCode").text
-      end
-
-      if pr.at_xpath("./Territory")
-        @territory=Territory.from_xml(pr.at_xpath("./Territory"))
-      end
-
-      @type=PriceType.from_code(pr.at("./PriceType").text)
-      @amount=(pr.at_xpath("./PriceAmount").text.to_f * 100).round
-
-      if pr.at_xpath("./Tax")
-        @tax=Tax.from_xml(pr.at_xpath("./Tax"))
-      end
-
     end
   end
 end

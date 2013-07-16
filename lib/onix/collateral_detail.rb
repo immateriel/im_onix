@@ -1,9 +1,15 @@
 module ONIX
   class TextContent < Subset
     attr_accessor :type, :text
-    def parse(txt)
-      @type=TextType.from_code(txt.at_xpath("./TextType").text)
-      @text=txt.at_xpath("./Text").text
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "TextType"
+            @type=TextType.from_code(t.text)
+          when "Text"
+            @text=t.text
+        end
+      end
     end
   end
 
@@ -55,13 +61,14 @@ module ONIX
       end
     end
 
-    def parse(collateral)
-      collateral.xpath("./TextContent").each do |txt|
-        @text_contents << TextContent.from_xml(txt)
-      end
-
-      collateral.xpath("./SupportingResource").each do |sr|
-        @supporting_resources << SupportingResource.from_xml(sr)
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "TextContent"
+            @text_contents << TextContent.from_xml(t)
+          when "SupportingResource"
+            @supporting_resources << SupportingResource.from_xml(t)
+        end
       end
     end
   end

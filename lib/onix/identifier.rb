@@ -9,9 +9,14 @@ module ONIX
     def self.parse_identifiers(node,prefix_tag)
       identifiers=[]
       node.xpath("./#{prefix_tag}Identifier").each do |id|
-        identifiers << Identifier.from_hash({:type=>ONIX.const_get("#{prefix_tag}IDType").from_code(id.at_xpath("./#{prefix_tag}IDType").text), :value=>id.at_xpath("./IDValue").text})
+        identifiers << self.parse_identifier(id,prefix_tag)
+
       end
       identifiers
+    end
+
+    def self.parse_identifier(node,prefix_tag)
+      Identifier.from_hash({:type=>ONIX.const_get("#{prefix_tag}IDType").from_code(node.at_xpath("./#{prefix_tag}IDType").text), :value=>node.at_xpath("./IDValue").text})
     end
 
     private

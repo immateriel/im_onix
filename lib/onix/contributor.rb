@@ -36,27 +36,25 @@ module ONIX
       end
     end
 
-    def parse(c)
-      if c.at_xpath("./SequenceNumber")
-        @sequence_number=c.at_xpath("./SequenceNumber").text.to_i
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "SequenceNumber"
+            @sequence_number=t.text.to_i
+          when "NamesBeforeKey"
+            @name_before_key=t.text
+          when "KeyNames"
+            @key_names=t.text
+          when "PersonName"
+            @person_name=t.text
+          when "BiographicalNote"
+            @biography_note=t.text.strip
+          when "ContributorRole"
+            @role=ContributorRole.from_code(t.text)
+
+        end
       end
 
-        if c.at_xpath("./NamesBeforeKey")
-        @name_before_key = c.at_xpath("./NamesBeforeKey").text
-      end
-      if c.at_xpath("./KeyNames")
-        @key_names =  c.at_xpath("./KeyNames").text
-      end
-
-      if c.at_xpath("./PersonName")
-        @person_name = c.at_xpath("./PersonName").text
-      end
-
-      @role=ContributorRole.from_code(c.at_xpath("./ContributorRole").text)
-
-      if c.at_xpath("./BiographicalNote")
-        @biography_note=c.at_xpath("./BiographicalNote").text.strip
-      end
     end
   end
 end

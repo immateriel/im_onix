@@ -14,10 +14,17 @@ module ONIX
   class Sender < Subset
     attr_accessor :identifiers, :name
 
-    def parse(sender)
-      @identifiers=Identifier.parse_identifiers(sender,"Sender")
-      if sender.at("./SenderName")
-        @name=sender.at("./SenderName").text
+    def initialize
+      @identifiers=[]
+    end
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "SenderIdentifier"
+            @identifiers << Identifier.parse_identifier(t,"Sender")
+          when "SenderName"
+            @name=t.text
+        end
       end
     end
   end
@@ -38,24 +45,20 @@ module ONIX
 
       header=xml.at_xpath("//Header")
       if header
-        if header.at_xpath("./Sender")
-          @sender=Sender.from_xml(header.at_xpath("./Sender"))
+        header.children.each do |t|
+          case t.name
+            when "Sender"
+              @sender=Sender.from_xml(t)
+            when "SentDateTime"
+              tm=t.text
+              @sent_date_time=Time.strptime(tm, "%Y%m%dT%H%M%S") rescue Time.strptime(tm, "%Y%m%dT%H%M") rescue Time.strptime(tm, "%Y%m%d") rescue nil
+            when "DefaultLanguageOfText"
+              @default_language_of_text=LanguageCode.from_code(t.text)
+            when "DefaultCurrencyCode"
+              @default_currency_code=t.text
+          end
         end
-
-        if header.at_xpath("./SentDateTime")
-          tm=header.at_xpath("./SentDateTime").text
-          @sent_date_time=Time.strptime(tm,"%Y%m%dT%H%M%S") rescue Time.strptime(tm,"%Y%m%dT%H%M") rescue Time.strptime(tm,"%Y%m%d") rescue nil
-        end
-
-        if header.at_xpath("./DefaultLanguageOfText")
-          @default_language_of_text=LanguageCode.from_code(header.at_xpath("./DefaultLanguageOfText").text)
-        end
-
-        if header.at_xpath("./DefaultCurrencyCode")
-          @default_currency_code=header.at_xpath("./DefaultCurrencyCode").text
-        end
-
-        end
+      end
 
 #      pp @sender.identifiers
 

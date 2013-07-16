@@ -4,9 +4,14 @@ module ONIX
 
   class MarketDate < Subset
     attr_accessor :role, :date
-    def parse(market_date)
-      @role = MarketDateRole.from_code(market_date.at_xpath("./MarketDateRole").text)
-      @date = Helper.parse_date(market_date)
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "MarketDateRole"
+            @role = MarketDateRole.from_code(t.text)
+        end
+      end
+      @date = Helper.parse_date(n)
     end
   end
 
@@ -14,9 +19,12 @@ module ONIX
     attr_accessor :territory
 
 
-    def parse(market)
-      if market.at("./Territory")
-        @territory=Territory.from_xml(market.at("./Territory"))
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "Territory"
+            @territory=Territory.from_xml(t)
+        end
       end
     end
   end
@@ -38,13 +46,15 @@ module ONIX
       end
     end
 
-    def parse(market_publishing)
+    def parse(n)
 
-        @publisher_representatives=Agent.parse_entities(market_publishing,"./PublisherRepresentative")
-
-        market_publishing.xpath("./MarketDate").each do |market_date|
-        @market_dates << MarketDate.from_xml(market_date)
-      end
+        @publisher_representatives=Agent.parse_entities(n,"./PublisherRepresentative")
+        n.children.each do |t|
+          case t.name
+            when "MarketDate"
+              @market_dates << MarketDate.from_xml(t)
+          end
+        end
     end
 
   end
@@ -83,21 +93,21 @@ module ONIX
       end
     end
 
-    def parse(supply)
+    def parse(n)
 
-      @suppliers = Supplier.parse_entities(supply, "./Supplier")
+      @suppliers = Supplier.parse_entities(n, "./Supplier")
 
-      if supply.at_xpath("./ProductAvailability")
-        @availability=ProductAvailability.from_code(supply.at_xpath("./ProductAvailability").text)
+      n.children.each do |t|
+        case t.name
+          when "ProductAvailability"
+            @availability=ProductAvailability.from_code(t.text)
+          when "SupplyDate"
+            @supply_dates << SupplyDate.from_xml(t)
+          when "Price"
+            @prices << Price.from_xml(t)
+        end
       end
 
-      supply.xpath("./SupplyDate").each do |supply_date|
-        @supply_dates << SupplyDate.from_xml(supply_date)
-      end
-
-      supply.xpath("./Price").each do |pr|
-        @prices << Price.from_xml(pr)
-      end
     end
   end
 
@@ -125,21 +135,18 @@ module ONIX
       self.available_supply_details.length > 0
     end
 
-    def parse(product_supply)
-      product_supply.xpath("./SupplyDetail").each do |sd|
-        @supply_details << SupplyDetail.from_xml(sd)
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "SupplyDetail"
+            @supply_details << SupplyDetail.from_xml(t)
+          when "Market"
+            @markets << Market.from_xml(t)
+          when "MarketPublishingDetail"
+            @market_publishing_detail = MarketPublishingDetail.from_xml(t)
+        end
       end
 
-      product_supply.xpath("./Market").each do |mk|
-        @markets << Market.from_xml(mk)
-      end
-
-
-      market_publishing = product_supply.at_xpath("./MarketPublishingDetail")
-
-      if market_publishing
-        @market_publishing_detail = MarketPublishingDetail.from_xml(market_publishing)
-      end
     end
 
 

@@ -90,18 +90,20 @@ module ONIX
     end
 
 
-      def parse(rv)
-      @form=ResourceForm.from_code(Helper.mandatory_text_at(rv,"./ResourceForm"))
-          rv.xpath("./ResourceLink").each do |l|
-            @links << l.text.strip
-          end
-      rv.xpath("./ContentDate").each do |d|
-        @content_dates << ContentDate.from_xml(d)
-      end
+      def parse(n)
+        n.children.each do |t|
+          case t.name
+            when "ResourceForm"
+              @form=ResourceForm.from_code(t.text)
+            when "ResourceLink"
+              @links << t.text.strip
+            when "ContentDate"
+              @content_dates << ContentDate.from_xml(t)
+            when "ResourceVersionFeature"
+              @features << ResourceVersionFeature.from_xml(t)
 
-      rv.xpath("./ResourceVersionFeature").each do |rvf|
-        @features << ResourceVersionFeature.from_xml(rvf)
-      end
+          end
+        end
 
     end
   end
@@ -112,13 +114,17 @@ module ONIX
     def initialize
       @notes=[]
     end
-    def parse(f)
-      @type=ResourceFeatureType.from_code(f.at("./ResourceFeatureType").text)
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "ResourceFeatureType"
+            @type=ResourceFeatureType.from_code(t.text)
+          when "FeatureValue"
+            @value=t.text
+          when "FeatureNote"
+            @notes << t.text
 
-      @value=Helper.text_at(f,"./FeatureValue")
-
-      f.xpath("./FeatureNote").each do |fn|
-        @notes << fn.text
+        end
       end
 
     end
@@ -131,15 +137,20 @@ module ONIX
       @versions=[]
       @features=[]
     end
-    def parse(sr)
-      @type=ResourceContentType.from_code(Helper.mandatory_text_at(sr,"./ResourceContentType"))
-      @target_audience=ContentAudience.from_code(Helper.mandatory_text_at(sr,"./ContentAudience"))
-      @mode=ResourceMode.from_code(Helper.mandatory_text_at(sr,"./ResourceMode"))
-      sr.xpath("./ResourceVersion").each do |rv|
-        @versions << ResourceVersion.from_xml(rv)
-      end
-      sr.xpath("./ResourceFeature").each do |rf|
-        @features << ResourceFeature.from_xml(rf)
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "ResourceContentType"
+            @type=ResourceContentType.from_code(t.text)
+          when "ContentAudience"
+            @target_audience=ContentAudience.from_code(t.text)
+          when "ResourceMode"
+            @mode=ResourceMode.from_code(t.text)
+          when "ResourceVersion"
+            @versions << ResourceVersion.from_xml(t)
+          when "ResourceFeature"
+            @features << ResourceFeature.from_xml(t)
+        end
       end
 
     end

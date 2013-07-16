@@ -8,9 +8,19 @@ module ONIX
 
     include EanMethods
 
-    def parse(rp)
-      @code=ProductRelationCode.from_code(rp.at_xpath("./ProductRelationCode").text)
-      @identifiers=Identifier.parse_identifiers(rp,"Product")
+    def initialize
+      @identifiers = []
+    end
+
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "ProductIdentifier"
+            @identifiers << Identifier.parse_identifier(t,"Product")
+          when "ProductRelationCode"
+            @code=ProductRelationCode.from_code(t.text)
+        end
+      end
     end
 
   end
@@ -21,9 +31,19 @@ module ONIX
 
     include EanMethods
 
-    def parse(rw)
-      @code=WorkRelationCode.from_code(rw.at_xpath("./WorkRelationCode").text)
-      @identifiers=Identifier.parse_identifiers(rw,"Work")
+    def initialize
+      @identifiers=[]
+    end
+
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "WorkIdentifier"
+            @identifiers << Identifier.parse_identifier(t,"Work")
+          when "WorkRelationCode"
+            @code=WorkRelationCode.from_code(t.text)
+        end
+      end
     end
 
   end
@@ -46,14 +66,16 @@ module ONIX
       end
     end
 
-    def parse(related)
-      related.xpath("./RelatedProduct").each do |rp|
-        @related_products << RelatedProduct.from_xml(rp)
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "RelatedProduct"
+            @related_products << RelatedProduct.from_xml(t)
+          when "RelatedWork"
+            @related_works << RelatedWork.from_xml(t)
+        end
       end
 
-      related.xpath("./RelatedWork").each do |rw|
-        @related_works << RelatedWork.from_xml(rw)
-      end
     end
   end
 

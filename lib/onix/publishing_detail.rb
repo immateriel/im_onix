@@ -1,18 +1,30 @@
 module ONIX
   class SalesRights < Subset
     attr_accessor :type, :territory
-    def parse(sr)
-      @type=SalesRightsType.from_code(Helper.mandatory_text_at(sr,"./SalesRightsType"))
-      @territory=Territory.from_xml(sr.at_xpath("./Territory"))
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "SalesRightsType"
+            @type=SalesRightsType.from_code(t.text)
+          when "Territory"
+            @territory=Territory.from_xml(t)
+        end
+      end
     end
   end
 
   class PublishingDate < Subset
     attr_accessor :role, :date
 
-    def parse(pd)
-      @role=PublishingDateRole.from_code(pd.at_xpath("./PublishingDateRole").text)
-      @date=Helper.parse_date(pd)
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "PublishingDateRole"
+            @role=PublishingDateRole.from_code(t.text)
+
+        end
+      end
+      @date=Helper.parse_date(n)
     end
   end
 
@@ -59,20 +71,21 @@ module ONIX
       end
     end
 
-    def parse(publishing)
-
-      @status=PublishingStatus.from_code(Helper.text_at(publishing,"./PublishingStatus"))
-
-      publishing.xpath("./SalesRights").each do |sr|
-        @sales_rights << SalesRights.from_xml(sr)
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "PublishingStatus"
+            @status=PublishingStatus.from_code(t.text)
+          when "SalesRights"
+            @sales_rights << SalesRights.from_xml(t)
+          when "PublishingDate"
+            @publishing_dates << PublishingDate.from_xml(t)
+        end
       end
 
-      publishing.xpath("./PublishingDate").each do |pd|
-        @publishing_dates << PublishingDate.from_xml(pd)
-      end
 
-      @imprints = Imprint.parse_entities(publishing,"./Imprint")
-      @publishers=Publisher.parse_entities(publishing,"./Publisher")
+      @imprints = Imprint.parse_entities(n,"./Imprint")
+      @publishers=Publisher.parse_entities(n,"./Publisher")
     end
   end
 end
