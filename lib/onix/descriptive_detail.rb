@@ -294,6 +294,7 @@ module ONIX
                   :languages,
                   :composition,
                   :form, :form_details, :form_features, :form_description, :parts,
+                  :edition_number,
                   :contributors,
                   :subjects,
                   :collections,
@@ -433,6 +434,8 @@ module ONIX
             @collections << Collection.from_xml(t)
           when "Extent"
             @extents << Extent.from_xml(t)
+          when "EditionNumber"
+            @edition_number=t.text.to_i
           when "Language"
             @languages << Language.from_xml(t)
           when "ProductComposition"

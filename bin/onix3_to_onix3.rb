@@ -38,8 +38,11 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
           xml.ProductComposition("00")
         end
 
-        # NOT HIGH LEVEL
-        xml.ProductForm(product.descriptive_detail.form.code)
+        if product.digital?
+          xml.ProductForm("EA")
+        else
+          xml.ProductForm("BA")
+        end
 
         if product.publisher_collection_title
           xml.Collection {
@@ -73,7 +76,9 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
           }
         end
 
-        # MISSING edition
+        if product.edition_number
+          xml.EditionNumber(product.edition_number)
+        end
 
         if product.language_of_text
           xml.Language {
@@ -185,7 +190,11 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         xml.ProductSupply {
           xml.Market {
             xml.Territory {
-              xml.CountriesIncluded(supply[:territory].join(" "))
+              if ONIX::Territory.worldwide?(supply[:territory])
+                xml.RegionsIncluded("WORLD")
+              else
+                xml.CountriesIncluded(supply[:territory].join(" "))
+              end
             }
           }
           xml.MarketPublishingDetail {
@@ -194,30 +203,33 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
             else
               xml.MarketPublishingStatus("12")
             end
+            if supply[:availability_date]
             xml.MarketDate {
               xml.MarketDateRole("01")
               xml.DateFormat("00")
               xml.Date(supply[:availability_date].strftime("%Y%m%d"))
             }
+            end
           }
 
           xml.SupplyDetail {
-            if product.distributor
             xml.Supplier {
               xml.SupplierRole("03")
+              if product.distributor
+
               if product.distributor_gln
+
               xml.SupplierIdentifier {
                 xml.SupplierIDType("06")
                 xml.IDValue(product.distributor_gln)
               }
               end
               xml.SupplierName(product.distributor_name)
+              else
+                  xml.SupplierName("Unknown")
+              end
             }
-            else
-              xml.Supplier {
-                xml.SupplierName("Unknown")
-              }
-            end
+
 
             if supply[:available]
               xml.ProductAvailability("20")

@@ -75,6 +75,12 @@ module ONIX
       end
     end
 
+    # :category: High level
+    # product edition number
+    def edition_number
+      @descriptive_detail.edition_number
+    end
+
     # product LanguageCode of text
     def language_of_text
       @descriptive_detail.language_of_text || @default_language_of_text
