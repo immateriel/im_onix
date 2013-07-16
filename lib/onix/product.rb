@@ -286,6 +286,16 @@ module ONIX
     end
 
     # :category: High level
+    # product distributor GLN string
+    def distributor_gln
+      if self.distributor
+        self.distributor.gln
+      else
+        nil
+      end
+    end
+
+    # :category: High level
     # paper linking RelatedProduct
     def paper_linking
       if @related_material
