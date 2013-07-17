@@ -3,6 +3,7 @@ require 'im_onix'
 
 filename=ARGV[0]
 
+if filename
 msg=ONIX::ONIXMessage.new
 msg.parse(filename)
 
@@ -129,11 +130,11 @@ msg.products.each do |product|
     puts " Current price: #{current_price/100.0} EUR"
   end
   puts " Supplies:"
+
   product.supplies_with_default_tax.each do |supply|
 #    if supply[:availability_date]
 #      puts " Availability date : #{supply[:availability_date]}"
 #    end
-
     output="  "
 
     if supply[:available]
@@ -180,4 +181,7 @@ msg.products.each do |product|
   end
 
 end
-#pp msg
+else
+  puts "ONIX 3.0 pretty printer"
+  puts "Usage: onix_pp.rb onix.xml"
+end

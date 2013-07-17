@@ -3,6 +3,7 @@ require 'nokogiri'
 
 filename=ARGV[0]
 
+if filename
 msg=ONIX::ONIXMessage.new
 msg.parse(filename)
 
@@ -43,6 +44,36 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         else
           xml.ProductForm("BA")
         end
+
+        if product.bundle?
+        else
+          if product.digital?
+          case product.file_format
+            when "Epub"
+              xml.ProductFormDetail("E101")
+            when "Pdf"
+              xml.ProductFormDetail("E107")
+            when "AmazonKindle"
+              xml.ProductFormDetail("E116")
+            else
+              xml.ProductFormDetail("E100")
+          end
+
+
+          case product.protection_type
+            when "None"
+              xml.EpubTechnicalProtection("00")
+            when "Drm"
+              xml.EpubTechnicalProtection("01")
+            when "DigitalWatermarking"
+              xml.EpubTechnicalProtection("02")
+            when "AdobeDrm"
+              xml.EpubTechnicalProtection("03")
+          end
+          end
+        end
+
+
 
         if product.publisher_collection_title
           xml.Collection {
@@ -239,7 +270,7 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
 
             supply[:prices].each do |price|
             xml.Price {
-              if supply[:tax_included]
+              if supply[:including_tax]
                 xml.PriceType("04")
               else
                 xml.PriceType("03")
@@ -275,3 +306,8 @@ end
 
 puts builder.to_xml
 
+else
+  puts "Onix 3.0 to Onix 3.0 converter"
+  puts "Generate a flattened ONIX 3.0, be aware that conversion could be destructive"
+  puts "Usage: onix3_to_onix3.rb onix.xml"
+end

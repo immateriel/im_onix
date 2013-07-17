@@ -137,9 +137,19 @@ module ONIX
     end
 
     # :category: High level
-    # Protection type string (None, Watermarking, DRM, AdobeDRM)
+    # Protection type string (None, Watermarking, Drm, AdobeDrm)
     def protection_type
       @descriptive_detail.protection_type
+    end
+
+    # :category: High level
+    # product has DRM ?
+    def drmized?
+      if @descriptive_detail.protection_type =~ /Drm/
+        true
+      else
+        false
+      end
     end
 
     # :category: High level
@@ -395,7 +405,7 @@ module ONIX
       # merge territories
       grouped_supplies={}
       supplies.each do |supply|
-        pr_key="#{supply[:available]}#{supply[:including_tax]}#{supply[:from_date]}#{supply[:until_date]}#{supply[:currency]}#{supply[:amount]}"
+        pr_key="#{supply[:available]}#{supply[:including_tax]}#{supply[:from_date]}:#{supply[:until_date]}#{supply[:currency]}#{supply[:amount]}"
         grouped_supplies[pr_key]||=supply
         grouped_supplies[pr_key][:territory]+=supply[:territory]
         grouped_supplies[pr_key][:territory].uniq!
@@ -452,6 +462,7 @@ module ONIX
                        s[:amount]=s[:price]
                        s.delete(:price)
                        s.delete(:available)
+                       s.delete(:currency)
                        s.delete(:availability_date)
                        s.delete(:including_tax)
                        s.delete(:territory)

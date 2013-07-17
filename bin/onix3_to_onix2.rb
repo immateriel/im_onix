@@ -3,6 +3,7 @@ require 'nokogiri'
 
 filename=ARGV[0]
 
+if filename
 msg=ONIX::ONIXMessage.new
 msg.parse(filename)
 
@@ -184,3 +185,7 @@ end
 end
 
 puts builder.to_xml
+else
+  puts "ONIX 3.0 to ONIX 2.1 converter"
+  puts "Usage: onix3_to_onix2.rb onix.xml"
+end
