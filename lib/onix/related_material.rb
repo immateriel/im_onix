@@ -55,15 +55,26 @@ module ONIX
       @related_works=[]
     end
 
+    def linking(human)
+      @related_products.select{|rp| rp.code.human==human}
+    end
+
     # :category: High level
-    # paper linking RelatedProduct
-    def paper_linking
-      papers=@related_products.select{|rp| rp.code.human=="EpublicationBasedOnPrintProduct"}
-      if papers.length > 0
-        papers.first
-      else
-        nil
-      end
+    # print products RelatedProduct array
+    def print_products
+      linking("EpublicationBasedOnPrintProduct")
+    end
+
+    # :category: High level
+    # is part of products RelatedProduct array
+    def part_of_products
+      linking("IsPartOf")
+    end
+
+    # :category: High level
+    # alternative format products RelatedProduct array
+    def alternative_format_products
+      linking("AlternativeFormat")
     end
 
     def parse(n)

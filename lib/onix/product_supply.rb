@@ -84,6 +84,10 @@ module ONIX
       @availability.human=="Available"
     end
 
+    def sold_separately?
+      @availability.human!="NotSoldSeparately"
+    end
+
     def availability_date
       av=@supply_dates.select{|sd| sd.role.human=="ExpectedAvailabilityDate" || sd.role.human=="EmbargoDate"}.first
       if av

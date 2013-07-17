@@ -119,13 +119,13 @@ msg.products.each do |product|
       xml.RightsCountry(product.countries_rights.join(" "))
     }
 
-    if product.paper_linking
+    if product.print_product
       xml.RelatedProduct {
         xml.RelationCode("13")
 
         xml.ProductIdentifier {
           xml.ProductIDType("03")
-          xml.IDValue(product.paper_linking.ean)
+          xml.IDValue(product.print_product.ean)
         }
       }
 

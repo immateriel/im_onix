@@ -46,6 +46,31 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         end
 
         if product.bundle?
+          product.parts.each do |part|
+            xml.ProductPart {
+              xml.ProductIdentifier {
+                xml.ProductIDType("03")
+                xml.IDValue(part.ean)
+              }
+
+              if part.file_format
+              xml.ProductForm("EA")
+              case part.file_format
+                when "Epub"
+                  xml.ProductFormDetail("E101")
+                when "Pdf"
+                  xml.ProductFormDetail("E107")
+                when "AmazonKindle"
+                  xml.ProductFormDetail("E116")
+                else
+                  xml.ProductFormDetail("E100")
+              end
+
+
+              end
+
+            }
+          end
         else
           if product.digital?
           case product.file_format
@@ -204,19 +229,34 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
       }
 
       xml.RelatedMaterial {
-        if product.paper_linking
+        if product.print_product
           xml.RelatedProduct {
             xml.ProductRelationCode("13")
 
             xml.ProductIdentifier {
               xml.ProductIDType("03")
-              xml.IDValue(product.paper_linking.ean)
+              xml.IDValue(product.print_product.ean)
             }
 
           }
         end
-      }
+        unless product.sold_separately?
+          if product.part_of_product
+            xml.RelatedProduct {
+              xml.ProductRelationCode("02")
+              xml.ProductIdentifier {
+                xml.ProductIDType("03")
+                xml.IDValue(product.part_of_product.ean)
+              }
 
+            }
+          end
+
+        end
+
+          }
+
+      if product.sold_separately?
       product.supplies.each do |supply|
         xml.ProductSupply {
           xml.Market {
@@ -299,6 +339,33 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         }
 
       end
+      else
+        xml.ProductSupply {
+          xml.SupplyDetail {
+            xml.Supplier {
+              xml.SupplierRole("03")
+              if product.distributor
+
+                if product.distributor_gln
+
+                  xml.SupplierIdentifier {
+                    xml.SupplierIDType("06")
+                    xml.IDValue(product.distributor_gln)
+                  }
+                end
+                xml.SupplierName(product.distributor_name)
+              else
+                xml.SupplierName("Unknown")
+              end
+
+            }
+            xml.ProductAvailability("45")
+            xml.UnpricedItemType("03")
+          }
+
+        }
+
+          end
       }
     end
   }

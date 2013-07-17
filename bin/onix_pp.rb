@@ -117,18 +117,20 @@ msg.products.each do |product|
       end
     end
 
-    if product.paper_linking
-      puts " Paper EAN: #{product.paper_linking.ean}"
+    if product.print_product
+      puts " Paper EAN: #{product.print_product.ean}"
     end
   end
 
-  puts " Available: #{product.available?}"
 #  pp product.supplies
 
   current_price=product.current_price_amount_for('EUR')
   if current_price
     puts " Current price: #{current_price/100.0} EUR"
   end
+
+  if product.sold_separately?
+    puts " Available: #{product.available?}"
   puts " Supplies:"
 
   product.supplies_with_default_tax.each do |supply|
@@ -179,8 +181,11 @@ msg.products.each do |product|
     end
 
   end
+  else
+    puts " Not sold separately"
+  end
 
-end
+  end
 else
   puts "ONIX 3.0 pretty printer"
   puts "Usage: onix_pp.rb onix.xml"

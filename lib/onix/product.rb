@@ -164,6 +164,10 @@ module ONIX
       @descriptive_detail.bundle?
     end
 
+    def sold_separately?
+      @product_supplies.map{|ps| ps.supply_details.map{|sd| sd.sold_separately?}.flatten}.flatten.uniq.first
+    end
+
     # :category: High level
     # bundle ProductPart array
     def parts
@@ -313,10 +317,23 @@ module ONIX
 
     # :category: High level
     # paper linking RelatedProduct
-    def paper_linking
+    def part_of_product
       if @related_material
-        @related_material.paper_linking
+        @related_material.part_of_products.first
       end
+    end
+
+      # :category: High level
+    # paper linking RelatedProduct
+    def print_product
+      if @related_material
+        @related_material.print_products.first
+      end
+    end
+
+    # DEPRECATED see print_product instead
+    def paper_linking
+      self.print_product
     end
 
     # :category: High level
