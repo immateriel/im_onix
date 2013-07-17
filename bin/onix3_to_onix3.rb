@@ -229,20 +229,27 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
           xml.PublisherName(product.publisher_name)
         }
         end
+
+        if product.publication_date
+          xml.PublishingDate {
+            xml.PublishingDateRole("01")
+            xml.DateFormat("00")
+            xml.Date(product.publication_date.strftime("%Y%m%d"))
+          }
+        end
       }
 
       xml.RelatedMaterial {
         if product.print_product
           xml.RelatedProduct {
             xml.ProductRelationCode("13")
-
             xml.ProductIdentifier {
               xml.ProductIDType("03")
               xml.IDValue(product.print_product.ean)
             }
-
           }
         end
+
         unless product.sold_separately?
           if product.part_of_product
             xml.RelatedProduct {
@@ -251,10 +258,8 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
                 xml.ProductIDType("03")
                 xml.IDValue(product.part_of_product.ean)
               }
-
             }
           end
-
         end
 
           }
@@ -348,9 +353,7 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
             xml.Supplier {
               xml.SupplierRole("03")
               if product.distributor
-
                 if product.distributor_gln
-
                   xml.SupplierIdentifier {
                     xml.SupplierIDType("06")
                     xml.IDValue(product.distributor_gln)
