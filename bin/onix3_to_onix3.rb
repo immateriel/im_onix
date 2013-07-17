@@ -60,14 +60,16 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
                   xml.ProductFormDetail("E101")
                 when "Pdf"
                   xml.ProductFormDetail("E107")
-                when "AmazonKindle"
-                  xml.ProductFormDetail("E116")
+                when "Mobipocket"
+                  xml.ProductFormDetail("E127")
                 else
                   xml.ProductFormDetail("E100")
+                  xml.ProductFormDescription(part.file_description)
+
               end
 
-
               end
+              xml.NumberOfCopies("1")
 
             }
           end
@@ -78,10 +80,11 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
               xml.ProductFormDetail("E101")
             when "Pdf"
               xml.ProductFormDetail("E107")
-            when "AmazonKindle"
-              xml.ProductFormDetail("E116")
+            when "Mobipocket"
+              xml.ProductFormDetail("E127")
             else
               xml.ProductFormDetail("E100")
+              xml.ProductFormDescription(product.file_description)
           end
 
 

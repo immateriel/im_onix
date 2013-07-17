@@ -181,7 +181,7 @@ module ONIX
     end
 
     # :category: High level
-    # digital file format string (Epub,Pdf,AmazonKindle)
+    # digital file format string (Epub,Pdf,Mobipocket)
     def file_format
       @descriptive_detail.file_format
     end
