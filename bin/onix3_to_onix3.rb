@@ -217,7 +217,7 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
           xml.ImprintName(product.imprint_name)
         }
         end
-        if product.publisher
+        if product.publisher_name
         xml.Publisher {
           xml.PublishingRole("01")
           if product.publisher_gln

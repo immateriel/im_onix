@@ -7,6 +7,10 @@ if filename
 msg=ONIX::ONIXMessage.new
 msg.parse(filename)
 
+#m=File.open("test.dump","wb")
+#m.write Marshal.dump(msg)
+#m.close
+
 if msg.sender
   puts "Sender: #{msg.sender.name}"
 end
@@ -58,10 +62,8 @@ msg.products.each do |product|
     puts " Keywords: #{product.keywords.join(', ')}"
   end
 
-  if product.publishers.length > 0
-  product.publishers.each do |publisher|
-    puts " Publisher: #{publisher.name}"
-  end
+  if product.publisher_name
+    puts " Publisher: #{product.publisher_name}"
   end
 
 #  puts " Publisher: #{product.publisher_name}"

@@ -235,19 +235,17 @@ module ONIX
     end
 
     # :category: High level
-    # publisher name string
+    # publisher name string, if multiple publishers are found, then they are concatenated with " / "
     def publisher_name
-      if self.publisher
-        self.publisher.name
-      else
-        nil
+      if self.publishers.length > 0
+        self.publishers.map{|p| p.name}.join(" / ")
       end
     end
 
     # :category: High level
-    # publisher GLN string
+    # publisher GLN string, nil if multiple publishers are found
     def publisher_gln
-      if self.publisher
+      if self.publishers.length==1
         self.publisher.gln
       end
     end
