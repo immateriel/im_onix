@@ -49,7 +49,7 @@ module ONIX
           else
             data=arg
           end
-        when File
+        when File,Tempfile
           data=arg.read
       end
 
