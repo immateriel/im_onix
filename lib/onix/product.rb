@@ -108,6 +108,10 @@ module ONIX
       @descriptive_detail.publisher_collection_title
     end
 
+    def subjects
+      @descriptive_detail.subjects
+    end
+
     # BISAC categories Subject
     def bisac_categories
       @descriptive_detail.bisac_categories

@@ -38,9 +38,18 @@ module ONIX
       @vault={}
     end
 
-    # parse filename
-    def parse(file)
-      xml=Nokogiri::XML.parse(File.open(file))
+
+    # parse filename or file
+    def parse(arg)
+      data=""
+      case arg
+        when String
+          data=File.open(file)
+        when File
+          data=arg.read
+      end
+
+      xml=Nokogiri::XML.parse(data)
       xml.remove_namespaces!
 
       header=xml.at_xpath("//Header")
