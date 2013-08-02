@@ -44,7 +44,11 @@ module ONIX
       data=""
       case arg
         when String
-          data=File.open(file)
+          if File.file?(arg)
+            data=File.open(arg)
+          else
+            data=arg
+          end
         when File
           data=arg.read
       end
