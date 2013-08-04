@@ -51,7 +51,7 @@ msg.products.each do |product|
   puts " Description: #{product.raw_description}"
 
   if product.frontcover_url
-    puts " Frontcover: #{product.frontcover_url}"
+    puts " Frontcover: #{product.frontcover_url} (#{product.frontcover_last_updated})"
   end
 
   if product.epub_sample_url

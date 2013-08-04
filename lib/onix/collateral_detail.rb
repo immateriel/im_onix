@@ -48,6 +48,12 @@ module ONIX
       end
     end
 
+    def frontcover_last_updated
+      if self.frontcover_resource
+          self.frontcover_resource.last_updated
+      end
+    end
+
     def epub_sample_resource
       es=@supporting_resources.select { |sr| sr.type.human=="SampleContent" }.select{|sr| sr.versions.last.file_format=="Epub"}.first
       if es
@@ -60,6 +66,13 @@ module ONIX
         self.epub_sample_resource.links.first.strip
       end
     end
+
+    def epub_sample_url_last_updated
+      if self.epub_sample_url_resource
+        self.epub_sample_url.last_updated
+      end
+    end
+
 
     def parse(n)
       n.children.each do |t|

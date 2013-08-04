@@ -89,6 +89,15 @@ module ONIX
       end
     end
 
+    def last_updated_content_date
+      @content_dates.select{|cd| cd.role.human=="LastUpdated"}.first
+    end
+
+    def last_updated
+      if self.last_updated_content_date
+        self.last_updated_content_date.date
+      end
+    end
 
       def parse(n)
         n.children.each do |t|
