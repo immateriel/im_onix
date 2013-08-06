@@ -126,9 +126,9 @@ msg.products.each do |product|
 
 #  pp product.supplies
 
-  current_price=product.current_price_amount_for('EUR')
+  current_price=product.current_price_amount_for('EUR','FR')
   if current_price
-    puts " Current price: #{current_price/100.0} EUR"
+    puts " Current EUR price for FR: #{current_price/100.0} EUR"
   end
 
   if product.sold_separately?

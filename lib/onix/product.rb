@@ -541,9 +541,12 @@ module ONIX
     end
 
     # :category: High level
-    # current price amount for given +currency+
-    def current_price_amount_for(currency)
+    # current price amount for given +currency+ and country
+    def current_price_amount_for(currency,country=nil)
       sups=self.supplies_with_default_tax.select { |p| p[:currency]==currency }
+      if country
+        sups=sups.select{|p| p[:territory].include?(country)}
+      end
       if sups.length > 0
 #        pp sups
         sup=sups.first[:prices].select { |p|
