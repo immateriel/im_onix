@@ -440,7 +440,7 @@ module ONIX
       # merge territories
       grouped_supplies={}
       supplies.each do |supply|
-        pr_key="#{supply[:available]}#{supply[:including_tax]}#{supply[:from_date]}:#{supply[:until_date]}#{supply[:currency]}#{supply[:amount]}"
+        pr_key="#{supply[:available]}#{supply[:including_tax]}#{supply[:from_date]}:#{supply[:until_date]}#{supply[:currency]}#{supply[:price]}"
         grouped_supplies[pr_key]||=supply
         grouped_supplies[pr_key][:territory]+=supply[:territory]
         grouped_supplies[pr_key][:territory].uniq!
