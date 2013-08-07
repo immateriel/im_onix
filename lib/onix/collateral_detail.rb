@@ -68,8 +68,8 @@ module ONIX
     end
 
     def epub_sample_last_updated
-      if self.epub_sample_url_resource
-        self.epub_sample_url.last_updated
+      if self.epub_sample_resource
+        self.epub_sample_resource.last_updated
       end
     end
 
