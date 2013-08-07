@@ -486,6 +486,10 @@ module ONIX
               explicit_from[:from_date]=nil
             end
           end
+        else
+          supply.each do |s|
+            s[:from_date]=nil
+          end
         end
       end
 
