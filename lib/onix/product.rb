@@ -481,7 +481,7 @@ module ONIX
             end
           else
             # remove explicit from date
-            explicit_from=supply.select{|p| p[:from_date] and not supply.select{|sp| sp[:until_date]==p[:from_date]}.first}.first
+            explicit_from=supply.select{|p| p[:from_date] and not supply.select{|sp| sp[:until_date] and sp[:until_date]+1==p[:from_date]}.first}.first
             if explicit_from
               explicit_from[:from_date]=nil
             end
