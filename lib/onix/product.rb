@@ -534,8 +534,12 @@ module ONIX
 
     # :category: High level
     # flattened supplies for country
-    def supplies_for_country(country)
-      self.supplies.select{|s|
+    def supplies_for_country(country,currency=nil)
+      country_supplies=self.supplies
+      if currency
+        country_supplies=country_supplies.select{|s| s[:currency]==currency}
+      end
+      country_supplies.select{|s|
         if s[:territory].include?(country)
           true
         else
@@ -545,8 +549,8 @@ module ONIX
     end
 
     # :category: High level
-    # current price amount for given +currency+ and country
-    def current_price_amount_for(currency,country=nil)
+    # price amount for given +currency+ and country at time
+    def at_time_price_amount_for(time,currency,country=nil)
       sups=self.supplies_with_default_tax.select { |p| p[:currency]==currency }
       if country
         sups=sups.select{|p| p[:territory].include?(country)}
@@ -554,8 +558,8 @@ module ONIX
       if sups.length > 0
 #        pp sups
         sup=sups.first[:prices].select { |p|
-          (!p[:from_date] or p[:from_date].to_time <= Time.now) and
-              (!p[:until_date] or p[:until_date].to_time > Time.now)
+          (!p[:from_date] or p[:from_date].to_time <= time) and
+              (!p[:until_date] or p[:until_date].to_time > time)
         }.first
 
         if sup
@@ -567,6 +571,12 @@ module ONIX
       else
         nil
       end
+    end
+
+    # :category: High level
+    # current price amount for given +currency+ and country
+    def current_price_amount_for(currency,country=nil)
+      at_time_price_amount_for(Time.now,currency,country)
     end
 
     def available_product_supplies
