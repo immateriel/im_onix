@@ -556,16 +556,26 @@ module ONIX
         sups=sups.select{|p| p[:territory].include?(country)}
       end
       if sups.length > 0
-#        pp sups
+        # exclusive
         sup=sups.first[:prices].select { |p|
-          (!p[:from_date] or p[:from_date].to_time <= time) and
-              (!p[:until_date] or p[:until_date].to_time > time)
+          (!p[:from_date] or p[:from_date].to_date <= time.to_date) and
+              (!p[:until_date] or p[:until_date].to_date > time.to_date)
         }.first
 
         if sup
           sup[:amount]
         else
-          nil
+          # or inclusive
+          sup=sups.first[:prices].select { |p|
+            (!p[:from_date] or p[:from_date].to_date <= time.to_date) and
+                (!p[:until_date] or p[:until_date].to_date >= time.to_date)
+          }.first
+
+          if sup
+            sup[:amount]
+          else
+            nil
+          end
         end
 
       else
