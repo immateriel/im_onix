@@ -1,3 +1,5 @@
+require 'onix/onix_date'
+
 module ONIX
 
   class Tax < Subset
@@ -13,9 +15,7 @@ module ONIX
             @rate_code=TaxRateCode.from_code(t.text)
         end
       end
-
     end
-
   end
 
   class PriceDate < Subset
@@ -25,10 +25,13 @@ module ONIX
         case t.name
           when "PriceDateRole"
             @role = PriceDateRole.from_code(t.text)
+          when "Date"
+            @date = OnixDate.from_xml(t)
         end
       end
-      @date = Helper.parse_date(n)
+#      @date = Helper.parse_date(n)
     end
+
   end
 
   class Price < Subset
@@ -41,16 +44,16 @@ module ONIX
     def from_date
       dt=@dates.select{|d| d.role.human=="FromDate"}.first
       if dt
-        dt.date
+          dt.date.date
       else
         nil
       end
     end
 
     def until_date
-      dt=@dates.select{|d| d.role.human=="UntilDate"}.first
+      dt=@dates.select { |d| d.role.human=="UntilDate" }.first
       if dt
-        dt.date
+        dt.date.date
       else
         nil
       end

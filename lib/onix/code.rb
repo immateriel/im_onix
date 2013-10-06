@@ -420,4 +420,11 @@ module ONIX
     end
   end
 
+  class DateFormat < CodeFromHtml
+    private
+    def self.code_ident
+      55
+    end
+  end
+
 end

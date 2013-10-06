@@ -9,15 +9,15 @@ module ONIX
         case t.name
           when "MarketDateRole"
             @role = MarketDateRole.from_code(t.text)
+          when "Date"
+            @date=OnixDate.from_xml(t)
         end
       end
-      @date = Helper.parse_date(n)
     end
   end
 
   class Market < Subset
     attr_accessor :territory
-
 
     def parse(n)
       n.children.each do |t|
@@ -40,30 +40,35 @@ module ONIX
     def availability_date
       av=@market_dates.select{|sd| sd.role.human=="PublicationDate" || sd.role.human=="EmbargoDate"}.first
       if av
-        av.date
+        av.date.date
       else
         nil
       end
     end
 
     def parse(n)
-
-        @publisher_representatives=Agent.parse_entities(n,"./PublisherRepresentative")
-        n.children.each do |t|
-          case t.name
-            when "MarketDate"
-              @market_dates << MarketDate.from_xml(t)
-          end
+      @publisher_representatives=Agent.parse_entities(n, "./PublisherRepresentative")
+      n.children.each do |t|
+        case t.name
+          when "MarketDate"
+            @market_dates << MarketDate.from_xml(t)
         end
+      end
     end
 
   end
 
   class SupplyDate < Subset
     attr_accessor :role, :date
-    def parse(supply_date)
-      @role = SupplyDateRole.from_code(supply_date.at_xpath("./SupplyDateRole").text)
-      @date = Helper.parse_date(supply_date)
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "SupplyDateRole"
+            @role = SupplyDateRole.from_code(t.text)
+          when "Date"
+            @date = OnixDate.from_xml(t)
+        end
+      end
     end
   end
 
@@ -91,14 +96,13 @@ module ONIX
     def availability_date
       av=@supply_dates.select{|sd| sd.role.human=="ExpectedAvailabilityDate" || sd.role.human=="EmbargoDate"}.first
       if av
-        av.date
+        av.date.date
       else
         nil
       end
     end
 
     def parse(n)
-
       @suppliers = Supplier.parse_entities(n, "./Supplier")
 
       n.children.each do |t|
@@ -111,7 +115,6 @@ module ONIX
             @prices << Price.from_xml(t)
         end
       end
-
     end
   end
 
@@ -150,10 +153,7 @@ module ONIX
             @market_publishing_detail = MarketPublishingDetail.from_xml(t)
         end
       end
-
     end
-
-
   end
 
 end

@@ -2,9 +2,15 @@ module ONIX
 
   class ContentDate < Subset
     attr_accessor :date, :role
-    def parse(d)
-      @date=Helper.parse_date(d)
-      @role=ContentDateRole.from_code(Helper.mandatory_text_at(d,"ContentDateRole"))
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "ContentDateRole"
+            @role=ContentDateRole.from_code(t.text)
+          when "Date"
+            @date=OnixDate.from_xml(t)
+        end
+      end
     end
   end
 
@@ -95,7 +101,7 @@ module ONIX
 
     def last_updated
       if self.last_updated_content_date
-        self.last_updated_content_date.date
+        self.last_updated_content_date.date.date
       end
     end
 

@@ -21,10 +21,10 @@ module ONIX
         case t.name
           when "PublishingDateRole"
             @role=PublishingDateRole.from_code(t.text)
-
+          when "Date"
+            @date=OnixDate.from_xml(t)
         end
       end
-      @date=Helper.parse_date(n)
     end
   end
 
@@ -65,7 +65,7 @@ module ONIX
     def publication_date
       pub=@publishing_dates.select{|pd| pd.role.human=="PublicationDate" or pd.role.human=="PublicationDateOfPrintCounterpart" or pd.role.human=="EmbargoDate"}.first
       if pub
-        pub.date
+        pub.date.date
       else
         nil
       end
