@@ -22,7 +22,6 @@ module ONIX
         end
       end
     end
-
   end
 
   class RelatedWork < Subset
@@ -45,8 +44,8 @@ module ONIX
         end
       end
     end
-
   end
+
   class RelatedMaterial < Subset
     attr_accessor :related_products, :related_works
 
@@ -86,7 +85,6 @@ module ONIX
             @related_works << RelatedWork.from_xml(t)
         end
       end
-
     end
   end
 

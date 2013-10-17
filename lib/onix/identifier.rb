@@ -19,6 +19,10 @@ module ONIX
       Identifier.from_hash({:type=>ONIX.const_get("#{prefix_tag}IDType").from_code(node.at_xpath("./#{prefix_tag}IDType").text), :value=>node.at_xpath("./IDValue").text})
     end
 
+    def uniq_id
+      "#{type.code}-#{@value}"
+    end
+
     private
     # identifier from hash
     def self.from_hash(h)

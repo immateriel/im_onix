@@ -17,11 +17,12 @@ module ONIX
     def initialize
       @identifiers=[]
     end
+
     def parse(n)
       n.children.each do |t|
         case t.name
           when "SenderIdentifier"
-            @identifiers << Identifier.parse_identifier(t,"Sender")
+            @identifiers << Identifier.parse_identifier(t, "Sender")
           when "SenderName"
             @name=t.text
         end
@@ -49,7 +50,7 @@ module ONIX
           else
             data=arg
           end
-        when File,Tempfile
+        when File, Tempfile
           data=arg.read
       end
 
@@ -92,31 +93,40 @@ module ONIX
 
 #      puts "ONIXMessage : produce vault"
       @products.each do |product|
-        @vault[product.ean]=product
+        product.identifiers.each do |ident|
+          @vault[ident.uniq_id]=product
+        end
       end
 
 #      puts "ONIXMessage : chain products from vault"
       @products.each do |product|
         if product.related_material
           product.related_material.related_products.each do |rp|
-            if @vault[rp.ean]
+            rp.identifiers.each do |ident|
+              if @vault[ident.uniq_id]
 #              puts "Vault found for related product #{rp.ean}"
-              rp.product=@vault[rp.ean]
+                rp.product=@vault[ident.uniq_id]
+              end
+
             end
           end
 
           product.related_material.related_works.each do |rw|
-            if @vault[rw.ean]
+            rw.identifiers.each do |ident|
+              if @vault[ident.uniq_id]
 #              puts "Vault found for related work #{rw.ean}"
-              rw.product=@vault[rw.ean]
+                rw.product=@vault[ident.uniq_id]
+              end
             end
           end
         end
 
         product.descriptive_detail.parts.each do |prt|
-          if @vault[prt.ean]
-#            puts "Vault found for product part #{prt.ean}"
-            prt.product=@vault[prt.ean]
+          prt.identifiers.each do |ident|
+              if @vault[ident.uniq_id]
+#              puts "Vault found for product part #{prt.ean}"
+                prt.product=@vault[ident.uniq_id]
+              end
           end
         end
       end
