@@ -57,7 +57,7 @@ module ONIX
     end
 
     def file_format
-      if @form.human=="DownloadableFile"
+      if ["DownloadableFile","LinkableResource"].include?(@form.human)
         if file_format_feature
           file_format_feature.value.human
         end

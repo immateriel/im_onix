@@ -35,10 +35,17 @@ module ONIX
       fc=@supporting_resources.select { |sr| sr.type.human=="FrontCover" }
       if fc.length > 0
         if fc.length > 1
+          best_found=fc.select{|c| c.versions.last and c.versions.last.image_width}.sort { |c1, c2| c2.versions.last.image_width <=> c1.versions.last.image_width }.first
+          if best_found
+            # we take larger one
+            best_found.versions.last
+          else
+            # we try first that is not gif
+            fc.select{|sr| not sr.versions.last.file_format=="Gif"}.first.versions.last
+          end
         else
           fc.first.versions.last
         end
-        fc.sort { |c1, c2| c2.versions.last.image_width <=> c1.versions.last.image_width }.first.versions.last
       end
     end
 
