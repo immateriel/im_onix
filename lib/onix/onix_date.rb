@@ -23,6 +23,7 @@ module ONIX
         format=text_format
       end
 
+      begin
       if format
       case @format.code
         when "00"
@@ -34,6 +35,9 @@ module ONIX
         else
           @date=nil
       end
+      end
+      rescue
+        # invalid date
       end
 
     end
