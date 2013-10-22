@@ -6,6 +6,8 @@ module ONIX
     # full Product if referenced in ONIXMessage
     attr_accessor :product
 
+    attr_accessor :form
+
     include EanMethods
 
     def initialize
@@ -19,6 +21,8 @@ module ONIX
             @identifiers << Identifier.parse_identifier(t,"Product")
           when "ProductRelationCode"
             @code=ProductRelationCode.from_code(t.text)
+          when "ProductForm"
+            @form=ProductForm.from_code(t.text)
         end
       end
     end
@@ -61,7 +65,7 @@ module ONIX
     # :category: High level
     # print products RelatedProduct array
     def print_products
-      linking("EpublicationBasedOnPrintProduct")
+      linking("EpublicationBasedOnPrintProduct") + self.alternative_format_products.select{|rp| rp.form.code=~/^B/}
     end
 
     # :category: High level
