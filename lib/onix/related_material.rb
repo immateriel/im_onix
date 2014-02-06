@@ -65,7 +65,7 @@ module ONIX
     # :category: High level
     # print products RelatedProduct array
     def print_products
-      linking("EpublicationBasedOnPrintProduct") + self.alternative_format_products.select{|rp| rp.form.code=~/^B/}
+      linking("EpublicationBasedOnPrintProduct") + self.alternative_format_products.select{|rp| rp.form && rp.form.code=~/^B/}
     end
 
     # :category: High level
