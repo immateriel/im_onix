@@ -9,8 +9,6 @@ begin
     gem.homepage = "http://github.com/immateriel/im_onix"
     gem.authors = ["julbouln"]
     gem.files = Dir.glob('bin/**/*') + Dir.glob('lib/**/*') + Dir.glob('data/**/*')
-
-    gem.add_dependency "nokogiri"
   end
   Jeweler::GemcutterTasks.new
 
