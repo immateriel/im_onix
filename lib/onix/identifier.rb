@@ -1,5 +1,5 @@
 module ONIX
-  class Identifier
+  class Identifier < Subset
     # IDType code object
     attr_accessor :type
     # IDValue string value

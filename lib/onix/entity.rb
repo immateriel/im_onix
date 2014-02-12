@@ -2,7 +2,7 @@ require 'onix/code'
 require 'onix/identifier'
 
 module ONIX
-  class Entity
+  class Entity < Subset
     # entity name
     attr_accessor :name
     # entity role

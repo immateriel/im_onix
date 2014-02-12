@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 module ONIX
-  class Code
+  class Code < Subset
     # code as defined in ONIX documentation codelist
     attr_accessor :code
     # humanized string (eg: "Digital watermarking" become DigitalWatermarking, "PDF" become Pdf, "BISAC Subject Heading" become BisacSubjectHeading, etc)
