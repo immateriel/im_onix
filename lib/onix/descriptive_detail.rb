@@ -115,6 +115,12 @@ module ONIX
       end
     end
 
+    def file_mimetype
+      if self.file_formats.first
+        self.file_formats.first.mimetype
+      end
+    end
+
     def file_formats
       @form_details.select{|fd| fd.code =~ /^E1.*/}
     end

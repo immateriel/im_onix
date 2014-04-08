@@ -207,6 +207,12 @@ module ONIX
     end
 
     # :category: High level
+    # digital file mimetype (Epub,Pdf,Mobipocket)
+    def file_mimetype
+      @descriptive_detail.file_mimetype
+    end
+
+    # :category: High level
     # digital file description string
     def file_description
       @descriptive_detail.file_description

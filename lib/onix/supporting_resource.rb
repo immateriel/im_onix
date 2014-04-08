@@ -64,6 +64,14 @@ module ONIX
       end
     end
 
+    def file_mimetype
+      if ["DownloadableFile","LinkableResource"].include?(@form.human)
+        if file_format_feature
+          file_format_feature.value.mimetype
+        end
+      end
+    end
+
     def image_width_feature
       @features.select{|i| i.type.human=="ImageWidthInPixels"}.first
     end

@@ -376,6 +376,25 @@ module ONIX
     def self.code_ident
       178
     end
+
+    # main formats
+    def mimetype
+      case self.human
+        when "Epub"
+          "application/epub"
+        when "Pdf"
+          "application/pdf"
+        when "AmazonKindle"
+          "application/x-mobipocket-ebook"
+        when "Gif"
+          "image/gif"
+        when "Jpeg"
+          "image/jpeg"
+        when "Png"
+          "image/png"
+      end
+    end
+
   end
 
   class LanguageRole < CodeFromHtml
