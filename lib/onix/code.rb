@@ -77,6 +77,27 @@ module ONIX
 
   end
 
+  class CodeFromHtmlWithMime < CodeFromHtml
+    # main formats
+    def mimetype
+      case self.human
+        when "Epub"
+          "application/epub"
+        when "Pdf"
+          "application/pdf"
+        when "Mobipocket"
+          "application/x-mobipocket-ebook"
+        when "Gif"
+          "image/gif"
+        when "Jpeg"
+          "image/jpeg"
+        when "Png"
+          "image/png"
+      end
+    end
+
+  end
+
   class NotificationType < CodeFromHtml
     private
     def self.code_ident
@@ -154,7 +175,7 @@ module ONIX
     end
   end
 
-  class ProductFormDetail < CodeFromHtml
+  class ProductFormDetail < CodeFromHtmlWithMime
     private
     def self.code_ident
       175
@@ -371,30 +392,11 @@ module ONIX
     end
   end
 
-  class SupportingResourceFileFormat < CodeFromHtml
+  class SupportingResourceFileFormat < CodeFromHtmlWithMime
     private
     def self.code_ident
       178
     end
-
-    # main formats
-    def mimetype
-      case self.human
-        when "Epub"
-          "application/epub"
-        when "Pdf"
-          "application/pdf"
-        when "AmazonKindle"
-          "application/x-mobipocket-ebook"
-        when "Gif"
-          "image/gif"
-        when "Jpeg"
-          "image/jpeg"
-        when "Png"
-          "image/png"
-      end
-    end
-
   end
 
   class LanguageRole < CodeFromHtml

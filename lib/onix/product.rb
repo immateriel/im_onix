@@ -76,6 +76,14 @@ module ONIX
     end
 
     # :category: High level
+    # product larger front cover mimetype
+    def frontcover_mimetype
+      if @collateral_detail
+        @collateral_detail.frontcover_mimetype
+      end
+    end
+
+    # :category: High level
     # ePub sample URL string
     def epub_sample_url
       if @collateral_detail
@@ -88,6 +96,14 @@ module ONIX
     def epub_sample_last_updated
       if @collateral_detail
         @collateral_detail.epub_sample_last_updated
+      end
+    end
+
+    # :category: High level
+    # ePub sample mimetype
+    def epub_sample_mimetype
+      if @collateral_detail
+        @collateral_detail.epub_sample_mimetype
       end
     end
 
