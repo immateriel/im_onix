@@ -120,32 +120,31 @@ module ONIX
     def parse(arg)
 
       xml=open(arg)
-
-      header=xml.at_xpath("//Header")
-      if header
-        header.children.each do |t|
-          case t.name
-            when "Sender"
-              @sender=Sender.from_xml(t)
-            when "SentDateTime"
-              tm=t.text
-              @sent_date_time=Time.strptime(tm, "%Y%m%dT%H%M%S") rescue Time.strptime(tm, "%Y%m%dT%H%M") rescue Time.strptime(tm, "%Y%m%d") rescue nil
-            when "DefaultLanguageOfText"
-              @default_language_of_text=LanguageCode.from_code(t.text)
-            when "DefaultCurrencyCode"
-              @default_currency_code=t.text
-          end
-        end
-      end
-
       @products=[]
-      xml.xpath("//Product").each do |p|
-        product=Product.from_xml(p)
-        product.default_language_of_text=@default_language_of_text
-        product.default_currency_code=@default_currency_code
-#        product.message=self
-        @products << product
 
+      xml.root.children.each do |e|
+        case e.name
+          when "Header"
+            e.children.each do |t|
+              case t.name
+                when "Sender"
+                  @sender=Sender.from_xml(t)
+                when "SentDateTime"
+                  tm=t.text
+                  @sent_date_time=Time.strptime(tm, "%Y%m%dT%H%M%S") rescue Time.strptime(tm, "%Y%m%dT%H%M") rescue Time.strptime(tm, "%Y%m%d") rescue nil
+                when "DefaultLanguageOfText"
+                  @default_language_of_text=LanguageCode.from_code(t.text)
+                when "DefaultCurrencyCode"
+                  @default_currency_code=t.text
+              end
+            end
+          when "Product"
+            product=Product.from_xml(e)
+            product.default_language_of_text=@default_language_of_text
+            product.default_currency_code=@default_currency_code
+            @products << product
+
+        end
       end
 
       init_vault
