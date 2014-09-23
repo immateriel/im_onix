@@ -1,7 +1,18 @@
 # coding: utf-8
 require 'helper'
 
-class TestImOnix < Test::Unit::TestCase
+class TestImOnix < Minitest::Test
+  def test_products_discount
+    message = ONIX::ONIXMessage.new
+    message.parse("test/fixtures/9782752906700.xml")
+    product = message.products.last
+    discount = product.product_supplies.last.supply_details.last.prices.last.discount
+
+    assert_equal "02", discount.code_type
+    assert_equal "CSPLUS", discount.code_type_name
+    assert_equal "04", discount.code
+  end
+
   context "certaines n'avaient jamais vu la mer" do
     setup do
       @message = ONIX::ONIXMessage.new
