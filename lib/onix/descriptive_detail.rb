@@ -2,11 +2,13 @@ require 'onix/identifier'
 
 module ONIX
   class TitleElement < Subset
-    attr_accessor :title_prefix, :title_without_prefix, :title_text, :subtitle
+    attr_accessor :level, :title_prefix, :title_without_prefix, :title_text, :subtitle, :part_number
 
     def parse(n)
       n.children.each do |t|
         case t.name
+          when "TitleElementLevel"
+            @level=TitleElementLevel.from_code(t.text)
           when "TitleText"
             @title_text=t.text
           when "TitlePrefix"
@@ -15,6 +17,8 @@ module ONIX
             @title_without_prefix=t.text
           when "Subtitle"
             @subtitle=t.text
+          when "PartNumber"
+            @part_number=t.text.to_i
         end
       end
     end
@@ -66,13 +70,21 @@ module ONIX
     # :category: High level
     # collection title string
     def title
-      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.first.title
+      if collection_title_element
+        collection_title_element.title
+      end
     end
 
     # :category: High level
     # collection subtitle string
     def subtitle
-      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.first.subtitle
+      if collection_title_element
+        collection_title_element.subtitle
+      end
+    end
+
+    def collection_title_element
+      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.select{ |te| te.level.human=~/CollectionLevel/ }.first
     end
 
 
@@ -323,12 +335,20 @@ module ONIX
 
     end
 
+    # :category: High level
+    # product title string
     def title
-      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.first.title
+      product_title_element.title
     end
 
+    # :category: High level
+    # product subtitle string
     def subtitle
-      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.first.subtitle
+      product_title_element.subtitle
+    end
+
+    def product_title_element
+      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.select{ |te| te.level.human=~/Product/ }.first
     end
 
     def pages_extent

@@ -175,6 +175,13 @@ module ONIX
     end
   end
 
+  class TitleElementLevel < CodeFromHtml
+    private
+    def self.code_ident
+      149
+    end
+  end
+
   class ProductFormDetail < CodeFromHtmlWithMime
     private
     def self.code_ident
