@@ -93,7 +93,7 @@ class TestImOnix < Test::Unit::TestCase
     end
 
     should "be currently priced in France" do
-      assert_equal 0, @product.current_price_amount_for("EUR","FR")
+      assert_equal 399, @product.current_price_amount_for("EUR","FR")
     end
 
     should "be priced in France at future date" do
@@ -109,7 +109,7 @@ class TestImOnix < Test::Unit::TestCase
     end
 
     should "be currently priced in Switzerland" do
-      assert_equal 0, @product.current_price_amount_for("CHF","CH")
+      assert_equal 500, @product.current_price_amount_for("CHF","CH")
     end
 
     should "be priced in Switzerland at future date" do
