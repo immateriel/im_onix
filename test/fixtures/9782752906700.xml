@@ -1497,6 +1497,11 @@
         </Territory>
       </Price>
       <Price>
+        <DiscountCoded>
+          <DiscountCodeType>02</DiscountCodeType>
+          <DiscountCodeTypeName>CSPLUS</DiscountCodeTypeName>
+          <DiscountCode>04</DiscountCode>
+        </DiscountCoded>
         <PriceType>04</PriceType>
         <PriceQualifier>05</PriceQualifier>
         <PriceAmount>126</PriceAmount>

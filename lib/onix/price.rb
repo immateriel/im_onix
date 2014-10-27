@@ -35,7 +35,7 @@ module ONIX
   end
 
   class Price < Subset
-    attr_accessor :amount, :type, :currency, :dates, :territory
+    attr_accessor :amount, :type, :currency, :dates, :territory, :discount
 
     def initialize
       @dates=[]
@@ -82,6 +82,25 @@ module ONIX
             @amount=(t.text.to_f * 100).round
           when "Tax"
             @tax=Tax.from_xml(t)
+          when "DiscountCoded"
+            @discount = Discount.from_xml(t)
+        end
+      end
+    end
+  end
+
+  class Discount < Subset
+    attr_accessor :code_type, :code_type_name, :code
+
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "DiscountCodeType"
+            @code_type = t.text
+          when "DiscountCodeTypeName"
+            @code_type_name = t.text
+          when "DiscountCode"
+            @code = t.text
         end
       end
     end
