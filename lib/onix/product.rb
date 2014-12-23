@@ -14,6 +14,8 @@ require 'onix/error'
 
 module ONIX
   class Product < Subset
+    # Record reference
+    attr_accessor :record_reference
     # NotificationType object
     attr_accessor :notification_type
     # product Identifier object array
@@ -648,6 +650,8 @@ module ONIX
     def parse(n)
       n.children.each do |t|
         case t.name
+          when "RecordReference"
+            @record_reference = t.text.strip
           when "ProductIdentifier"
             @identifiers << Identifier.parse_identifier(t, "Product")
           when "NotificationType"

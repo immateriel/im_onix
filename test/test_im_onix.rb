@@ -20,6 +20,10 @@ class TestImOnix < Minitest::Test
       @product=@message.products.last
     end
 
+    should "have record reference" do
+      assert_equal "immateriel.fr-O192530", @product.record_reference
+    end
+
     should "have title" do
       assert_equal "Certaines n'avaient jamais vu la mer", @product.title
     end
