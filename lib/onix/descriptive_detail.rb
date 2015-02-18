@@ -111,6 +111,7 @@ module ONIX
     attr_accessor :part_of
 
     include EanMethods
+    include ProprietaryIdMethods
 
     def initialize
       @identifiers = []
