@@ -25,8 +25,8 @@ class TestImOnix < Minitest::Test
     end
 
     should "have a named proprietary id" do
-      assert_equal 'O192530', @product.proprietary_ids.first[:value]
-      assert_equal 'SKU', @product.proprietary_ids.first[:name]
+      assert_equal 'O192530', @product.proprietary_ids.first.value
+      assert_equal 'SKU', @product.proprietary_ids.first.name
     end
 
     should "have title" do

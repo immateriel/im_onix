@@ -73,17 +73,6 @@ module ONIX
 
   module ProprietaryIdMethods
     def proprietary_ids
-      [].tap do |prop_ids|
-        proprietary_ids_identifiers.each do |identifier|
-          prop_ids << {
-            :value => identifier.value,
-            :name => identifier.name,
-          }
-        end
-      end
-    end
-    # private
-    def proprietary_ids_identifiers
       @identifiers.select{|id| id.type.human=="Proprietary"}
     end
   end
