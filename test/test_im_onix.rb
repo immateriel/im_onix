@@ -176,4 +176,17 @@ class TestImOnix < Minitest::Test
     end
 
   end
+
+  context "file full-sender.xml" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/full-sender.xml")
+      @product=@message.products.last
+    end
+
+    should "have a named sender with a GLN" do
+      assert_equal "Hxxxxxxx Lxxxx", @message.sender.name
+      assert_equal "42424242424242", @message.sender.gln
+    end
+  end
 end
