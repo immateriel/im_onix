@@ -225,6 +225,10 @@ module ONIX
       @descriptive_detail.file_format
     end
 
+    def reflowable?
+      return @descriptive_detail.reflowable?
+    end
+
     # :category: High level
     # digital file mimetype (Epub,Pdf,Mobipocket)
     def file_mimetype
