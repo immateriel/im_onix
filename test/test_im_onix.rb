@@ -53,6 +53,12 @@ class TestImOnix < Minitest::Test
       assert_equal 3, @product.parts.length
     end
 
+    should "have parts that do not provide info about fixed layout or not" do
+      @product.parts.each do |part|
+        assert_equal nil, part.reflowable?
+      end
+    end
+
     should "have author named" do
       assert_equal "Julie Otsuka", @product.contributors.first.name
     end
