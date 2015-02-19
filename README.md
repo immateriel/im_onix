@@ -23,6 +23,16 @@ onix_pp.rb onix.xml
 onix3_to_onix2.rb onix.xml
 onix3_to_onix3.rb onix.xml
 ```
+### Development
+
+#### Running the tests
+
+Launch this command:
+
+```
+ruby -Ilib:test test/test_im_onix.rb
+```
+
 
 ### License
 Copyright (C) 2013 immatériel.fr
