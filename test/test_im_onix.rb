@@ -24,6 +24,11 @@ class TestImOnix < Minitest::Test
       assert_equal "immateriel.fr-O192530", @product.record_reference
     end
 
+    should "have a named proprietary id" do
+      assert_equal 'O192530', @product.proprietary_ids.first.value
+      assert_equal 'SKU', @product.proprietary_ids.first.name
+    end
+
     should "have title" do
       assert_equal "Certaines n'avaient jamais vu la mer", @product.title
     end

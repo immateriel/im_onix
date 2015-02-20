@@ -31,7 +31,15 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         xml.ProductIDType("03")
         xml.IDValue(product.ean)
       }
-
+      product.proprietary_ids.each do |id|
+        xml.ProductIdentifier {
+          xml.ProductIDType("01")
+          if id.name
+            xml.IDTypeName(id.name)
+          end
+          xml.IDValue(id.value)
+        }
+      end
       xml.DescriptiveDetail {
         if product.bundle?
           xml.ProductComposition("10")

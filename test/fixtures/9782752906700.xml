@@ -244,6 +244,7 @@
   <NotificationType>03</NotificationType>
   <ProductIdentifier>
     <ProductIDType>01</ProductIDType>
+    <IDTypeName>SKU</IDTypeName>
     <IDValue>O192530</IDValue>
   </ProductIdentifier>
   <ProductIdentifier>

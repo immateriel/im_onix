@@ -4,6 +4,8 @@ module ONIX
     attr_accessor :type
     # IDValue string value
     attr_accessor :value
+    # IDTypeName string value
+    attr_accessor :name
 
     # create Identifier array from Nokogiri:XML::Node
     def self.parse_identifiers(node,prefix_tag)
@@ -16,7 +18,11 @@ module ONIX
     end
 
     def self.parse_identifier(node,prefix_tag)
-      Identifier.from_hash({:type=>ONIX.const_get("#{prefix_tag}IDType").from_code(node.at_xpath("./#{prefix_tag}IDType").text), :value=>node.at_xpath("./IDValue").text})
+      identifier = Identifier.from_hash({:type => ONIX.const_get("#{prefix_tag}IDType").from_code(node.at_xpath("./#{prefix_tag}IDType").text), :value => node.at_xpath("./IDValue").text})
+      if node.at_xpath("./IDTypeName")
+        identifier.name = node.at_xpath("./IDTypeName").text
+      end
+      identifier
     end
 
     def uniq_id
@@ -62,6 +68,12 @@ module ONIX
     # private
     def gln_identifier
       @identifiers.select{|id| id.type.human=="Gln"}.first
+    end
+  end
+
+  module ProprietaryIdMethods
+    def proprietary_ids
+      @identifiers.select{|id| id.type.human=="Proprietary"}
     end
   end
 end

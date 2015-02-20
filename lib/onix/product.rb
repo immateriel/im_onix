@@ -38,6 +38,7 @@ module ONIX
 
 
     include EanMethods
+    include ProprietaryIdMethods
 
     # :category: High level
     # product title string
