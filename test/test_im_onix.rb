@@ -73,6 +73,10 @@ class TestImOnix < Minitest::Test
       assert_equal 1400, @product.supplies_for_country("CH","CHF").first[:prices].first[:amount]
     end
 
+    should "have a named sender without GLN" do
+      assert_equal "immatériel·fr", @message.sender.name
+      assert_equal nil, @message.sender.gln
+    end
   end
 
   context "prices with past change time" do
@@ -176,5 +180,18 @@ class TestImOnix < Minitest::Test
       assert_equal 250, @product.at_time_price_amount_for(Time.new(2013,6,10),"CHF","CH")
     end
 
+  end
+
+  context "file full-sender.xml" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/full-sender.xml")
+      @product=@message.products.last
+    end
+
+    should "have a named sender with a GLN" do
+      assert_equal "Hxxxxxxx Lxxxx", @message.sender.name
+      assert_equal "42424242424242", @message.sender.gln
+    end
   end
 end

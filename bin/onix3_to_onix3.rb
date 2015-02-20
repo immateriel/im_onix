@@ -12,6 +12,12 @@ builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
     xml.Header {
       if msg.sender
         xml.Sender {
+          if msg.sender.gln
+            xml.SenderIdentifier {
+              xml.SenderIDType("06")
+              xml.IDValue(msg.sender.gln)
+            }
+          end
           xml.SenderName(msg.sender.name)
         }
       end

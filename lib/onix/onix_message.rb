@@ -16,6 +16,8 @@ module ONIX
   class Sender < Subset
     attr_accessor :identifiers, :name
 
+    include GlnMethods
+
     def initialize
       @identifiers=[]
     end
