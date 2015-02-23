@@ -24,6 +24,15 @@ class TestImOnix < Minitest::Test
       assert_equal "immateriel.fr-O192530", @product.record_reference
     end
 
+    should "have a named sender without GLN" do
+      assert_equal "immatériel·fr", @message.sender.name
+      assert_equal nil, @message.sender.gln
+    end
+
+    should "have an EAN13" do
+      assert_equal "9782752908643", @product.ean
+    end
+
     should "have a named proprietary id" do
       assert_equal 'O192530', @product.proprietary_ids.first.value
       assert_equal 'SKU', @product.proprietary_ids.first.name
@@ -86,6 +95,11 @@ class TestImOnix < Minitest::Test
 
     should "not provide info about fixed layout or not" do
       assert_equal nil, @product.reflowable?
+    end
+
+    should "be a part of its main product" do
+      assert_equal "9782752908643", @product.part_of_product.ean
+      assert_equal "O192530", @product.part_of_product.proprietary_ids.first.value
     end
   end
 

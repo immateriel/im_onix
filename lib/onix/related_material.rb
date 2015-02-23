@@ -11,6 +11,7 @@ module ONIX
     attr_accessor :form_details
 
     include EanMethods
+    include ProprietaryIdMethods
 
     def initialize
       @identifiers = []
