@@ -138,6 +138,11 @@ module ONIX
       @form_details.select{|fd| fd.code =~ /^E1.*/}
     end
 
+    def reflowable?
+      return true if @form_details.select{|fd| fd.code == "E200"}.length > 0
+      return false if @form_details.select{|fd| fd.code == "E201"}.length > 0
+    end
+
     # :category: High level
     # part file description string
     def file_description
@@ -404,6 +409,11 @@ module ONIX
 
     def file_formats
       @form_details.select{|fd| fd.code =~ /^E1.*/}
+    end
+
+    def reflowable?
+      return true if @form_details.select{|fd| fd.code == "E200"}.length > 0
+      return false if @form_details.select{|fd| fd.code == "E201"}.length > 0
     end
 
     def file_description

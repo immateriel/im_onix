@@ -53,6 +53,12 @@ class TestImOnix < Minitest::Test
       assert_equal 3, @product.parts.length
     end
 
+    should "have parts that do not provide info about fixed layout or not" do
+      @product.parts.each do |part|
+        assert_equal nil, part.reflowable?
+      end
+    end
+
     should "have author named" do
       assert_equal "Julie Otsuka", @product.contributors.first.name
     end
@@ -77,6 +83,34 @@ class TestImOnix < Minitest::Test
       assert_equal "immatériel·fr", @message.sender.name
       assert_equal nil, @message.sender.gln
     end
+
+    should "not provide info about fixed layout or not" do
+      assert_equal nil, @product.reflowable?
+    end
+  end
+
+  context "reflowable epub" do
+      setup do
+        @message = ONIX::ONIXMessage.new
+        @message.parse("test/fixtures/reflowable.xml")
+        @product = @message.products.last
+      end
+
+      should "be reflowable" do
+        assert_equal true, @product.reflowable?
+      end
+  end
+
+  context "epub fixed layout" do
+      setup do
+        @message = ONIX::ONIXMessage.new
+        @message.parse("test/fixtures/fixed_layout.xml")
+        @product = @message.products.last
+      end
+
+      should "not be reflowable" do
+        assert_equal false, @product.reflowable?
+      end
   end
 
   context "prices with past change time" do
