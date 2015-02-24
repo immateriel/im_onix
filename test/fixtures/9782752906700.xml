@@ -488,6 +488,10 @@
         <IDValue>9782752906700</IDValue>
       </ProductIdentifier>
       <ProductIdentifier>
+        <ProductIDType>01</ProductIDType>
+        <IDValue>RP64128-print</IDValue>
+      </ProductIdentifier>
+      <ProductIdentifier>
         <ProductIDType>15</ProductIDType>
         <IDValue>9782752906700</IDValue>
       </ProductIdentifier>

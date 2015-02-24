@@ -68,8 +68,10 @@ class TestImOnix < Minitest::Test
       end
     end
 
-    should "have a printed equivalent" do
-      assert_equal "9782752906700", @product.print_product.ean
+    should "have a printed equivalent with a proprietary id" do
+      print = @product.print_product
+      assert_equal "9782752906700", print.ean
+      assert_equal "RP64128-print", print.proprietary_ids.first.value
     end
 
     should "have a PDF equivalent" do
