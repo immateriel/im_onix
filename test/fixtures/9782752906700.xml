@@ -473,6 +473,15 @@
   </PublishingDetail>
   <RelatedMaterial>
     <RelatedProduct>
+      <ProductRelationCode>06</ProductRelationCode>
+      <ProductIdentifier>
+        <ProductIDType>03</ProductIDType>
+        <IDValue>9781111111111</IDValue>
+      </ProductIdentifier>
+      <ProductForm>EA</ProductForm>
+      <ProductFormDetail>E107</ProductFormDetail>
+    </RelatedProduct>
+    <RelatedProduct>
       <ProductRelationCode>13</ProductRelationCode>
       <ProductIdentifier>
         <ProductIDType>03</ProductIDType>
