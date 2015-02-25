@@ -8,10 +8,14 @@ module ONIX
 
     attr_accessor :form
 
+    attr_accessor :form_details
+
     include EanMethods
+    include ProprietaryIdMethods
 
     def initialize
       @identifiers = []
+      @form_details = []
     end
 
     def parse(n)
@@ -23,8 +27,18 @@ module ONIX
             @code=ProductRelationCode.from_code(t.text)
           when "ProductForm"
             @form=ProductForm.from_code(t.text)
+          when "ProductFormDetail"
+            @form_details << ProductFormDetail.from_code(t.text)
         end
       end
+    end
+
+    def file_format
+      file_formats.first.human if file_formats.first
+    end
+
+    def file_formats
+      @form_details.select{|fd| fd.code =~ /^E1.*/}
     end
   end
 

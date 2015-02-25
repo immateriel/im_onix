@@ -24,6 +24,15 @@ class TestImOnix < Minitest::Test
       assert_equal "immateriel.fr-O192530", @product.record_reference
     end
 
+    should "have a named sender without GLN" do
+      assert_equal "immatériel·fr", @message.sender.name
+      assert_equal nil, @message.sender.gln
+    end
+
+    should "have an EAN13" do
+      assert_equal "9782752908643", @product.ean
+    end
+
     should "have a named proprietary id" do
       assert_equal 'O192530', @product.proprietary_ids.first.value
       assert_equal 'SKU', @product.proprietary_ids.first.name
@@ -59,6 +68,22 @@ class TestImOnix < Minitest::Test
       end
     end
 
+    should "have a printed equivalent with a proprietary id" do
+      print = @product.print_product
+      assert_equal "9782752906700", print.ean
+      assert_equal "RP64128-print", print.proprietary_ids.first.value
+    end
+
+    should "have a PDF equivalent" do
+      pdf = @product.related_material.alternative_format_products.first
+      assert_equal "9781111111111", pdf.ean
+      assert_equal "Pdf", pdf.file_format
+    end
+
+    should "not provide info about fixed layout or not" do
+      assert_equal nil, @product.reflowable?
+    end
+
     should "have author named" do
       assert_equal "Julie Otsuka", @product.contributors.first.name
     end
@@ -86,6 +111,12 @@ class TestImOnix < Minitest::Test
 
     should "not provide info about fixed layout or not" do
       assert_equal nil, @product.reflowable?
+    end
+
+    should "be a part of its main product" do
+      parent = @product.part_of_product
+      assert_equal "9782752908643", parent.ean
+      assert_equal "O192530", parent.proprietary_ids.first.value
     end
   end
 
