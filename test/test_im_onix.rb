@@ -104,15 +104,6 @@ class TestImOnix < Minitest::Test
       assert_equal 1400, @product.supplies_for_country("CH","CHF").first[:prices].first[:amount]
     end
 
-    should "have a named sender without GLN" do
-      assert_equal "immatériel·fr", @message.sender.name
-      assert_equal nil, @message.sender.gln
-    end
-
-    should "not provide info about fixed layout or not" do
-      assert_equal nil, @product.reflowable?
-    end
-
     should "be a part of its main product" do
       parent = @product.part_of_product
       assert_equal "9782752908643", parent.ean

@@ -466,21 +466,39 @@ module ONIX
         end
       end
 
-      # merge territories
-      grouped_supplies={}
-      supplies.each do |supply|
-        pr_key="#{supply[:available]}#{supply[:including_tax]}#{supply[:from_date]}:#{supply[:until_date]}#{supply[:currency]}#{supply[:price]}"
-        grouped_supplies[pr_key]||=supply
-        grouped_supplies[pr_key][:territory]+=supply[:territory]
-        grouped_supplies[pr_key][:territory].uniq!
 
+      grouped_territories_supplies={}
+      supplies.each do |supply|
+        pr_key="#{supply[:available]}_#{supply[:including_tax]}_#{supply[:currency]}"
+        grouped_territories_supplies[pr_key]||=[]
+        grouped_territories_supplies[pr_key] << {:price=>supply[:price],:from_date=>supply[:from_date], :until_date=>supply[:until_date]}
+        grouped_territories_supplies[pr_key].uniq!
       end
 
+      # merge territories
+      grouped_territories=0
+      grouped_supplies={}
+      supplies.sort{|s1,s2| s1[:from_date]||Date.new<=>s2[:from_date]||Date.new}.each do |supply|
+        pr_key="#{supply[:available]}_#{supply[:including_tax]}_#{supply[:from_date]}_#{supply[:until_date]}_#{supply[:currency]}_#{supply[:price]}_#{grouped_territories}"
+        gpr_key="#{supply[:available]}_#{supply[:including_tax]}_#{supply[:currency]}"
+
+        grouped_supplies[pr_key]||=supply
+
+        if grouped_territories_supplies[gpr_key].select{|s| s[:from_date]!=supply[:from_date] or s[:until_date] != supply[:until_date]}.length==1
+          grouped_supplies[pr_key][:territory]+=supply[:territory]
+          grouped_supplies[pr_key][:territory].uniq!
+          grouped_supplies[pr_key][:territory].sort!
+        else
+          grouped_territories+=1
+        end
+      end
+
+#      pp grouped_supplies
       supplies=grouped_supplies.to_a.map{|h| h.last}
 
       grouped_supplies={}
       supplies.each do |supply|
-        pr_key="#{supply[:available]}#{supply[:including_tax]}#{supply[:currency]}#{supply[:territory].join(',')}"
+        pr_key="#{supply[:available]}_#{supply[:including_tax]}_#{supply[:currency]}_#{supply[:territory].join('_')}"
         grouped_supplies[pr_key]||=[]
         grouped_supplies[pr_key] << supply
       end
@@ -488,13 +506,13 @@ module ONIX
       # render prices sequentially with dates
       grouped_supplies.each do |ksup, supply|
         if supply.length > 1
-#          puts "MULTIPRICES"
           global_price=supply.select{|p| not p[:from_date] and not p[:until_date]}
-#          pp global_price
           global_price=global_price.first
+
           if global_price
-#            puts "FOUND GLOBAL"
+            nsupply=supply.dup
             supply.each do |p|
+
               if p!=global_price
                 if p[:from_date]
                   global_price[:until_date]=p[:from_date]
@@ -503,11 +521,12 @@ module ONIX
                 if p[:until_date]
                   np=global_price.dup
                   np[:from_date]=p[:until_date]
-                  supply << np
+                  nsupply << np
                 end
-
               end
             end
+            grouped_supplies[ksup]=nsupply
+
           else
             # remove explicit from date
             explicit_from=supply.select{|p| p[:from_date] and not supply.select{|sp| sp[:until_date] and sp[:until_date]<=p[:from_date]}.first}.first
@@ -515,6 +534,8 @@ module ONIX
               explicit_from[:from_date]=nil
             end
           end
+
+
         else
           supply.each do |s|
             s[:from_date]=nil

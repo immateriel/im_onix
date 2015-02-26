@@ -14,7 +14,7 @@ msg.parse(filename)
 if msg.sender
   puts "Sender: #{msg.sender.name}"
   if msg.sender.gln
-    puts "Sender’s GLN: #{msg.sender.gln}"
+    puts "Sender's GLN: #{msg.sender.gln}"
   end
 end
 if msg.sent_date_time
