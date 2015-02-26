@@ -493,7 +493,6 @@ module ONIX
         end
       end
 
-#      pp grouped_supplies
       supplies=grouped_supplies.to_a.map{|h| h.last}
 
       grouped_supplies={}
@@ -510,9 +509,7 @@ module ONIX
           global_price=global_price.first
 
           if global_price
-            nsupply=supply.dup
             supply.each do |p|
-
               if p!=global_price
                 if p[:from_date]
                   global_price[:until_date]=p[:from_date]
@@ -521,11 +518,11 @@ module ONIX
                 if p[:until_date]
                   np=global_price.dup
                   np[:from_date]=p[:until_date]
-                  nsupply << np
+                  np[:until_date]=nil
+                  supply << np
                 end
               end
             end
-            grouped_supplies[ksup]=nsupply
 
           else
             # remove explicit from date
