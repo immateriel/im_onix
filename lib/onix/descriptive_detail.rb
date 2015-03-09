@@ -121,11 +121,7 @@ module ONIX
     # :category: High level
     # digital file format string (Epub,Pdf,AmazonKindle)
     def file_format
-      if self.file_formats.first
-        self.file_formats.first.human
-      else
-        "Undefined"
-      end
+      self.file_formats.first.human if self.file_formats.first
     end
 
     def file_mimetype
@@ -394,11 +390,7 @@ module ONIX
     end
 
     def file_format
-      if self.file_formats.first
-        self.file_formats.first.human
-      else
-        "Undefined"
-      end
+      self.file_formats.first.human if self.file_formats.first
     end
 
     def file_mimetype
@@ -427,8 +419,6 @@ module ONIX
         else
           raise ExpectsOneButHasSeveral, @epub_technical_protections.map(&:type)
         end
-      else
-        "Undefined"
       end
     end
 

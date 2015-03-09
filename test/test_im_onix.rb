@@ -42,6 +42,10 @@ class TestImOnix < Minitest::Test
       assert_equal "Certaines n'avaient jamais vu la mer", @product.title
     end
 
+    should "have no format" do
+      assert_equal nil, @product.file_format
+    end
+
     should "have publisher name" do
       assert_equal "Phébus", @product.publisher_name
     end
@@ -124,15 +128,27 @@ class TestImOnix < Minitest::Test
   end
 
   context "epub fixed layout" do
-      setup do
-        @message = ONIX::ONIXMessage.new
-        @message.parse("test/fixtures/fixed_layout.xml")
-        @product = @message.products.last
-      end
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/fixed_layout.xml")
+      @product = @message.products.last
+    end
 
-      should "not be reflowable" do
-        assert_equal false, @product.reflowable?
-      end
+    should "not be reflowable" do
+      assert_equal false, @product.reflowable?
+    end
+  end
+
+  context 'epub part of "Certaines n’avaient jamais vu la mer"' do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/9782752906700.xml")
+      @product=@message.products[1]
+    end
+
+    should "have epub file format" do
+      assert_equal "Epub", @product.file_format
+    end
   end
 
   context "prices with past change time" do
