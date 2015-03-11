@@ -378,7 +378,7 @@ module ONIX
     end
 
     def digital?
-      if @form.human=~/Digital/
+      if @form and @form.human=~/Digital/
         true
       else
         false
