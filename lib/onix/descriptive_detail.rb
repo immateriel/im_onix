@@ -385,6 +385,10 @@ module ONIX
       end
     end
 
+    def streaming?
+      @form.code=="EC"
+    end
+
     def bundle?
       @composition.human=="MultipleitemRetailProduct"
     end

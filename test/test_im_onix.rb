@@ -107,11 +107,17 @@ class TestImOnix < Minitest::Test
     should "be priced in Switzerland" do
       assert_equal 1400, @product.supplies_for_country("CH","CHF").first[:prices].first[:amount]
     end
+  end
 
-    should "be a part of its main product" do
-      parent = @product.part_of_product
-      assert_equal "9782752908643", parent.ean
-      assert_equal "O192530", parent.proprietary_ids.first.value
+  context 'streaming version of "Certaines n’avaient jamais vu la mer"' do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/9782752906700.xml")
+      @product=@message.products.first
+    end
+
+    should "be streaming" do
+      assert @product.streaming?
     end
   end
 
@@ -148,6 +154,12 @@ class TestImOnix < Minitest::Test
 
     should "have epub file format" do
       assert_equal "Epub", @product.file_format
+    end
+
+    should "be a part of its main product" do
+      parent = @product.part_of_product
+      assert_equal "9782752908643", parent.ean
+      assert_equal "O192530", parent.proprietary_ids.first.value
     end
   end
 
@@ -264,6 +276,18 @@ class TestImOnix < Minitest::Test
     should "have a named sender with a GLN" do
       assert_equal "Hxxxxxxx Lxxxx", @message.sender.name
       assert_equal "42424242424242", @message.sender.gln
+    end
+  end
+
+  context "streaming epub" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/streaming.xml")
+      @product=@message.products.last
+    end
+
+    should "be a streaming product" do
+      assert @product.streaming?
     end
   end
 end

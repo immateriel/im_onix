@@ -198,6 +198,12 @@ module ONIX
     end
 
     # :category: High level
+    # is product digital ?
+    def streaming?
+      @descriptive_detail.streaming?
+    end
+
+    # :category: High level
     # is product a bundle of multiple parts ?
     def bundle?
       @descriptive_detail.bundle?
