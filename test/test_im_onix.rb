@@ -107,12 +107,6 @@ class TestImOnix < Minitest::Test
     should "be priced in Switzerland" do
       assert_equal 1400, @product.supplies_for_country("CH","CHF").first[:prices].first[:amount]
     end
-
-    should "be a part of its main product" do
-      parent = @product.part_of_product
-      assert_equal "9782752908643", parent.ean
-      assert_equal "O192530", parent.proprietary_ids.first.value
-    end
   end
 
   context 'streaming version of "Certaines n’avaient jamais vu la mer"' do
@@ -160,6 +154,12 @@ class TestImOnix < Minitest::Test
 
     should "have epub file format" do
       assert_equal "Epub", @product.file_format
+    end
+
+    should "be a part of its main product" do
+      parent = @product.part_of_product
+      assert_equal "9782752908643", parent.ean
+      assert_equal "O192530", parent.proprietary_ids.first.value
     end
   end
 
