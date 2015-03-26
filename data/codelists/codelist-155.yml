@@ -1,0 +1,10 @@
+---
+:codelist:
+  '01': PublicationDate
+  '04': BroadcastDate
+  '14': FromDate
+  '15': UntilDate
+  '17': LastUpdated
+  '24': From…UntilDate
+  '27': AvailableFrom
+  '28': AvailableUntil

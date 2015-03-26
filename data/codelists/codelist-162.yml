@@ -1,0 +1,9 @@
+---
+:codelist:
+  '01': FileFormat
+  '02': ImageHeightInPixels
+  '03': ImageWidthInPixels
+  '04': Filename
+  '05': ApproximateDownloadFileSizeInMegabytes
+  '06': Md5HashValue
+  '07': ExactDownloadFileSizeInBytes

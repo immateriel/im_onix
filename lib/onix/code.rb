@@ -1,4 +1,5 @@
 # -*- encoding : utf-8 -*-
+require 'yaml'
 
 module ONIX
   class Code < Subset
@@ -40,31 +41,9 @@ module ONIX
 
   end
 
-  class CodeFromHtml < Code
-
-    private
-    def self.parse_codelist(codelist)
-      h={}
-#      puts "PARSE CODELIST #{codelist}"
-      html=Nokogiri::HTML.parse(File.open(codelist))
-      html.search("//tr").each do |tr|
-#        pp tr
-        td_code=tr.at("./td[1]")
-        td_human=tr.at("./td[2]")
-        if td_code and td_human
-          h[td_code.text.strip]=self.rename(td_human.text.strip)
-        end
-      end
-      h
-    end
-
+  class CodeFromYaml < Code
     def self.hash
-      @hash||=self.parse_codelist(File.dirname(__FILE__) + "/../../data/codelists/onix-codelist-#{self.code_ident}.htm")
-    end
-
-    # from rails
-    def self.rename(term)
-      term.gsub(/\(|\)|\,|\-|’|\//,"").gsub(/\;/," Or ").gsub(/\s+/," ").split(" ").map{|t| t.capitalize}.join("")
+      @hash||=YAML.load(File.open(File.dirname(__FILE__) + "/../../data/codelists/codelist-#{self.code_ident}.yml"))[:codelist]
     end
 
     def self.list
@@ -74,10 +53,9 @@ module ONIX
     def self.code_ident
       nil
     end
-
   end
 
-  class CodeFromHtmlWithMime < CodeFromHtml
+  class CodeFromYamlWithMime < CodeFromYaml
     # main formats
     def mimetype
       case self.human
@@ -98,357 +76,357 @@ module ONIX
 
   end
 
-  class NotificationType < CodeFromHtml
+  class NotificationType < CodeFromYaml
     private
     def self.code_ident
       1
     end
   end
 
-  class ProductComposition < CodeFromHtml
+  class ProductComposition < CodeFromYaml
     private
     def self.code_ident
       2
     end
   end
 
-  class ProductIDType < CodeFromHtml
+  class ProductIDType < CodeFromYaml
     private
     def self.code_ident
       5
     end
   end
 
-  class WorkIDType < CodeFromHtml
+  class WorkIDType < CodeFromYaml
     private
     def self.code_ident
       16
     end
   end
 
-  class SupplierIDType < CodeFromHtml
+  class SupplierIDType < CodeFromYaml
     private
     def self.code_ident
       92
     end
   end
 
-  class AgentIDType < CodeFromHtml
+  class AgentIDType < CodeFromYaml
     private
     def self.code_ident
       92
     end
   end
 
-  class PublisherIDType < CodeFromHtml
+  class PublisherIDType < CodeFromYaml
     private
     def self.code_ident
       44
     end
   end
 
-  class ImprintIDType < CodeFromHtml
+  class ImprintIDType < CodeFromYaml
     private
     def self.code_ident
       44
     end
   end
 
-  class ProductForm < CodeFromHtml
+  class ProductForm < CodeFromYaml
     private
     def self.code_ident
       150
     end
   end
 
-  class EpubTechnicalProtection < CodeFromHtml
+  class EpubTechnicalProtection < CodeFromYaml
     private
     def self.code_ident
       144
     end
   end
 
-  class TitleType < CodeFromHtml
+  class TitleType < CodeFromYaml
     private
     def self.code_ident
       15
     end
   end
 
-  class TitleElementLevel < CodeFromHtml
+  class TitleElementLevel < CodeFromYaml
     private
     def self.code_ident
       149
     end
   end
 
-  class ProductFormDetail < CodeFromHtmlWithMime
+  class ProductFormDetail < CodeFromYamlWithMime
     private
     def self.code_ident
       175
     end
   end
 
-  class TextType < CodeFromHtml
+  class TextType < CodeFromYaml
     private
     def self.code_ident
       153
     end
   end
 
-  class ContributorRole < CodeFromHtml
+  class ContributorRole < CodeFromYaml
     private
     def self.code_ident
       17
     end
   end
 
-  class ContentAudience < CodeFromHtml
+  class ContentAudience < CodeFromYaml
     private
     def self.code_ident
       154
     end
   end
 
-  class ResourceForm < CodeFromHtml
+  class ResourceForm < CodeFromYaml
     private
     def self.code_ident
       161
     end
   end
 
-  class ResourceMode < CodeFromHtml
+  class ResourceMode < CodeFromYaml
     private
     def self.code_ident
       159
     end
   end
 
-  class ResourceContentType < CodeFromHtml
+  class ResourceContentType < CodeFromYaml
     private
     def self.code_ident
       158
     end
   end
 
-  class ContentDateRole < CodeFromHtml
+  class ContentDateRole < CodeFromYaml
     private
     def self.code_ident
       155
     end
   end
 
-  class ProductRelationCode < CodeFromHtml
+  class ProductRelationCode < CodeFromYaml
     private
     def self.code_ident
       51
     end
   end
 
-  class SubjectSchemeIdentifier < CodeFromHtml
+  class SubjectSchemeIdentifier < CodeFromYaml
     private
     def self.code_ident
       27
     end
   end
 
-  class ProductAvailability < CodeFromHtml
+  class ProductAvailability < CodeFromYaml
     private
     def self.code_ident
       65
     end
   end
 
-  class PriceType < CodeFromHtml
+  class PriceType < CodeFromYaml
     private
     def self.code_ident
       58
     end
   end
 
-  class PriceDateRole < CodeFromHtml
+  class PriceDateRole < CodeFromYaml
     private
     def self.code_ident
       173
     end
   end
 
-  class SupplyDateRole < CodeFromHtml
+  class SupplyDateRole < CodeFromYaml
     private
     def self.code_ident
       166
     end
   end
 
-  class SupplierRole < CodeFromHtml
+  class SupplierRole < CodeFromYaml
     private
     def self.code_ident
       93
     end
   end
 
-  class AgentRole < CodeFromHtml
+  class AgentRole < CodeFromYaml
     private
     def self.code_ident
       69
     end
   end
 
-  class SalesRightsType < CodeFromHtml
+  class SalesRightsType < CodeFromYaml
     private
     def self.code_ident
       46
     end
   end
 
-  class PublishingDateRole < CodeFromHtml
+  class PublishingDateRole < CodeFromYaml
     private
     def self.code_ident
       163
     end
   end
 
-  class PublishingStatus < CodeFromHtml
+  class PublishingStatus < CodeFromYaml
     private
     def self.code_ident
       64
     end
   end
 
-  class WorkRelationCode < CodeFromHtml
+  class WorkRelationCode < CodeFromYaml
     private
     def self.code_ident
       164
     end
   end
 
-  class CountryCode < CodeFromHtml
+  class CountryCode < CodeFromYaml
     private
     def self.code_ident
       91
     end
   end
 
-  class RegionCode < CodeFromHtml
+  class RegionCode < CodeFromYaml
     private
     def self.code_ident
       49
     end
   end
 
-  class CollectionType < CodeFromHtml
+  class CollectionType < CodeFromYaml
     private
     def self.code_ident
       148
     end
   end
 
-  class ExtentType < CodeFromHtml
+  class ExtentType < CodeFromYaml
     private
     def self.code_ident
       23
     end
   end
 
-  class ExtentUnit < CodeFromHtml
+  class ExtentUnit < CodeFromYaml
     private
     def self.code_ident
       24
     end
   end
 
-  class EpubUsageType < CodeFromHtml
+  class EpubUsageType < CodeFromYaml
     private
     def self.code_ident
       145
     end
   end
 
-  class EpubUsageStatus < CodeFromHtml
+  class EpubUsageStatus < CodeFromYaml
     private
     def self.code_ident
       146
     end
   end
 
-  class EpubUsageUnit < CodeFromHtml
+  class EpubUsageUnit < CodeFromYaml
     private
     def self.code_ident
       147
     end
   end
 
-  class CollectionIDType < CodeFromHtml
+  class CollectionIDType < CodeFromYaml
     private
     def self.code_ident
       13
     end
   end
 
-  class ResourceFeatureType < CodeFromHtml
+  class ResourceFeatureType < CodeFromYaml
     private
     def self.code_ident
       160
     end
   end
 
-  class ResourceVersionFeatureType < CodeFromHtml
+  class ResourceVersionFeatureType < CodeFromYaml
     private
     def self.code_ident
       162
     end
   end
 
-  class SupportingResourceFileFormat < CodeFromHtmlWithMime
+  class SupportingResourceFileFormat < CodeFromYamlWithMime
     private
     def self.code_ident
       178
     end
   end
 
-  class LanguageRole < CodeFromHtml
+  class LanguageRole < CodeFromYaml
     private
     def self.code_ident
       22
     end
   end
 
-  class LanguageCode < CodeFromHtml
+  class LanguageCode < CodeFromYaml
     private
     def self.code_ident
       74
     end
   end
 
-  class MarketDateRole < CodeFromHtml
+  class MarketDateRole < CodeFromYaml
     private
     def self.code_ident
       163
     end
   end
 
-  class TaxRateCode < CodeFromHtml
+  class TaxRateCode < CodeFromYaml
     private
     def self.code_ident
       62
     end
   end
 
-  class ProductFormFeatureType < CodeFromHtml
+  class ProductFormFeatureType < CodeFromYaml
     private
     def self.code_ident
       79
     end
   end
 
-  class SenderIDType < CodeFromHtml
+  class SenderIDType < CodeFromYaml
     private
     def self.code_ident
       44
     end
   end
 
-  class DateFormat < CodeFromHtml
+  class DateFormat < CodeFromYaml
     private
     def self.code_ident
       55

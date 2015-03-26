@@ -1,0 +1,5 @@
+---
+:codelist:
+  '00': UnspecifiedDefault
+  '10': PublisherCollection
+  '20': AscribedCollection
