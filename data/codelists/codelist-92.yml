@@ -1,0 +1,11 @@
+---
+:codelist:
+  '01': Proprietary
+  '02': Proprietary
+  '04': BörsenvereinVerkehrsnummer
+  '05': GermanIsbnAgencyPublisherIdentifier
+  '06': Gln
+  '07': San
+  '12': DistributeurscodeBoekenbank
+  '13': FondscodeBoekenbank
+  '23': VatIdentityNumber

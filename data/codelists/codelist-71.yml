@@ -1,0 +1,13 @@
+---
+:codelist:
+  '00': UnspecifiedSeeText
+  '01': RetailerExclusiveOwnBrand
+  '02': OfficeSuppliesEdition
+  '03': InternalPublisherUseOnlyDoNotList
+  '04': RetailerExclusive
+  '05': RetailerOwnBrand
+  '06': LibraryEdition
+  '07': SchoolsOnlyEdition
+  08: Indiziert
+  09: NotForSaleToLibraries
+  '10': NewsOutletEdition

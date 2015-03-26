@@ -1,0 +1,10 @@
+---
+:codelist:
+  '01': BornIn
+  '02': DiedIn
+  '03': FormerlyResidedIn
+  '04': CurrentlyResidesIn
+  '05': EducatedIn
+  '06': WorkedIn
+  '07': FlourishedIn
+  08: CitizenOf

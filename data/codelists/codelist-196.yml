@@ -1,0 +1,22 @@
+---
+:codelist:
+  '01': LiaComplianceScheme
+  '10': NoReadingSystemAccessibilityOptionsDisabledExcept
+  '11': TableOfContentsNavigation
+  '12': IndexNavigation
+  '13': ReadingOrder
+  '14': ShortAlternativeDescriptions
+  '15': FullAlternativeDescriptions
+  '16': VisualisedDataAlsoAvailableAsNongraphicalData
+  '17': AccessibleMathContent
+  '18': AccessibleChemContent
+  '19': PrintequivalentPageNumbering
+  '20': SynchronisedPrerecordedAudio
+  '21': TexttospeechHintingProvided
+  '22': LanguageTaggingProvided
+  '94': ComplianceWebPageForDetailedAccessibilityInformation
+  '95': TrustedIntermediarysWebPageForDetailedAccessibilityInformation
+  '96': PublishersWebPageForDetailedAccessibilityInformation
+  '97': CompatibilityTested
+  '98': TrustedIntermediaryContact
+  '99': PublisherContactForFurtherAccessibilityInformation

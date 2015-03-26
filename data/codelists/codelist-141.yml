@@ -1,0 +1,12 @@
+---
+:codelist:
+  '00': NotBarcoded
+  '01': BarcodedSchemeUnspecified
+  '02': Gtin13
+  '03': Gtin135UsDollarPriceEncoded
+  '04': Gtin135CanDollarPriceEncoded
+  '05': Gtin135NoPriceEncoded
+  '06': Upc12Itemspecific
+  '07': Upc125Itemspecific
+  08: Upc12Pricepoint
+  09: Upc125Pricepoint

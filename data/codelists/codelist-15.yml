@@ -1,0 +1,15 @@
+---
+:codelist:
+  '00': Undefined
+  '01': DistinctiveTitleBookOrCoverTitleSerialOrTitleOnItemSerialContentItemOrReviewedResource
+  '02': IssnKeyTitleOfSerial
+  '03': TitleInOriginalLanguage
+  '04': TitleAcronymOrInitialism
+  '05': AbbreviatedTitle
+  '06': TitleInOtherLanguage
+  '07': ThematicTitleOfJournalIssue
+  08: FormerTitle
+  '10': DistributorsTitle
+  '11': AlternativeTitleOnCover
+  '12': AlternativeTitleOnBack
+  '13': ExpandedTitle

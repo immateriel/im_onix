@@ -1,0 +1,9 @@
+---
+:codelist:
+  '01': WarningChokingHazardSmallPartsNotForChildrenUnder3Yrs
+  '02': WarningChokingHazardThisToyIsASmallBallNotForChildrenUnder3Yrs
+  '03': WarningChokingHazardToyContainsASmallBallNotForChildrenUnder3Yrs
+  '04': WarningChokingHazardChildrenUnder8YrsCanChokeOrSuffocateOnUninflatedOrBrokenBalloonsAdultSupervisionRequiredKeepUninflatedBalloonsFromChildrenDiscardBrokenBalloonsAtOnce
+  '05': WarningChokingHazardThisToyIsAMarbleNotForChildrenUnder3Yrs
+  '06': WarningChokingHazardToyContainsAMarbleNotForChildrenUnder3Yrs
+  '07': NoChokingHazardWarningNecessary

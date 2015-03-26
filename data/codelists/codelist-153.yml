@@ -1,0 +1,19 @@
+---
+:codelist:
+  '01': SenderdefinedText
+  '02': ShortDescriptionannotation
+  '03': Description
+  '04': TableOfContents
+  '05': FlapCoverCopy
+  '06': ReviewQuote
+  '07': ReviewQuotePreviousEdition
+  08: ReviewQuotePreviousWork
+  09: Endorsement
+  '10': PromotionalHeadline
+  '11': Feature
+  '12': BiographicalNote
+  '13': PublishersNotice
+  '14': Excerpt
+  '15': Index
+  '16': ShortDescriptionannotationForCollection
+  '17': DescriptionForCollection
