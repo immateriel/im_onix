@@ -266,4 +266,16 @@ class TestImOnix < Minitest::Test
       assert_equal "42424242424242", @message.sender.gln
     end
   end
+
+  context "streaming epub" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/streaming.xml")
+      @product=@message.products.last
+    end
+
+    should "be a streaming product" do
+      assert @product.streaming?
+    end
+  end
 end
