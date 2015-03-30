@@ -389,6 +389,22 @@ module ONIX
       @form.code=="EC"
     end
 
+    def audio?
+      if @form and @form.human =~ /Audio/
+        true
+      else
+        false
+      end
+    end
+
+    def audio_format
+      self.audio_formats.first.human if self.audio_formats.first
+    end
+
+    def audio_formats
+      @form_details.select{|fd| fd.code =~ /^A.*/}
+    end
+
     def bundle?
       @composition.human=="MultipleitemRetailProduct"
     end

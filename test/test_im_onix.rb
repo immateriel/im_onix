@@ -279,6 +279,23 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context "audio product" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/audio.xml")
+      @product=@message.products.last
+    end
+
+    should "be an audio product" do
+      assert @product.audio?
+    end
+
+    should "be an Mp3Format product" do
+      assert_equal "Mp3Format", @product.audio_format
+    end
+
+  end
+
   context "streaming epub" do
     setup do
       @message = ONIX::ONIXMessage.new

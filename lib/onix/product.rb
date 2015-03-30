@@ -198,6 +198,12 @@ module ONIX
     end
 
     # :category: High level
+    # is product audio ?
+    def audio?
+      @descriptive_detail.audio?
+    end
+
+    # :category: High level
     # is product digital ?
     def streaming?
       @descriptive_detail.streaming?
@@ -223,6 +229,18 @@ module ONIX
     # digital file filesize in bytes
     def filesize
       @descriptive_detail.filesize
+    end
+
+    # :category: High level
+    # audio formats array
+    def audio_formats
+      @descriptive_detail.audio_formats
+    end
+
+    # :category: High level
+    # audio format string ()
+    def audio_format
+      @descriptive_detail.audio_format
     end
 
     # :category: High level
