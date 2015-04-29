@@ -490,35 +490,6 @@ module ONIX
         end
       end
 
-
-      grouped_territories_supplies={}
-      supplies.each do |supply|
-        pr_key="#{supply[:available]}_#{supply[:including_tax]}_#{supply[:currency]}"
-        grouped_territories_supplies[pr_key]||=[]
-        grouped_territories_supplies[pr_key] << {:price=>supply[:price],:from_date=>supply[:from_date], :until_date=>supply[:until_date]}
-        grouped_territories_supplies[pr_key].uniq!
-      end
-
-      # merge territories
-      grouped_territories=0
-      grouped_supplies={}
-      supplies.sort{|s1,s2| s1[:from_date]||Date.new<=>s2[:from_date]||Date.new}.each do |supply|
-        pr_key="#{supply[:available]}_#{supply[:including_tax]}_#{supply[:from_date]}_#{supply[:until_date]}_#{supply[:currency]}_#{supply[:price]}_#{grouped_territories}"
-        gpr_key="#{supply[:available]}_#{supply[:including_tax]}_#{supply[:currency]}"
-
-        grouped_supplies[pr_key]||=supply
-
-        if grouped_territories_supplies[gpr_key].select{|s| s[:from_date]!=supply[:from_date] or s[:until_date] != supply[:until_date]}.length==1
-          grouped_supplies[pr_key][:territory]+=supply[:territory]
-          grouped_supplies[pr_key][:territory].uniq!
-          grouped_supplies[pr_key][:territory].sort!
-        else
-          grouped_territories+=1
-        end
-      end
-
-      supplies=grouped_supplies.to_a.map{|h| h.last}
-
       grouped_supplies={}
       supplies.each do |supply|
         pr_key="#{supply[:available]}_#{supply[:including_tax]}_#{supply[:currency]}_#{supply[:territory].join('_')}"
@@ -564,11 +535,27 @@ module ONIX
         end
       end
 
-      supplies=[]
+      # merge by territories
+      grouped_territories_supplies={}
       grouped_supplies.each do |ksup,supply|
         fsupply=supply.first
-        supplies << {:including_tax=>fsupply[:including_tax],:currency=>fsupply[:currency],:territory=>fsupply[:territory],:available=>fsupply[:available], :availability_date=>fsupply[:availability_date],
-                     :prices=>supply.map{|s|
+        pr_key="#{fsupply[:available]}_#{fsupply[:including_tax]}_#{fsupply[:currency]}"
+        supply.each do |s|
+          pr_key+="_#{s[:price]}_#{s[:from_date]}_#{s[:until_date]}"
+        end
+        grouped_territories_supplies[pr_key]||=[]
+        grouped_territories_supplies[pr_key] << supply
+      end
+
+      supplies=[]
+      grouped_territories_supplies.each do |ksup,supply|
+        fsupply=supply.first.first
+        supplies << {:including_tax=>fsupply[:including_tax],:currency=>fsupply[:currency],
+                     :territory=>supply.map{|fs| fs.map{|s| s[:territory]}}.flatten.uniq,
+                     :available=>fsupply[:available],
+                     :availability_date=>fsupply[:availability_date],
+                     :prices=>supply.first.map{|s|
+
                        s[:amount]=s[:price]
                        s.delete(:price)
                        s.delete(:available)
@@ -579,8 +566,6 @@ module ONIX
                        s
                      }}
       end
-
-#      supplies=grouped_supplies.to_a.map{|h| h.last}.flatten
 
       supplies
     end
