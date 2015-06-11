@@ -101,17 +101,7 @@ module ONIX
 
     # open with arg detection
     def open(arg)
-      data=""
-      case arg
-        when String
-          if File.file?(arg)
-            data=File.open(arg)
-          else
-            data=arg
-          end
-        when File, Tempfile
-          data=arg.read
-      end
+      data=ONIX::Helper.arg_to_data(arg)
 
       xml=Nokogiri::XML.parse(data)
       xml.remove_namespaces!
