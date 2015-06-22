@@ -5,16 +5,19 @@ module ONIX
 
     def parse(n)
       @format=DateFormat.from_code("00")
+      date_txt=nil
       @date=nil
       n.children.each do |t|
         case t.name
           when "DateFormat"
             @format=DateFormat.from_code(t.text)
+          when "Date"
+            date_txt=t.text
         end
       end
 
       code_format=format_from_code(@format.code)
-      text_format=format_from_string(n.text)
+      text_format=format_from_string(date_txt)
 
       format=code_format
 
@@ -27,11 +30,11 @@ module ONIX
       if format
       case @format.code
         when "00"
-          @date=Date.strptime(n.text, format)
+          @date=Date.strptime(date_txt, format)
         when "01"
-          @date=Date.strptime(n.text, format)
+          @date=Date.strptime(date_txt, format)
         when "14"
-          @date=Time.strptime(n.text, format)
+          @date=Time.strptime(date_txt, format)
         else
           @date=nil
       end
@@ -39,7 +42,6 @@ module ONIX
       rescue
         # invalid date
       end
-
     end
 
     def format_from_code(code)

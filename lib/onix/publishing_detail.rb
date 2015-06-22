@@ -21,10 +21,11 @@ module ONIX
         case t.name
           when "PublishingDateRole"
             @role=PublishingDateRole.from_code(t.text)
-          when "Date"
-            @date=OnixDate.from_xml(t)
         end
       end
+
+      @date=OnixDate.from_xml(n)
+
     end
   end
 

@@ -530,7 +530,11 @@ module ONIX
 
         else
           supply.each do |s|
+            if s[:from_date] and s[:from_date] >= s[:availability_date]
+              s[:availability_date]=s[:from_date]
+            end
             s[:from_date]=nil
+
           end
         end
       end
@@ -548,6 +552,7 @@ module ONIX
       end
 
       supplies=[]
+
       grouped_territories_supplies.each do |ksup,supply|
         fsupply=supply.first.first
         supplies << {:including_tax=>fsupply[:including_tax],:currency=>fsupply[:currency],

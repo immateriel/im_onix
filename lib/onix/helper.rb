@@ -17,7 +17,7 @@ module ONIX
     end
 
     # traverse each product as xml string
-    def self.each_xml_product(arg, &block)
+    def self.each_xml_product(arg,  &block)
       data=self.arg_to_data(arg)
       Nokogiri::XML::Reader(data).each do |node|
         if node.name == 'Product' and node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
@@ -79,6 +79,7 @@ module ONIX
               date=date_str
             end
         rescue
+
           date=nil
         end
 

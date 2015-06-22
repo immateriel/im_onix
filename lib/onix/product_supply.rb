@@ -9,10 +9,10 @@ module ONIX
         case t.name
           when "MarketDateRole"
             @role = MarketDateRole.from_code(t.text)
-          when "Date"
-            @date=OnixDate.from_xml(t)
         end
       end
+      @date=OnixDate.from_xml(n)
+
     end
   end
 
@@ -65,10 +65,10 @@ module ONIX
         case t.name
           when "SupplyDateRole"
             @role = SupplyDateRole.from_code(t.text)
-          when "Date"
-            @date = OnixDate.from_xml(t)
         end
       end
+      @date = OnixDate.from_xml(n)
+
     end
   end
 
