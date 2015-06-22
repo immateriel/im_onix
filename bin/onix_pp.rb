@@ -158,6 +158,8 @@ msg.products.each do |product|
 
     if supply[:availability_date]
       output+=" starting #{supply[:availability_date]}"
+      output+=" (#{supply[:availability_date].to_date})" if supply[:availability_date].class==Time
+
     end
 
     puts output
@@ -177,9 +179,11 @@ msg.products.each do |product|
 
       if price[:from_date]
       output+=" from #{price[:from_date]}"
+        output+=" (#{price[:from_date].to_date})" if price[:from_date].class==Time
     end
     if price[:until_date]
       output+=" until #{price[:until_date]}"
+      output+=" (#{price[:until_date].to_date})" if price[:until_date].class==Time
     end
       puts  output
 

@@ -25,11 +25,9 @@ module ONIX
         case t.name
           when "PriceDateRole"
             @role = PriceDateRole.from_code(t.text)
-          when "Date"
-            @date = OnixDate.from_xml(t)
         end
       end
-#      @date = Helper.parse_date(n)
+      @date = OnixDate.from_xml(n)
     end
 
   end

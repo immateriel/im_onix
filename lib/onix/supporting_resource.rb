@@ -7,10 +7,10 @@ module ONIX
         case t.name
           when "ContentDateRole"
             @role=ContentDateRole.from_code(t.text)
-          when "Date"
-            @date=OnixDate.from_xml(t)
         end
       end
+      @date=OnixDate.from_xml(n)
+
     end
   end
 
