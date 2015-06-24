@@ -266,6 +266,33 @@ class TestImOnix < Minitest::Test
 
   end
 
+  context "price with tax" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices4.xml")
+      @product=@message.products.last
+    end
+
+    should "have a tax amount and a tax rate" do
+      assert_equal 109, @product.supplies_for_country('FR','EUR').first[:prices].first[:tax].amount
+      assert_equal 5.5, @product.supplies_for_country('FR','EUR').first[:prices].first[:tax].rate_percent
+    end
+
+  end
+
+  context "prices without taxes" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices1.xml")
+      @product=@message.products.last
+    end
+
+    should "not have a tax" do
+      assert_nil @product.supplies_for_country('FR','EUR').first[:prices].first[:tax]
+    end
+
+  end
+
   context "file full-sender.xml" do
     setup do
       @message = ONIX::ONIXMessage.new

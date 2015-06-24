@@ -33,7 +33,7 @@ module ONIX
   end
 
   class Price < Subset
-    attr_accessor :amount, :type, :currency, :dates, :territory, :discount
+    attr_accessor :amount, :type, :currency, :dates, :territory, :discount, :tax
 
     def initialize
       @dates=[]

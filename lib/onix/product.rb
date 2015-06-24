@@ -441,7 +441,8 @@ module ONIX
     #     :territory=>string,
     #     :prices=>[{:amount=>int,
     #                :from_date=>date,
-    #                :until_date=>date}]}]
+    #                :until_date=>date,
+    #                :tax=>{:amount=>int, :rate_percent=>float}}]}]
     def supplies
       supplies=[]
 
@@ -479,6 +480,7 @@ module ONIX
               supply[:from_date]=p.from_date
               supply[:until_date]=p.until_date
               supply[:currency]=p.currency
+              supply[:tax]=p.tax
 
               unless supply[:availability_date]
                 supply[:availability_date]=@publishing_detail.publication_date
