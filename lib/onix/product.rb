@@ -663,6 +663,12 @@ module ONIX
       end
     end
 
+    def sales_restriction
+      if @publishing_detail
+        @publishing_detail.sales_restriction
+      end
+    end
+
     # :category: High level
     # product countries rights string array
     def countries_rights
