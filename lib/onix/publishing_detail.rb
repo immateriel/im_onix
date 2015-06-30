@@ -29,10 +29,25 @@ module ONIX
     end
   end
 
+  class SalesRestriction < Subset
+    attr_accessor :type
+
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "SalesRestrictionType"
+            @type = SalesRestrictionType.from_code(t.text)
+        end
+      end
+    end
+
+  end
+
   class PublishingDetail < Subset
     attr_accessor :status, :publishers, :imprints,
                   :sales_rights,
-                  :publishing_dates
+                  :publishing_dates,
+                  :sales_restriction
 
     def initialize
       @sales_rights=[]
@@ -72,6 +87,10 @@ module ONIX
       end
     end
 
+    def sales_restriction
+      @sales_restriction
+    end
+
     def parse(n)
       n.children.each do |t|
         case t.name
@@ -81,6 +100,8 @@ module ONIX
             @sales_rights << SalesRights.from_xml(t)
           when "PublishingDate"
             @publishing_dates << PublishingDate.from_xml(t)
+          when "SalesRestriction"
+            @sales_restriction = SalesRestriction.from_xml(t)
         end
       end
 
