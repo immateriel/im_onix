@@ -4,6 +4,7 @@ module ONIX
   class PublishingDetail < SubsetDSL
     element "PublishingStatus", :subset
     elements "SalesRights", :subset, {:pluralize=>false}
+    element "SalesRestriction", :subset
     element "ROWSalesRightsType", :subset, {:klass=>"SalesRightsType"}
     elements "PublishingDate", :subset
     elements "Publisher", :subset
@@ -34,7 +35,25 @@ module ONIX
     end
 
     def publication_date
-      pub=@publishing_dates.select{|pd| pd.role.human=="PublicationDate" or pd.role.human=="PublicationDateOfPrintCounterpart" or pd.role.human=="EmbargoDate"}.first
+      pub=@publishing_dates.select{|pd| pd.role.human=="PublicationDate" or pd.role.human=="PublicationDateOfPrintCounterpart"}.first
+      if pub
+        pub.date
+      else
+        nil
+      end
+    end
+
+    def embargo_date
+      pub=@publishing_dates.select{|pd| pd.role.human=="EmbargoDate"}.first
+      if pub
+        pub.date
+      else
+        nil
+      end
+    end
+
+    def preorder_embargo_date
+      pub=@publishing_dates.select{|pd| pd.role.human=="PreorderEmbargoDate"}.first
       if pub
         pub.date
       else
