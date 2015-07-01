@@ -334,4 +334,17 @@ class TestImOnix < Minitest::Test
       assert @product.streaming?
     end
   end
+
+  context 'sales restriction of "Certaines n’avaient jamais vu la mer"' do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/9782752906700.xml")
+      @product=@message.products.first
+    end
+
+    should "be 09" do
+      assert_equal "09", @product.sales_restriction.type.code
+    end
+  end
+
 end
