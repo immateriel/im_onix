@@ -445,6 +445,7 @@ module ONIX
     #     :including_tax=>bool,
     #     :currency=>string,
     #     :territory=>string,
+    #     :suppliers=>[Supplier,...],
     #     :prices=>[{:amount=>int,
     #                :from_date=>date,
     #                :until_date=>date,
@@ -458,6 +459,7 @@ module ONIX
           ps.supply_details.each do |sd|
             sd.prices.each do |p|
               supply={}
+              supply[:suppliers]=sd.suppliers
               supply[:available]=sd.available?
               supply[:availability_date]=sd.availability_date
 
@@ -567,6 +569,7 @@ module ONIX
                      :territory=>supply.map{|fs| fs.map{|s| s[:territory]}}.flatten.uniq,
                      :available=>fsupply[:available],
                      :availability_date=>fsupply[:availability_date],
+                     :suppliers=>fsupply[:suppliers],
                      :prices=>supply.first.map{|s|
 
                        s[:amount]=s[:price]

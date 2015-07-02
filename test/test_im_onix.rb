@@ -92,6 +92,10 @@ class TestImOnix < Minitest::Test
       assert_equal "Julie Otsuka", @product.contributors.first.name
     end
 
+    should "have supplier named" do
+      assert_equal "immatériel·fr", @product.supplies_for_country("FR","EUR").first[:suppliers].first.name
+    end
+
     should "be available in France" do
       assert_equal true, @product.supplies_for_country("FR","EUR").first[:available]
     end
