@@ -94,6 +94,16 @@ class TestImOnix < Minitest::Test
       assert_equal 3, @product.parts.length
     end
 
+    should "have a front cover illustration with a last update date printed in UTC" do
+      assert_equal @product.illustrations.first[:type], 'FrontCover'
+      assert_equal @product.illustrations.first[:caption], 'Couverture principale'
+      assert_equal @product.illustrations.first[:updated_at], '20121105T000000+0100'
+    end
+
+    should "have a publisher log illustration" do
+      assert_equal @product.illustrations.last[:type], 'PublisherLogo'
+    end
+
     should "have parts that do not provide info about fixed layout or not" do
       @product.parts.each do |part|
         assert_equal nil, part.reflowable?

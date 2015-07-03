@@ -111,6 +111,12 @@ module ONIX
         self.last_updated_content_date.date
       end
     end
+
+    def last_updated_utc
+      if self.last_updated_content_date
+        self.last_updated_content_date.date.date.to_time.strftime('%Y%m%dT%H%M%S%z')
+      end
+    end
   end
 
   class ResourceFeature < SubsetDSL
@@ -154,6 +160,16 @@ module ONIX
 
     def features
       @resource_versions
+    end
+
+    def caption_feature
+      @features.select{|i| i.type.human=="Caption"}.first
+    end
+
+    def caption
+      if self.caption_feature
+        self.caption_feature.value
+      end
     end
 
     def target_audience
