@@ -680,6 +680,8 @@ module ONIX
 
     # :category: High level
     def illustrations
+      return [] unless @collateral_detail && @collateral_detail.supporting_resources
+
       @collateral_detail.supporting_resources.select { |sr| sr.mode.human == 'Image' }.map do |image_resource|
         {
           :url => image_resource.versions.last.links.first.strip,
