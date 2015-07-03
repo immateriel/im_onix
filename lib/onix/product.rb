@@ -440,7 +440,7 @@ module ONIX
     def illustrations
       return [] unless @collateral_detail && @collateral_detail.supporting_resources
 
-      @collateral_detail.supporting_resources.select { |sr| sr.mode.human == 'Image' }.map do |image_resource|
+      @collateral_detail.supporting_resources.select {|sr| sr.mode.human=='Image'}.map do |image_resource|
         {
           :url => image_resource.versions.last.links.first.strip,
           :type => image_resource.type.human,
