@@ -460,7 +460,7 @@ class TestImOnix < Minitest::Test
     should "have a front cover illustration with a last update date printed in UTC" do
       assert_equal @product.illustrations.first[:type], 'FrontCover'
       assert_equal @product.illustrations.first[:caption], 'Couverture principale'
-      assert_equal @product.illustrations.first[:updated_at], '20121105T000000+0100'
+      assert_equal @product.illustrations.first[:updated_at], '20121104T230000+0000'
     end
 
     should "have a publisher logo illustration" do
