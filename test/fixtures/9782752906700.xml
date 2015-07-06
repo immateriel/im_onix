@@ -385,16 +385,8 @@
       <ResourceContentType>01</ResourceContentType>
       <ContentAudience>00</ContentAudience>
       <ResourceMode>03</ResourceMode>
-      <ResourceFeature>
-        <ResourceFeatureType>02</ResourceFeatureType>
-        <FeatureValue>Couverture principale</FeatureValue>
-      </ResourceFeature>
       <ResourceVersion>
         <ResourceForm>02</ResourceForm>
-        <ResourceVersionFeature>
-          <ResourceVersionFeatureType>01</ResourceVersionFeatureType>
-          <FeatureValue>D503</FeatureValue>
-        </ResourceVersionFeature>
         <ResourceLink>http://images.immateriel.fr/covers/9782752906700.png</ResourceLink>
         <ContentDate>
           <ContentDateRole>17</ContentDateRole>
