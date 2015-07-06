@@ -84,7 +84,6 @@ module ONIX
       @features.select{|i| i.type.human=="Md5HashValue"}.first
     end
 
-
     def image_width
       if self.image_width_feature
         self.image_width_feature.value.to_i
@@ -110,6 +109,12 @@ module ONIX
     def last_updated
       if self.last_updated_content_date
         self.last_updated_content_date.date.date
+      end
+    end
+
+    def last_updated_utc
+      if self.last_updated_content_date
+        self.last_updated_content_date.date.date.to_time.strftime('%Y%m%dT%H%M%S%z')
       end
     end
 
@@ -160,6 +165,17 @@ module ONIX
       @versions=[]
       @features=[]
     end
+
+    def caption_feature
+      @features.select{|i| i.type.human=="Caption"}.first
+    end
+
+    def caption
+      if self.caption_feature
+        self.caption_feature.value
+      end
+    end
+
     def parse(n)
       n.children.each do |t|
         case t.name

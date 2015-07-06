@@ -351,4 +351,22 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context "epub with illustrations" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/illustrations.xml")
+      @product=@message.products.last
+    end
+
+    should "have a front cover illustration with a last update date printed in UTC" do
+      assert_equal @product.illustrations.first[:type], 'FrontCover'
+      assert_equal @product.illustrations.first[:caption], 'Couverture principale'
+      assert_equal @product.illustrations.first[:updated_at], '20121105T000000+0100'
+    end
+
+    should "have a publisher logo illustration" do
+      assert_equal @product.illustrations.last[:type], 'PublisherLogo'
+    end
+  end
+
 end
