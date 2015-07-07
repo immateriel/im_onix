@@ -33,6 +33,10 @@ class TestImOnix < Minitest::Test
       assert_equal "9782752908643", @product.ean
     end
 
+    should "have an ISBN-13" do
+      assert_equal "9782752908643", @product.isbn13
+    end
+
     should "have a named proprietary id" do
       assert_equal 'O192530', @product.proprietary_ids.first.value
       assert_equal 'SKU', @product.proprietary_ids.first.name
