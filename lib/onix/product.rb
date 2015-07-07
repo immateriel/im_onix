@@ -244,6 +244,7 @@ module ONIX
 
   class Product < SubsetDSL
     include EanMethods
+    include IsbnMethods
     include ProprietaryIdMethods
 
     element "RecordReference", :text
