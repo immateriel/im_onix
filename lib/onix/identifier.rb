@@ -56,6 +56,22 @@ module ONIX
     end
   end
 
+  module IsbnMethods
+    # ISBN-13 string identifier from identifiers
+    def isbn13
+      if isbn13_identifier
+        isbn13_identifier.value
+      else
+        nil
+      end
+    end
+
+    private
+    def isbn13_identifier
+      @identifiers.select{|id| id.type.human=="Isbn13"}.first
+    end
+  end
+
   module GlnMethods
     # GLN string identifier from identifiers
     def gln
