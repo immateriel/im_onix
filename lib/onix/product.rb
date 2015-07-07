@@ -38,6 +38,7 @@ module ONIX
 
 
     include EanMethods
+    include IsbnMethods
     include ProprietaryIdMethods
 
     # :category: High level
