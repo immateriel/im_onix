@@ -299,10 +299,10 @@ class TestImOnix < Minitest::Test
     end
   end
 
-  context "audio product" do
+  context "audio product specified as 'downloadable audio file'" do
     setup do
       @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/audio.xml")
+      @message.parse("test/fixtures/audio1.xml")
       @product=@message.products.last
     end
 
