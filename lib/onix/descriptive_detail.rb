@@ -390,11 +390,7 @@ module ONIX
     end
 
     def audio?
-      if @form and @form.human =~ /Audio/
-        true
-      else
-        false
-      end
+      not audio_formats.empty?
     end
 
     def audio_format

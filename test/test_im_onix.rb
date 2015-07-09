@@ -314,10 +314,27 @@ class TestImOnix < Minitest::Test
     end
   end
 
-  context "audio product" do
+  context "audio product specified as 'downloadable audio file'" do
     setup do
       @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/audio.xml")
+      @message.parse("test/fixtures/audio1.xml")
+      @product=@message.products.last
+    end
+
+    should "be an audio product" do
+      assert @product.audio?
+    end
+
+    should "be an Mp3Format product" do
+      assert_equal "Mp3Format", @product.audio_format
+    end
+
+  end
+
+  context "audio product specified as 'digital content delivered by download only'" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/audio2.xml")
       @product=@message.products.last
     end
 
