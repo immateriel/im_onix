@@ -50,6 +50,10 @@ class TestImOnix < Minitest::Test
       assert_equal nil, @product.file_format
     end
 
+    should "have no format details" do
+      assert_equal [], @product.form_details
+    end
+
     should "have publisher name" do
       assert_equal "Phébus", @product.publisher_name
     end
@@ -130,15 +134,19 @@ class TestImOnix < Minitest::Test
   end
 
   context "reflowable epub" do
-      setup do
-        @message = ONIX::ONIXMessage.new
-        @message.parse("test/fixtures/reflowable.xml")
-        @product = @message.products.last
-      end
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/reflowable.xml")
+      @product = @message.products.last
+    end
 
-      should "be reflowable" do
-        assert_equal true, @product.reflowable?
-      end
+    should "be reflowable" do
+      assert_equal true, @product.reflowable?
+    end
+
+    should "have format details" do
+      assert_equal 2, @product.form_details.length
+    end
   end
 
   context "epub fixed layout" do
@@ -168,6 +176,10 @@ class TestImOnix < Minitest::Test
       parent = @product.part_of_product
       assert_equal "9782752908643", parent.ean
       assert_equal "O192530", parent.proprietary_ids.first.value
+    end
+
+    should "have format details" do
+      assert_equal 1, @product.form_details.length
     end
   end
 
