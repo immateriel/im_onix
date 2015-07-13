@@ -250,6 +250,10 @@ module ONIX
       @descriptive_detail.file_format
     end
 
+    def form_details
+      @descriptive_detail.form_details
+    end
+
     def reflowable?
       return @descriptive_detail.reflowable?
     end
