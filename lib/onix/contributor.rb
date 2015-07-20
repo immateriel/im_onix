@@ -2,7 +2,7 @@ require 'onix/subset'
 
 module ONIX
   class Contributor < Subset
-    attr_accessor :name_before_key, :key_names, :person_name, :role, :biography_note, :sequence_number
+    attr_accessor :name_before_key, :key_names, :person_name, :inverted_name, :role, :biography_note, :place, :sequence_number
 
     # :category: High level
     # flatten person name (firstname lastname)
@@ -18,6 +18,12 @@ module ONIX
           end
         end
       end
+    end
+
+    # :category: High level
+    # inverted flatten person name
+    def inverted_name
+      @inverted_name
     end
 
     # :category: High level
@@ -47,14 +53,32 @@ module ONIX
             @key_names=t.text
           when "PersonName"
             @person_name=t.text
+          when "PersonNameInverted"
+            @inverted_name=t.text
           when "BiographicalNote"
             @biography_note=t.text.strip
           when "ContributorRole"
             @role=ContributorRole.from_code(t.text)
-
+          when "ContributorPlace"
+            @place=ContributorPlace.from_xml(t)
         end
       end
-
     end
+
+    class ContributorPlace < Subset
+      attr_accessor :relator, :country_code
+
+      def parse(p)
+        p.children.each do |t|
+          case t.name
+            when "ContributorPlaceRelator"
+              @relator=ContributorPlaceRelator.from_code(t.text)
+            when "CountryCode"
+              @country_code=t.text
+          end
+        end
+      end
+    end
+
   end
 end

@@ -181,6 +181,13 @@ module ONIX
     end
   end
 
+  class ContributorPlaceRelator < CodeFromYaml
+    private
+    def self.code_ident
+      151
+    end
+  end
+
   class ContentAudience < CodeFromYaml
     private
     def self.code_ident
