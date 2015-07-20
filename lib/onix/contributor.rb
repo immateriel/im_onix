@@ -38,6 +38,22 @@ module ONIX
     end
 
     # :category: High level
+    # inverted flatten person name (lastname, firstname)
+    def inverted_name
+      if @person_name_inverted
+        @person_name_inverted
+      else
+        if @key_names
+          if @name_before_key
+            "#{@key_names}, #{@name_before_key}"
+          else
+            @key_names
+          end
+        end
+      end
+    end
+
+    # :category: High level
     # biography string with HTML
     def biography
       @biography_note
