@@ -43,19 +43,9 @@ module ONIX
     end
 
     # :category: High level
-    # inverted flatten person name (lastname, firstname)
+    # inverted flatten person name
     def inverted_name
-      if @person_name_inverted
-        @person_name_inverted
-      else
-        if @key_names
-          if @name_before_key
-            "#{@key_names}, #{@name_before_key}"
-          else
-            @key_names
-          end
-        end
-      end
+      @person_name_inverted
     end
 
     # :category: High level
