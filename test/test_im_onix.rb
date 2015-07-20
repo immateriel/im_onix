@@ -128,6 +128,10 @@ class TestImOnix < Minitest::Test
       assert_equal "Otsuka, Julie", @product.contributors.first.inverted_name
     end
 
+    should "not have author place" do
+      assert_nil @product.contributors.first.place
+    end
+
     should "have supplier named" do
       assert_equal "immatériel·fr", @product.supplies_for_country("FR","EUR").first[:suppliers].first.name
     end
@@ -208,6 +212,19 @@ class TestImOnix < Minitest::Test
 
     should "have format details" do
       assert_equal 1, @product.form_details.length
+    end
+  end
+
+  context "author with place informations" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/illustrations.xml")
+      @product=@message.products.last
+    end
+
+    should "have author place" do
+      assert_equal "US", @product.contributors.first.place.country_code
+      assert_equal "BornIn", @product.contributors.first.place.relator.human
     end
   end
 
