@@ -73,7 +73,7 @@ module ONIX
   end
 
   class SupplyDetail < Subset
-    attr_accessor :availability, :suppliers, :supply_dates, :prices
+    attr_accessor :availability, :suppliers, :supply_dates, :prices, :unpriced_item_type
 
     def initialize
       @suppliers=[]
@@ -113,6 +113,8 @@ module ONIX
             @supply_dates << SupplyDate.from_xml(t)
           when "Price"
             @prices << Price.from_xml(t)
+          when "UnpricedItemType"
+            @unpriced_item_type=UnpricedItemType.from_code(t.text)
         end
       end
     end
