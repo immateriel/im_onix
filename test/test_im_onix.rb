@@ -581,7 +581,7 @@ class TestImOnix < Minitest::Test
       assert_equal 'PublisherLogo', @product.illustrations.last[:type]
     end
 
-    should "have a 2 illustrations" do
+    should "have 2 illustrations" do
       assert_equal 2, @product.illustrations.size
     end
   end
