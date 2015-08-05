@@ -230,6 +230,9 @@ class TestImOnix < Minitest::Test
       assert_equal 1499, @product.at_time_price_amount_for(Time.new(2013,4,27),"EUR","FR")
     end
 
+    should "not have a price to be announced" do
+      assert_equal false, @product.price_to_be_announced?
+    end
   end
 
 
@@ -266,6 +269,10 @@ class TestImOnix < Minitest::Test
 
     should "be priced in Switzerland at future date" do
       assert_equal 500, @product.at_time_price_amount_for(Time.new(2013,12,1),"CHF","CH")
+    end
+
+    should "not have a price to be announced" do
+      assert_equal false, @product.price_to_be_announced?
     end
   end
 
@@ -308,6 +315,9 @@ class TestImOnix < Minitest::Test
       assert_equal 250, @product.at_time_price_amount_for(Time.new(2013,6,10),"CHF","CH")
     end
 
+    should "not have a price to be announced" do
+      assert_equal false, @product.price_to_be_announced?
+    end
   end
 
   context "price with tax" do
@@ -322,6 +332,9 @@ class TestImOnix < Minitest::Test
       assert_equal 5.5, @product.supplies_for_country('FR','EUR').first[:prices].first[:tax].rate_percent
     end
 
+    should "not have a price to be announced" do
+      assert_equal false, @product.price_to_be_announced?
+    end
   end
 
   context "prices without taxes" do
@@ -335,6 +348,9 @@ class TestImOnix < Minitest::Test
       assert_nil @product.supplies_for_country('FR','EUR').first[:prices].first[:tax]
     end
 
+    should "not have a price to be announced" do
+      assert_equal false, @product.price_to_be_announced?
+    end
   end
 
   context "file full-sender.xml" do
@@ -556,13 +572,29 @@ class TestImOnix < Minitest::Test
     end
 
     should "have a front cover illustration with a last update date printed in UTC" do
-      assert_equal @product.illustrations.first[:type], 'FrontCover'
-      assert_equal @product.illustrations.first[:caption], 'Couverture principale'
-      assert_equal @product.illustrations.first[:updated_at], '20121104T230000+0000'
+      assert_equal 'FrontCover', @product.illustrations.first[:type]
+      assert_equal 'Couverture principale', @product.illustrations.first[:caption]
+      assert_equal '20121104T230000+0000', @product.illustrations.first[:updated_at]
     end
 
     should "have a publisher logo illustration" do
-      assert_equal @product.illustrations.last[:type], 'PublisherLogo'
+      assert_equal 'PublisherLogo', @product.illustrations.last[:type]
+    end
+
+    should "have a 2 illustrations" do
+      assert_equal 2, @product.illustrations.size
+    end
+  end
+
+  context "epub not yet available" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/price_to_be_announced.xml")
+      @product=@message.products.last
+    end
+
+    should "have a price to be announced" do
+      assert_equal true, @product.price_to_be_announced?
     end
   end
 

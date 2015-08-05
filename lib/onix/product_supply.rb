@@ -27,6 +27,7 @@ module ONIX
     elements "Supplier", :subset
     elements "SupplyDate", :subset
     elements "Price", :subset
+    element "UnpricedItemType", :subset
 
     def availability
       @product_availability
