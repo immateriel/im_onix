@@ -244,6 +244,13 @@ module ONIX
     end
   end
 
+  class UnpricedItemType < CodeFromYaml
+    private
+    def self.code_ident
+      57
+    end
+  end
+
   class PriceType < CodeFromYaml
     private
     def self.code_ident
