@@ -481,7 +481,9 @@ module ONIX
               supply[:currency]=p.currency
 
               unless supply[:availability_date]
-                supply[:availability_date]=@publishing_detail.publication_date
+                if @publishing_detail
+                  supply[:availability_date]=@publishing_detail.publication_date
+                end
               end
 
               supplies << supply
@@ -530,7 +532,7 @@ module ONIX
 
         else
           supply.each do |s|
-            if s[:from_date] and s[:from_date] >= s[:availability_date]
+            if s[:from_date] and s[:availability_date] and s[:from_date] >= s[:availability_date]
               s[:availability_date]=s[:from_date]
             end
             s[:from_date]=nil
