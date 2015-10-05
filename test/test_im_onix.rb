@@ -455,4 +455,16 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context "onix without any SupplyDate" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/without-supply-date.xml")
+      @product=@message.products.last
+    end
+
+    should "detect availability" do
+      assert_equal true, @product.supplies_for_country("FR","EUR").first[:available]
+    end
+  end
+
 end

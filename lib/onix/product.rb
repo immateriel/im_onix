@@ -562,7 +562,10 @@ module ONIX
 
         else
           supply.each do |s|
-            if s[:from_date] and s[:from_date] >= s[:availability_date]
+            if s[:from_date] and (
+                (!s[:availability_date].nil? and s[:from_date] >= s[:availability_date]) or
+                s[:availability_date].nil?
+              )
               s[:availability_date]=s[:from_date]
             end
             s[:from_date]=nil
