@@ -472,7 +472,7 @@ module ONIX
     #                :from_date=>date,
     #                :until_date=>date,
     #                :tax=>{:amount=>int, :rate_percent=>float}}]}]
-    def supplies
+    def supplies(keep_all_prices_dates=false)
       supplies=[]
 
       # add territories if missing
@@ -555,7 +555,7 @@ module ONIX
             # remove explicit from date
             explicit_from=supply.select{|p| p[:from_date] and not supply.select{|sp| sp[:until_date] and sp[:until_date]<=p[:from_date]}.first}.first
             if explicit_from
-              explicit_from[:from_date]=nil
+              explicit_from[:from_date]=nil unless keep_all_prices_dates
             end
           end
 
@@ -568,7 +568,7 @@ module ONIX
               )
               s[:availability_date]=s[:from_date]
             end
-            s[:from_date]=nil
+            s[:from_date]=nil unless keep_all_prices_dates
 
           end
         end
