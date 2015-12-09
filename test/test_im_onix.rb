@@ -219,7 +219,7 @@ class TestImOnix < Minitest::Test
       assert_equal 1499, @product.current_price_amount_for("EUR","FR")
     end
 
-    should "be priced in France at past date" do
+    should "be priced in France at promo date" do
       assert_equal 499, @product.at_time_price_amount_for(Time.new(2013,3,1),"EUR","FR")
     end
 
@@ -347,6 +347,18 @@ class TestImOnix < Minitest::Test
 
     should "not have a price to be announced" do
       assert_equal false, @product.price_to_be_announced?
+    end
+  end
+
+  context "price with past from date" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices5.xml")
+      @product=@message.products.last
+    end
+
+    should "have a from date even if it's passed" do
+      assert_equal Time.new(2013,10,01), @product.supplies(true).first[:prices].first[:from_date]
     end
   end
 
