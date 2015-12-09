@@ -219,7 +219,7 @@ class TestImOnix < Minitest::Test
       assert_equal 1499, @product.current_price_amount_for("EUR","FR")
     end
 
-    should "be priced in France at promo date" do
+    should "be priced in France at past date" do
       assert_equal 499, @product.at_time_price_amount_for(Time.new(2013,3,1),"EUR","FR")
     end
 
