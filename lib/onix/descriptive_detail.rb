@@ -471,7 +471,7 @@ module ONIX
     end
 
     def keywords
-      kws=@subjects.select{|s| s.scheme_identifier.human=="Keywords"}.map{|kw| kw.heading_text}
+      kws=@subjects.select{|s| s.scheme_identifier.human=="Keywords"}.map{|kw| kw.heading_text}.compact
       kws.map{|kw| kw.split(/;|,|\n/)}.flatten.map{|kw| kw.strip}
     end
 
