@@ -18,9 +18,9 @@ module ONIX
         name_node = n.at_xpath("./#{self.prefix}Name")
         role_node = n.at_xpath("./#{self.prefix}Role")
 
-        self.from_hash({
+        from_hash({
           :name => name_node.nil? ? nil : name_node.text,
-          :role => if self.role_class then self.role_class.from_code(role_node.text) else nil end,
+          :role => role_class ? role_class.from_code(role_node.text) : nil,
           :identifiers => Identifier.parse_identifiers(n, prefix)
         })
       end
