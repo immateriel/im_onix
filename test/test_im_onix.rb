@@ -479,4 +479,17 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context 'onix without any PublisherName' do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/no_publisher_name.xml')
+
+      @product = message.products.last
+    end
+
+    should 'have no publisher name' do
+      assert_equal '', @product.publisher_name
+    end
+  end
+
 end
