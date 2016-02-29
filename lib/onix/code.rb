@@ -132,6 +132,13 @@ module ONIX
     end
   end
 
+  class SalesOutletIDType < CodeFromYaml
+    private
+    def self.code_ident
+      102
+    end
+  end
+
   class ProductForm < CodeFromYaml
     private
     def self.code_ident
@@ -433,4 +440,11 @@ module ONIX
     end
   end
 
+
+  class SalesRestrictionType < CodeFromYaml
+    private
+    def self.code_ident
+      71
+    end
+  end
 end
