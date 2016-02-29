@@ -78,6 +78,10 @@ msg.products.each do |product|
     puts " Distributor: #{product.distributor_name}"
   end
 
+  if product.onix_outlets_values.length > 0
+    puts " Outlets: #{product.onix_outlets_values}"
+  end
+
   product.contributors.each do |c|
     puts " Contributor:"
     puts "  Name: #{c.name}"
