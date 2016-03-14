@@ -34,8 +34,9 @@ ruby -Ilib:test test/test_im_onix.rb
 ```
 
 ### Contributors
-TEA http://www.tea-ebook.com/
-Bookmate https://bookmate.com/
+TEA "The Ebook Alternative" : http://www.tea-ebook.com/
+
+Bookmate : https://bookmate.com/
 
 ### License
 Copyright (C) 2013-2016 immatériel.fr
