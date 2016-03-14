@@ -84,10 +84,12 @@ module ONIX
     end
 
     def collection_title_element
-      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.select{ |te| te.level.human=~/CollectionLevel/ }.first
+      distinctive_title=@title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first
+      if distinctive_title
+        distinctive_title.title_elements.select{ |te| te.level.human=~/CollectionLevel/ }.first
+      end
     end
-
-
+    
     def parse(n)
       n.children.each do |t|
         case t.name
@@ -467,7 +469,7 @@ module ONIX
     end
 
     def keywords
-      kws=@subjects.select{|s| s.scheme_identifier.human=="Keywords"}.map{|kw| kw.heading_text}
+      kws=@subjects.select{|s| s.scheme_identifier.human=="Keywords"}.map{|kw| kw.heading_text}.compact
       kws.map{|kw| kw.split(/;|,|\n/)}.flatten.map{|kw| kw.strip}
     end
 

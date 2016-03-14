@@ -513,7 +513,9 @@ module ONIX
               supply[:tax]=p.tax
 
               unless supply[:availability_date]
-                supply[:availability_date]=@publishing_detail.publication_date
+                if @publishing_detail
+                  supply[:availability_date]=@publishing_detail.publication_date
+                end
               end
 
               supplies << supply
@@ -558,7 +560,6 @@ module ONIX
               explicit_from[:from_date]=nil unless keep_all_prices_dates
             end
           end
-
 
         else
           supply.each do |s|
@@ -721,6 +722,15 @@ module ONIX
     # Contributor array
     def contributors
       @descriptive_detail.contributors
+    end
+
+    # :category: High level
+    # List of ONIX outlets values
+    def onix_outlets_values
+      @publishing_detail.sales_rights.map{|sri|
+        sri.sales_restrictions.select{|sr| (!sr.start_date or sr.start_date <= Date.today) and (!sr.end_date or sr.end_date >= Date.today)}.map{|sr|
+          sr.sales_outlets.select{|so|
+            so.identifier.type.human=="OnixSalesOutletIdCode"}.map{|so| so.identifier.value}}}.flatten
     end
 
 

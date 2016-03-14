@@ -73,7 +73,14 @@ msg.products.each do |product|
   if product.imprint_name
     puts " Imprint: #{product.imprint_name}"
   end
-  puts " Distributor: #{product.distributor_name}"
+
+  if product.distributor_name
+    puts " Distributor: #{product.distributor_name}"
+  end
+
+  if product.onix_outlets_values.length > 0
+    puts " Outlets: #{product.onix_outlets_values}"
+  end
 
   product.contributors.each do |c|
     puts " Contributor:"
