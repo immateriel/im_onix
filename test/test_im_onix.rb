@@ -46,8 +46,14 @@ class TestImOnix < Minitest::Test
       assert_equal nil, @product.file_format
     end
 
-    should "have publisher name" do
+    should "have one publisher named Phébus" do
+      assert_equal 1, @product.publishers.length
       assert_equal "Phébus", @product.publisher_name
+      assert_equal "Publisher", @product.publishers.first.role.human
+    end
+
+    should "have a main publisher named Phébus" do
+      assert_equal "Phébus", @product.publishing_detail.publisher.name
     end
 
     should "be published" do
@@ -305,6 +311,28 @@ class TestImOnix < Minitest::Test
 
     should "be a streaming product" do
       assert @product.streaming?
+    end
+  end
+
+  context "multiple publishers" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/9782707154298.xml")
+      @product=@message.products.last
+    end
+
+    should "have two publisher" do
+      assert_equal 2, @product.publishers.length
+      assert_equal "LA BALLE / Le ballon", @product.publisher_name
+    end
+
+    should "have a main publisher named LA BALLE" do
+      assert_equal "LA BALLE", @product.publishing_detail.publisher.name
+    end
+
+    should "have a co-publisher named Le ballon" do
+      assert_equal "Le ballon", @product.publishers.last.name
+      assert_equal "Copublisher", @product.publishers.last.role.human
     end
   end
 end

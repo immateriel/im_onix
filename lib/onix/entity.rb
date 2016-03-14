@@ -50,17 +50,6 @@ module ONIX
     end
   end
 
-  class Publisher < Entity
-    private
-    def self.prefix
-      "Publisher"
-    end
-
-    def self.role_class
-      nil
-    end
-  end
-
   class Imprint < Entity
     private
     def self.prefix

@@ -132,6 +132,13 @@ module ONIX
     end
   end
 
+  class PublishingRole < CodeFromYaml
+    private
+    def self.code_ident
+      45
+    end
+  end
+
   class SalesOutletIDType < CodeFromYaml
     private
     def self.code_ident

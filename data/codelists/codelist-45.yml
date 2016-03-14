@@ -7,8 +7,8 @@
   '05': HostdistributorOfElectronicContent
   '06': PublishedForonBehalfOf
   '07': PublishedInAssociationWith
-  08: PublishedOnBehalfOf
-  09: NewOrAcquiringPublisher
+  '08': PublishedOnBehalfOf
+  '09': NewOrAcquiringPublisher
   '10': PublishingGroup
   '11': PublisherOfFacsimileOriginal
   '12': RepackagerOfPreboundEdition
