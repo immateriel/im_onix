@@ -109,27 +109,26 @@ module ONIX
     def initialize
       @sales_rights=[]
       @publishing_dates=[]
+      @publishers=[]
     end
 
     def publisher
-      if @publishers.length > 0
-      if @publishers.length==1
-        @publishers.first
+      main_publishers = @publishers.select { |p| p.role.human=="Publisher" }
+      return nil if main_publishers.empty?
+      if main_publishers.length == 1
+        main_publishers.first
       else
         raise ExpectsOneButHasSeveral, Publisher
-      end
-      else
-        nil
       end
     end
 
     def imprint
       if @imprints.length > 0
-      if @imprints.length==1
-        @imprints.first
-      else
-        raise ExpectsOneButHasSeveral, Imprint
-      end
+        if @imprints.length==1
+          @imprints.first
+        else
+          raise ExpectsOneButHasSeveral, Imprint
+        end
       else
         nil
       end
@@ -153,12 +152,12 @@ module ONIX
             @sales_rights << SalesRights.from_xml(t)
           when "PublishingDate"
             @publishing_dates << PublishingDate.from_xml(t)
+          when "Publisher"
+            @publishers << Publisher.from_xml(t)
         end
       end
 
-
       @imprints = Imprint.parse_entities(n,"./Imprint")
-      @publishers=Publisher.parse_entities(n,"./Publisher")
     end
   end
 end
