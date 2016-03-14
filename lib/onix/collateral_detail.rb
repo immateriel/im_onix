@@ -22,7 +22,7 @@ module ONIX
     end
 
     def description
-      desc_contents=@text_contents.select{|tc| tc.type.human=="Description"}
+      desc_contents=@text_contents.select{|tc| tc.type.human=="Description"} + @text_contents.select{|tc| tc.type.human=="ShortDescriptionannotation"}
       if desc_contents.length > 0
         desc_contents.first.text
       else
