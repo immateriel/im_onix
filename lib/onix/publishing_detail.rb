@@ -79,6 +79,28 @@ module ONIX
     end
   end
 
+  class Publisher < Subset
+    attr_accessor :name, :role,
+                  :identifiers
+
+    def initialize
+      @identifiers=[]
+    end
+
+    def parse(n)
+      n.children.each do |t|
+        case t.name
+          when "PublisherName"
+            @name = t.text
+          when "PublishingRole"
+            @role = PublishingRole.from_code(t.text)
+          when "PublisherIdentifier"
+            @identifiers << Identifier.parse_identifier(t, "Publisher")
+        end
+      end
+    end
+  end
+
   class PublishingDetail < Subset
     attr_accessor :status, :publishers, :imprints,
                   :sales_rights,
