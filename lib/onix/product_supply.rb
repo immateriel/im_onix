@@ -6,8 +6,8 @@ module ONIX
     attr_accessor :role, :date
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "MarketDateRole"
+        case t
+          when tag_match("MarketDateRole")
             @role = MarketDateRole.from_code(t.text)
         end
       end

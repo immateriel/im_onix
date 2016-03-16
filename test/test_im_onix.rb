@@ -349,4 +349,28 @@ class TestImOnix < Minitest::Test
       assert_equal "Copublisher", @product.publishers.last.role.human
     end
   end
+
+  # from ONIX documentation
+  context "short tags" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/short.xml")
+      @product=@message.products.last
+    end
+
+    should "have title" do
+      assert_equal "Roseanna", @product.title
+    end
+
+    should "have publisher" do
+      assert_equal 1, @product.publishers.length
+      assert_equal "HarperCollins Publishers", @product.publisher_name
+    end
+
+    should "have two authors" do
+      assert_equal 2, @product.contributors.select{|c| c.role.human=="ByAuthor"}.length
+    end
+
+  end
+
 end
