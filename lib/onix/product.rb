@@ -697,22 +697,22 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "RecordReference"
+        case t
+          when tag_match("RecordReference")
             @record_reference = t.text.strip
-          when "ProductIdentifier"
+          when tag_match("ProductIdentifier")
             @identifiers << Identifier.parse_identifier(t, "Product")
-          when "NotificationType"
+          when tag_match("NotificationType")
             @notification_type=NotificationType.from_code(t.text)
-          when "RelatedMaterial"
+          when tag_match("RelatedMaterial")
             @related_material=RelatedMaterial.from_xml(t)
-          when "DescriptiveDetail"
+          when tag_match("DescriptiveDetail")
             @descriptive_detail=DescriptiveDetail.from_xml(t)
-          when "CollateralDetail"
+          when tag_match("CollateralDetail")
             @collateral_detail=CollateralDetail.from_xml(t)
-          when "PublishingDetail"
+          when tag_match("PublishingDetail")
             @publishing_detail=PublishingDetail.from_xml(t)
-          when "ProductSupply"
+          when tag_match("ProductSupply")
             @product_supplies << ProductSupply.from_xml(t)
         end
       end

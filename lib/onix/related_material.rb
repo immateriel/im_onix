@@ -96,10 +96,10 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "RelatedProduct"
+        case t
+          when tag_match("RelatedProduct")
             @related_products << RelatedProduct.from_xml(t)
-          when "RelatedWork"
+          when tag_match("RelatedWork")
             @related_works << RelatedWork.from_xml(t)
         end
       end

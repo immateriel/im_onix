@@ -34,7 +34,7 @@ module ONIX
     end
   end
 
-  class ONIXMessage
+  class ONIXMessage < Subset
     attr_accessor :sender, :sent_date_time,
                   :default_language_of_text, :default_currency_code,
                   :products, :vault
@@ -114,25 +114,27 @@ module ONIX
       xml=open(arg)
       @products=[]
 
-      case xml.root.name
-        when "ONIXMessage"
-          xml.root.children.each do |e|
-            case e.name
-              when "Header"
+      root = xml.root
+
+      case root
+        when tag_match("ONIXMessage")
+          root.children.each do |e|
+            case e
+              when tag_match("Header")
                 e.children.each do |t|
-                  case t.name
-                    when "Sender"
+                  case t
+                    when tag_match("Sender")
                       @sender=Sender.from_xml(t)
-                    when "SentDateTime"
+                    when tag_match("SentDateTime")
                       tm=t.text
                       @sent_date_time=Time.strptime(tm, "%Y%m%dT%H%M%S") rescue Time.strptime(tm, "%Y%m%dT%H%M") rescue Time.strptime(tm, "%Y%m%d") rescue nil
-                    when "DefaultLanguageOfText"
+                    when tag_match("DefaultLanguageOfText")
                       @default_language_of_text=LanguageCode.from_code(t.text)
-                    when "DefaultCurrencyCode"
+                    when tag_match("DefaultCurrencyCode")
                       @default_currency_code=t.text
                   end
                 end
-              when "Product"
+              when tag_match("Product")
                 product=Product.from_xml(e)
                 product.default_language_of_text=@default_language_of_text
                 product.default_currency_code=@default_currency_code
@@ -141,12 +143,11 @@ module ONIX
             end
           end
 
-        when "Product"
+        when tag_match("Product")
           product=Product.from_xml(xml.root)
           product.default_language_of_text=@default_language_of_text
           product.default_currency_code=@default_currency_code
           @products << product
-
       end
 
       init_vault
