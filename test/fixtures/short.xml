@@ -417,10 +417,6 @@
       <b394 datestamp="20100508">04</b394>
       <publishingdate>
         <x448>01</x448>
-        299
-        300
-        301
-        302
         <b306 dateformat="00">20060807</b306>
       </publishingdate>
       <publishingdate>
@@ -434,7 +430,6 @@
       </publishingdate>
       <salesrights>
         <b089>01</b089>
-
         <territory>
           <x449>AG AI AU BB BD BM BN BS BW BZ CM
             CY DM EG FJ FK GB GD GG GH GI GM GY HK IE IL IM IN
@@ -478,8 +473,7 @@
       <market>
         <territory>
           <x450>WORLD</x450>
-          <x451>AS AU CA GU MP NZ PH PR US VI ZA
-          </x451>
+          <x451>AS AU CA GU MP NZ PH PR US VI ZA</x451>
         </territory>
       </market>
       <marketpublishingdetail>
@@ -556,7 +550,6 @@
           <j152>GBP</j152>
           <territory>
             <x450>WORLD</x450>
-
             <x451>GB AT BE CY FI FR DE ES GR IE IT
               LU MT NL PT SI SK AD MC ME SM VA AS AU CA GU MP NZ
               PH PR US VI ZA
