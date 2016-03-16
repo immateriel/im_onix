@@ -100,18 +100,24 @@ module ONIX
     end
 
     # open with arg detection
-    def open(arg)
+    def open(arg,force_encoding=nil)
       data=ONIX::Helper.arg_to_data(arg)
 
-      xml=Nokogiri::XML.parse(data)
+      xml=nil
+      if force_encoding
+        xml=Nokogiri::XML.parse(data,nil,force_encoding)
+      else
+        xml=Nokogiri::XML.parse(data)
+      end
+
       xml.remove_namespaces!
       xml
     end
 
     # parse filename or file
-    def parse(arg)
+    def parse(arg,force_encoding=nil)
 
-      xml=open(arg)
+      xml=open(arg,force_encoding)
       @products=[]
 
       root = xml.root
