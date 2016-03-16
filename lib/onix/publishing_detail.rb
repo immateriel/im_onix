@@ -83,6 +83,8 @@ module ONIX
     attr_accessor :name, :role,
                   :identifiers
 
+    include GlnMethods
+
     def initialize
       @identifiers=[]
     end
