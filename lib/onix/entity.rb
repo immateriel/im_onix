@@ -19,24 +19,23 @@ module ONIX
       node.children.each do |t|
         case t
           when tag_match(list_tag)
-            name=nil
-            role=nil
+            nm=nil
+            rl=nil
             t.children.each do |tn|
               case tn
                 when tag_match("#{self.prefix}Name")
-                  name=tn.text
+                  nm=tn.text
                 when tag_match("#{self.prefix}Role")
-                  role=tn.text
+                  rl=tn.text
               end
             end
-            entities << self.from_hash({:name => name,
-                                        :role => if self.role_class then self.role_class.from_code(role) else nil end,
+            entities << self.from_hash({:name => nm,
+                                        :role => if self.role_class then self.role_class.from_code(rl) else nil end,
                                         :identifiers => Identifier.parse_identifiers(t, prefix)})
 
         end
       end
       entities
-
     end
 
     private

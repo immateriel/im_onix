@@ -35,7 +35,6 @@ module ONIX
       end
       identifier = Identifier.from_hash({:type => ONIX.const_get("#{prefix_tag}IDType").from_code(id_type), :value => id_value})
       identifier.name = id_type_name
-
       identifier
     end
 
