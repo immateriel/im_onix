@@ -1,12 +1,14 @@
 module ONIX
+  class Short
+    def self.names
+      @shortnames||=YAML.load(File.open(File.dirname(__FILE__) + "/../../data/shortnames.yml"))
+    end
+  end
   TagNameMatcher = Struct.new(:tag_name) do
     def ===(target)
       if target.element?
         name=target.name
-        if target.attribute("refname")
-          name=target.attribute("refname").to_s
-        end
-        name.casecmp(tag_name) == 0
+        name.casecmp(tag_name) == 0 or Short.names[name] == tag_name
       else
         false
       end

@@ -52,10 +52,18 @@ class TestImOnix < Minitest::Test
       assert_equal "Publisher", @product.publishers.first.role.human
     end
 
+    should "have one publisher GLN" do
+      assert_equal "3052859400019", @product.publisher_gln
+    end
+
     should "have one distributor named immatériel·fr" do
       assert_equal 1, @product.distributors.length
       assert_equal "immatériel·fr", @product.distributor_name
       assert_equal "PublishersNonexclusiveDistributorToRetailers", @product.distributors.first.role.human
+    end
+
+    should "have one distributor GLN" do
+      assert_equal "3012410001000", @product.distributor_gln
     end
 
     should "have a main publisher named Phébus" do
