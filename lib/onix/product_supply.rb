@@ -6,8 +6,8 @@ module ONIX
     attr_accessor :role, :date
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "MarketDateRole"
+        case t
+          when tag_match("MarketDateRole")
             @role = MarketDateRole.from_code(t.text)
         end
       end
@@ -21,8 +21,8 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "Territory"
+        case t
+          when tag_match("Territory")
             @territory=Territory.from_xml(t)
         end
       end
@@ -47,10 +47,10 @@ module ONIX
     end
 
     def parse(n)
-      @publisher_representatives=Agent.parse_entities(n, "./PublisherRepresentative")
+      @publisher_representatives=Agent.parse_entities(n, "PublisherRepresentative")
       n.children.each do |t|
-        case t.name
-          when "MarketDate"
+        case t
+          when tag_match("MarketDate")
             @market_dates << MarketDate.from_xml(t)
         end
       end
@@ -62,8 +62,8 @@ module ONIX
     attr_accessor :role, :date
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "SupplyDateRole"
+        case t
+          when tag_match("SupplyDateRole")
             @role = SupplyDateRole.from_code(t.text)
         end
       end
@@ -103,15 +103,15 @@ module ONIX
     end
 
     def parse(n)
-      @suppliers = Supplier.parse_entities(n, "./Supplier")
+      @suppliers = Supplier.parse_entities(n, "Supplier")
 
       n.children.each do |t|
-        case t.name
-          when "ProductAvailability"
+        case t
+          when tag_match("ProductAvailability")
             @availability=ProductAvailability.from_code(t.text)
-          when "SupplyDate"
+          when tag_match("SupplyDate")
             @supply_dates << SupplyDate.from_xml(t)
-          when "Price"
+          when tag_match("Price")
             @prices << Price.from_xml(t)
         end
       end
@@ -144,12 +144,12 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "SupplyDetail"
+        case t
+          when tag_match("SupplyDetail")
             @supply_details << SupplyDetail.from_xml(t)
-          when "Market"
+          when tag_match("Market")
             @markets << Market.from_xml(t)
-          when "MarketPublishingDetail"
+          when tag_match("MarketPublishingDetail")
             @market_publishing_detail = MarketPublishingDetail.from_xml(t)
         end
       end

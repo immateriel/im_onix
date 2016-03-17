@@ -6,12 +6,12 @@ module ONIX
     attr_accessor :amount, :rate_code, :rate_percent
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "TaxAmount"
+        case t
+          when tag_match("TaxAmount")
             @amount=(t.text.to_f * 100).round
-          when "TaxRatePercent"
+          when tag_match("TaxRatePercent")
             @rate_percent=t.text.to_f
-          when "TaxRateCode"
+          when tag_match("TaxRateCode")
             @rate_code=TaxRateCode.from_code(t.text)
         end
       end
@@ -22,8 +22,8 @@ module ONIX
     attr_accessor :role, :date
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "PriceDateRole"
+        case t
+          when tag_match("PriceDateRole")
             @role = PriceDateRole.from_code(t.text)
         end
       end
@@ -67,20 +67,20 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "PriceDate"
+        case t
+          when tag_match("PriceDate")
             @dates << PriceDate.from_xml(t)
-          when "CurrencyCode"
+          when tag_match("CurrencyCode")
             @currency=t.text.strip
-          when "Territory"
+          when tag_match("Territory")
             @territory=Territory.from_xml(t)
-          when "PriceType"
+          when tag_match("PriceType")
             @type=PriceType.from_code(t.text)
-          when "PriceAmount"
+          when tag_match("PriceAmount")
             @amount=(t.text.to_f * 100).round
-          when "Tax"
+          when tag_match("Tax")
             @tax=Tax.from_xml(t)
-          when "DiscountCoded"
+          when tag_match("DiscountCoded")
             @discount = Discount.from_xml(t)
         end
       end
@@ -92,12 +92,12 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "DiscountCodeType"
+        case t
+          when tag_match("DiscountCodeType")
             @code_type = t.text
-          when "DiscountCodeTypeName"
+          when tag_match("DiscountCodeTypeName")
             @code_type_name = t.text
-          when "DiscountCode"
+          when tag_match("DiscountCode")
             @code = t.text
         end
       end

@@ -38,18 +38,18 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "SequenceNumber"
+        case t
+          when tag_match("SequenceNumber")
             @sequence_number=t.text.to_i
-          when "NamesBeforeKey"
+          when tag_match("NamesBeforeKey")
             @name_before_key=t.text
-          when "KeyNames"
+          when tag_match("KeyNames")
             @key_names=t.text
-          when "PersonName"
+          when tag_match("PersonName")
             @person_name=t.text
-          when "BiographicalNote"
+          when tag_match("BiographicalNote")
             @biography_note=t.text.strip
-          when "ContributorRole"
+          when tag_match("ContributorRole")
             @role=ContributorRole.from_code(t.text)
 
         end

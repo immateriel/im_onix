@@ -4,14 +4,14 @@ module ONIX
     attr_accessor :countries_included, :regions_included, :countries_excluded, :region_excluded
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "CountriesIncluded"
+        case t
+          when tag_match("CountriesIncluded")
             @countries_included=t.text
-          when "RegionsIncluded"
+          when tag_match("RegionsIncluded")
             @regions_included=t.text
-          when "CountriesExcluded"
+          when tag_match("CountriesExcluded")
             @countries_excluded=t.text
-          when "RegionsExcluded"
+          when tag_match("RegionsExcluded")
             @regions_excluded=t.text
         end
       end

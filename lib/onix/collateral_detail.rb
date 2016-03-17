@@ -3,10 +3,10 @@ module ONIX
     attr_accessor :type, :text
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "TextType"
+        case t
+          when tag_match("TextType")
             @type=TextType.from_code(t.text)
-          when "Text"
+          when tag_match("Text")
             @text=t.text
         end
       end
@@ -94,10 +94,10 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "TextContent"
+        case t
+          when tag_match("TextContent")
             @text_contents << TextContent.from_xml(t)
-          when "SupportingResource"
+          when tag_match("SupportingResource")
             @supporting_resources << SupportingResource.from_xml(t)
         end
       end

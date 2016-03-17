@@ -8,10 +8,10 @@ module ONIX
       date_txt=nil
       @date=nil
       n.children.each do |t|
-        case t.name
-          when "DateFormat"
+        case t
+          when tag_match("DateFormat")
             @format=DateFormat.from_code(t.text)
-          when "Date"
+          when tag_match("Date")
             date_txt=t.text
         end
       end
