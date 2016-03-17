@@ -106,7 +106,9 @@ module ONIX
   class PublishingDetail < Subset
     attr_accessor :status, :publishers, :imprints,
                   :sales_rights,
-                  :publishing_dates
+                  :publishing_dates,
+                  :city,
+                  :country
 
     def initialize
       @sales_rights=[]
@@ -156,6 +158,10 @@ module ONIX
             @publishing_dates << PublishingDate.from_xml(t)
           when tag_match("Publisher")
             @publishers << Publisher.from_xml(t)
+          when tag_match("CityOfPublication")
+            @city = t.text
+          when tag_match("CountryOfPublication")
+            @country = t.text
         end
       end
 

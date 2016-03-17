@@ -431,12 +431,7 @@
       <salesrights>
         <b089>01</b089>
         <territory>
-          <x449>AG AI AU BB BD BM BN BS BW BZ CM
-            CY DM EG FJ FK GB GD GG GH GI GM GY HK IE IL IM IN
-            IO JE JM JO KE KI KN KW KY LC LK LS MT MU MV MW MY
-            MZ NA NG NR NZ PG PK PN SB SC SD SG SH SL SO SZ TC
-            TO TT TV TZ UG VC VG VU WS YE RS ME ZA ZM ZW
-          </x449>
+          <x449>AG AI AU BB BD BM BN BS BW BZ CM CY DM EG FJ FK GB GD GG GH GI GM GY HK IE IL IM IN IO JE JM JO KE KI KN KW KY LC LK LS MT MU MV MW MY MZ NA NG NR NZ PG PK PN SB SC SD SG SH SL SO SZ TC TO TT TV TZ UG VC VG VU WS YE RS ME ZA ZM ZW</x449>
         </territory>
       </salesrights>
       <salesrights>
@@ -534,9 +529,7 @@
           <j151>8.99</j151>
           <j152>EUR</j152>
           <territory>
-            <x449>AT BE CY FI FR DE ES GR IE IT LU
-              MT NL PT SI SK AD MC ME SM VA
-            </x449>
+            <x449>AT BE CY FI FR DE ES GR IE IT LU MT NL PT SI SK AD MC ME SM VA</x449>
           </territory>
           <x301>01</x301>
         </price>
@@ -550,10 +543,7 @@
           <j152>GBP</j152>
           <territory>
             <x450>WORLD</x450>
-            <x451>GB AT BE CY FI FR DE ES GR IE IT
-              LU MT NL PT SI SK AD MC ME SM VA AS AU CA GU MP NZ
-              PH PR US VI ZA
-            </x451>
+            <x451>GB AT BE CY FI FR DE ES GR IE IT LU MT NL PT SI SK AD MC ME SM VA AS AU CA GU MP NZ PH PR US VI ZA</x451>
           </territory>
           <x301>01</x301>
         </price>
