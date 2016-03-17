@@ -20,14 +20,14 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "ProductIdentifier"
+        case t
+          when tag_match("ProductIdentifier")
             @identifiers << Identifier.parse_identifier(t,"Product")
-          when "ProductRelationCode"
+          when tag_match("ProductRelationCode")
             @code=ProductRelationCode.from_code(t.text)
-          when "ProductForm"
+          when tag_match("ProductForm")
             @form=ProductForm.from_code(t.text)
-          when "ProductFormDetail"
+          when tag_match("ProductFormDetail")
             @form_details << ProductFormDetail.from_code(t.text)
         end
       end
@@ -54,10 +54,10 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "WorkIdentifier"
+        case t
+          when tag_match("WorkIdentifier")
             @identifiers << Identifier.parse_identifier(t,"Work")
-          when "WorkRelationCode"
+          when tag_match("WorkRelationCode")
             @code=WorkRelationCode.from_code(t.text)
         end
       end

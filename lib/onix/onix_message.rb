@@ -24,10 +24,10 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "SenderIdentifier"
+        case t
+          when tag_match("SenderIdentifier")
             @identifiers << Identifier.parse_identifier(t, "Sender")
-          when "SenderName"
+          when tag_match("SenderName")
             @name=t.text
         end
       end
