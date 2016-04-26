@@ -6,7 +6,7 @@ module ONIX
       case arg
         when String
           if File.file?(arg)
-            data=File.open(arg)
+            data=File.read(arg)
           else
             data=arg
           end

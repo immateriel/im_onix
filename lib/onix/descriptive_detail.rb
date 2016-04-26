@@ -6,18 +6,18 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "TitleElementLevel"
+        case t
+          when tag_match("TitleElementLevel")
             @level=TitleElementLevel.from_code(t.text)
-          when "TitleText"
+          when tag_match("TitleText")
             @title_text=t.text
-          when "TitlePrefix"
+          when tag_match("TitlePrefix")
             @title_prefix=t.text
-          when "TitleWithoutPrefix"
+          when tag_match("TitleWithoutPrefix")
             @title_without_prefix=t.text
-          when "Subtitle"
+          when tag_match("Subtitle")
             @subtitle=t.text
-          when "PartNumber"
+          when tag_match("PartNumber")
             @part_number=t.text.to_i
         end
       end
@@ -49,10 +49,10 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "TitleType"
+        case t
+          when tag_match("TitleType")
             @type=TitleType.from_code(t.text)
-          when "TitleElement"
+          when tag_match("TitleElement")
             @title_elements << TitleElement.from_xml(t)
         end
       end
@@ -92,12 +92,12 @@ module ONIX
     
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "CollectionIdentifier"
+        case t
+          when tag_match("CollectionIdentifier")
             @identifiers << Identifier.parse_identifier(t,"Collection")
-          when "CollectionType"
+          when tag_match("CollectionType")
             @type=CollectionType.from_code(t.text)
-          when "TitleDetail"
+          when tag_match("TitleDetail")
             @title_details << TitleDetail.from_xml(t)
         end
       end
@@ -159,14 +159,14 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "ProductIdentifier"
+        case t
+          when tag_match("ProductIdentifier")
             @identifiers << Identifier.parse_identifier(t,"Product")
-          when "ProductForm"
+          when tag_match("ProductForm")
             @form=ProductForm.from_code(t.text)
-          when "ProductFormDescription"
+          when tag_match("ProductFormDescription")
             @form_description=t.text
-          when "ProductFormDetail"
+          when tag_match("ProductFormDetail")
             @form_details << ProductFormDetail.from_code(t.text)
         end
       end
@@ -225,12 +225,12 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "ExtentType"
+        case t
+          when tag_match("ExtentType")
             @type=ExtentType.from_code(t.text)
-          when "ExtentUnit"
+          when tag_match("ExtentUnit")
             @unit=ExtentUnit.from_code(t.text)
-          when "ExtentValue"
+          when tag_match("ExtentValue")
             @value=t.text
         end
       end
@@ -242,10 +242,10 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "EpubUsageUnit"
+        case t
+          when tag_match("EpubUsageUnit")
             @unit=EpubUsageUnit.from_code(t.text)
-          when "Quantity"
+          when tag_match("Quantity")
             @quantity=t.text.to_i
         end
       end
@@ -261,12 +261,12 @@ module ONIX
 
     def parse(drm)
       drm.children.each do |t|
-        case t.name
-          when "EpubUsageType"
+        case t
+          when tag_match("EpubUsageType")
             @type=EpubUsageType.from_code(t.text)
-          when "EpubUsageStatus"
+          when tag_match("EpubUsageStatus")
             @status=EpubUsageStatus.from_code(t.text)
-          when "EpubUsageLimit"
+          when tag_match("EpubUsageLimit")
             @limits << EpubUsageLimit.from_xml(t)
         end
       end
@@ -278,10 +278,10 @@ module ONIX
     attr_accessor :role, :code
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "LanguageRole"
+        case t
+          when tag_match("LanguageRole")
             @role=LanguageRole.from_code(t.text)
-          when "LanguageCode"
+          when tag_match("LanguageCode")
             @code=LanguageCode.from_code(t.text)
         end
       end
@@ -298,12 +298,12 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "ProductFormFeatureType"
+        case t
+          when tag_match("ProductFormFeatureType")
             @type=ProductFormFeatureType.from_code(t.text)
-          when "ProductFormFeatureValue"
+          when tag_match("ProductFormFeatureValue")
             @value=t.text
-          when "ProductFormFeatureDescription"
+          when tag_match("ProductFormFeatureDescription")
             @descriptions << t.text
         end
       end
@@ -476,38 +476,38 @@ module ONIX
     def parse(n)
 
       n.children.each do |t|
-        case t.name
-          when "TitleDetail"
+        case t
+          when tag_match("TitleDetail")
             @title_details << TitleDetail.from_xml(t)
-          when "Contributor"
+          when tag_match("Contributor")
             @contributors << Contributor.from_xml(t)
-          when "Collection"
+          when tag_match("Collection")
             @collections << Collection.from_xml(t)
-          when "Extent"
+          when tag_match("Extent")
             @extents << Extent.from_xml(t)
-          when "EditionNumber"
+          when tag_match("EditionNumber")
             @edition_number=t.text.to_i
-          when "Language"
+          when tag_match("Language")
             @languages << Language.from_xml(t)
-          when "ProductComposition"
+          when tag_match("ProductComposition")
             @composition=ProductComposition.from_code(t.text)
-          when "ProductForm"
+          when tag_match("ProductForm")
             @form=ProductForm.from_code(t.text)
-          when "ProductFormFeature"
+          when tag_match("ProductFormFeature")
             @form_features << ProductFormFeature.from_xml(t)
-          when "ProductFormDescription"
+          when tag_match("ProductFormDescription")
             @form_description=t.text
-          when "ProductFormDetail"
+          when tag_match("ProductFormDetail")
             @form_details << ProductFormDetail.from_code(t.text)
-          when "EpubTechnicalProtection"
+          when tag_match("EpubTechnicalProtection")
             @epub_technical_protections << EpubTechnicalProtection.from_code(t.text)
-          when "EpubUsageConstraint"
+          when tag_match("EpubUsageConstraint")
             @epub_usage_constraints << EpubUsageConstraint.from_xml(t)
-          when "ProductPart"
+          when tag_match("ProductPart")
             part=ProductPart.from_xml(t)
             part.part_of=self
             @parts << part
-          when "Subject"
+          when tag_match("Subject")
             @subjects << Subject.from_xml(t)
         end
       end
