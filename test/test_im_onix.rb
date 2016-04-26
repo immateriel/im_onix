@@ -386,6 +386,19 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context "product that is unpriced" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices6.xml")
+      @product=@message.products.last
+    end
+
+    should "have a supply free of charge and no prices" do
+      assert_nil @product.supplies.first[:prices]
+      assert_equal 'FreeOfCharge', @product.supplies.first[:unpriced_item_type]
+    end
+  end
+
   context "file full-sender.xml" do
     setup do
       @message = ONIX::ONIXMessage.new
