@@ -96,6 +96,7 @@ module ONIX
         end
       end
 
+      # filter on availability, date and type because suppliers are always the same
       unpriced_items.uniq! {|i| i.except(:suppliers).hash }
 
       grouped_supplies={}
