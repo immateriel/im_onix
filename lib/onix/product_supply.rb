@@ -113,7 +113,7 @@ module ONIX
             @supply_dates << SupplyDate.from_xml(t)
           when tag_match("Price")
             @prices << Price.from_xml(t)
-          when "UnpricedItemType"
+          when tag_match("UnpricedItemType")
             @unpriced_item_type=UnpricedItemType.from_code(t.text)
         end
       end
