@@ -4,8 +4,8 @@ module ONIX
     attr_accessor :date, :role
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "ContentDateRole"
+        case t
+          when tag_match("ContentDateRole")
             @role=ContentDateRole.from_code(t.text)
         end
       end
@@ -22,18 +22,20 @@ module ONIX
     end
 
     def parse(f)
-      @type=ResourceVersionFeatureType.from_code(f.at_xpath("./ResourceVersionFeatureType").text)
+      f.children.each do |fn|
+        case fn
+          when tag_match("ResourceVersionFeatureType")
+            @type = ResourceVersionFeatureType.from_code(fn.text)
+          when tag_match("FeatureNote")
+            @notes << fn.text
+        end
+      end
 
       @value=Helper.text_at(f,"./FeatureValue")
 
       if @type.human=="FileFormat"
         @value=SupportingResourceFileFormat.from_code(@value)
       end
-
-      f.xpath("./FeatureNote").each do |fn|
-        @notes << fn.text
-      end
-
     end
   end
 
@@ -120,14 +122,14 @@ module ONIX
 
       def parse(n)
         n.children.each do |t|
-          case t.name
-            when "ResourceForm"
+          case t
+            when tag_match("ResourceForm")
               @form=ResourceForm.from_code(t.text)
-            when "ResourceLink"
+            when tag_match("ResourceLink")
               @links << t.text.strip
-            when "ContentDate"
+            when tag_match("ContentDate")
               @content_dates << ContentDate.from_xml(t)
-            when "ResourceVersionFeature"
+            when tag_match("ResourceVersionFeature")
               @features << ResourceVersionFeature.from_xml(t)
 
           end
@@ -144,12 +146,12 @@ module ONIX
     end
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "ResourceFeatureType"
+        case t
+          when tag_match("ResourceFeatureType")
             @type=ResourceFeatureType.from_code(t.text)
-          when "FeatureValue"
+          when tag_match("FeatureValue")
             @value=t.text
-          when "FeatureNote"
+          when tag_match("FeatureNote")
             @notes << t.text
 
         end
@@ -178,16 +180,16 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "ResourceContentType"
+        case t
+          when tag_match("ResourceContentType")
             @type=ResourceContentType.from_code(t.text)
-          when "ContentAudience"
+          when tag_match("ContentAudience")
             @target_audience=ContentAudience.from_code(t.text)
-          when "ResourceMode"
+          when tag_match("ResourceMode")
             @mode=ResourceMode.from_code(t.text)
-          when "ResourceVersion"
+          when tag_match("ResourceVersion")
             @versions << ResourceVersion.from_xml(t)
-          when "ResourceFeature"
+          when tag_match("ResourceFeature")
             @features << ResourceFeature.from_xml(t)
         end
       end

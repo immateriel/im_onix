@@ -5,16 +5,16 @@ module ONIX
 
     def parse(n)
       n.children.each do |t|
-        case t.name
-          when "SubjectHeadingText"
+        case t
+          when tag_match("SubjectHeadingText")
             @heading_text=t.text.strip
-          when "SubjectCode"
+          when tag_match("SubjectCode")
             @code=t.text.strip
-          when "SubjectSchemeIdentifier"
+          when tag_match("SubjectSchemeIdentifier")
             @scheme_identifier=SubjectSchemeIdentifier.from_code(t.text)
-          when "SubjectSchemeName"
+          when tag_match("SubjectSchemeName")
             @scheme_name=t.text.strip
-          when "SubjectSchemeVersion"
+          when tag_match("SubjectSchemeVersion")
             @scheme_version=t.text.strip
         end
       end

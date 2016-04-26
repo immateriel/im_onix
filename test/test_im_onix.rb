@@ -60,6 +60,20 @@ class TestImOnix < Minitest::Test
       assert_equal "Publisher", @product.publishers.first.role.human
     end
 
+    should "have one publisher GLN" do
+      assert_equal "3052859400019", @product.publisher_gln
+    end
+
+    should "have one distributor named immatériel·fr" do
+      assert_equal 1, @product.distributors.length
+      assert_equal "immatériel·fr", @product.distributor_name
+      assert_equal "PublishersNonexclusiveDistributorToRetailers", @product.distributors.first.role.human
+    end
+
+    should "have one distributor GLN" do
+      assert_equal "3012410001000", @product.distributor_gln
+    end
+
     should "have a main publisher named Phébus" do
       assert_equal "Phébus", @product.publishing_detail.publisher.name
     end
@@ -519,4 +533,28 @@ class TestImOnix < Minitest::Test
       assert_equal "Copublisher", @product.publishers.last.role.human
     end
   end
+
+  # from ONIX documentation
+  context "short tags" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/short.xml")
+      @product=@message.products.last
+    end
+
+    should "have title" do
+      assert_equal "Roseanna", @product.title
+    end
+
+    should "have publisher" do
+      assert_equal 1, @product.publishers.length
+      assert_equal "HarperCollins Publishers", @product.publisher_name
+    end
+
+    should "have two authors" do
+      assert_equal 2, @product.contributors.select{|c| c.role.human=="ByAuthor"}.length
+    end
+
+  end
+
 end

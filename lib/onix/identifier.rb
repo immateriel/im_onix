@@ -10,18 +10,31 @@ module ONIX
     # create Identifier array from Nokogiri:XML::Node
     def self.parse_identifiers(node,prefix_tag)
       identifiers=[]
-      node.xpath("./#{prefix_tag}Identifier").each do |id|
-        identifiers << self.parse_identifier(id,prefix_tag)
-
+      node.children.each do |id|
+        case id
+          when tag_match("#{prefix_tag}Identifier")
+            identifiers << self.parse_identifier(id,prefix_tag)
+        end
       end
       identifiers
     end
 
     def self.parse_identifier(node,prefix_tag)
-      identifier = Identifier.from_hash({:type => ONIX.const_get("#{prefix_tag}IDType").from_code(node.at_xpath("./#{prefix_tag}IDType").text), :value => node.at_xpath("./IDValue").text})
-      if node.at_xpath("./IDTypeName")
-        identifier.name = node.at_xpath("./IDTypeName").text
+      id_type=nil
+      id_value=nil
+      id_type_name=nil
+      node.children.each do |id|
+        case id
+          when tag_match("#{prefix_tag}IDType")
+            id_type=id.text
+          when tag_match("IDValue")
+            id_value=id.text
+          when tag_match("IDTypeName")
+            id_type_name = id.text
+        end
       end
+      identifier = Identifier.from_hash({:type => ONIX.const_get("#{prefix_tag}IDType").from_code(id_type), :value => id_value})
+      identifier.name = id_type_name
       identifier
     end
 
