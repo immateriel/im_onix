@@ -382,16 +382,24 @@ class TestImOnix < Minitest::Test
     end
   end
 
-  context "product that is unpriced" do
+  context "product that contains a supply free of charge" do
     setup do
       @message = ONIX::ONIXMessage.new
       @message.parse("test/fixtures/test_prices6.xml")
       @product=@message.products.last
     end
 
-    should "have a supply free of charge and no prices" do
-      assert_nil @product.supplies.first[:prices]
-      assert_equal 'FreeOfCharge', @product.supplies.first[:unpriced_item_type]
+    should "have a supply with a price for 3 other countries" do
+      priced_supply = @product.supplies.first
+      assert_equal 1, priced_supply[:prices].size
+      assert_equal 3, priced_supply[:territory].size
+    end
+
+    should "have a supply free of charge for 8 countries" do
+      free_supply = @product.supplies.last
+      assert_nil free_supply[:prices]
+      assert_equal 'FreeOfCharge', free_supply[:unpriced_item_type]
+      assert_equal 8, free_supply[:territory].size
     end
   end
 

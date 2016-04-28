@@ -479,6 +479,9 @@ module ONIX
       # add territories if missing
       if @product_supplies
         @product_supplies.each do |ps|
+
+          market_territories=ps.markets ? ps.markets.map{|m| m.territory.countries}.flatten.uniq : []
+
           ps.supply_details.each do |sd|
 
             availability_date=sd.availability_date
@@ -499,10 +502,7 @@ module ONIX
               supply[:price]=p.amount
               supply[:including_tax]=p.including_tax?
               if !p.territory or p.territory.countries.length==0
-                supply[:territory]=[]
-                if ps.markets
-                  supply[:territory]=ps.markets.map{|m| m.territory.countries}.flatten.uniq
-                end
+                supply[:territory]=market_territories
                 if supply[:territory].length==0
                   if @publishing_detail
                     supply[:territory]=self.countries_rights
@@ -524,15 +524,18 @@ module ONIX
                 :suppliers => sd.suppliers,
                 :available => sd.available?,
                 :availability_date => availability_date,
-                :unpriced_item_type => sd.unpriced_item_type.human
+                :unpriced_item_type => sd.unpriced_item_type.human,
+                :territory => market_territories
               }
             end
           end
         end
       end
 
-      # filter on availability, date and type because suppliers are always the same
-      unpriced_items.uniq! {|i| i.except(:suppliers).hash }
+      # filter on availability, date, type and territories because suppliers are always the same
+      unpriced_items.uniq! do |i|
+        i.select {|k,v| [:available, :availability_date, :unpriced_item_type, :territory].include?(k) }.hash
+      end
 
       grouped_supplies={}
       supplies.each do |supply|
