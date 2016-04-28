@@ -54,14 +54,14 @@
     <SalesRights>
       <SalesRightsType>01</SalesRightsType>
       <Territory>
-        <CountriesIncluded>AT BE BG CY CZ DE ES EE FI FR GR HU IE IT LT LU LV MT NL PL PT RO SK SI</CountriesIncluded>
+        <CountriesIncluded>FR GF GP MC MQ NC PF PM ES IT PT</CountriesIncluded>
       </Territory>
     </SalesRights>
   </PublishingDetail>
   <ProductSupply>
     <Market>
       <Territory>
-        <CountriesIncluded>AT BE CY DE EE ES FI FR GR IE IT LU MT NL PT SI SK SE DK BG CZ HU LT LV PL RO</CountriesIncluded>
+        <CountriesIncluded>FR GF GP MC MQ NC PF PM</CountriesIncluded>
       </Territory>
     </Market>
     <MarketPublishingDetail>
@@ -74,7 +74,7 @@
     <SupplyDetail>
       <Supplier>
         <SupplierRole>01</SupplierRole>
-        <SupplierName>Hachette Livre</SupplierName>
+        <SupplierName>Vendu Livre</SupplierName>
       </Supplier>
       <ProductAvailability>20</ProductAvailability>
       <SupplyDate>
@@ -82,6 +82,126 @@
         <Date>20150401</Date>
       </SupplyDate>
       <UnpricedItemType>01</UnpricedItemType>
+    </SupplyDetail>
+    <SupplyDetail>
+      <Supplier>
+        <SupplierRole>01</SupplierRole>
+        <SupplierName>Vendu Livre</SupplierName>
+      </Supplier>
+      <ProductAvailability>20</ProductAvailability>
+      <SupplyDate>
+        <SupplyDateRole>08</SupplyDateRole>
+        <Date>20150401</Date>
+      </SupplyDate>
+      <UnpricedItemType>01</UnpricedItemType>
+    </SupplyDetail>
+    <SupplyDetail>
+      <Supplier>
+        <SupplierRole>01</SupplierRole>
+        <SupplierName>Vendu Livre</SupplierName>
+      </Supplier>
+      <ProductAvailability>20</ProductAvailability>
+      <SupplyDate>
+        <SupplyDateRole>08</SupplyDateRole>
+        <Date>20150401</Date>
+      </SupplyDate>
+      <UnpricedItemType>01</UnpricedItemType>
+    </SupplyDetail>
+    <SupplyDetail>
+      <Supplier>
+        <SupplierRole>01</SupplierRole>
+        <SupplierName>Vendu Livre</SupplierName>
+      </Supplier>
+      <ProductAvailability>20</ProductAvailability>
+      <SupplyDate>
+        <SupplyDateRole>08</SupplyDateRole>
+        <Date>20150401</Date>
+      </SupplyDate>
+      <UnpricedItemType>01</UnpricedItemType>
+    </SupplyDetail>
+    <SupplyDetail>
+      <Supplier>
+        <SupplierRole>01</SupplierRole>
+        <SupplierName>Vendu Livre</SupplierName>
+      </Supplier>
+      <ProductAvailability>20</ProductAvailability>
+      <SupplyDate>
+        <SupplyDateRole>08</SupplyDateRole>
+        <Date>20150401</Date>
+      </SupplyDate>
+      <UnpricedItemType>01</UnpricedItemType>
+    </SupplyDetail>
+    <SupplyDetail>
+      <Supplier>
+        <SupplierRole>01</SupplierRole>
+        <SupplierName>Vendu Livre</SupplierName>
+      </Supplier>
+      <ProductAvailability>20</ProductAvailability>
+      <SupplyDate>
+        <SupplyDateRole>08</SupplyDateRole>
+        <Date>20150401</Date>
+      </SupplyDate>
+      <UnpricedItemType>01</UnpricedItemType>
+    </SupplyDetail>
+    <SupplyDetail>
+      <Supplier>
+        <SupplierRole>01</SupplierRole>
+        <SupplierName>Vendu Livre</SupplierName>
+      </Supplier>
+      <ProductAvailability>20</ProductAvailability>
+      <SupplyDate>
+        <SupplyDateRole>08</SupplyDateRole>
+        <Date>20150401</Date>
+      </SupplyDate>
+      <UnpricedItemType>01</UnpricedItemType>
+    </SupplyDetail>
+    <SupplyDetail>
+      <Supplier>
+        <SupplierRole>01</SupplierRole>
+        <SupplierName>Vendu Livre</SupplierName>
+      </Supplier>
+      <ProductAvailability>20</ProductAvailability>
+      <SupplyDate>
+        <SupplyDateRole>08</SupplyDateRole>
+        <Date>20150401</Date>
+      </SupplyDate>
+      <UnpricedItemType>01</UnpricedItemType>
+    </SupplyDetail>
+  </ProductSupply>
+  <ProductSupply>
+    <Market>
+      <Territory>
+        <CountriesIncluded>ES IT PT</CountriesIncluded>
+      </Territory>
+    </Market>
+    <MarketPublishingDetail>
+      <MarketPublishingStatus>04</MarketPublishingStatus>
+      <MarketDate>
+        <MarketDateRole>11</MarketDateRole>
+        <Date>20150401</Date>
+      </MarketDate>
+    </MarketPublishingDetail>
+    <SupplyDetail>
+      <Supplier>
+        <SupplierRole>01</SupplierRole>
+        <SupplierName>Vendu Livre</SupplierName>
+      </Supplier>
+      <ProductAvailability>20</ProductAvailability>
+      <Price>
+        <PriceType>04</PriceType>
+        <PriceAmount>10.99</PriceAmount>
+        <Tax>
+          <TaxType>01</TaxType>
+          <TaxRatePercent>5.5</TaxRatePercent>
+          <TaxAmount>1.09</TaxAmount>
+        </Tax>
+        <CurrencyCode>EUR</CurrencyCode>
+        <PriceDate>
+          <PriceDateRole>14</PriceDateRole>
+          <DateFormat>14</DateFormat>
+          <Date>20131001</Date>
+        </PriceDate>
+      </Price>
     </SupplyDetail>
   </ProductSupply>
 </Product>
