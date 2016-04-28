@@ -89,15 +89,18 @@ module ONIX
                 :suppliers => sd.suppliers,
                 :available => sd.available?,
                 :availability_date => availability_date,
-                :unpriced_item_type => sd.unpriced_item_type.human
+                :unpriced_item_type => sd.unpriced_item_type.human,
+                :territory => ps.markets ? ps.markets.map{|m| m.territory.countries}.flatten.uniq : []
              }
             end
           end
         end
       end
 
-      # filter on availability, date and type because suppliers are always the same
-      unpriced_items.uniq! {|i| i.except(:suppliers).hash }
+      # filter on availability, date, type and territories because suppliers are always the same
+      unpriced_items.uniq! do |i|
+        i.select {|k,v| [:available, :availability_date, :unpriced_item_type, :territory].include?(k) }.hash
+      end
 
       grouped_supplies={}
       supplies.each do |supply|
