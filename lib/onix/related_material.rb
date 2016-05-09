@@ -19,7 +19,7 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("ProductIdentifier")
             @identifiers << Identifier.parse_identifier(t,"Product")
@@ -29,6 +29,8 @@ module ONIX
             @form=ProductForm.from_code(t.text)
           when tag_match("ProductFormDetail")
             @form_details << ProductFormDetail.from_code(t.text)
+          else
+            unsupported(t)
         end
       end
     end
@@ -53,12 +55,14 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("WorkIdentifier")
             @identifiers << Identifier.parse_identifier(t,"Work")
           when tag_match("WorkRelationCode")
             @code=WorkRelationCode.from_code(t.text)
+          else
+            unsupported(t)
         end
       end
     end
@@ -95,12 +99,14 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("RelatedProduct")
-            @related_products << RelatedProduct.from_xml(t)
+            @related_products << RelatedProduct.parse(t)
           when tag_match("RelatedWork")
-            @related_works << RelatedWork.from_xml(t)
+            @related_works << RelatedWork.parse(t)
+          else
+            unsupported(t)
         end
       end
     end

@@ -5,7 +5,7 @@ module ONIX
     attr_accessor :level, :title_prefix, :title_without_prefix, :title_text, :subtitle, :part_number
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("TitleElementLevel")
             @level=TitleElementLevel.from_code(t.text)
@@ -48,12 +48,12 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("TitleType")
             @type=TitleType.from_code(t.text)
           when tag_match("TitleElement")
-            @title_elements << TitleElement.from_xml(t)
+            @title_elements << TitleElement.parse(t)
         end
       end
     end
@@ -86,19 +86,19 @@ module ONIX
     def collection_title_element
       distinctive_title=@title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first
       if distinctive_title
-        distinctive_title.title_elements.select{ |te| te.level.human=~/CollectionLevel/ }.first
+        distinctive_title.title_elements.select { |te| te.level.human=~/CollectionLevel/ }.first
       end
     end
-    
+
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("CollectionIdentifier")
-            @identifiers << Identifier.parse_identifier(t,"Collection")
+            @identifiers << Identifier.parse_identifier(t, "Collection")
           when tag_match("CollectionType")
             @type=CollectionType.from_code(t.text)
           when tag_match("TitleDetail")
-            @title_details << TitleDetail.from_xml(t)
+            @title_details << TitleDetail.parse(t)
         end
       end
     end
@@ -133,12 +133,12 @@ module ONIX
     end
 
     def file_formats
-      @form_details.select{|fd| fd.code =~ /^E1.*/}
+      @form_details.select { |fd| fd.code =~ /^E1.*/ }
     end
 
     def reflowable?
-      return true if @form_details.select{|fd| fd.code == "E200"}.length > 0
-      return false if @form_details.select{|fd| fd.code == "E201"}.length > 0
+      return true if @form_details.select { |fd| fd.code == "E200" }.length > 0
+      return false if @form_details.select { |fd| fd.code == "E201" }.length > 0
     end
 
     # :category: High level
@@ -151,26 +151,27 @@ module ONIX
     # raw part file description string without HTML
     def raw_file_description
       if @form_description
-        Helper.strip_html(@form_description).gsub(/\s+/," ").strip
+        Helper.strip_html(@form_description).gsub(/\s+/, " ").strip
       else
         nil
       end
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("ProductIdentifier")
-            @identifiers << Identifier.parse_identifier(t,"Product")
+            @identifiers << Identifier.parse_identifier(t, "Product")
           when tag_match("ProductForm")
             @form=ProductForm.from_code(t.text)
           when tag_match("ProductFormDescription")
             @form_description=t.text
           when tag_match("ProductFormDetail")
             @form_details << ProductFormDetail.from_code(t.text)
+          else
+            unsupported(t)
         end
       end
-
     end
 
     # :category: High level
@@ -196,7 +197,6 @@ module ONIX
         nil
       end
     end
-
   end
 
   class Extent < Subset
@@ -224,7 +224,7 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("ExtentType")
             @type=ExtentType.from_code(t.text)
@@ -232,6 +232,8 @@ module ONIX
             @unit=ExtentUnit.from_code(t.text)
           when tag_match("ExtentValue")
             @value=t.text
+          else
+            unsupported(t)
         end
       end
     end
@@ -241,12 +243,14 @@ module ONIX
     attr_accessor :quantity, :unit
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("EpubUsageUnit")
             @unit=EpubUsageUnit.from_code(t.text)
           when tag_match("Quantity")
             @quantity=t.text.to_i
+          else
+            unsupported(t)
         end
       end
     end
@@ -259,33 +263,36 @@ module ONIX
       @limits=[]
     end
 
-    def parse(drm)
-      drm.children.each do |t|
+    def parse(n)
+      n.elements.each do |t|
         case t
           when tag_match("EpubUsageType")
             @type=EpubUsageType.from_code(t.text)
           when tag_match("EpubUsageStatus")
             @status=EpubUsageStatus.from_code(t.text)
           when tag_match("EpubUsageLimit")
-            @limits << EpubUsageLimit.from_xml(t)
+            @limits << EpubUsageLimit.parse(t)
+          else
+            unsupported(t)
         end
       end
-
     end
   end
 
   class Language < Subset
     attr_accessor :role, :code
+
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("LanguageRole")
             @role=LanguageRole.from_code(t.text)
           when tag_match("LanguageCode")
             @code=LanguageCode.from_code(t.text)
+          else
+            unsupported(t)
         end
       end
-
     end
   end
 
@@ -297,7 +304,7 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("ProductFormFeatureType")
             @type=ProductFormFeatureType.from_code(t.text)
@@ -305,17 +312,19 @@ module ONIX
             @value=t.text
           when tag_match("ProductFormFeatureDescription")
             @descriptions << t.text
+          else
+            unsupported(t)
         end
       end
-
     end
-
   end
+
   class DescriptiveDetail < Subset
     attr_accessor :title_details, :collection,
                   :languages,
                   :composition,
                   :form, :form_details, :form_features, :form_description, :parts,
+                  :primary_content_type,
                   :edition_number,
                   :contributors,
                   :subjects,
@@ -336,7 +345,6 @@ module ONIX
       @languages=[]
       @form_details=[]
       @form_features=[]
-
     end
 
     # :category: High level
@@ -352,11 +360,11 @@ module ONIX
     end
 
     def product_title_element
-      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.select{ |te| te.level.human=~/Product/ }.first
+      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.select { |te| te.level.human=~/Product/ }.first
     end
 
     def pages_extent
-      @extents.select{|e| e.type.human=~/PageCount/ || e.type.human=~/NumberOfPage/}.first
+      @extents.select { |e| e.type.human=~/PageCount/ || e.type.human=~/NumberOfPage/ }.first
     end
 
     def pages
@@ -368,7 +376,7 @@ module ONIX
     end
 
     def filesize_extent
-      @extents.select{|e| e.type.human=="Filesize"}.first
+      @extents.select { |e| e.type.human=="Filesize" }.first
     end
 
     def filesize
@@ -404,7 +412,7 @@ module ONIX
     end
 
     def audio_formats
-      @form_details.select{|fd| fd.code =~ /^A.*/}
+      @form_details.select { |fd| fd.code =~ /^A.*/ }
     end
 
     def bundle?
@@ -422,12 +430,12 @@ module ONIX
     end
 
     def file_formats
-      @form_details.select{|fd| fd.code =~ /^E1.*/}
+      @form_details.select { |fd| fd.code =~ /^E1.*/ }
     end
 
     def reflowable?
-      return true if @form_details.select{|fd| fd.code == "E200"}.length > 0
-      return false if @form_details.select{|fd| fd.code == "E201"}.length > 0
+      return true if @form_details.select { |fd| fd.code == "E200" }.length > 0
+      return false if @form_details.select { |fd| fd.code == "E201" }.length > 0
     end
 
     def file_description
@@ -445,7 +453,7 @@ module ONIX
     end
 
     def language_of_text
-      l=@languages.select{|l| l.role.human=="LanguageOfText"}.first
+      l=@languages.select { |l| l.role.human=="LanguageOfText" }.first
       if l
         l.code
       else
@@ -454,68 +462,73 @@ module ONIX
     end
 
     def publisher_collection
-      @collections.select{|c| c.type.human=="PublisherCollection"}.first
+      @collections.select { |c| c.type.human=="PublisherCollection" }.first
     end
 
     def publisher_collection_title
       if self.publisher_collection
         self.publisher_collection.title
       end
-
     end
 
     def bisac_categories
-      @subjects.select{|s| s.scheme_identifier.human=="BisacSubjectHeading"}
+      @subjects.select { |s| s.scheme_identifier.human=="BisacSubjectHeading" }
     end
 
     def clil_categories
-      @subjects.select{|s| s.scheme_identifier.human=="Clil"}
+      @subjects.select { |s| s.scheme_identifier.human=="Clil" }
     end
 
     def keywords
-      kws=@subjects.select{|s| s.scheme_identifier.human=="Keywords"}.map{|kw| kw.heading_text}.compact
-      kws.map{|kw| kw.split(/;|,|\n/)}.flatten.map{|kw| kw.strip}
+      kws=@subjects.select { |s| s.scheme_identifier.human=="Keywords" }.map { |kw| kw.heading_text }.compact
+      kws.map { |kw| kw.split(/;|,|\n/) }.flatten.map { |kw| kw.strip }
     end
 
     def parse(n)
-
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("TitleDetail")
-            @title_details << TitleDetail.from_xml(t)
+            @title_details << TitleDetail.parse(t)
           when tag_match("Contributor")
-            @contributors << Contributor.from_xml(t)
+            @contributors << Contributor.parse(t)
           when tag_match("Collection")
-            @collections << Collection.from_xml(t)
+            @collections << Collection.parse(t)
           when tag_match("Extent")
-            @extents << Extent.from_xml(t)
+            @extents << Extent.parse(t)
           when tag_match("EditionNumber")
             @edition_number=t.text.to_i
           when tag_match("Language")
-            @languages << Language.from_xml(t)
+            @languages << Language.parse(t)
           when tag_match("ProductComposition")
             @composition=ProductComposition.from_code(t.text)
           when tag_match("ProductForm")
             @form=ProductForm.from_code(t.text)
           when tag_match("ProductFormFeature")
-            @form_features << ProductFormFeature.from_xml(t)
+            @form_features << ProductFormFeature.parse(t)
           when tag_match("ProductFormDescription")
             @form_description=t.text
           when tag_match("ProductFormDetail")
             @form_details << ProductFormDetail.from_code(t.text)
+          when tag_match("PrimaryContentType")
+            @primary_content_type = ProductContentType.from_code(t.text)
           when tag_match("EpubTechnicalProtection")
             @epub_technical_protections << EpubTechnicalProtection.from_code(t.text)
           when tag_match("EpubUsageConstraint")
-            @epub_usage_constraints << EpubUsageConstraint.from_xml(t)
+            @epub_usage_constraints << EpubUsageConstraint.parse(t)
+          when tag_match("NoCollection")
+            # ignore
+          when tag_match("NoEdition")
+            # ignore
           when tag_match("ProductPart")
-            part=ProductPart.from_xml(t)
+            part=ProductPart.parse(t)
             part.part_of=self
             @parts << part
           when tag_match("Subject")
-            @subjects << Subject.from_xml(t)
+            @subjects << Subject.parse(t)
+          else
+            unsupported(t)
         end
-      end
-
       end
     end
   end
+end

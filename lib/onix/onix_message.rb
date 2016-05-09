@@ -23,7 +23,7 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("SenderIdentifier")
             @identifiers << Identifier.parse_identifier(t, "Sender")
@@ -124,13 +124,13 @@ module ONIX
 
       case root
         when tag_match("ONIXMessage")
-          root.children.each do |e|
+          root.elements.each do |e|
             case e
               when tag_match("Header")
-                e.children.each do |t|
+                e.elements.each do |t|
                   case t
                     when tag_match("Sender")
-                      @sender=Sender.from_xml(t)
+                      @sender=Sender.parse(t)
                     when tag_match("SentDateTime")
                       tm=t.text
                       @sent_date_time=Time.strptime(tm, "%Y%m%dT%H%M%S") rescue Time.strptime(tm, "%Y%m%dT%H%M") rescue Time.strptime(tm, "%Y%m%d") rescue nil
@@ -138,10 +138,12 @@ module ONIX
                       @default_language_of_text=LanguageCode.from_code(t.text)
                     when tag_match("DefaultCurrencyCode")
                       @default_currency_code=t.text
+                    else
+                      unsupported(t)
                   end
                 end
               when tag_match("Product")
-                product=Product.from_xml(e)
+                product=Product.parse(e)
                 product.default_language_of_text=@default_language_of_text
                 product.default_currency_code=@default_currency_code
                 @products << product
@@ -150,7 +152,7 @@ module ONIX
           end
 
         when tag_match("Product")
-          product=Product.from_xml(xml.root)
+          product=Product.parse(xml.root)
           product.default_language_of_text=@default_language_of_text
           product.default_currency_code=@default_currency_code
           @products << product

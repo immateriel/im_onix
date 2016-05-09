@@ -4,6 +4,7 @@ module ONIX
       @shortnames||=YAML.load(File.open(File.dirname(__FILE__) + "/../../data/shortnames.yml"))
     end
   end
+
   TagNameMatcher = Struct.new(:tag_name) do
     def ===(target)
       if target.element?
@@ -12,20 +13,24 @@ module ONIX
       else
         false
       end
-
     end
   end
 
   class Subset
-    # instanciate Subset form Nokogiri::XML::Node
-    def self.from_xml(n)
+    # instanciate Subset form Nokogiri::XML::Element
+    def self.parse(n)
       o=self.new
       o.parse(n)
       o
     end
 
-    # parse Nokogiri::XML::Node
+    # parse Nokogiri::XML::Element
     def parse(n)
+    end
+
+    def unsupported(tag)
+#      raise SubsetUnsupported,tag.name
+#      puts "SubsetUnsupported: #{self.class}##{tag.name}"
     end
 
     def tag_match(v)

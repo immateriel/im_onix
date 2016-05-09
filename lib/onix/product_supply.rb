@@ -5,13 +5,17 @@ module ONIX
   class MarketDate < Subset
     attr_accessor :role, :date
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("MarketDateRole")
             @role = MarketDateRole.from_code(t.text)
+          when tag_match("Date")
+            # via OnixDate
+          else
+            unsupported(t)
         end
       end
-      @date=OnixDate.from_xml(n)
+      @date=OnixDate.parse(n)
 
     end
   end
@@ -20,10 +24,12 @@ module ONIX
     attr_accessor :territory
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("Territory")
-            @territory=Territory.from_xml(t)
+            @territory=Territory.parse(t)
+          else
+            unsupported(t)
         end
       end
     end
@@ -48,10 +54,12 @@ module ONIX
 
     def parse(n)
       @publisher_representatives=Agent.parse_entities(n, "PublisherRepresentative")
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("MarketDate")
-            @market_dates << MarketDate.from_xml(t)
+            @market_dates << MarketDate.parse(t)
+          else
+            unsupported(t)
         end
       end
     end
@@ -61,13 +69,17 @@ module ONIX
   class SupplyDate < Subset
     attr_accessor :role, :date
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("SupplyDateRole")
             @role = SupplyDateRole.from_code(t.text)
+          when tag_match("Date")
+            # via OnixDate
+          else
+            unsupported(t)
         end
       end
-      @date = OnixDate.from_xml(n)
+      @date = OnixDate.parse(n)
 
     end
   end
@@ -105,14 +117,18 @@ module ONIX
     def parse(n)
       @suppliers = Supplier.parse_entities(n, "Supplier")
 
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("ProductAvailability")
             @availability=ProductAvailability.from_code(t.text)
           when tag_match("SupplyDate")
-            @supply_dates << SupplyDate.from_xml(t)
+            @supply_dates << SupplyDate.parse(t)
           when tag_match("Price")
-            @prices << Price.from_xml(t)
+            @prices << Price.parse(t)
+          when tag_match("Supplier")
+            # via parse_entities
+          else
+            unsupported(t)
         end
       end
     end
@@ -143,14 +159,16 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("SupplyDetail")
-            @supply_details << SupplyDetail.from_xml(t)
+            @supply_details << SupplyDetail.parse(t)
           when tag_match("Market")
-            @markets << Market.from_xml(t)
+            @markets << Market.parse(t)
           when tag_match("MarketPublishingDetail")
-            @market_publishing_detail = MarketPublishingDetail.from_xml(t)
+            @market_publishing_detail = MarketPublishingDetail.parse(t)
+          else
+            unsupported(t)
         end
       end
     end

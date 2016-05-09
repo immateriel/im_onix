@@ -2,15 +2,19 @@ module ONIX
 
   class ContentDate < Subset
     attr_accessor :date, :role
+
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("ContentDateRole")
             @role=ContentDateRole.from_code(t.text)
+          when tag_match("Date")
+            # via OnixDate
+          else
+            unsupported(t)
         end
       end
-      @date=OnixDate.from_xml(n)
-
+      @date=OnixDate.parse(n)
     end
   end
 
@@ -21,17 +25,19 @@ module ONIX
       @notes=[]
     end
 
-    def parse(f)
-      f.children.each do |fn|
+    def parse(n)
+      n.elements.each do |t|
         case fn
           when tag_match("ResourceVersionFeatureType")
-            @type = ResourceVersionFeatureType.from_code(fn.text)
+            @type = ResourceVersionFeatureType.from_code(t.text)
           when tag_match("FeatureNote")
-            @notes << fn.text
+            @notes << t.text
+          else
+            unsupported(t)
         end
       end
 
-      @value=Helper.text_at(f,"./FeatureValue")
+      @value=Helper.text_at(f, "./FeatureValue")
 
       if @type.human=="FileFormat"
         @value=SupportingResourceFileFormat.from_code(@value)
@@ -55,11 +61,11 @@ module ONIX
     end
 
     def file_format_feature
-      @features.select{|f| f.type.human=="FileFormat"}.first
+      @features.select { |f| f.type.human=="FileFormat" }.first
     end
 
     def file_format
-      if ["DownloadableFile","LinkableResource"].include?(@form.human)
+      if ["DownloadableFile", "LinkableResource"].include?(@form.human)
         if file_format_feature
           file_format_feature.value.human
         end
@@ -67,7 +73,7 @@ module ONIX
     end
 
     def file_mimetype
-      if ["DownloadableFile","LinkableResource"].include?(@form.human)
+      if ["DownloadableFile", "LinkableResource"].include?(@form.human)
         if file_format_feature
           file_format_feature.value.mimetype
         end
@@ -75,17 +81,16 @@ module ONIX
     end
 
     def image_width_feature
-      @features.select{|i| i.type.human=="ImageWidthInPixels"}.first
+      @features.select { |i| i.type.human=="ImageWidthInPixels" }.first
     end
 
     def image_height_feature
-      @features.select{|i| i.type.human=="ImageHeightInPixels"}.first
+      @features.select { |i| i.type.human=="ImageHeightInPixels" }.first
     end
 
     def md5_hash_feature
-      @features.select{|i| i.type.human=="Md5HashValue"}.first
+      @features.select { |i| i.type.human=="Md5HashValue" }.first
     end
-
 
     def image_width
       if self.image_width_feature
@@ -106,7 +111,7 @@ module ONIX
     end
 
     def last_updated_content_date
-      @content_dates.select{|cd| cd.role.human=="LastUpdated"}.first
+      @content_dates.select { |cd| cd.role.human=="LastUpdated" }.first
     end
 
     def last_updated
@@ -115,21 +120,21 @@ module ONIX
       end
     end
 
-      def parse(n)
-        n.children.each do |t|
-          case t
-            when tag_match("ResourceForm")
-              @form=ResourceForm.from_code(t.text)
-            when tag_match("ResourceLink")
-              @links << t.text.strip
-            when tag_match("ContentDate")
-              @content_dates << ContentDate.from_xml(t)
-            when tag_match("ResourceVersionFeature")
-              @features << ResourceVersionFeature.from_xml(t)
-
-          end
+    def parse(n)
+      n.elements.each do |t|
+        case t
+          when tag_match("ResourceForm")
+            @form=ResourceForm.from_code(t.text)
+          when tag_match("ResourceLink")
+            @links << t.text.strip
+          when tag_match("ContentDate")
+            @content_dates << ContentDate.parse(t)
+          when tag_match("ResourceVersionFeature")
+            @features << ResourceVersionFeature.parse(t)
+          else
+            unsupported(t)
         end
-
+      end
     end
   end
 
@@ -139,8 +144,9 @@ module ONIX
     def initialize
       @notes=[]
     end
+
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("ResourceFeatureType")
             @type=ResourceFeatureType.from_code(t.text)
@@ -148,10 +154,10 @@ module ONIX
             @value=t.text
           when tag_match("FeatureNote")
             @notes << t.text
-
+          else
+            unsupported(t)
         end
       end
-
     end
   end
 
@@ -162,8 +168,9 @@ module ONIX
       @versions=[]
       @features=[]
     end
+
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("ResourceContentType")
             @type=ResourceContentType.from_code(t.text)
@@ -172,12 +179,13 @@ module ONIX
           when tag_match("ResourceMode")
             @mode=ResourceMode.from_code(t.text)
           when tag_match("ResourceVersion")
-            @versions << ResourceVersion.from_xml(t)
+            @versions << ResourceVersion.parse(t)
           when tag_match("ResourceFeature")
-            @features << ResourceFeature.from_xml(t)
+            @features << ResourceFeature.parse(t)
+          else
+            unsupported(t)
         end
       end
-
     end
   end
 end
