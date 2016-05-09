@@ -3,8 +3,6 @@ module ONIX
     attr_accessor :code
     # product Identifier array
     attr_accessor :identifiers
-    # full Product if referenced in ONIXMessage
-    attr_accessor :product
 
     attr_accessor :form
 
@@ -12,6 +10,15 @@ module ONIX
 
     include EanMethods
     include ProprietaryIdMethods
+
+    # full Product if referenced in ONIXMessage
+    def product
+      @product
+    end
+
+    def product=v
+      @product=v
+    end
 
     def initialize
       @identifiers = []

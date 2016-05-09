@@ -106,14 +106,29 @@ module ONIX
 
   # product part use full Product to provide file protection and file size
   class ProductPart < Subset
-    attr_accessor :identifiers, :form, :form_details, :form_description, :content_types, :number_of_copies
-    # full Product if referenced in ONIXMessage
-    attr_accessor :product
-    # this ProductPart is part of Product
-    attr_accessor :part_of
+    attr_accessor :identifiers, :form, :form_details, :form_description, :content_types,
+                  :number_of_copies
 
     include EanMethods
     include ProprietaryIdMethods
+
+    # full Product if referenced in ONIXMessage
+    def product
+      @product
+    end
+
+    def product=v
+      @product=v
+    end
+
+    # this ProductPart is part of Product
+    def part_of
+      @part_of
+    end
+
+    def part_of=v
+      @part_of=v
+    end
 
     def initialize
       @identifiers = []

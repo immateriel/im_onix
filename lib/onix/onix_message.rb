@@ -58,11 +58,19 @@ module ONIX
   class ONIXMessage < Subset
     attr_accessor :sender, :adressee, :sent_date_time,
                   :default_language_of_text, :default_currency_code,
-                  :products, :vault
+                  :products
 
     def initialize
       @products=[]
       @vault={}
+    end
+
+    def vault
+      @vault
+    end
+
+    def vault=v
+      @vault = v
     end
 
     # merge another message in this one
@@ -181,7 +189,7 @@ module ONIX
       end
 
       init_vault
-
     end
   end
+
 end
