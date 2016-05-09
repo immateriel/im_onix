@@ -30,7 +30,7 @@ module ONIX
 
     def unsupported(tag)
 #      raise SubsetUnsupported,tag.name
-#      puts "SubsetUnsupported: #{self.class}##{tag.name}"
+#      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{Short.names[tag.name]})"
     end
 
     def tag_match(v)

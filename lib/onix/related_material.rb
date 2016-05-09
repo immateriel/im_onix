@@ -24,11 +24,11 @@ module ONIX
           when tag_match("ProductIdentifier")
             @identifiers << Identifier.parse_identifier(t,"Product")
           when tag_match("ProductRelationCode")
-            @code=ProductRelationCode.from_code(t.text)
+            @code=ProductRelationCode.parse(t)
           when tag_match("ProductForm")
-            @form=ProductForm.from_code(t.text)
+            @form=ProductForm.parse(t)
           when tag_match("ProductFormDetail")
-            @form_details << ProductFormDetail.from_code(t.text)
+            @form_details << ProductFormDetail.parse(t)
           else
             unsupported(t)
         end
@@ -60,7 +60,7 @@ module ONIX
           when tag_match("WorkIdentifier")
             @identifiers << Identifier.parse_identifier(t,"Work")
           when tag_match("WorkRelationCode")
-            @code=WorkRelationCode.from_code(t.text)
+            @code=WorkRelationCode.parse(t)
           else
             unsupported(t)
         end

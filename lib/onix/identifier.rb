@@ -7,23 +7,11 @@ module ONIX
     # IDTypeName string value
     attr_accessor :name
 
-    # create Identifier array from Nokogiri:XML::Node
-    def self.parse_identifiers(node,prefix_tag)
-      identifiers=[]
-      node.children.each do |id|
-        case id
-          when tag_match("#{prefix_tag}Identifier")
-            identifiers << self.parse_identifier(id,prefix_tag)
-        end
-      end
-      identifiers
-    end
-
     def self.parse_identifier(node,prefix_tag)
       id_type=nil
       id_value=nil
       id_type_name=nil
-      node.children.each do |id|
+      node.elements.each do |id|
         case id
           when tag_match("#{prefix_tag}IDType")
             id_type=id.text

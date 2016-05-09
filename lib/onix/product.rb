@@ -706,7 +706,7 @@ module ONIX
           when tag_match("ProductIdentifier")
             @identifiers << Identifier.parse_identifier(t, "Product")
           when tag_match("NotificationType")
-            @notification_type=NotificationType.from_code(t.text)
+            @notification_type=NotificationType.parse(t)
           when tag_match("RelatedMaterial")
             @related_material=RelatedMaterial.parse(t)
           when tag_match("DescriptiveDetail")

@@ -3,7 +3,11 @@ require 'onix/subset'
 module ONIX
   class Contributor < Subset
     attr_accessor :name_before_key, :key_names, :person_name, :person_name_inverted, :role,
-                  :biography_note, :sequence_number
+                  :biography_note, :sequence_number, :website, :identifiers
+
+    def initialize
+      @identifiers = []
+    end
 
     # :category: High level
     # flatten person name (firstname lastname)
@@ -53,7 +57,11 @@ module ONIX
           when tag_match("BiographicalNote")
             @biography_note=t.text.strip
           when tag_match("ContributorRole")
-            @role=ContributorRole.from_code(t.text)
+            @role=ContributorRole.parse(t)
+          when tag_match("Website")
+            @website=t.text
+          when tag_match("NameIdentifier")
+            @identifiers = Identifier.parse_identifier(t,"Name")
           else
             unsupported(t)
         end

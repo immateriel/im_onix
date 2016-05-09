@@ -7,8 +7,10 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("ContentDateRole")
-            @role=ContentDateRole.from_code(t.text)
+            @role=ContentDateRole.parse(t)
           when tag_match("Date")
+            # via OnixDate
+          when tag_match("DateFormat")
             # via OnixDate
           else
             unsupported(t)
@@ -29,15 +31,15 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("ResourceVersionFeatureType")
-            @type = ResourceVersionFeatureType.from_code(t.text)
+            @type = ResourceVersionFeatureType.parse(t)
           when tag_match("FeatureNote")
             @notes << t.text
+          when tag_match("FeatureValue")
+            @value = t.text
           else
             unsupported(t)
         end
       end
-
-      @value=Helper.text_at(n, "./FeatureValue")
 
       if @type.human=="FileFormat"
         @value=SupportingResourceFileFormat.from_code(@value)
@@ -124,7 +126,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("ResourceForm")
-            @form=ResourceForm.from_code(t.text)
+            @form=ResourceForm.parse(t)
           when tag_match("ResourceLink")
             @links << t.text.strip
           when tag_match("ContentDate")
@@ -149,7 +151,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("ResourceFeatureType")
-            @type=ResourceFeatureType.from_code(t.text)
+            @type=ResourceFeatureType.parse(t)
           when tag_match("FeatureValue")
             @value=t.text
           when tag_match("FeatureNote")
@@ -173,11 +175,11 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("ResourceContentType")
-            @type=ResourceContentType.from_code(t.text)
+            @type=ResourceContentType.parse(t)
           when tag_match("ContentAudience")
-            @target_audience=ContentAudience.from_code(t.text)
+            @target_audience=ContentAudience.parse(t)
           when tag_match("ResourceMode")
-            @mode=ResourceMode.from_code(t.text)
+            @mode=ResourceMode.parse(t)
           when tag_match("ResourceVersion")
             @versions << ResourceVersion.parse(t)
           when tag_match("ResourceFeature")

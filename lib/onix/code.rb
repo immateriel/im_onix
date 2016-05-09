@@ -8,6 +8,11 @@ module ONIX
     # humanized string (eg: "Digital watermarking" become DigitalWatermarking, "PDF" become Pdf, "BISAC Subject Heading" become BisacSubjectHeading, etc)
     attr_accessor :human
 
+    def parse(n)
+      @code=n.text
+      @human=self.class.hash[n.text]
+    end
+
     # create Code from string ONIX code
     def self.from_code(code)
       o=self.new
@@ -124,6 +129,13 @@ module ONIX
     end
   end
 
+  class EditionType < CodeFromYaml
+    private
+    def self.code_ident
+      21
+    end
+  end
+
   class LanguageRole < CodeFromYaml
     private
     def self.code_ident
@@ -152,25 +164,30 @@ module ONIX
     end
   end
 
-  class SenderIDType < CodeFromYaml
+  class AudienceCode < CodeFromYaml
+    private
+    def self.code_ident
+      28
+    end
+  end
+
+  class IDType < CodeFromYaml
     private
     def self.code_ident
       44
     end
   end
 
-  class PublisherIDType < CodeFromYaml
-    private
-    def self.code_ident
-      44
-    end
+  class SenderIDType < IDType
   end
 
-  class ImprintIDType < CodeFromYaml
-    private
-    def self.code_ident
-      44
-    end
+  class PublisherIDType < IDType
+  end
+
+  class ImprintIDType < IDType
+  end
+
+  class NameIDType < IDType
   end
 
   class PublishingRole < CodeFromYaml
@@ -207,10 +224,31 @@ module ONIX
     end
   end
 
+  class UnpricedItemType < CodeFromYaml
+    private
+    def self.code_ident
+      57
+    end
+  end
+
   class PriceType < CodeFromYaml
     private
     def self.code_ident
       58
+    end
+  end
+
+  class PriceQualifier < CodeFromYaml
+    private
+    def self.code_ident
+      59
+    end
+  end
+
+  class PriceStatus < CodeFromYaml
+    private
+    def self.code_ident
+      61
     end
   end
 
@@ -232,6 +270,13 @@ module ONIX
     private
     def self.code_ident
       65
+    end
+  end
+
+  class MarketPublishingStatus < CodeFromYaml
+    private
+    def self.code_ident
+      68
     end
   end
 
