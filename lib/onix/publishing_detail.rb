@@ -69,10 +69,11 @@ module ONIX
     end
   end
 
-  class PublishingDate < Subset
-    attr_accessor :role, :date
+  class PublishingDate < OnixDate
+    attr_accessor :role
 
     def parse(n)
+      super
       n.elements.each do |t|
         case t
           when tag_match("PublishingDateRole")
@@ -85,9 +86,6 @@ module ONIX
             unsupported(t)
         end
       end
-
-      @date=OnixDate.parse(n)
-
     end
   end
 
@@ -130,7 +128,7 @@ module ONIX
     def publication_date
       pub=@publishing_dates.select{|pd| pd.role.human=="PublicationDate" or pd.role.human=="PublicationDateOfPrintCounterpart" or pd.role.human=="EmbargoDate"}.first
       if pub
-        pub.date.date
+        pub.date
       else
         nil
       end

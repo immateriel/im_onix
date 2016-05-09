@@ -17,7 +17,7 @@ module ONIX
           when tag_match("#{self.class.prefix}IDType")
             @type=ONIX.const_get("#{self.class.prefix}IDType").parse(t)
           when tag_match("IDValue")
-            @value=t.text
+            @value = t.text
           when tag_match("IDTypeName")
             @name = t.text
         end

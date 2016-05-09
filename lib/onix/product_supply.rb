@@ -2,9 +2,10 @@ require 'onix/price'
 
 module ONIX
 
-  class MarketDate < Subset
-    attr_accessor :role, :date
+  class MarketDate < OnixDate
+    attr_accessor :role
     def parse(n)
+      super
       n.elements.each do |t|
         case t
           when tag_match("MarketDateRole")
@@ -17,8 +18,6 @@ module ONIX
             unsupported(t)
         end
       end
-      @date=OnixDate.parse(n)
-
     end
   end
 
@@ -48,7 +47,7 @@ module ONIX
     def availability_date
       av=@market_dates.select{|sd| sd.role.human=="PublicationDate" || sd.role.human=="EmbargoDate"}.first
       if av
-        av.date.date
+        av.date
       else
         nil
       end
@@ -71,9 +70,10 @@ module ONIX
 
   end
 
-  class SupplyDate < Subset
-    attr_accessor :role, :date
+  class SupplyDate < OnixDate
+    attr_accessor :role
     def parse(n)
+      super
       n.elements.each do |t|
         case t
           when tag_match("SupplyDateRole")
@@ -86,8 +86,6 @@ module ONIX
             unsupported(t)
         end
       end
-      @date = OnixDate.parse(n)
-
     end
   end
 
@@ -115,7 +113,7 @@ module ONIX
     def availability_date
       av=@supply_dates.select{|sd| sd.role.human=="ExpectedAvailabilityDate" || sd.role.human=="EmbargoDate"}.first
       if av
-        av.date.date
+        av.date
       else
         nil
       end
