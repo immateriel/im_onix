@@ -3,12 +3,14 @@ module ONIX
   class SalesOutlet < Subset
     attr_accessor :identifier, :name
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("SalesOutletName")
             @name = t.text
           when tag_match("SalesOutletIdentifier")
             @identifier = Identifier.parse_identifier(t, "SalesOutlet")
+          else
+            unsupported(t)
         end
       end
     end
@@ -22,12 +24,12 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("SalesRestrictionType")
             @type = SalesRestrictionType.from_code(t.text)
           when tag_match("SalesOutlet")
-            @sales_outlets << SalesOutlet.from_xml(t)
+            @sales_outlets << SalesOutlet.parse(t)
           when tag_match("SalesRestrictionNote")
             @note = t.text
           when tag_match("StartDate")
@@ -36,6 +38,8 @@ module ONIX
           when tag_match("EndDate")
             fmt=t["dateformat"] || "00"
             @end_date=ONIX::Helper.to_date(fmt,t.text)
+          else
+            unsupported(t)
         end
       end
     end
@@ -50,14 +54,16 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("SalesRightsType")
             @type=SalesRightsType.from_code(t.text)
           when tag_match("Territory")
-            @territory=Territory.from_xml(t)
+            @territory=Territory.parse(t)
           when tag_match("SalesRestriction")
-            @sales_restrictions << SalesRestriction.from_xml(t)
+            @sales_restrictions << SalesRestriction.parse(t)
+          else
+            unsupported(t)
         end
       end
     end
@@ -67,14 +73,18 @@ module ONIX
     attr_accessor :role, :date
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("PublishingDateRole")
             @role=PublishingDateRole.from_code(t.text)
+          when tag_match("Date")
+            # via OnixDate
+          else
+            unsupported(t)
         end
       end
 
-      @date=OnixDate.from_xml(n)
+      @date=OnixDate.parse(n)
 
     end
   end
@@ -90,7 +100,7 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("PublisherName")
             @name = t.text
@@ -98,6 +108,8 @@ module ONIX
             @role = PublishingRole.from_code(t.text)
           when tag_match("PublisherIdentifier")
             @identifiers << Identifier.parse_identifier(t, "Publisher")
+          else
+            unsupported(t)
         end
       end
     end
@@ -148,20 +160,26 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("PublishingStatus")
             @status=PublishingStatus.from_code(t.text)
           when tag_match("SalesRights")
-            @sales_rights << SalesRights.from_xml(t)
+            @sales_rights << SalesRights.parse(t)
+          when tag_match("ROWSalesRightsType")
+            @row_sales_rights_type=SalesRightsType.from_code(t.text)
           when tag_match("PublishingDate")
-            @publishing_dates << PublishingDate.from_xml(t)
+            @publishing_dates << PublishingDate.parse(t)
           when tag_match("Publisher")
-            @publishers << Publisher.from_xml(t)
+            @publishers << Publisher.parse(t)
           when tag_match("CityOfPublication")
             @city = t.text
           when tag_match("CountryOfPublication")
             @country = t.text
+          when tag_match("Imprint")
+            # via parse_entities
+          else
+            unsupported(t)
         end
       end
 

@@ -5,7 +5,7 @@ module ONIX
   class Tax < Subset
     attr_accessor :amount, :rate_code, :rate_percent
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("TaxAmount")
             @amount=(t.text.to_f * 100).round
@@ -21,13 +21,17 @@ module ONIX
   class PriceDate < Subset
     attr_accessor :role, :date
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("PriceDateRole")
             @role = PriceDateRole.from_code(t.text)
+          when tag_match("Date")
+            # via OnixDate
+          else
+            unsupported(t)
         end
       end
-      @date = OnixDate.from_xml(n)
+      @date = OnixDate.parse(n)
     end
 
   end
@@ -42,7 +46,7 @@ module ONIX
     def from_date
       dt=@dates.select{|d| d.role.human=="FromDate"}.first
       if dt
-          dt.date.date
+        dt.date.date
       else
         nil
       end
@@ -66,22 +70,24 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("PriceDate")
-            @dates << PriceDate.from_xml(t)
+            @dates << PriceDate.parse(t)
           when tag_match("CurrencyCode")
             @currency=t.text.strip
           when tag_match("Territory")
-            @territory=Territory.from_xml(t)
+            @territory=Territory.parse(t)
           when tag_match("PriceType")
             @type=PriceType.from_code(t.text)
           when tag_match("PriceAmount")
             @amount=(t.text.to_f * 100).round
           when tag_match("Tax")
-            @tax=Tax.from_xml(t)
+            @tax=Tax.parse(t)
           when tag_match("DiscountCoded")
-            @discount = Discount.from_xml(t)
+            @discount = Discount.parse(t)
+          else
+            unsupported(t)
         end
       end
     end
@@ -91,7 +97,7 @@ module ONIX
     attr_accessor :code_type, :code_type_name, :code
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("DiscountCodeType")
             @code_type = t.text
@@ -99,6 +105,8 @@ module ONIX
             @code_type_name = t.text
           when tag_match("DiscountCode")
             @code = t.text
+          else
+            unsupported(t)
         end
       end
     end

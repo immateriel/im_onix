@@ -7,7 +7,7 @@ module ONIX
       @format=DateFormat.from_code("00")
       date_txt=nil
       @date=nil
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("DateFormat")
             @format=DateFormat.from_code(t.text)
@@ -27,18 +27,18 @@ module ONIX
       end
 
       begin
-      if format
-      case @format.code
-        when "00"
-          @date=Date.strptime(date_txt, format)
-        when "01"
-          @date=Date.strptime(date_txt, format)
-        when "14"
-          @date=Time.strptime(date_txt, format)
-        else
-          @date=nil
-      end
-      end
+        if format
+          case @format.code
+            when "00"
+              @date=Date.strptime(date_txt, format)
+            when "01"
+              @date=Date.strptime(date_txt, format)
+            when "14"
+              @date=Time.strptime(date_txt, format)
+            else
+              @date=nil
+          end
+        end
       rescue
         # invalid date
       end
@@ -46,14 +46,14 @@ module ONIX
 
     def format_from_code(code)
       case code
-      when "00"
-        "%Y%m%d"
-      when "01"
-        "%Y%m"
-      when "14"
-        "%Y%m%dT%H%M%S%z"
-      else
-        nil
+        when "00"
+          "%Y%m%d"
+        when "01"
+          "%Y%m"
+        when "14"
+          "%Y%m%dT%H%M%S%z"
+        else
+          nil
       end
     end
 
@@ -69,7 +69,6 @@ module ONIX
           nil
       end
     end
-
 
     def time
       @date.to_time

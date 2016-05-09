@@ -2,7 +2,8 @@ require 'onix/subset'
 
 module ONIX
   class Contributor < Subset
-    attr_accessor :name_before_key, :key_names, :person_name, :role, :biography_note, :sequence_number
+    attr_accessor :name_before_key, :key_names, :person_name, :person_name_inverted, :role,
+                  :biography_note, :sequence_number
 
     # :category: High level
     # flatten person name (firstname lastname)
@@ -37,7 +38,7 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("SequenceNumber")
             @sequence_number=t.text.to_i
@@ -47,14 +48,16 @@ module ONIX
             @key_names=t.text
           when tag_match("PersonName")
             @person_name=t.text
+          when tag_match("PersonNameInverted")
+            @person_name_inverted=t.text
           when tag_match("BiographicalNote")
             @biography_note=t.text.strip
           when tag_match("ContributorRole")
             @role=ContributorRole.from_code(t.text)
-
+          else
+            unsupported(t)
         end
       end
-
     end
   end
 end

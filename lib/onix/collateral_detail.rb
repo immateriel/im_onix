@@ -1,13 +1,21 @@
 module ONIX
   class TextContent < Subset
-    attr_accessor :type, :text
+    attr_accessor :type, :text, :source_title, :text_author, :content_audience
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("TextType")
             @type=TextType.from_code(t.text)
           when tag_match("Text")
             @text=t.text
+          when tag_match("SourceTitle")
+            @source_title=t.text
+          when tag_match("TextAuthor")
+            @text_author=t.text
+          when tag_match("ContentAudience")
+            @content_audience=ContentAudience.from_code(t.text)
+          else
+            unsupported(t)
         end
       end
     end
@@ -93,12 +101,14 @@ module ONIX
     end
 
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("TextContent")
-            @text_contents << TextContent.from_xml(t)
+            @text_contents << TextContent.parse(t)
           when tag_match("SupportingResource")
-            @supporting_resources << SupportingResource.from_xml(t)
+            @supporting_resources << SupportingResource.parse(t)
+          else
+            unsupported(t)
         end
       end
     end

@@ -3,7 +3,7 @@ module ONIX
   class Territory < Subset
     attr_accessor :countries_included, :regions_included, :countries_excluded, :region_excluded
     def parse(n)
-      n.children.each do |t|
+      n.elements.each do |t|
         case t
           when tag_match("CountriesIncluded")
             @countries_included=t.text
