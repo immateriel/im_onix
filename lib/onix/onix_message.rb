@@ -26,7 +26,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("SenderIdentifier")
-            @identifiers << Identifier.parse_identifier(t, "Sender")
+            @identifiers << SenderIdentifier.parse(t)
           when tag_match("SenderName")
             @name=t.text
         end
@@ -47,7 +47,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("AddresseeIdentifier")
-            @identifiers << Identifier.parse_identifier(t, "Sender")
+            @identifiers << AddresseeIdentifier.parse(t)
           when tag_match("AddresseeName")
             @name=t.text
         end
@@ -170,7 +170,6 @@ module ONIX
                 product.default_language_of_text=@default_language_of_text
                 product.default_currency_code=@default_currency_code
                 @products << product
-
             end
           end
 

@@ -8,7 +8,7 @@ module ONIX
           when tag_match("SalesOutletName")
             @name = t.text
           when tag_match("SalesOutletIdentifier")
-            @identifier = Identifier.parse_identifier(t, "SalesOutlet")
+            @identifier = SalesOutletIdentifier.parse(t)
           else
             unsupported(t)
         end

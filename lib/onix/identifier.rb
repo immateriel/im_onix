@@ -7,38 +7,86 @@ module ONIX
     # IDTypeName string value
     attr_accessor :name
 
-    def self.parse_identifier(node,prefix_tag)
-      id_type=nil
-      id_value=nil
-      id_type_name=nil
-      node.elements.each do |id|
-        case id
-          when tag_match("#{prefix_tag}IDType")
-            id_type=id.text
+    def self.prefix
+      nil
+    end
+
+    def parse(n)
+      n.elements.each do |t|
+        case t
+          when tag_match("#{self.class.prefix}IDType")
+            @type=ONIX.const_get("#{self.class.prefix}IDType").parse(t)
           when tag_match("IDValue")
-            id_value=id.text
+            @value=t.text
           when tag_match("IDTypeName")
-            id_type_name = id.text
+            @name = t.text
         end
       end
-      identifier = Identifier.from_hash({:type => ONIX.const_get("#{prefix_tag}IDType").from_code(id_type), :value => id_value})
-      identifier.name = id_type_name
-      identifier
     end
 
     def uniq_id
       "#{type.code}-#{@value}"
     end
+  end
 
-    private
-    # identifier from hash
-    def self.from_hash(h)
-      o=self.new
-      o.type=h[:type]
-      o.value=h[:value]
-      o
+  class SenderIdentifier < Identifier
+    def self.prefix
+      "Sender"
     end
+  end
 
+  class AddresseeIdentifier < Identifier
+    def self.prefix
+      "Addressee"
+    end
+  end
+
+  class AgentIdentifier < Identifier
+    def self.prefix
+      "Agent"
+    end
+  end
+
+  class PublisherIdentifier < Identifier
+    def self.prefix
+      "Publisher"
+    end
+  end
+
+  class SupplierIdentifier < Identifier
+    def self.prefix
+      "Supplier"
+    end
+  end
+
+  class NameIdentifier < Identifier
+    def self.prefix
+      "Name"
+    end
+  end
+
+  class CollectionIdentifier < Identifier
+    def self.prefix
+      "Collection"
+    end
+  end
+
+  class ProductIdentifier < Identifier
+    def self.prefix
+      "Product"
+    end
+  end
+
+  class SalesOutletIdentifier < Identifier
+    def self.prefix
+      "SalesOutlet"
+    end
+  end
+
+  class WorkIdentifier < Identifier
+    def self.prefix
+      "Work"
+    end
   end
 
   module EanMethods
@@ -53,7 +101,7 @@ module ONIX
 
     private
     def ean_identifier
-      @identifiers.select{|id| id.type.human=="Gtin13"}.first || @identifiers.select{|id| id.type.human=="Isbn13"}.first
+      @identifiers.select { |id| id.type.human=="Gtin13" }.first || @identifiers.select { |id| id.type.human=="Isbn13" }.first
     end
   end
 
@@ -71,15 +119,16 @@ module ONIX
         nil
       end
     end
+
     # private
     def gln_identifier
-      @identifiers.select{|id| id.type.human=="Gln"}.first
+      @identifiers.select { |id| id.type.human=="Gln" }.first
     end
   end
 
   module ProprietaryIdMethods
     def proprietary_ids
-      @identifiers.select{|id| id.type.human=="Proprietary"}
+      @identifiers.select { |id| id.type.human=="Proprietary" }
     end
   end
 end

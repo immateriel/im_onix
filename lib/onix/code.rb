@@ -181,6 +181,9 @@ module ONIX
   class SenderIDType < IDType
   end
 
+  class AddresseeIDType < IDType
+  end
+
   class PublisherIDType < IDType
   end
 

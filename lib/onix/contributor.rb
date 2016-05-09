@@ -63,7 +63,7 @@ module ONIX
           when tag_match("Website")
             @websites << Website.parse(t)
           when tag_match("NameIdentifier")
-            @identifiers = Identifier.parse_identifier(t,"Name")
+            @identifiers = NameIdentifier.parse(t)
           else
             unsupported(t)
         end

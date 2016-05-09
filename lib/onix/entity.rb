@@ -39,13 +39,19 @@ module ONIX
               @role=self.class.role_class.parse(t)
             end
           when tag_match(self.class.identifier_tag)
-            @identifiers << Identifier.parse_identifier(t,self.class.prefix)
+            if self.class.identifier_class
+              @identifiers << self.class.identifier_class.parse(t)
+            end
         end
       end
     end
 
     private
     def self.prefix
+    end
+
+    def self.identifier_class
+      nil
     end
 
     def self.role_class
@@ -59,6 +65,10 @@ module ONIX
       "Agent"
     end
 
+    def self.identifier_class
+      AgentIdentifier
+    end
+
     def self.role_class
       AgentRole
     end
@@ -70,6 +80,10 @@ module ONIX
       "Imprint"
     end
 
+    def self.identifier_class
+      nil
+    end
+
     def self.role_class
       nil
     end
@@ -79,6 +93,10 @@ module ONIX
     private
     def self.prefix
       "Supplier"
+    end
+
+    def self.identifier_class
+      SupplierIdentifier
     end
 
     def self.role_class
@@ -112,6 +130,10 @@ module ONIX
 
     def self.role_tag
       "PublishingRole"
+    end
+
+    def self.identifier_class
+      PublisherIdentifier
     end
 
     def self.role_class
