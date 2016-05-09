@@ -294,6 +294,13 @@ module ONIX
     end
   end
 
+  class WebsiteRole < CodeFromYaml
+    private
+    def self.code_ident
+      73
+    end
+  end
+
   class LanguageCode < CodeFromYaml
     private
     def self.code_ident

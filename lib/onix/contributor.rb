@@ -1,12 +1,14 @@
 require 'onix/subset'
+require 'onix/website'
 
 module ONIX
   class Contributor < Subset
     attr_accessor :name_before_key, :key_names, :person_name, :person_name_inverted, :role,
-                  :biography_note, :sequence_number, :website, :identifiers
+                  :biography_note, :sequence_number, :websites, :identifiers
 
     def initialize
       @identifiers = []
+      @websites = []
     end
 
     # :category: High level
@@ -59,7 +61,7 @@ module ONIX
           when tag_match("ContributorRole")
             @role=ContributorRole.parse(t)
           when tag_match("Website")
-            @website=t.text
+            @websites << Website.parse(t)
           when tag_match("NameIdentifier")
             @identifiers = Identifier.parse_identifier(t,"Name")
           else

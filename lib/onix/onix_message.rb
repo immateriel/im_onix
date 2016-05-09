@@ -34,8 +34,29 @@ module ONIX
     end
   end
 
+  class Addressee < Subset
+    attr_accessor :identifiers, :name
+
+    include GlnMethods
+
+    def initialize
+      @identifiers=[]
+    end
+
+    def parse(n)
+      n.elements.each do |t|
+        case t
+          when tag_match("AddresseeIdentifier")
+            @identifiers << Identifier.parse_identifier(t, "Sender")
+          when tag_match("AddresseeName")
+            @name=t.text
+        end
+      end
+    end
+  end
+
   class ONIXMessage < Subset
-    attr_accessor :sender, :sent_date_time,
+    attr_accessor :sender, :adressee, :sent_date_time,
                   :default_language_of_text, :default_currency_code,
                   :products, :vault
 
@@ -131,6 +152,8 @@ module ONIX
                   case t
                     when tag_match("Sender")
                       @sender=Sender.parse(t)
+                    when tag_match("Addressee")
+                      @addressee=Addressee.parse(t)
                     when tag_match("SentDateTime")
                       tm=t.text
                       @sent_date_time=Time.strptime(tm, "%Y%m%dT%H%M%S") rescue Time.strptime(tm, "%Y%m%dT%H%M") rescue Time.strptime(tm, "%Y%m%d") rescue nil

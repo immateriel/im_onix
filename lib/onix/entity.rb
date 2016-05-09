@@ -1,5 +1,6 @@
 require 'onix/code'
 require 'onix/identifier'
+require 'onix/website'
 
 module ONIX
   class Entity < Subset
@@ -86,6 +87,24 @@ module ONIX
   end
 
   class Publisher < Entity
+    attr_accessor :websites
+
+    def initialize
+      super
+      @websites = []
+    end
+
+    def parse(n)
+      super
+      n.elements.each do |t|
+        case t
+          when tag_match("Website")
+            @websites << Website.parse(t)
+          else
+
+        end
+      end
+    end
     private
     def self.prefix
       "Publisher"
