@@ -27,7 +27,7 @@ module ONIX
 
     def parse(n)
       n.elements.each do |t|
-        case fn
+        case t
           when tag_match("ResourceVersionFeatureType")
             @type = ResourceVersionFeatureType.from_code(t.text)
           when tag_match("FeatureNote")
@@ -37,7 +37,7 @@ module ONIX
         end
       end
 
-      @value=Helper.text_at(f, "./FeatureValue")
+      @value=Helper.text_at(n, "./FeatureValue")
 
       if @type.human=="FileFormat"
         @value=SupportingResourceFileFormat.from_code(@value)
