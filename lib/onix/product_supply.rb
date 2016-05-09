@@ -8,8 +8,10 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("MarketDateRole")
-            @role = MarketDateRole.from_code(t.text)
+            @role = MarketDateRole.parse(t)
           when tag_match("Date")
+            # via OnixDate
+          when tag_match("DateFormat")
             # via OnixDate
           else
             unsupported(t)
@@ -36,7 +38,7 @@ module ONIX
   end
 
   class MarketPublishingDetail < Subset
-    attr_accessor :publisher_representatives, :market_dates
+    attr_accessor :publisher_representatives, :market_publishing_status, :market_dates
 
     def initialize
       @publisher_representatives=[]
@@ -53,11 +55,14 @@ module ONIX
     end
 
     def parse(n)
-      @publisher_representatives=Agent.parse_entities(n, "PublisherRepresentative")
       n.elements.each do |t|
         case t
           when tag_match("MarketDate")
             @market_dates << MarketDate.parse(t)
+          when tag_match("MarketPublishingStatus")
+            @market_publishing_status=MarketPublishingStatus.parse(t)
+          when tag_match("PublisherRepresentative")
+            @publisher_representatives << Agent.parse(t)
           else
             unsupported(t)
         end
@@ -72,8 +77,10 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("SupplyDateRole")
-            @role = SupplyDateRole.from_code(t.text)
+            @role = SupplyDateRole.parse(t)
           when tag_match("Date")
+            # via OnixDate
+          when tag_match("DateFormat")
             # via OnixDate
           else
             unsupported(t)
@@ -115,18 +122,18 @@ module ONIX
     end
 
     def parse(n)
-      @suppliers = Supplier.parse_entities(n, "Supplier")
-
       n.elements.each do |t|
         case t
           when tag_match("ProductAvailability")
-            @availability=ProductAvailability.from_code(t.text)
+            @availability=ProductAvailability.parse(t)
           when tag_match("SupplyDate")
             @supply_dates << SupplyDate.parse(t)
           when tag_match("Price")
             @prices << Price.parse(t)
+          when tag_match("UnpricedItemType")
+            @unpriced_item_type = UnpricedItemType.parse(t)
           when tag_match("Supplier")
-            # via parse_entities
+            @suppliers << Supplier.parse(t)
           else
             unsupported(t)
         end

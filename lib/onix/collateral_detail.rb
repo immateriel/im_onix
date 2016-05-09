@@ -5,7 +5,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("TextType")
-            @type=TextType.from_code(t.text)
+            @type=TextType.parse(t)
           when tag_match("Text")
             @text=t.text
           when tag_match("SourceTitle")
@@ -13,7 +13,7 @@ module ONIX
           when tag_match("TextAuthor")
             @text_author=t.text
           when tag_match("ContentAudience")
-            @content_audience=ContentAudience.from_code(t.text)
+            @content_audience=ContentAudience.parse(t)
           else
             unsupported(t)
         end

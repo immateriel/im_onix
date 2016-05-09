@@ -27,7 +27,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("SalesRestrictionType")
-            @type = SalesRestrictionType.from_code(t.text)
+            @type = SalesRestrictionType.parse(t)
           when tag_match("SalesOutlet")
             @sales_outlets << SalesOutlet.parse(t)
           when tag_match("SalesRestrictionNote")
@@ -57,7 +57,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("SalesRightsType")
-            @type=SalesRightsType.from_code(t.text)
+            @type=SalesRightsType.parse(t)
           when tag_match("Territory")
             @territory=Territory.parse(t)
           when tag_match("SalesRestriction")
@@ -76,8 +76,10 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("PublishingDateRole")
-            @role=PublishingDateRole.from_code(t.text)
+            @role=PublishingDateRole.parse(t)
           when tag_match("Date")
+            # via OnixDate
+          when tag_match("DateFormat")
             # via OnixDate
           else
             unsupported(t)
@@ -86,32 +88,6 @@ module ONIX
 
       @date=OnixDate.parse(n)
 
-    end
-  end
-
-  class Publisher < Subset
-    attr_accessor :name, :role,
-                  :identifiers
-
-    include GlnMethods
-
-    def initialize
-      @identifiers=[]
-    end
-
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("PublisherName")
-            @name = t.text
-          when tag_match("PublishingRole")
-            @role = PublishingRole.from_code(t.text)
-          when tag_match("PublisherIdentifier")
-            @identifiers << Identifier.parse_identifier(t, "Publisher")
-          else
-            unsupported(t)
-        end
-      end
     end
   end
 
@@ -126,6 +102,7 @@ module ONIX
       @sales_rights=[]
       @publishing_dates=[]
       @publishers=[]
+      @imprints=[]
     end
 
     def publisher
@@ -163,11 +140,11 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("PublishingStatus")
-            @status=PublishingStatus.from_code(t.text)
+            @status=PublishingStatus.parse(t)
           when tag_match("SalesRights")
             @sales_rights << SalesRights.parse(t)
           when tag_match("ROWSalesRightsType")
-            @row_sales_rights_type=SalesRightsType.from_code(t.text)
+            @row_sales_rights_type=SalesRightsType.parse(t)
           when tag_match("PublishingDate")
             @publishing_dates << PublishingDate.parse(t)
           when tag_match("Publisher")
@@ -177,13 +154,11 @@ module ONIX
           when tag_match("CountryOfPublication")
             @country = t.text
           when tag_match("Imprint")
-            # via parse_entities
+            @imprints << Imprint.parse(t)
           else
             unsupported(t)
         end
       end
-
-      @imprints = Imprint.parse_entities(n,"Imprint")
     end
   end
 end

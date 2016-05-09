@@ -135,7 +135,7 @@ module ONIX
                       tm=t.text
                       @sent_date_time=Time.strptime(tm, "%Y%m%dT%H%M%S") rescue Time.strptime(tm, "%Y%m%dT%H%M") rescue Time.strptime(tm, "%Y%m%d") rescue nil
                     when tag_match("DefaultLanguageOfText")
-                      @default_language_of_text=LanguageCode.from_code(t.text)
+                      @default_language_of_text=LanguageCode.parse(t)
                     when tag_match("DefaultCurrencyCode")
                       @default_currency_code=t.text
                     else

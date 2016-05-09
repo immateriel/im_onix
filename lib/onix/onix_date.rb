@@ -10,7 +10,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("DateFormat")
-            @format=DateFormat.from_code(t.text)
+            @format=DateFormat.parse(t)
           when tag_match("Date")
             date_txt=t.text
         end

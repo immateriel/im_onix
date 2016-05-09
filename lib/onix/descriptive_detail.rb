@@ -8,7 +8,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("TitleElementLevel")
-            @level=TitleElementLevel.from_code(t.text)
+            @level=TitleElementLevel.parse(t)
           when tag_match("TitleText")
             @title_text=t.text
           when tag_match("TitlePrefix")
@@ -51,7 +51,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("TitleType")
-            @type=TitleType.from_code(t.text)
+            @type=TitleType.parse(t)
           when tag_match("TitleElement")
             @title_elements << TitleElement.parse(t)
         end
@@ -96,7 +96,7 @@ module ONIX
           when tag_match("CollectionIdentifier")
             @identifiers << Identifier.parse_identifier(t, "Collection")
           when tag_match("CollectionType")
-            @type=CollectionType.from_code(t.text)
+            @type=CollectionType.parse(t)
           when tag_match("TitleDetail")
             @title_details << TitleDetail.parse(t)
         end
@@ -106,7 +106,7 @@ module ONIX
 
   # product part use full Product to provide file protection and file size
   class ProductPart < Subset
-    attr_accessor :identifiers, :form, :form_details, :form_description
+    attr_accessor :identifiers, :form, :form_details, :form_description, :content_types, :number_of_copies
     # full Product if referenced in ONIXMessage
     attr_accessor :product
     # this ProductPart is part of Product
@@ -118,6 +118,7 @@ module ONIX
     def initialize
       @identifiers = []
       @form_details = []
+      @content_types = []
     end
 
     # :category: High level
@@ -163,11 +164,15 @@ module ONIX
           when tag_match("ProductIdentifier")
             @identifiers << Identifier.parse_identifier(t, "Product")
           when tag_match("ProductForm")
-            @form=ProductForm.from_code(t.text)
+            @form=ProductForm.parse(t)
           when tag_match("ProductFormDescription")
             @form_description=t.text
           when tag_match("ProductFormDetail")
-            @form_details << ProductFormDetail.from_code(t.text)
+            @form_details << ProductFormDetail.parse(t)
+          when tag_match("ProductContentType")
+            @content_types << ProductContentType.parse(t)
+          when tag_match("NumberOfCopies")
+            @number_of_copies=t.text.to_i
           else
             unsupported(t)
         end
@@ -227,9 +232,9 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("ExtentType")
-            @type=ExtentType.from_code(t.text)
+            @type=ExtentType.parse(t)
           when tag_match("ExtentUnit")
-            @unit=ExtentUnit.from_code(t.text)
+            @unit=ExtentUnit.parse(t)
           when tag_match("ExtentValue")
             @value=t.text
           else
@@ -246,7 +251,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("EpubUsageUnit")
-            @unit=EpubUsageUnit.from_code(t.text)
+            @unit=EpubUsageUnit.parse(t)
           when tag_match("Quantity")
             @quantity=t.text.to_i
           else
@@ -267,9 +272,9 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("EpubUsageType")
-            @type=EpubUsageType.from_code(t.text)
+            @type=EpubUsageType.parse(t)
           when tag_match("EpubUsageStatus")
-            @status=EpubUsageStatus.from_code(t.text)
+            @status=EpubUsageStatus.parse(t)
           when tag_match("EpubUsageLimit")
             @limits << EpubUsageLimit.parse(t)
           else
@@ -286,9 +291,9 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("LanguageRole")
-            @role=LanguageRole.from_code(t.text)
+            @role=LanguageRole.parse(t)
           when tag_match("LanguageCode")
-            @code=LanguageCode.from_code(t.text)
+            @code=LanguageCode.parse(t)
           else
             unsupported(t)
         end
@@ -307,7 +312,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("ProductFormFeatureType")
-            @type=ProductFormFeatureType.from_code(t.text)
+            @type=ProductFormFeatureType.parse(t)
           when tag_match("ProductFormFeatureValue")
             @value=t.text
           when tag_match("ProductFormFeatureDescription")
@@ -324,12 +329,13 @@ module ONIX
                   :languages,
                   :composition,
                   :form, :form_details, :form_features, :form_description, :parts,
-                  :primary_content_type,
-                  :edition_number,
+                  :primary_content_type, :content_types,
+                  :edition_number, :edition_type,
                   :contributors,
                   :subjects,
                   :collections,
                   :extents,
+                  :audience_codes,
                   :epub_technical_protections
 
     def initialize
@@ -345,6 +351,8 @@ module ONIX
       @languages=[]
       @form_details=[]
       @form_features=[]
+      @content_types=[]
+      @audience_codes=[]
     end
 
     # :category: High level
@@ -497,24 +505,30 @@ module ONIX
             @extents << Extent.parse(t)
           when tag_match("EditionNumber")
             @edition_number=t.text.to_i
+          when tag_match("EditionType")
+            @edition_type=EditionType.parse(t)
           when tag_match("Language")
             @languages << Language.parse(t)
           when tag_match("ProductComposition")
-            @composition=ProductComposition.from_code(t.text)
+            @composition=ProductComposition.parse(t)
           when tag_match("ProductForm")
-            @form=ProductForm.from_code(t.text)
+            @form=ProductForm.parse(t)
           when tag_match("ProductFormFeature")
             @form_features << ProductFormFeature.parse(t)
           when tag_match("ProductFormDescription")
             @form_description=t.text
           when tag_match("ProductFormDetail")
-            @form_details << ProductFormDetail.from_code(t.text)
+            @form_details << ProductFormDetail.parse(t)
           when tag_match("PrimaryContentType")
-            @primary_content_type = ProductContentType.from_code(t.text)
+            @primary_content_type = ProductContentType.parse(t)
+          when tag_match("ProductContentType")
+            @content_types << ProductContentType.parse(t)
           when tag_match("EpubTechnicalProtection")
-            @epub_technical_protections << EpubTechnicalProtection.from_code(t.text)
+            @epub_technical_protections << EpubTechnicalProtection.parse(t)
           when tag_match("EpubUsageConstraint")
             @epub_usage_constraints << EpubUsageConstraint.parse(t)
+          when tag_match("AudienceCode")
+            @audience_codes << AudienceCode.parse(t)
           when tag_match("NoCollection")
             # ignore
           when tag_match("NoEdition")

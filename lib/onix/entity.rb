@@ -12,44 +12,43 @@ module ONIX
 
     include GlnMethods
 
-    # create Entity array from Nokogiri:XML::Node
-    def self.parse_entities(node,list_tag)
-      entities=[]
+    def initialize
+      @identifiers = []
+    end
 
-      node.children.each do |t|
+    def self.role_tag
+      "#{self.prefix}Role"
+    end
+
+    def self.name_tag
+      "#{self.prefix}Name"
+    end
+
+    def self.identifier_tag
+      "#{self.prefix}Identifier"
+    end
+
+    def parse(n)
+      n.children.each do |t|
         case t
-          when tag_match(list_tag)
-            nm=nil
-            rl=nil
-            t.children.each do |tn|
-              case tn
-                when tag_match("#{self.prefix}Name")
-                  nm=tn.text
-                when tag_match("#{self.prefix}Role")
-                  rl=tn.text
-              end
+          when tag_match(self.class.name_tag)
+            @name=t.text
+          when tag_match(self.class.role_tag)
+            if self.class.role_class
+              @role=self.class.role_class.parse(t)
             end
-            entities << self.from_hash({:name => nm,
-                                        :role => if self.role_class then self.role_class.from_code(rl) else nil end,
-                                        :identifiers => Identifier.parse_identifiers(t, prefix)})
-
+          when tag_match(self.class.identifier_tag)
+            @identifiers << Identifier.parse_identifier(t,self.class.prefix)
         end
       end
-      entities
     end
 
     private
     def self.prefix
     end
+
     def self.role_class
       nil
-    end
-    def self.from_hash(h)
-      o=self.new
-      o.name=h[:name]
-      o.role=h[:role]
-      o.identifiers=h[:identifiers]
-      o
     end
   end
 
@@ -85,4 +84,20 @@ module ONIX
       SupplierRole
     end
   end
+
+  class Publisher < Entity
+    private
+    def self.prefix
+      "Publisher"
+    end
+
+    def self.role_tag
+      "PublishingRole"
+    end
+
+    def self.role_class
+      PublishingRole
+    end
+  end
+
 end

@@ -12,7 +12,7 @@ module ONIX
           when tag_match("TaxRatePercent")
             @rate_percent=t.text.to_f
           when tag_match("TaxRateCode")
-            @rate_code=TaxRateCode.from_code(t.text)
+            @rate_code=TaxRateCode.parse(t)
         end
       end
     end
@@ -24,8 +24,10 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("PriceDateRole")
-            @role = PriceDateRole.from_code(t.text)
+            @role = PriceDateRole.parse(t)
           when tag_match("Date")
+            # via OnixDate
+          when tag_match("DateFormat")
             # via OnixDate
           else
             unsupported(t)
@@ -37,7 +39,7 @@ module ONIX
   end
 
   class Price < Subset
-    attr_accessor :amount, :type, :currency, :dates, :territory, :discount
+    attr_accessor :amount, :type, :qualifier, :currency, :dates, :territory, :discount
 
     def initialize
       @dates=[]
@@ -79,9 +81,13 @@ module ONIX
           when tag_match("Territory")
             @territory=Territory.parse(t)
           when tag_match("PriceType")
-            @type=PriceType.from_code(t.text)
+            @type=PriceType.parse(t)
+          when tag_match("PriceQualifier")
+            @qualifier=PriceQualifier.parse(t)
           when tag_match("PriceAmount")
             @amount=(t.text.to_f * 100).round
+          when tag_match("PriceStatus")
+            @qualifier=PriceStatus.parse(t)
           when tag_match("Tax")
             @tax=Tax.parse(t)
           when tag_match("DiscountCoded")
