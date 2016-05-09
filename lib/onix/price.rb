@@ -18,9 +18,10 @@ module ONIX
     end
   end
 
-  class PriceDate < Subset
-    attr_accessor :role, :date
+  class PriceDate < OnixDate
+    attr_accessor :role
     def parse(n)
+      super
       n.elements.each do |t|
         case t
           when tag_match("PriceDateRole")
@@ -33,7 +34,6 @@ module ONIX
             unsupported(t)
         end
       end
-      @date = OnixDate.parse(n)
     end
 
   end
@@ -48,7 +48,7 @@ module ONIX
     def from_date
       dt=@dates.select{|d| d.role.human=="FromDate"}.first
       if dt
-        dt.date.date
+        dt.date
       else
         nil
       end
@@ -57,7 +57,7 @@ module ONIX
     def until_date
       dt=@dates.select { |d| d.role.human=="UntilDate" }.first
       if dt
-        dt.date.date
+        dt.date
       else
         nil
       end

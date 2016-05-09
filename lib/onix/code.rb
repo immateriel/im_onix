@@ -181,6 +181,9 @@ module ONIX
   class SenderIDType < IDType
   end
 
+  class AddresseeIDType < IDType
+  end
+
   class PublisherIDType < IDType
   end
 
@@ -291,6 +294,13 @@ module ONIX
     private
     def self.code_ident
       71
+    end
+  end
+
+  class WebsiteRole < CodeFromYaml
+    private
+    def self.code_ident
+      73
     end
   end
 

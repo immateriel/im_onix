@@ -22,7 +22,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("ProductIdentifier")
-            @identifiers << Identifier.parse_identifier(t,"Product")
+            @identifiers << ProductIdentifier.parse(t)
           when tag_match("ProductRelationCode")
             @code=ProductRelationCode.parse(t)
           when tag_match("ProductForm")
@@ -58,7 +58,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("WorkIdentifier")
-            @identifiers << Identifier.parse_identifier(t,"Work")
+            @identifiers << WorkIdentifier.parse(t)
           when tag_match("WorkRelationCode")
             @code=WorkRelationCode.parse(t)
           else

@@ -704,7 +704,7 @@ module ONIX
           when tag_match("RecordReference")
             @record_reference = t.text.strip
           when tag_match("ProductIdentifier")
-            @identifiers << Identifier.parse_identifier(t, "Product")
+            @identifiers << ProductIdentifier.parse(t)
           when tag_match("NotificationType")
             @notification_type=NotificationType.parse(t)
           when tag_match("RelatedMaterial")

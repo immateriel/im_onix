@@ -94,7 +94,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("CollectionIdentifier")
-            @identifiers << Identifier.parse_identifier(t, "Collection")
+            @identifiers << CollectionIdentifier.parse(t)
           when tag_match("CollectionType")
             @type=CollectionType.parse(t)
           when tag_match("TitleDetail")
@@ -162,7 +162,7 @@ module ONIX
       n.elements.each do |t|
         case t
           when tag_match("ProductIdentifier")
-            @identifiers << Identifier.parse_identifier(t, "Product")
+            @identifiers << ProductIdentifier.parse(t)
           when tag_match("ProductForm")
             @form=ProductForm.parse(t)
           when tag_match("ProductFormDescription")

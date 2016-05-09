@@ -1,9 +1,10 @@
 module ONIX
 
-  class ContentDate < Subset
-    attr_accessor :date, :role
+  class ContentDate < OnixDate
+    attr_accessor :role
 
     def parse(n)
+      super
       n.elements.each do |t|
         case t
           when tag_match("ContentDateRole")
@@ -16,7 +17,6 @@ module ONIX
             unsupported(t)
         end
       end
-      @date=OnixDate.parse(n)
     end
   end
 
@@ -118,7 +118,7 @@ module ONIX
 
     def last_updated
       if self.last_updated_content_date
-        self.last_updated_content_date.date.date
+        self.last_updated_content_date.date
       end
     end
 

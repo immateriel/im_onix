@@ -1,22 +1,26 @@
 module ONIX
   # FIXME : support only 00,01 and 14 date format
   class OnixDate < Subset
-    attr_accessor :format, :date
+    attr_accessor :date_format, :date
 
     def parse(n)
-      @format=DateFormat.from_code("00")
+      @date_format=DateFormat.from_code("00")
       date_txt=nil
       @date=nil
       n.elements.each do |t|
         case t
           when tag_match("DateFormat")
-            @format=DateFormat.parse(t)
+            @date_format=DateFormat.parse(t)
           when tag_match("Date")
             date_txt=t.text
         end
+
+        if t["dateformat"]
+          @date_format = DateFormat.from_code(t["dateformat"])
+        end
       end
 
-      code_format=format_from_code(@format.code)
+      code_format=format_from_code(@date_format.code)
       text_format=format_from_string(date_txt)
 
       format=code_format
@@ -28,7 +32,7 @@ module ONIX
 
       begin
         if format
-          case @format.code
+          case @date_format.code
             when "00"
               @date=Date.strptime(date_txt, format)
             when "01"

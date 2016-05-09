@@ -1,5 +1,6 @@
 require 'onix/code'
 require 'onix/identifier'
+require 'onix/website'
 
 module ONIX
   class Entity < Subset
@@ -38,13 +39,19 @@ module ONIX
               @role=self.class.role_class.parse(t)
             end
           when tag_match(self.class.identifier_tag)
-            @identifiers << Identifier.parse_identifier(t,self.class.prefix)
+            if self.class.identifier_class
+              @identifiers << self.class.identifier_class.parse(t)
+            end
         end
       end
     end
 
     private
     def self.prefix
+    end
+
+    def self.identifier_class
+      nil
     end
 
     def self.role_class
@@ -58,6 +65,10 @@ module ONIX
       "Agent"
     end
 
+    def self.identifier_class
+      AgentIdentifier
+    end
+
     def self.role_class
       AgentRole
     end
@@ -67,6 +78,10 @@ module ONIX
     private
     def self.prefix
       "Imprint"
+    end
+
+    def self.identifier_class
+      nil
     end
 
     def self.role_class
@@ -80,12 +95,34 @@ module ONIX
       "Supplier"
     end
 
+    def self.identifier_class
+      SupplierIdentifier
+    end
+
     def self.role_class
       SupplierRole
     end
   end
 
   class Publisher < Entity
+    attr_accessor :websites
+
+    def initialize
+      super
+      @websites = []
+    end
+
+    def parse(n)
+      super
+      n.elements.each do |t|
+        case t
+          when tag_match("Website")
+            @websites << Website.parse(t)
+          else
+
+        end
+      end
+    end
     private
     def self.prefix
       "Publisher"
@@ -93,6 +130,10 @@ module ONIX
 
     def self.role_tag
       "PublishingRole"
+    end
+
+    def self.identifier_class
+      PublisherIdentifier
     end
 
     def self.role_class
