@@ -1,69 +1,59 @@
-module ONIX
+require 'onix/date'
 
-  class ContentDate < OnixDate
-    attr_accessor :role
+module ONIX
+  class ResourceVersionFeature < SubsetDSL
+    element "ResourceVersionFeatureType", :subset
+    elements "FeatureNote", :text
+    element "FeatureValue", :text
+
+    def type
+      @resource_version_feature_type
+    end
+
+    def value
+      @feature_value
+    end
+
+    def notes
+      @feature_notes
+    end
 
     def parse(n)
       super
-      n.elements.each do |t|
-        case t
-          when tag_match("ContentDateRole")
-            @role=ContentDateRole.parse(t)
-          when tag_match("Date")
-            # via OnixDate
-          when tag_match("DateFormat")
-            # via OnixDate
-          else
-            unsupported(t)
-        end
+
+      if @resource_version_feature_type.human=="FileFormat"
+        @feature_value=SupportingResourceFileFormat.from_code(@feature_value)
       end
     end
   end
 
-  class ResourceVersionFeature < Subset
-    attr_accessor :type, :value, :notes
+  class ResourceVersion < SubsetDSL
+    element "ResourceForm", :subset
+    elements "ResourceLink", :text
+    elements "ContentDate", :subset
+    elements "ResourceVersionFeature", :subset
 
-    def initialize
-      @notes=[]
+    # shortcuts
+    def form
+      @resource_form
     end
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("ResourceVersionFeatureType")
-            @type = ResourceVersionFeatureType.parse(t)
-          when tag_match("FeatureNote")
-            @notes << t.text
-          when tag_match("FeatureValue")
-            @value = t.text
-          else
-            unsupported(t)
-        end
-      end
-
-      if @type.human=="FileFormat"
-        @value=SupportingResourceFileFormat.from_code(@value)
-      end
+    def links
+      @resource_links
     end
-  end
 
-  class ResourceVersion < Subset
-    attr_accessor :form, :links, :content_dates, :features
-
-    def initialize
-      @links=[]
-      @content_dates=[]
-      @features=[]
+    def features
+      @resource_version_features
     end
 
     def filename
-      if @form.human=="DownloadableFile"
-        @links.first
+      if @resource_form.human=="DownloadableFile"
+        @resource_links.first
       end
     end
 
     def file_format_feature
-      @features.select { |f| f.type.human=="FileFormat" }.first
+      @resource_version_features.select { |f| f.type.human=="FileFormat" }.first
     end
 
     def file_format
@@ -87,11 +77,11 @@ module ONIX
     end
 
     def image_height_feature
-      @features.select { |i| i.type.human=="ImageHeightInPixels" }.first
+      @resource_version_features.select { |i| i.type.human=="ImageHeightInPixels" }.first
     end
 
     def md5_hash_feature
-      @features.select { |i| i.type.human=="Md5HashValue" }.first
+      @resource_version_features.select { |i| i.type.human=="Md5HashValue" }.first
     end
 
     def image_width
@@ -121,73 +111,54 @@ module ONIX
         self.last_updated_content_date.date
       end
     end
+  end
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("ResourceForm")
-            @form=ResourceForm.parse(t)
-          when tag_match("ResourceLink")
-            @links << t.text.strip
-          when tag_match("ContentDate")
-            @content_dates << ContentDate.parse(t)
-          when tag_match("ResourceVersionFeature")
-            @features << ResourceVersionFeature.parse(t)
-          else
-            unsupported(t)
-        end
-      end
+  class ResourceFeature < SubsetDSL
+    element "ResourceFeatureType", :subset
+    element "FeatureValue", :text
+    elements "FeatureNotes", :text
+
+    # shortcuts
+    def type
+      @resource_feature_type
+    end
+
+    def value
+      @feature_value
+    end
+
+    def notes
+      @feature_notes
     end
   end
 
-  class ResourceFeature < Subset
-    attr_accessor :type, :value, :notes
+  class SupportingResource < SubsetDSL
+    element "ResourceContentType", :subset
+    element "ContentAudience", :subset
+    element "ResourceMode", :subset
+    elements "ResourceVersion", :subset
+    elements "ResourceFeature", :subset
 
-    def initialize
-      @notes=[]
+    # shortcuts
+    def type
+      @resource_content_type
     end
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("ResourceFeatureType")
-            @type=ResourceFeatureType.parse(t)
-          when tag_match("FeatureValue")
-            @value=t.text
-          when tag_match("FeatureNote")
-            @notes << t.text
-          else
-            unsupported(t)
-        end
-      end
-    end
-  end
-
-  class SupportingResource < Subset
-    attr_accessor :type, :mode, :target_audience, :versions, :features
-
-    def initialize
-      @versions=[]
-      @features=[]
+    def mode
+      @resource_mode
     end
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("ResourceContentType")
-            @type=ResourceContentType.parse(t)
-          when tag_match("ContentAudience")
-            @target_audience=ContentAudience.parse(t)
-          when tag_match("ResourceMode")
-            @mode=ResourceMode.parse(t)
-          when tag_match("ResourceVersion")
-            @versions << ResourceVersion.parse(t)
-          when tag_match("ResourceFeature")
-            @features << ResourceFeature.parse(t)
-          else
-            unsupported(t)
-        end
-      end
+    def versions
+      @resource_versions
     end
+
+    def features
+      @resource_versions
+    end
+
+    def target_audience
+      @content_audience
+    end
+
   end
 end

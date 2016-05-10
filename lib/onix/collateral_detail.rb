@@ -1,33 +1,20 @@
 module ONIX
-  class TextContent < Subset
-    attr_accessor :type, :text, :source_title, :text_author, :content_audience
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("TextType")
-            @type=TextType.parse(t)
-          when tag_match("Text")
-            @text=t.text
-          when tag_match("SourceTitle")
-            @source_title=t.text
-          when tag_match("TextAuthor")
-            @text_author=t.text
-          when tag_match("ContentAudience")
-            @content_audience=ContentAudience.parse(t)
-          else
-            unsupported(t)
-        end
-      end
+  class TextContent < SubsetDSL
+    element "TextType", :subset
+    element "Text", :text
+    element "SourceTitle", :text
+    element "TextAuthor", :text
+    element "ContentAudience", :subset
+
+    # shortcuts
+    def type
+      @text_type
     end
   end
 
-  class CollateralDetail < Subset
-    attr_accessor :text_contents, :supporting_resources
-
-    def initialize
-      @text_contents=[]
-      @supporting_resources=[]
-    end
+  class CollateralDetail < SubsetDSL
+    elements "TextContent", :subset
+    elements "SupportingResource", :subset
 
     def description
       desc_contents=@text_contents.select{|tc| tc.type.human=="Description"} + @text_contents.select{|tc| tc.type.human=="ShortDescriptionannotation"}
@@ -100,17 +87,5 @@ module ONIX
       end
     end
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("TextContent")
-            @text_contents << TextContent.parse(t)
-          when tag_match("SupportingResource")
-            @supporting_resources << SupportingResource.parse(t)
-          else
-            unsupported(t)
-        end
-      end
-    end
   end
 end

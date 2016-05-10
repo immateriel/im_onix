@@ -1,9 +1,9 @@
 module ONIX
-  # FIXME : support only 00,01 and 14 date format
-  class OnixDate < Subset
+
+  module DateHelper
     attr_accessor :date_format, :date
 
-    def parse(n)
+    def parse_date(n)
       @date_format=DateFormat.from_code("00")
       date_txt=nil
       @date=nil
@@ -79,6 +79,85 @@ module ONIX
     def time
       @date.to_time
     end
+  end
 
+  class MarketDate < SubsetDSL
+    include DateHelper
+    element "Date", :ignore
+    element "DateFormat", :ignore
+    element "MarketDateRole", :subset
+
+    def role
+      @market_date_role
+    end
+
+    def parse(n)
+      super
+      parse_date(n)
+    end
+  end
+
+  class PriceDate < SubsetDSL
+    include DateHelper
+    element "Date", :ignore
+    element "DateFormat", :ignore
+    element "PriceDateRole", :subset
+
+    def role
+      @price_date_role
+    end
+
+    def parse(n)
+      super
+      parse_date(n)
+    end
+  end
+
+  class SupplyDate < SubsetDSL
+    include DateHelper
+    element "Date", :ignore
+    element "DateFormat", :ignore
+    element "SupplyDateRole", :subset
+
+    def role
+      @supply_date_role
+    end
+
+    def parse(n)
+      super
+      parse_date(n)
+    end
+  end
+
+  class PublishingDate < SubsetDSL
+    include DateHelper
+    element "Date", :ignore
+    element "DateFormat", :ignore
+    element "PublishingDateRole", :subset
+
+    def role
+      @publishing_date_role
+    end
+
+    def parse(n)
+      super
+      parse_date(n)
+    end
+  end
+
+  class ContentDate < SubsetDSL
+    include DateHelper
+    element "Date", :ignore
+    element "DateFormat", :ignore
+    element "ContentDateRole", :subset
+
+    def role
+      @content_date_role
+    end
+
+    def parse(n)
+      super
+      parse_date(n)
+    end
   end
 end

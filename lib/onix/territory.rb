@@ -1,21 +1,10 @@
 require 'onix/code'
 module ONIX
-  class Territory < Subset
-    attr_accessor :countries_included, :regions_included, :countries_excluded, :region_excluded
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("CountriesIncluded")
-            @countries_included=t.text
-          when tag_match("RegionsIncluded")
-            @regions_included=t.text
-          when tag_match("CountriesExcluded")
-            @countries_excluded=t.text
-          when tag_match("RegionsExcluded")
-            @regions_excluded=t.text
-        end
-      end
-    end
+  class Territory < SubsetDSL
+    element "CountriesIncluded", :text
+    element "RegionsIncluded", :text
+    element "CountriesExcluded", :text
+    element "RegionsExcluded", :text
 
     # all countries array
     def countries
@@ -63,6 +52,5 @@ module ONIX
     def self.worldwide?(countries)
       (countries & CountryCode.list).length==CountryCode.list.length
     end
-
   end
 end

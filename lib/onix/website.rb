@@ -1,19 +1,21 @@
 require 'onix/code'
 module ONIX
-  class Website < Subset
-    attr_accessor :role, :link, :description
+  class Website < SubsetDSL
+    element "WebsiteRole", :subset
+    element "WebsiteLink", :text
+    element "WebsiteDescription", :text
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("WebsiteRole")
-            @role=WebsiteRole.parse(t)
-          when tag_match("WebsiteLink")
-            @link=t.text
-          when tag_match("WebsiteDescription")
-            @description=t.text.strip
-        end
-      end
+    # shortcuts
+    def role
+      @website_role
+    end
+
+    def link
+      @website_link
+    end
+
+    def description
+      @website_description
     end
   end
 end

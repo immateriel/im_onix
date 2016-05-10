@@ -493,6 +493,13 @@ module ONIX
     end
   end
 
+  class TaxType < CodeFromYaml
+    private
+    def self.code_ident
+      171
+    end
+  end
+
   class PriceDateRole < CodeFromYaml
     private
     def self.code_ident

@@ -1,26 +1,31 @@
 module ONIX
-  class Subject < Subset
-    attr_accessor :code, :heading_text, :scheme_identifier, :scheme_name, :scheme_version, :main_subject
+  class Subject < SubsetDSL
+    element "SubjectCode", :text
+    element "SubjectHeadingText", :text
+    element "SubjectSchemeIdentifier", :subset
+    element "SubjectSchemeName", :text
+    element "SubjectSchemeVersion", :text
+    element "MainSubject", :bool
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("SubjectHeadingText")
-            @heading_text=t.text.strip
-          when tag_match("SubjectCode")
-            @code=t.text.strip
-          when tag_match("SubjectSchemeIdentifier")
-            @scheme_identifier=SubjectSchemeIdentifier.parse(t)
-          when tag_match("SubjectSchemeName")
-            @scheme_name=t.text.strip
-          when tag_match("SubjectSchemeVersion")
-            @scheme_version=t.text.strip
-          when tag_match("MainSubject")
-            @main_subject=true
-          else
-            unsupported(t)
-        end
-      end
+    # shortcuts
+    def code
+      @subject_code
+    end
+
+    def heading_text
+      @subject_heading_text
+    end
+
+    def scheme_identifier
+      @subject_scheme_identifier
+    end
+
+    def scheme_name
+      @subject_scheme_name
+    end
+
+    def scheme_version
+      @subject_scheme_version
     end
   end
 end
