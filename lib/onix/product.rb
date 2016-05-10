@@ -20,6 +20,7 @@ module ONIX
     element "RecordReference", :text
     elements "ProductIdentifier", :subset
     element "NotificationType", :subset
+    element "RecordSourceName", :text
     element "RelatedMaterial", :subset
     element "DescriptiveDetail", :subset
     element "CollateralDetail", :subset

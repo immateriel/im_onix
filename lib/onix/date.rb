@@ -81,6 +81,8 @@ module ONIX
 
   class MarketDate < SubsetDSL
     include DateHelper
+    element "Date", :ignore
+    element "DateFormat", :ignore
     element "MarketDateRole", :subset
 
     def role
@@ -95,6 +97,8 @@ module ONIX
 
   class PriceDate < SubsetDSL
     include DateHelper
+    element "Date", :ignore
+    element "DateFormat", :ignore
     element "PriceDateRole", :subset
 
     def role
@@ -109,6 +113,8 @@ module ONIX
 
   class SupplyDate < SubsetDSL
     include DateHelper
+    element "Date", :ignore
+    element "DateFormat", :ignore
     element "SupplyDateRole", :subset
 
     def role
@@ -123,6 +129,8 @@ module ONIX
 
   class PublishingDate < SubsetDSL
     include DateHelper
+    element "Date", :ignore
+    element "DateFormat", :ignore
     element "PublishingDateRole", :subset
 
     def role
@@ -137,6 +145,8 @@ module ONIX
 
   class ContentDate < SubsetDSL
     include DateHelper
+    element "Date", :ignore
+    element "DateFormat", :ignore
     element "ContentDateRole", :subset
 
     def role

@@ -137,7 +137,7 @@ module ONIX
     element "ContentAudience", :subset
     element "ResourceMode", :subset
     elements "ResourceVersion", :subset
-    elements "ResourceFeatures", :subset
+    elements "ResourceFeature", :subset
 
     # shortcuts
     def type

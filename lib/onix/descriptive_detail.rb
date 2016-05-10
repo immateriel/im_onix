@@ -8,6 +8,7 @@ module ONIX
     element "TitleWithoutPrefix", :text
     element "Subtitle", :text
     element "PartNumber", :integer
+    element "SequenceNumber", :integer
 
     # shortcuts
     def level
@@ -42,7 +43,7 @@ module ONIX
 
   class Collection < SubsetDSL
     element "CollectionType", :subset
-    elements "CollectionIdentifiers", :subset
+    elements "CollectionIdentifier", :subset
     elements "TitleDetail", :subset
 
     # shortcuts
@@ -309,6 +310,9 @@ module ONIX
     elements "AudienceCode", :subset
     elements "ProductPart", :subset
     elements "Subject", :subset
+    element "NoEdition", :ignore
+    element "NoCollection", :ignore
+
 
     # shortcuts
     def form

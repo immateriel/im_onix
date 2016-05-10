@@ -30,7 +30,7 @@ module ONIX
 
     def unsupported(tag)
 #      raise SubsetUnsupported,tag.name
-#      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{Short.names[tag.name]})"
+      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{Short.names[tag.name]})"
     end
 
     def tag_match(v)
@@ -159,7 +159,7 @@ module ONIX
 
     # shortcut for element :array=>true
     def self.elements(name, type, options={})
-      self.element(name,type,options.merge(:array=>true))
+      self.element(name, type, options.merge(:array => true))
     end
 
     def self._ancestors_registered_elements
@@ -182,9 +182,9 @@ module ONIX
 
     def initialize
       # initialize plural as Array
-      self.class.ancestors_registered_elements.each do |k,e|
+      self.class.ancestors_registered_elements.each do |k, e|
         if e.is_array?
-          instance_variable_set(e.to_instance,[])
+          instance_variable_set(e.to_instance, [])
         end
       end
     end
@@ -208,14 +208,18 @@ module ONIX
               val=t.text.to_f
             when :bool
               val=true
+            when :ignore
+              val=nil
             else
               val=t.text
           end
 
-          if e.is_array?
-            instance_variable_get(e.to_instance).send(:push,val)
-          else
-            instance_variable_set(e.to_instance, e.lambda(val))
+          if val
+            if e.is_array?
+              instance_variable_get(e.to_instance).send(:push, val)
+            else
+              instance_variable_set(e.to_instance, e.lambda(val))
+            end
           end
         else
           unsupported(t)

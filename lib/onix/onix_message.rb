@@ -18,6 +18,8 @@ module ONIX
 
     elements "SenderIdentifier", :subset
     element "SenderName", :text
+    element "ContactName", :text
+    element "EmailAddress", :text
 
     # shortcuts
     def identifiers
