@@ -13,32 +13,29 @@ require 'onix/territory'
 require 'onix/error'
 
 module ONIX
-  class Product < Subset
-    # Record reference
-    attr_accessor :record_reference
-    # NotificationType object
-    attr_accessor :notification_type
-    # product Identifier object array
-    attr_accessor :identifiers
-    # RelatedMaterial object
-    attr_accessor :related_material
-    # DescriptiveDetail object
-    attr_accessor :descriptive_detail
-    # PublishingDetail object
-    attr_accessor :publishing_detail
-    # CollateralDetail object
-    attr_accessor :collateral_detail
-    # ProductSupply object array
-    attr_accessor :product_supplies
+  class Product < SubsetDSL
+    include EanMethods
+    include ProprietaryIdMethods
+
+    element "RecordReference", :text
+    elements "ProductIdentifier", :subset
+    element "NotificationType", :subset
+    element "RelatedMaterial", :subset
+    element "DescriptiveDetail", :subset
+    element "CollateralDetail", :subset
+    element "PublishingDetail", :subset
+    elements "ProductSupply", :subset
+
+    # shortcuts
+    def identifiers
+      @product_identifiers
+    end
 
     # default LanguageCode from ONIXMessage
     attr_accessor :default_language_of_text
     # default code from ONIXMessage
     attr_accessor :default_currency_code
 
-
-    include EanMethods
-    include ProprietaryIdMethods
 
     # :category: High level
     # product title string
@@ -690,38 +687,6 @@ module ONIX
         sri.sales_restrictions.select{|sr| (!sr.start_date or sr.start_date <= Date.today) and (!sr.end_date or sr.end_date >= Date.today)}.map{|sr|
           sr.sales_outlets.select{|so|
             so.identifier.type.human=="OnixSalesOutletIdCode"}.map{|so| so.identifier.value}}}.flatten
-    end
-
-
-    def initialize
-      @identifiers=[]
-      @product_supplies=[]
-    end
-
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("RecordReference")
-            @record_reference = t.text.strip
-          when tag_match("ProductIdentifier")
-            @identifiers << ProductIdentifier.parse(t)
-          when tag_match("NotificationType")
-            @notification_type=NotificationType.parse(t)
-          when tag_match("RelatedMaterial")
-            @related_material=RelatedMaterial.parse(t)
-          when tag_match("DescriptiveDetail")
-            @descriptive_detail=DescriptiveDetail.parse(t)
-          when tag_match("CollateralDetail")
-            @collateral_detail=CollateralDetail.parse(t)
-          when tag_match("PublishingDetail")
-            @publishing_detail=PublishingDetail.parse(t)
-          when tag_match("ProductSupply")
-            @product_supplies << ProductSupply.parse(t)
-          else
-            unsupported(t)
-        end
-      end
-
     end
   end
 end

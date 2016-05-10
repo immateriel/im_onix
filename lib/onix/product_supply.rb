@@ -1,48 +1,16 @@
 require 'onix/price'
+require 'onix/date'
 
 module ONIX
 
-  class MarketDate < OnixDate
-    attr_accessor :role
-    def parse(n)
-      super
-      n.elements.each do |t|
-        case t
-          when tag_match("MarketDateRole")
-            @role = MarketDateRole.parse(t)
-          when tag_match("Date")
-            # via OnixDate
-          when tag_match("DateFormat")
-            # via OnixDate
-          else
-            unsupported(t)
-        end
-      end
-    end
+  class Market < SubsetDSL
+    element "Territory", :subset
   end
 
-  class Market < Subset
-    attr_accessor :territory
-
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("Territory")
-            @territory=Territory.parse(t)
-          else
-            unsupported(t)
-        end
-      end
-    end
-  end
-
-  class MarketPublishingDetail < Subset
-    attr_accessor :publisher_representatives, :market_publishing_status, :market_dates
-
-    def initialize
-      @publisher_representatives=[]
-      @market_dates = []
-    end
+  class MarketPublishingDetail < SubsetDSL
+    elements "MarketDate", :subset
+    element "MarketPublishingStatus", :subset
+    elements "PublisherRepresentative", :subset, {:klass=>"Agent"}
 
     def availability_date
       av=@market_dates.select{|sd| sd.role.human=="PublicationDate" || sd.role.human=="EmbargoDate"}.first
@@ -52,50 +20,16 @@ module ONIX
         nil
       end
     end
-
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("MarketDate")
-            @market_dates << MarketDate.parse(t)
-          when tag_match("MarketPublishingStatus")
-            @market_publishing_status=MarketPublishingStatus.parse(t)
-          when tag_match("PublisherRepresentative")
-            @publisher_representatives << Agent.parse(t)
-          else
-            unsupported(t)
-        end
-      end
-    end
-
   end
 
-  class SupplyDate < OnixDate
-    attr_accessor :role
-    def parse(n)
-      super
-      n.elements.each do |t|
-        case t
-          when tag_match("SupplyDateRole")
-            @role = SupplyDateRole.parse(t)
-          when tag_match("Date")
-            # via OnixDate
-          when tag_match("DateFormat")
-            # via OnixDate
-          else
-            unsupported(t)
-        end
-      end
-    end
-  end
+  class SupplyDetail < SubsetDSL
+    element "ProductAvailability", :subset
+    elements "Supplier", :subset
+    elements "SupplyDate", :subset
+    elements "Price", :subset
 
-  class SupplyDetail < Subset
-    attr_accessor :availability, :suppliers, :supply_dates, :prices
-
-    def initialize
-      @suppliers=[]
-      @supply_dates=[]
-      @prices=[]
+    def availability
+      @product_availability
     end
 
     def distributors
@@ -103,11 +37,11 @@ module ONIX
     end
 
     def available?
-      ["Available","NotYetAvailable","InStock","ToOrder","Pod"].include?(@availability.human)
+      ["Available","NotYetAvailable","InStock","ToOrder","Pod"].include?(@product_availability.human)
     end
 
     def sold_separately?
-      @availability.human!="NotSoldSeparately"
+      @product_availability.human!="NotSoldSeparately"
     end
 
     def availability_date
@@ -118,34 +52,12 @@ module ONIX
         nil
       end
     end
-
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("ProductAvailability")
-            @availability=ProductAvailability.parse(t)
-          when tag_match("SupplyDate")
-            @supply_dates << SupplyDate.parse(t)
-          when tag_match("Price")
-            @prices << Price.parse(t)
-          when tag_match("UnpricedItemType")
-            @unpriced_item_type = UnpricedItemType.parse(t)
-          when tag_match("Supplier")
-            @suppliers << Supplier.parse(t)
-          else
-            unsupported(t)
-        end
-      end
-    end
   end
 
-  class ProductSupply < Subset
-    attr_accessor :supply_details, :markets, :market_publishing_detail
-
-    def initialize
-      @supply_details=[]
-      @markets=[]
-    end
+  class ProductSupply < SubsetDSL
+    elements "SupplyDetail", :subset
+    elements "Market", :subset
+    element "MarketPublishingDetail", :subset
 
     def distributors
       @supply_details.map{|sd| sd.distributors}.flatten.uniq{|d| d.name}
@@ -162,21 +74,5 @@ module ONIX
     def available?
       self.available_supply_details.length > 0
     end
-
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("SupplyDetail")
-            @supply_details << SupplyDetail.parse(t)
-          when tag_match("Market")
-            @markets << Market.parse(t)
-          when tag_match("MarketPublishingDetail")
-            @market_publishing_detail = MarketPublishingDetail.parse(t)
-          else
-            unsupported(t)
-        end
-      end
-    end
   end
-
 end

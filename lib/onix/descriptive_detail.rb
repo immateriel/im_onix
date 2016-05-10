@@ -310,38 +310,31 @@ module ONIX
     elements "ProductPart", :subset
     elements "Subject", :subset
 
-    if false
-    attr_accessor :title_details, :collection,
-                  :languages,
-                  :composition,
-                  :form, :form_details, :form_features, :form_description, :parts,
-                  :primary_content_type, :content_types,
-                  :edition_number, :edition_type,
-                  :contributors,
-                  :subjects,
-                  :collections,
-                  :extents,
-                  :audience_codes,
-                  :epub_technical_protections
-
-    def initialize
-      @title_details=[]
-      @text_contents=[]
-      @parts=[]
-      @contributors=[]
-      @subjects=[]
-      @collections=[]
-      @extents=[]
-      @epub_technical_protections=[]
-      @epub_usage_constraints=[]
-      @languages=[]
-      @form_details=[]
-      @form_features=[]
-      @content_types=[]
-      @audience_codes=[]
+    # shortcuts
+    def form
+      @product_form
     end
 
+    def form_details
+      @product_form_details
     end
+
+    def form_features
+      @product_form_features
+    end
+
+    def composition
+      @product_composition
+    end
+
+    def parts
+      @product_parts
+    end
+
+    def content_types
+      @product_content_types
+    end
+
     # :category: High level
     # product title string
     def title
@@ -478,85 +471,5 @@ module ONIX
       kws=@subjects.select { |s| s.scheme_identifier.human=="Keywords" }.map { |kw| kw.heading_text }.compact
       kws.map { |kw| kw.split(/;|,|\n/) }.flatten.map { |kw| kw.strip }
     end
-
-    # shortcuts
-    def form
-      @product_form
-    end
-
-    def form_details
-      @product_form_details
-    end
-
-    def form_features
-      @product_form_features
-    end
-
-    def composition
-      @product_composition
-    end
-
-    def parts
-      @product_parts
-    end
-
-    def content_types
-      @product_content_types
-    end
-
-    if false
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("TitleDetail")
-            @title_details << TitleDetail.parse(t)
-          when tag_match("Contributor")
-            @contributors << Contributor.parse(t)
-          when tag_match("Collection")
-            @collections << Collection.parse(t)
-          when tag_match("Extent")
-            @extents << Extent.parse(t)
-          when tag_match("EditionNumber")
-            @edition_number=t.text.to_i
-          when tag_match("EditionType")
-            @edition_type=EditionType.parse(t)
-          when tag_match("Language")
-            @languages << Language.parse(t)
-          when tag_match("ProductComposition")
-            @composition=ProductComposition.parse(t)
-          when tag_match("ProductForm")
-            @form=ProductForm.parse(t)
-          when tag_match("ProductFormFeature")
-            @form_features << ProductFormFeature.parse(t)
-          when tag_match("ProductFormDescription")
-            @form_description=t.text
-          when tag_match("ProductFormDetail")
-            @form_details << ProductFormDetail.parse(t)
-          when tag_match("PrimaryContentType")
-            @primary_content_type = ProductContentType.parse(t)
-          when tag_match("ProductContentType")
-            @content_types << ProductContentType.parse(t)
-          when tag_match("EpubTechnicalProtection")
-            @epub_technical_protections << EpubTechnicalProtection.parse(t)
-          when tag_match("EpubUsageConstraint")
-            @epub_usage_constraints << EpubUsageConstraint.parse(t)
-          when tag_match("AudienceCode")
-            @audience_codes << AudienceCode.parse(t)
-          when tag_match("NoCollection")
-            # ignore
-          when tag_match("NoEdition")
-            # ignore
-          when tag_match("ProductPart")
-            part=ProductPart.parse(t)
-            part.part_of=self
-            @parts << part
-          when tag_match("Subject")
-            @subjects << Subject.parse(t)
-          else
-            unsupported(t)
-        end
-      end
-    end
-      end
   end
 end

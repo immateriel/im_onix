@@ -1,91 +1,92 @@
 module ONIX
-  class Identifier < Subset
-    # IDType code object
-    attr_accessor :type
-    # IDValue string value
-    attr_accessor :value
-    # IDTypeName string value
-    attr_accessor :name
+  class Identifier < SubsetDSL
+    element "IDValue", :text
+    element "IDTypeName", :text
 
-    def self.prefix
+    def value
+      @id_value
+    end
+
+    def name
+      @id_type_name
+    end
+
+    def type
       nil
     end
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("#{self.class.prefix}IDType")
-            @type=ONIX.const_get("#{self.class.prefix}IDType").parse(t)
-          when tag_match("IDValue")
-            @value = t.text
-          when tag_match("IDTypeName")
-            @name = t.text
-        end
-      end
-    end
-
     def uniq_id
-      "#{type.code}-#{@value}"
+      "#{type.code}-#{value}"
     end
   end
 
   class SenderIdentifier < Identifier
-    def self.prefix
-      "Sender"
+    element "SenderIDType", :subset
+    def type
+      @sender_id_type
     end
   end
 
   class AddresseeIdentifier < Identifier
-    def self.prefix
-      "Addressee"
+    element "AddresseeIDType", :subset
+    def type
+      @addressee_id_type
     end
   end
 
   class AgentIdentifier < Identifier
-    def self.prefix
-      "Agent"
+    element "AgentIDType", :subset
+    def type
+      @agent_id_type
     end
   end
 
   class PublisherIdentifier < Identifier
-    def self.prefix
-      "Publisher"
+    element "PublisherIDType", :subset
+    def type
+      @publisher_id_type
     end
   end
 
   class SupplierIdentifier < Identifier
-    def self.prefix
-      "Supplier"
+    element "SupplierIDType", :subset
+    def type
+      @supplier_id_type
     end
   end
 
   class NameIdentifier < Identifier
-    def self.prefix
-      "Name"
+    element "NameIDType", :subset
+    def type
+      @name_id_type
     end
   end
 
   class CollectionIdentifier < Identifier
-    def self.prefix
-      "Collection"
+    element "CollectionIDType", :subset
+    def type
+      @collection_id_type
     end
   end
 
   class ProductIdentifier < Identifier
-    def self.prefix
-      "Product"
+    element "ProductIDType", :subset
+    def type
+      @product_id_type
     end
   end
 
   class SalesOutletIdentifier < Identifier
-    def self.prefix
-      "SalesOutlet"
+    element "SalesOutletIDType", :subset
+    def type
+      @sales_outlet_id_type
     end
   end
 
   class WorkIdentifier < Identifier
-    def self.prefix
-      "Work"
+    element "WorkIDType", :subset
+    def type
+      @work_id_type
     end
   end
 

@@ -1,25 +1,6 @@
 require 'onix/sales_rights'
+require 'onix/date'
 module ONIX
-  class PublishingDate < OnixDate
-    attr_accessor :role
-
-    def parse(n)
-      super
-      n.elements.each do |t|
-        case t
-          when tag_match("PublishingDateRole")
-            @role=PublishingDateRole.parse(t)
-          when tag_match("Date")
-            # via OnixDate
-          when tag_match("DateFormat")
-            # via OnixDate
-          else
-            unsupported(t)
-        end
-      end
-    end
-  end
-
   class PublishingDetail < SubsetDSL
     element "PublishingStatus", :subset
     elements "SalesRights", :subset, {:pluralize=>false}

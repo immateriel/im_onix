@@ -1,28 +1,8 @@
-require 'onix/onix_date'
 require 'onix/tax'
 require 'onix/discount_coded'
+require 'onix/date'
 
 module ONIX
-  class PriceDate < OnixDate
-    attr_accessor :role
-    def parse(n)
-      super
-      n.elements.each do |t|
-        case t
-          when tag_match("PriceDateRole")
-            @role = PriceDateRole.parse(t)
-          when tag_match("Date")
-            # via OnixDate
-          when tag_match("DateFormat")
-            # via OnixDate
-          else
-            unsupported(t)
-        end
-      end
-    end
-
-  end
-
   class Price < SubsetDSL
     elements "PriceDate", :subset
     element "CurrencyCode", :text
