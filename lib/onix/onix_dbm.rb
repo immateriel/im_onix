@@ -1,4 +1,5 @@
 module ONIX
+  # TEST
   require 'dbm'
   class ONIXDBM
     attr_accessor :db

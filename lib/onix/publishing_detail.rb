@@ -1,74 +1,5 @@
+require 'onix/sales_rights'
 module ONIX
-
-  class SalesOutlet < Subset
-    attr_accessor :identifier, :name
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("SalesOutletName")
-            @name = t.text
-          when tag_match("SalesOutletIdentifier")
-            @identifier = SalesOutletIdentifier.parse(t)
-          else
-            unsupported(t)
-        end
-      end
-    end
-  end
-
-  class SalesRestriction < Subset
-    attr_accessor :type, :sales_outlets, :note, :start_date, :end_date
-
-    def initialize
-      @sales_outlets=[]
-    end
-
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("SalesRestrictionType")
-            @type = SalesRestrictionType.parse(t)
-          when tag_match("SalesOutlet")
-            @sales_outlets << SalesOutlet.parse(t)
-          when tag_match("SalesRestrictionNote")
-            @note = t.text
-          when tag_match("StartDate")
-            fmt=t["dateformat"] || "00"
-            @start_date=ONIX::Helper.to_date(fmt,t.text)
-          when tag_match("EndDate")
-            fmt=t["dateformat"] || "00"
-            @end_date=ONIX::Helper.to_date(fmt,t.text)
-          else
-            unsupported(t)
-        end
-      end
-    end
-
-  end
-
-  class SalesRights < Subset
-    attr_accessor :type, :territory, :sales_restrictions
-
-    def initialize
-      @sales_restrictions=[]
-    end
-
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("SalesRightsType")
-            @type=SalesRightsType.parse(t)
-          when tag_match("Territory")
-            @territory=Territory.parse(t)
-          when tag_match("SalesRestriction")
-            @sales_restrictions << SalesRestriction.parse(t)
-          else
-            unsupported(t)
-        end
-      end
-    end
-  end
-
   class PublishingDate < OnixDate
     attr_accessor :role
 
@@ -89,19 +20,15 @@ module ONIX
     end
   end
 
-  class PublishingDetail < Subset
-    attr_accessor :status, :publishers, :imprints,
-                  :sales_rights,
-                  :publishing_dates,
-                  :city,
-                  :country
-
-    def initialize
-      @sales_rights=[]
-      @publishing_dates=[]
-      @publishers=[]
-      @imprints=[]
-    end
+  class PublishingDetail < SubsetDSL
+    element "PublishingStatus", :subset
+    elements "SalesRights", :subset, {:pluralize=>false}
+    element "ROWSalesRightsType", :subset, {:klass=>"SalesRightsType"}
+    elements "PublishingDate", :subset
+    elements "Publisher", :subset
+    element "CityOfPublication", :text
+    element "CountryOfPublication", :text
+    elements "Imprint", :subset
 
     def publisher
       main_publishers = @publishers.select { |p| p.role.human=="Publisher" }
@@ -134,29 +61,17 @@ module ONIX
       end
     end
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("PublishingStatus")
-            @status=PublishingStatus.parse(t)
-          when tag_match("SalesRights")
-            @sales_rights << SalesRights.parse(t)
-          when tag_match("ROWSalesRightsType")
-            @row_sales_rights_type=SalesRightsType.parse(t)
-          when tag_match("PublishingDate")
-            @publishing_dates << PublishingDate.parse(t)
-          when tag_match("Publisher")
-            @publishers << Publisher.parse(t)
-          when tag_match("CityOfPublication")
-            @city = t.text
-          when tag_match("CountryOfPublication")
-            @country = t.text
-          when tag_match("Imprint")
-            @imprints << Imprint.parse(t)
-          else
-            unsupported(t)
-        end
-      end
+    def status
+      @publising_status
     end
+
+    def city
+      @city_of_publication
+    end
+
+    def country
+      @country_of_publication
+    end
+
   end
 end

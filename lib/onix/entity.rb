@@ -123,6 +123,7 @@ module ONIX
         end
       end
     end
+
     private
     def self.prefix
       "Publisher"

@@ -1,26 +1,17 @@
 require 'onix/identifier'
 
 module ONIX
-  class TitleElement < Subset
-    attr_accessor :level, :title_prefix, :title_without_prefix, :title_text, :subtitle, :part_number
+  class TitleElement < SubsetDSL
+    element "TitleElementLevel", :subset
+    element "TitleText", :text
+    element "TitlePrefix", :text
+    element "TitleWithoutPrefix", :text
+    element "Subtitle", :text
+    element "PartNumber", :integer
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("TitleElementLevel")
-            @level=TitleElementLevel.parse(t)
-          when tag_match("TitleText")
-            @title_text=t.text
-          when tag_match("TitlePrefix")
-            @title_prefix=t.text
-          when tag_match("TitleWithoutPrefix")
-            @title_without_prefix=t.text
-          when tag_match("Subtitle")
-            @subtitle=t.text
-          when tag_match("PartNumber")
-            @part_number=t.text.to_i
-        end
-      end
+    # shortcuts
+    def level
+      @title_element_level
     end
 
     # :category: High level
@@ -40,31 +31,27 @@ module ONIX
     end
   end
 
-  class TitleDetail < Subset
-    attr_accessor :type, :title_elements
+  class TitleDetail < SubsetDSL
+    element "TitleType", :subset
+    elements "TitleElement", :subset
 
-    def initialize
-      @title_elements=[]
-    end
-
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("TitleType")
-            @type=TitleType.parse(t)
-          when tag_match("TitleElement")
-            @title_elements << TitleElement.parse(t)
-        end
-      end
+    def type
+      @title_type
     end
   end
 
-  class Collection < Subset
-    attr_accessor :type, :identifiers, :title_details
+  class Collection < SubsetDSL
+    element "CollectionType", :subset
+    elements "CollectionIdentifiers", :subset
+    elements "TitleDetail", :subset
 
-    def initialize
-      @identifiers=[]
-      @title_details=[]
+    # shortcuts
+    def type
+      @collection_type
+    end
+
+    def identifiers
+      @collection_identifiers
     end
 
     # :category: High level
@@ -90,27 +77,36 @@ module ONIX
       end
     end
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("CollectionIdentifier")
-            @identifiers << CollectionIdentifier.parse(t)
-          when tag_match("CollectionType")
-            @type=CollectionType.parse(t)
-          when tag_match("TitleDetail")
-            @title_details << TitleDetail.parse(t)
-        end
-      end
-    end
   end
 
   # product part use full Product to provide file protection and file size
-  class ProductPart < Subset
-    attr_accessor :identifiers, :form, :form_details, :form_description, :content_types,
-                  :number_of_copies
-
+  class ProductPart < SubsetDSL
     include EanMethods
     include ProprietaryIdMethods
+
+    elements "ProductIdentifier", :subset
+    element "ProductForm", :subset
+    element "ProductFormDescription", :text
+    elements "ProductFormDetail", :subset
+    elements "ProductContentType", :subset
+    element "NumberOfCopies", :integer
+
+    # shortcuts
+    def identifiers
+      @product_identifiers
+    end
+
+    def form
+      @product_form
+    end
+
+    def form_details
+      @product_form_details
+    end
+
+    def content_types
+      @product_content_types
+    end
 
     # full Product if referenced in ONIXMessage
     def product
@@ -130,12 +126,6 @@ module ONIX
       @part_of=v
     end
 
-    def initialize
-      @identifiers = []
-      @form_details = []
-      @content_types = []
-    end
-
     # :category: High level
     # digital file format string (Epub,Pdf,AmazonKindle)
     def file_format
@@ -149,48 +139,27 @@ module ONIX
     end
 
     def file_formats
-      @form_details.select { |fd| fd.code =~ /^E1.*/ }
+      @product_form_details.select { |fd| fd.code =~ /^E1.*/ }
     end
 
     def reflowable?
-      return true if @form_details.select { |fd| fd.code == "E200" }.length > 0
-      return false if @form_details.select { |fd| fd.code == "E201" }.length > 0
+      return true if @product_form_details.select { |fd| fd.code == "E200" }.length > 0
+      return false if @product_form_details.select { |fd| fd.code == "E201" }.length > 0
     end
 
     # :category: High level
     # part file description string
     def file_description
-      @form_description
+      @product_form_description
     end
 
     # :category: High level
     # raw part file description string without HTML
     def raw_file_description
-      if @form_description
-        Helper.strip_html(@form_description).gsub(/\s+/, " ").strip
+      if @product_form_description
+        Helper.strip_html(@product_form_description).gsub(/\s+/, " ").strip
       else
         nil
-      end
-    end
-
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("ProductIdentifier")
-            @identifiers << ProductIdentifier.parse(t)
-          when tag_match("ProductForm")
-            @form=ProductForm.parse(t)
-          when tag_match("ProductFormDescription")
-            @form_description=t.text
-          when tag_match("ProductFormDetail")
-            @form_details << ProductFormDetail.parse(t)
-          when tag_match("ProductContentType")
-            @content_types << ProductContentType.parse(t)
-          when tag_match("NumberOfCopies")
-            @number_of_copies=t.text.to_i
-          else
-            unsupported(t)
-        end
       end
     end
 
@@ -219,127 +188,129 @@ module ONIX
     end
   end
 
-  class Extent < Subset
-    attr_accessor :type, :value, :unit
+  class Extent < SubsetDSL
+    element "ExtentType", :subset
+    element "ExtentUnit", :subset
+    element "ExtentValue", :text
+
+    # shortcuts
+    def type
+      @extent_type
+    end
+
+    def unit
+      @extent_unit
+    end
+
+    def value
+      @extent_value
+    end
 
     def bytes
-      case @unit.human
+      case @extent_unit.human
         when "Bytes"
-          @value.to_i
+          @extent_value.to_i
         when "Kbytes"
-          (@value.to_f*1024).to_i
+          (@extent_value.to_f*1024).to_i
         when "Mbytes"
-          (@value.to_f*1024*1024).to_i
+          (@extent_value.to_f*1024*1024).to_i
         else
           nil
       end
     end
 
     def pages
-      if @unit.human=="Pages"
-        @value.to_i
+      if @extent_unit.human=="Pages"
+        @extent_value.to_i
       else
         nil
       end
     end
+  end
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("ExtentType")
-            @type=ExtentType.parse(t)
-          when tag_match("ExtentUnit")
-            @unit=ExtentUnit.parse(t)
-          when tag_match("ExtentValue")
-            @value=t.text
-          else
-            unsupported(t)
-        end
-      end
+  class EpubUsageLimit < SubsetDSL
+    element "EpubUsageUnit", :subset
+    element "Quantity", :integer
+
+    def unit
+      @epub_usage_unit
     end
   end
 
-  class EpubUsageLimit < Subset
-    attr_accessor :quantity, :unit
+  class EpubUsageConstraint < SubsetDSL
+    element "EpubUsageType", :subset
+    element "EpubUsageStatus", :subset
+    elements "EpubUsageLimit", :subset
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("EpubUsageUnit")
-            @unit=EpubUsageUnit.parse(t)
-          when tag_match("Quantity")
-            @quantity=t.text.to_i
-          else
-            unsupported(t)
-        end
-      end
+    # shortcuts
+    def type
+      @epub_usage_type
+    end
+
+    def status
+      @epub_usage_status
+    end
+
+    def limits
+      @epub_usage_limits
     end
   end
 
-  class EpubUsageConstraint < Subset
-    attr_accessor :type, :status, :limits
+  class Language < SubsetDSL
+    element "LanguageRole", :subset
+    element "LanguageCode", :subset
 
-    def initialize
-      @limits=[]
+    # shortcuts
+    def role
+      @language_role
     end
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("EpubUsageType")
-            @type=EpubUsageType.parse(t)
-          when tag_match("EpubUsageStatus")
-            @status=EpubUsageStatus.parse(t)
-          when tag_match("EpubUsageLimit")
-            @limits << EpubUsageLimit.parse(t)
-          else
-            unsupported(t)
-        end
-      end
+    def code
+      @language_code
     end
   end
 
-  class Language < Subset
-    attr_accessor :role, :code
+  class ProductFormFeature < SubsetDSL
+    element "ProductFormFeatureType", :subset
+    element "ProductFormFeatureValue", :text
+    elements "ProductFormFeatureDescription", :text
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("LanguageRole")
-            @role=LanguageRole.parse(t)
-          when tag_match("LanguageCode")
-            @code=LanguageCode.parse(t)
-          else
-            unsupported(t)
-        end
-      end
+    # shortcuts
+    def type
+      @product_form_feature_type
+    end
+
+    def value
+      @product_form_feature_value
+    end
+
+    def descriptions
+      @product_form_feature_descriptions
     end
   end
 
-  class ProductFormFeature < Subset
-    attr_accessor :type, :value, :descriptions
+  class DescriptiveDetail < SubsetDSL
+    elements "TitleDetail", :subset
+    elements "Contributor", :subset
+    elements "Collection", :subset
+    elements "Extent", :subset
+    element "EditionNumber", :integer
+    element "EditionType", :subset
+    elements "Language", :subset
+    element "ProductComposition", :subset
+    element "ProductForm", :subset
+    elements "ProductFormFeature", :subset
+    element "ProductFormDescription", :text
+    elements "ProductFormDetail", :subset
+    element "PrimaryContentType", :subset, {:klass=>"ProductContentType"}
+    elements "ProductContentType", :subset
+    elements "EpubTechnicalProtection", :subset
+    elements "EpubUsageConstraint", :subset
+    elements "AudienceCode", :subset
+    elements "ProductPart", :subset
+    elements "Subject", :subset
 
-    def initialize
-      @descriptions=[]
-    end
-
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("ProductFormFeatureType")
-            @type=ProductFormFeatureType.parse(t)
-          when tag_match("ProductFormFeatureValue")
-            @value=t.text
-          when tag_match("ProductFormFeatureDescription")
-            @descriptions << t.text
-          else
-            unsupported(t)
-        end
-      end
-    end
-  end
-
-  class DescriptiveDetail < Subset
+    if false
     attr_accessor :title_details, :collection,
                   :languages,
                   :composition,
@@ -370,6 +341,7 @@ module ONIX
       @audience_codes=[]
     end
 
+    end
     # :category: High level
     # product title string
     def title
@@ -411,7 +383,7 @@ module ONIX
     end
 
     def digital?
-      if @form and @form.human=~/Digital/
+      if @product_form and @product_form.human=~/Digital/
         true
       else
         false
@@ -419,11 +391,11 @@ module ONIX
     end
 
     def streaming?
-      @form.code=="EC"
+      @product_form.code=="EC"
     end
 
     def audio?
-      if @form and @form.human =~ /Audio/
+      if @product_form and @product_form.human =~ /Audio/
         true
       else
         false
@@ -435,11 +407,11 @@ module ONIX
     end
 
     def audio_formats
-      @form_details.select { |fd| fd.code =~ /^A.*/ }
+      @product_form_details.select { |fd| fd.code =~ /^A.*/ }
     end
 
     def bundle?
-      @composition.human=="MultipleitemRetailProduct"
+      @product_composition.human=="MultipleitemRetailProduct"
     end
 
     def file_format
@@ -453,12 +425,12 @@ module ONIX
     end
 
     def file_formats
-      @form_details.select { |fd| fd.code =~ /^E1.*/ }
+      @product_form_details.select { |fd| fd.code =~ /^E1.*/ }
     end
 
     def reflowable?
-      return true if @form_details.select { |fd| fd.code == "E200" }.length > 0
-      return false if @form_details.select { |fd| fd.code == "E201" }.length > 0
+      return true if @product_form_details.select { |fd| fd.code == "E200" }.length > 0
+      return false if @product_form_details.select { |fd| fd.code == "E201" }.length > 0
     end
 
     def file_description
@@ -507,6 +479,32 @@ module ONIX
       kws.map { |kw| kw.split(/;|,|\n/) }.flatten.map { |kw| kw.strip }
     end
 
+    # shortcuts
+    def form
+      @product_form
+    end
+
+    def form_details
+      @product_form_details
+    end
+
+    def form_features
+      @product_form_features
+    end
+
+    def composition
+      @product_composition
+    end
+
+    def parts
+      @product_parts
+    end
+
+    def content_types
+      @product_content_types
+    end
+
+    if false
     def parse(n)
       n.elements.each do |t|
         case t
@@ -559,5 +557,6 @@ module ONIX
         end
       end
     end
+      end
   end
 end

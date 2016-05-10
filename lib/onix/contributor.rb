@@ -2,13 +2,23 @@ require 'onix/subset'
 require 'onix/website'
 
 module ONIX
-  class Contributor < Subset
-    attr_accessor :name_before_key, :key_names, :person_name, :person_name_inverted, :role,
-                  :biography_note, :sequence_number, :websites, :identifiers
+  class Contributor < SubsetDSL
+    element "NameBeforeKey", :text
+    element "KeyNames", :text
+    element "PersonName", :text
+    element "PersonNameInverted", :text
+    element "ContributorRole", :subset
+    element "BiographyNote", :text
+    element "SequenceNumber", :integer
+    elements "Website", :subset
+    elements "NameIdentifier", :subset
 
-    def initialize
-      @identifiers = []
-      @websites = []
+    def role
+      @contributor_role
+    end
+
+    def identifiers
+      @name_identifiers
     end
 
     # :category: High level
@@ -37,36 +47,9 @@ module ONIX
     # raw biography string without HTML
     def raw_biography
       if self.biography
-        Helper.strip_html(self.biography).gsub(/\s+/," ")
+        Helper.strip_html(self.biography).gsub(/\s+/, " ")
       else
         nil
-      end
-    end
-
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("SequenceNumber")
-            @sequence_number=t.text.to_i
-          when tag_match("NamesBeforeKey")
-            @name_before_key=t.text
-          when tag_match("KeyNames")
-            @key_names=t.text
-          when tag_match("PersonName")
-            @person_name=t.text
-          when tag_match("PersonNameInverted")
-            @person_name_inverted=t.text
-          when tag_match("BiographicalNote")
-            @biography_note=t.text.strip
-          when tag_match("ContributorRole")
-            @role=ContributorRole.parse(t)
-          when tag_match("Website")
-            @websites << Website.parse(t)
-          when tag_match("NameIdentifier")
-            @identifiers = NameIdentifier.parse(t)
-          else
-            unsupported(t)
-        end
       end
     end
   end

@@ -101,7 +101,7 @@ module ONIX
 
     private
     def ean_identifier
-      @identifiers.select { |id| id.type.human=="Gtin13" }.first || @identifiers.select { |id| id.type.human=="Isbn13" }.first
+      self.identifiers.select { |id| id.type.human=="Gtin13" }.first || self.identifiers.select { |id| id.type.human=="Isbn13" }.first
     end
   end
 
@@ -122,13 +122,13 @@ module ONIX
 
     # private
     def gln_identifier
-      @identifiers.select { |id| id.type.human=="Gln" }.first
+      self.identifiers.select { |id| id.type.human=="Gln" }.first
     end
   end
 
   module ProprietaryIdMethods
     def proprietary_ids
-      @identifiers.select { |id| id.type.human=="Proprietary" }
+      self.identifiers.select { |id| id.type.human=="Proprietary" }
     end
   end
 end

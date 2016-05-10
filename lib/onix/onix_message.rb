@@ -13,45 +13,35 @@ require 'onix/product'
 
 module ONIX
 
-  class Sender < Subset
-    attr_accessor :identifiers, :name
-
+  class Sender < SubsetDSL
     include GlnMethods
 
-    def initialize
-      @identifiers=[]
+    elements "SenderIdentifier", :subset
+    element "SenderName", :text
+
+    # shortcuts
+    def identifiers
+      @sender_identifiers
     end
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("SenderIdentifier")
-            @identifiers << SenderIdentifier.parse(t)
-          when tag_match("SenderName")
-            @name=t.text
-        end
-      end
+    def name
+      @sender_name
     end
   end
 
-  class Addressee < Subset
-    attr_accessor :identifiers, :name
-
+  class Addressee < SubsetDSL
     include GlnMethods
 
-    def initialize
-      @identifiers=[]
+    elements "AddresseeIdentifier", :subset
+    element "AddresseeName", :text
+
+    # shortcuts
+    def identifiers
+      @addressee_identifiers
     end
 
-    def parse(n)
-      n.elements.each do |t|
-        case t
-          when tag_match("AddresseeIdentifier")
-            @identifiers << AddresseeIdentifier.parse(t)
-          when tag_match("AddresseeName")
-            @name=t.text
-        end
-      end
+    def name
+      @addressee_name
     end
   end
 
