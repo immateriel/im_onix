@@ -30,7 +30,7 @@ module ONIX
 
     def unsupported(tag)
 #      raise SubsetUnsupported,tag.name
-#      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{Short.names[tag.name]})"
+      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{Short.names[tag.name]})"
     end
 
     def tag_match(v)
@@ -189,6 +189,10 @@ module ONIX
       end
     end
 
+    def self.get_class(name)
+      ONIX.const_get(name)
+    end
+
     def parse(n)
       n.elements.each do |t|
         name = t.name
@@ -199,7 +203,7 @@ module ONIX
         if e
           case e.type
             when :subset
-              val=ONIX.const_get(e.class_name).parse(t)
+              val=self.class.get_class(e.class_name).parse(t)
             when :text
               val=t.text
             when :integer

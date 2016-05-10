@@ -248,7 +248,7 @@ module ONIX
     end
 
     def reflowable?
-      return @descriptive_detail.reflowable?
+      @descriptive_detail.reflowable?
     end
 
     # :category: High level

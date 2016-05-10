@@ -11,6 +11,8 @@ require 'onix/contributor'
 require 'onix/product_supply'
 require 'onix/product'
 
+require 'onix/onix21'
+
 module ONIX
 
   class Sender < SubsetDSL
@@ -170,7 +172,12 @@ module ONIX
                   end
                 end
               when tag_match("Product")
-                product=Product.parse(e)
+                product=nil
+                if @release =~ /^3.0/
+                  product=Product.parse(e)
+                else
+                  product=ONIX21::Product.parse(e)
+                end
                 product.default_language_of_text=@default_language_of_text
                 product.default_currency_code=@default_currency_code
                 @products << product
@@ -184,7 +191,7 @@ module ONIX
           @products << product
       end
 
-      init_vault
+#      init_vault
     end
   end
 
