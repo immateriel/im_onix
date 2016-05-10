@@ -50,7 +50,8 @@ module ONIX
   class ONIXMessage < Subset
     attr_accessor :sender, :adressee, :sent_date_time,
                   :default_language_of_text, :default_currency_code,
-                  :products
+                  :products,
+                  :release
 
     def initialize
       @products=[]
@@ -61,7 +62,7 @@ module ONIX
       @vault
     end
 
-    def vault=v
+    def vault= v
       @vault = v
     end
 
@@ -69,14 +70,14 @@ module ONIX
     # current object erase other values
     def merge!(other)
       @products+=other.products
-      @products=@products.uniq{|p| p.ean}
+      @products=@products.uniq { |p| p.ean }
       init_vault
       self
     end
 
     # keep products for which block return true
     def select! &block
-      @products.select!{|p| block.call(p)}
+      @products.select! { |p| block.call(p) }
       init_vault
       self
     end
@@ -110,10 +111,12 @@ module ONIX
           end
         end
 
-        product.descriptive_detail.parts.each do |prt|
-          prt.identifiers.each do |ident|
-            if @vault[ident.uniq_id]
-              prt.product=@vault[ident.uniq_id]
+        if product.descriptive_detail
+          product.descriptive_detail.parts.each do |prt|
+            prt.identifiers.each do |ident|
+              if @vault[ident.uniq_id]
+                prt.product=@vault[ident.uniq_id]
+              end
             end
           end
         end
@@ -121,12 +124,12 @@ module ONIX
     end
 
     # open with arg detection
-    def open(arg,force_encoding=nil)
+    def open(arg, force_encoding=nil)
       data=ONIX::Helper.arg_to_data(arg)
 
       xml=nil
       if force_encoding
-        xml=Nokogiri::XML.parse(data,nil,force_encoding)
+        xml=Nokogiri::XML.parse(data, nil, force_encoding)
       else
         xml=Nokogiri::XML.parse(data)
       end
@@ -136,15 +139,16 @@ module ONIX
     end
 
     # parse filename or file
-    def parse(arg,force_encoding=nil)
+    def parse(arg, force_encoding=nil)
 
-      xml=open(arg,force_encoding)
+      xml=open(arg, force_encoding)
       @products=[]
 
       root = xml.root
 
       case root
         when tag_match("ONIXMessage")
+          @release=root["release"]
           root.elements.each do |e|
             case e
               when tag_match("Header")

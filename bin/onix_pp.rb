@@ -10,6 +10,7 @@ if filename
 #m=File.open("test.dump","wb")
 #m.write Marshal.dump(msg)
 #m.close
+  puts "Release: #{msg.release}"
 
   if msg.sender
     puts "Sender: #{msg.sender.name}"
