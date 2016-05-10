@@ -373,4 +373,16 @@ class TestImOnix < Minitest::Test
 
   end
 
+  context "other publication date format" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/other-publication-date-format.xml')
+
+      @product = message.products.last
+    end
+
+    should "be published" do
+      assert_equal Date.new(2011, 8, 31), @product.publication_date
+    end
+  end
 end
