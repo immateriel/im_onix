@@ -61,6 +61,8 @@ module ONIX
       case str
         when /^\d{4}\d{2}\d{2}T\d{2}\d{2}\d{2}/
           "%Y%m%dT%H%M%S%z"
+        when /^\d{4}\-\d{2}\-\d{2}$/
+          "%Y-%m-%d"
         when /^\d{4}\d{2}\d{2}$/
           "%Y%m%d"
         when /^\d{4}\d{2}$/
