@@ -62,36 +62,5 @@ module ONIX
       end
     end
 
-    def self.parse_date(pd)
-      date=nil
-      if pd and pd.at("./Date")
-        begin
-          date_str=pd.at("./Date").text
-          date_format="00"
-          if pd.at("./DateFormat")
-            date_format=pd.at("./DateFormat").text
-          end
-          date_str_f=date_str.gsub(/\-/, "").gsub(/\:/, "")
-
-          # devrait être dans le convertisseur auto de date
-            date=self.to_date(date_format,date_str_f)
-            unless date
-              date=date_str
-            end
-        rescue
-
-          date=nil
-        end
-
-#        puts date
-        case date
-          when /^\d{4}$/
-            date=Date.new(date_str_f.to_i,1,1)
-        end
-
-      end
-      date
-    end
-
   end
 end

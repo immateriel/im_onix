@@ -1,7 +1,13 @@
 module ONIX
-  class Short
+  class ShortToRef
     def self.names
       @shortnames||=YAML.load(File.open(File.dirname(__FILE__) + "/../../data/shortnames.yml"))
+    end
+  end
+
+  class RefToShort
+    def self.names
+      @refnames||=ShortToRef.names.invert
     end
   end
 
@@ -9,7 +15,7 @@ module ONIX
     def ===(target)
       if target.element?
         name=target.name
-        name.casecmp(tag_name) == 0 or Short.names[name] == tag_name
+        name.casecmp(tag_name) == 0 or ShortToRef.names[name] == tag_name
       else
         false
       end
@@ -30,7 +36,7 @@ module ONIX
 
     def unsupported(tag)
 #      raise SubsetUnsupported,tag.name
-      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{Short.names[tag.name]})"
+#      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{ShortToRef.names[tag.name]})"
     end
 
     def tag_match(v)
@@ -153,7 +159,12 @@ module ONIX
     def self.element(name, type, options={})
       @elements ||= {}
       @elements[name]=ElementParser.new(name, type, options)
-#      puts "REGISTER ELEMENT #{name} #{@elements[name].to_instance}"
+#      puts "#{self.name} REGISTER ELEMENT #{name} #{@elements[name].to_instance}"
+      short_name=self.ref_to_short(name)
+      if short_name
+        @elements[short_name]=@elements[name]
+#        puts "#{self.name} REGISTER SHORT ELEMENT #{short_name} #{@elements[name].to_instance}"
+      end
       attr_accessor @elements[name].to_sym
     end
 
@@ -189,6 +200,14 @@ module ONIX
       end
     end
 
+    def self.short_to_ref(name)
+      ShortToRef.names[name]
+    end
+
+    def self.ref_to_short(name)
+      RefToShort.names[name]
+    end
+
     def self.get_class(name)
       ONIX.const_get(name)
     end
@@ -196,9 +215,10 @@ module ONIX
     def parse(n)
       n.elements.each do |t|
         name = t.name
-        if Short.names[name]
-          name=Short.names[name]
-        end
+#        short_name=self.class.short_to_ref(name)
+#        if short_name
+#          name=short_name
+#        end
         e=self.class.ancestors_registered_elements[name]
         if e
           case e.type
@@ -230,5 +250,11 @@ module ONIX
         end
       end
     end
+
+    def unsupported(tag)
+#      raise SubsetUnsupported,tag.name
+#      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{self.class.short_to_ref(tag.name)})"
+    end
+
   end
 end

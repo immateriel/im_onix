@@ -59,6 +59,16 @@ module ONIX
     elements "Market", :subset
     element "MarketPublishingDetail", :subset
 
+    def availability_date
+      if @market_publishing_detail
+        @market_publishing_detail.availability_date
+      end
+    end
+
+    def countries
+      @markets.map{|m| m.territory.countries}.flatten.uniq
+    end
+
     def distributors
       @supply_details.map{|sd| sd.distributors}.flatten.uniq{|d| d.name}
     end

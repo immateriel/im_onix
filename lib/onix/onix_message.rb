@@ -94,31 +94,18 @@ module ONIX
       end
 
       @products.each do |product|
-        if product.related_material
-          product.related_material.related_products.each do |rp|
-            rp.identifiers.each do |ident|
-              if @vault[ident.uniq_id]
-                rp.product=@vault[ident.uniq_id]
-              end
-
-            end
-          end
-
-          product.related_material.related_works.each do |rw|
-            rw.identifiers.each do |ident|
-              if @vault[ident.uniq_id]
-                rw.product=@vault[ident.uniq_id]
-              end
+        product.related.each do |rel|
+          rel.identifiers.each do |ident|
+            if @vault[ident.uniq_id]
+              rel.product=@vault[ident.uniq_id]
             end
           end
         end
 
-        if product.descriptive_detail
-          product.descriptive_detail.parts.each do |prt|
-            prt.identifiers.each do |ident|
-              if @vault[ident.uniq_id]
-                prt.product=@vault[ident.uniq_id]
-              end
+        product.parts.each do |prt|
+          prt.identifiers.each do |ident|
+            if @vault[ident.uniq_id]
+              prt.product=@vault[ident.uniq_id]
             end
           end
         end
@@ -191,7 +178,7 @@ module ONIX
           @products << product
       end
 
-#      init_vault
+      init_vault
     end
   end
 
