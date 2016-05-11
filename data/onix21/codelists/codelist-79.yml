@@ -1,0 +1,26 @@
+---
+:codelist:
+  '01': ColorOfCover
+  '02': ColorOfPageEdge
+  '03': TextFont
+  '04': SpecialCoverMaterial
+  '05': DvdRegion
+  '06': OperatingSystemRequirements
+  '07': OtherSystemRequirements
+  08: PointAndListenDeviceCompatibility
+  09: EpublicationAccessibilityDetail
+  '10': EpublicationFormatVersion
+  '11': CpsiaChokingHazardWarning
+  '12': CpsiaChokingHazardWarning
+  '13': EuToySafetyHazardWarning
+  '14': IataDangerousGoodsWarning
+  '15': EpublicationFormatVersionCode
+  '30': NotFscOrPefcCertified
+  '31': FscCertifiedPure
+  '32': FscCertifiedMixedSources
+  '33': FscCertifiedRecycled
+  '34': PefcCertified
+  '35': PefcRecycled
+  '36': FscOrPefcCertifiedPreAndPostconsumerWastePcwPercentage
+  '37': ClaimedPreAndPostconsumerWastePcwPercentage
+  '40': PaperProducedByGreenTechnology

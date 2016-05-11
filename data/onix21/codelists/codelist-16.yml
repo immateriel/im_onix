@@ -1,0 +1,8 @@
+---
+:codelist:
+  '01': Proprietary
+  '02': Isbn10
+  '06': Doi
+  '11': Istc
+  '15': Isbn13
+  '18': Isrc

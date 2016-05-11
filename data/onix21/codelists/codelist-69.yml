@@ -1,0 +1,6 @@
+---
+:codelist:
+  '05': ExclusiveSalesAgent
+  '06': NonexclusiveSalesAgent
+  '07': LocalPublisher
+  08: SalesAgent

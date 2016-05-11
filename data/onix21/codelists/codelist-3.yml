@@ -1,0 +1,13 @@
+---
+:codelist:
+  '00': Unspecified
+  '01': Publisher
+  '02': PublishersDistributor
+  '03': Wholesaler
+  '04': BibliographicAgency
+  '05': LibraryBookseller
+  '06': PublishersSalesAgent
+  '07': PublishersConversionServiceProvider
+  08: ConversionServiceProvider
+  09: IsbnRegistrationAgency
+  '10': IstcRegistrationAgency

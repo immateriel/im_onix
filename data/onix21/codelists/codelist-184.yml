@@ -1,0 +1,10 @@
+---
+:codelist:
+  '00': NoWarning
+  '01': CarriesCeLogo
+  '02': CarriesMinimumAgeWarning
+  '03': CarriesEuToySafetyDirectiveUnsuitableForChildrenAges03WarningLogo
+  '04': CarriesEuToySafetyDirectiveHazardWarning
+  '05': CarriesOtherTextAssociatedWithToySafety
+  '06': MaterialSafetyDataSheetAvailable
+  '07': DeclarationOfConformityAvailable

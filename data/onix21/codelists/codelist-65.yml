@@ -1,0 +1,31 @@
+---
+:codelist:
+  '01': Cancelled
+  '10': NotYetAvailable
+  '11': AwaitingStock
+  '12': NotYetAvailableWillBePod
+  '20': Available
+  '21': InStock
+  '22': ToOrder
+  '23': Pod
+  '30': TemporarilyUnavailable
+  '31': OutOfStock
+  '32': Reprinting
+  '33': AwaitingReissue
+  '34': TemporarilyWithdrawnFromSale
+  '40': NotAvailableReasonUnspecified
+  '41': NotAvailableReplacedByNewProduct
+  '42': NotAvailableOtherFormatAvailable
+  '43': NoLongerSuppliedByUs
+  '44': ApplyDirect
+  '45': NotSoldSeparately
+  '46': WithdrawnFromSale
+  '47': Remaindered
+  '48': NotAvailableReplacedByPod
+  '49': Recalled
+  '50': NotSoldAsSet
+  '51': NotAvailablePublisherIndicatesOp
+  '52': NotAvailablePublisherNoLongerSellsProductInThisMarket
+  '97': NoRecentUpdateReceived
+  '98': NoLongerReceivingUpdates
+  '99': ContactSupplier

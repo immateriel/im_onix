@@ -1,0 +1,8 @@
+---
+:codelist:
+  '00': None
+  '01': Drm
+  '02': DigitalWatermarking
+  '03': AdobeDrm
+  '04': AppleDrm
+  '05': OmaDrm

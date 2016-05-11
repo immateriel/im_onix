@@ -1,0 +1,18 @@
+---
+:codelist:
+  '01': PublicationDate
+  '02': EmbargoDate
+  09: PublicAnnouncementDate
+  '10': TradeAnnouncementDate
+  '11': DateOfFirstPublication
+  '12': LastReprintDate
+  '13': OutofprintDeletionDate
+  '16': LastReissueDate
+  '19': PublicationDateOfPrintCounterpart
+  '20': DateOfFirstPublicationInOriginalLanguage
+  '21': ForthcomingReissueDate
+  '22': ExpectedAvailabilityDateAfterTemporaryWithdrawal
+  '23': ReviewEmbargoDate
+  '25': PublishersReservationOrderDeadline
+  '26': ForthcomingReprintDate
+  '27': PreorderEmbargoDate

@@ -1,0 +1,25 @@
+---
+:codelist:
+  AB: Cancelled
+  AD: AvailableDirectFromPublisherOnly
+  CS: AvailabilityUncertain
+  EX: NoLongerStockedByUs
+  IP: Available
+  MD: ManufacturedOnDemand
+  NP: NotYetPublished
+  NY: NewlyCataloguedNotYetInStock
+  OF: OtherFormatAvailable
+  OI: OutOfStockIndefinitely
+  OP: OutOfPrint
+  OR: ReplacedByNewEdition
+  PP: PublicationPostponedIndefinitely
+  RF: ReferToAnotherSupplier
+  RM: Remaindered
+  RP: Reprinting
+  RU: ReprintingUndated
+  TO: SpecialOrder
+  TP: TemporarilyOutOfStockBecausePublisherCannotSupply
+  TU: TemporarilyUnavailable
+  UR: UnavailableAwaitingReissue
+  WR: WillBeRemainderedAsOfDate
+  WS: WithdrawnFromSale

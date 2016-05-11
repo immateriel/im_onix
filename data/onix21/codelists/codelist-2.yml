@@ -1,0 +1,8 @@
+---
+:codelist:
+  '00': SingleitemRetailProduct
+  '10': MultipleitemRetailProduct
+  '11': MultipleitemCollectionRetailedAsSeparateParts
+  '20': TradeonlyProduct
+  '30': MultipleitemTradePack
+  '31': MultipleitemPack

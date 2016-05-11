@@ -29,6 +29,38 @@ module ONIX
       end
     end
 
+    # ONIX 2.1 codes
+
+    class CodeFromYaml < Code
+      def self.hash
+        @hash||=YAML.load(File.open(File.dirname(__FILE__) + "/../../data/onix21/codelists/codelist-#{self.code_ident}.yml"))[:codelist]
+      end
+
+      def self.list
+        self.hash.to_a.map{|h| h.first}
+      end
+
+      def self.code_ident
+        nil
+      end
+    end
+
+    class EpubType < CodeFromYaml
+      private
+      def self.code_ident
+        10
+      end
+    end
+
+    class TextTypeCode < CodeFromYaml
+      private
+      def self.code_ident
+        33
+      end
+    end
+
+    # ONIX 2.1 subset
+
     class Title < SubsetDSL
       element "TitleType", :subset
       element "TitleText", :text
@@ -47,11 +79,12 @@ module ONIX
     end
 
     class OtherText < SubsetDSL
-      element "TextTypeCode", :text
+      element "TextTypeCode", :subset
       element "TextFormat", :text
       element "Text", :text
 
-      def type_code
+      def type
+        pp @text_type_code
         @text_type_code
       end
     end
@@ -201,7 +234,7 @@ module ONIX
 
       elements "SupplyDetail", :subset
 
-      element "EpubType", :text
+      element "EpubType", :subset
       element "EpubTypeDescription", :text
       element "EpubFormat", :text
       element "EpubTypeNote", :text
@@ -297,7 +330,7 @@ module ONIX
       end
 
       def description
-        desc_contents=@other_texts.select { |tc| tc.type_code=="03" } + @other_texts.select { |tc| tc.type_code=="01" } + @other_texts.select { |tc| tc.type_code=="13" }
+        desc_contents=@other_texts.select{|tc| tc.type.human=="MainDescription"} + @other_texts.select{|tc| tc.type.human=="LongDescription"} + @other_texts.select{|tc| tc.type.human=="ShortDescriptionannotation"}
         if desc_contents.length > 0
           desc_contents.first.text
         else
@@ -376,14 +409,7 @@ module ONIX
       end
 
       def file_format
-        case @epub_type
-          when "029"
-            "Epub"
-          when "002"
-            "Pdf"
-          else
-            nil
-        end
+        @epub_type.human
       end
 
       def file_description

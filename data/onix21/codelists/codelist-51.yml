@@ -1,0 +1,37 @@
+---
+:codelist:
+  '00': Unspecified
+  '01': Includes
+  '02': IsPartOf
+  '03': Replaces
+  '05': ReplacedBy
+  '06': AlternativeFormat
+  '07': HasAncillaryProduct
+  08: IsAncillaryTo
+  09: IsRemainderedAs
+  '10': IsRemainderOf
+  '11': IsOtherlanguageVersionOf
+  '12': PublishersSuggestedAlternative
+  '13': EpublicationBasedOnPrintProduct
+  '14': EpublicationIsDistributedAs
+  '15': EpublicationIsARenderingOf
+  '16': PodReplacementFor
+  '17': ReplacedByPod
+  '18': IsSpecialEditionOf
+  '19': HasSpecialEdition
+  '20': IsPreboundEditionOf
+  '21': IsOriginalOfPreboundEdition
+  '22': ProductBySameAuthor
+  '23': SimilarProduct
+  '24': IsFacsimileOf
+  '25': IsOriginalOfFacsimile
+  '26': IsLicenseFor
+  '27': ElectronicVersionAvailableAs
+  '28': EnhancedVersionAvailableAs
+  '29': BasicVersionAvailableAs
+  '30': ProductInSameCollection
+  '31': HasAlternativeInADifferentMarketSector
+  '32': HasEquivalentIntendedForADifferentMarket
+  '33': HasAlternativeIntendedForDifferentMarket
+  '34': Cites
+  '35': IsCitedBy
