@@ -1,0 +1,11 @@
+---
+:codelist:
+  '00': SalesRightsUnknownOrUnstatedForAnyReason
+  '01': ForSaleWithExclusiveRightsInTheSpecifiedCountriesOrTerritories
+  '02': ForSaleWithNonexclusiveRightsInTheSpecifiedCountriesOrTerritories
+  '03': NotForSaleInTheSpecifiedCountriesOrTerritoriesReasonUnspecified
+  '04': NotForSaleInTheSpecifiedCountriesButPublisherHoldsExclusiveRightsInThoseCountriesOrTerritories
+  '05': NotForSaleInTheSpecifiedCountriesPublisherHoldsNonexclusiveRightsInThoseCountriesOrTerritories
+  '06': NotForSaleInTheSpecifiedCountriesBecausePublisherDoesNotHoldRightsInThoseCountriesOrTerritories
+  '07': ForSaleWithExclusiveRightsInTheSpecifiedCountriesOrTerritoriesSalesRestrictionApplies
+  08: ForSaleWithNonexclusiveRightsInTheSpecifiedCountriesOrTerritoriesSalesRestrictionApplies

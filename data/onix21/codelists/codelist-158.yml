@@ -1,0 +1,35 @@
+---
+:codelist:
+  '01': FrontCover
+  '02': BackCover
+  '03': CoverPack
+  '04': ContributorPicture
+  '05': SeriesImageArtwork
+  '06': SeriesLogo
+  '07': ProductImageArtwork
+  08: ProductLogo
+  09: PublisherLogo
+  '10': ImprintLogo
+  '11': ContributorInterview
+  '12': ContributorPresentation
+  '13': ContributorReading
+  '14': ContributorEventSchedule
+  '15': SampleContent
+  '16': Widget
+  '17': Review
+  '18': OtherCommentaryDiscussion
+  '19': ReadingGroupGuide
+  '20': TeachersGuide
+  '21': FeatureArticle
+  '22': CharacterInterview
+  '23': WallpaperScreensaver
+  '24': PressRelease
+  '25': TableOfContents
+  '26': Trailer
+  '27': CoverThumbnail
+  '28': FullContent
+  '29': FullCover
+  '30': MasterBrandLogo
+  '31': Description
+  '32': Index
+  '99': License

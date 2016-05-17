@@ -1,0 +1,36 @@
+---
+:codelist:
+  ABR: Abridged
+  ACT: ActingEdtion
+  ADP: Adapted
+  ALT: Alternate
+  ANN: Annotated
+  BLL: BilingualEdition
+  BRL: Braille
+  CMB: CombinedVolume
+  CRI: Critical
+  CSP: Coursepack
+  DGO: DigitalOriginal
+  ENH: Enhanced
+  ENL: Enlarged
+  EXP: Expurgated
+  FAC: Facsimile
+  FST: Festschrift
+  ILL: Illustrated
+  LTE: LargeTypeLargePrint
+  MCP: Microprint
+  MDT: MediaTiein
+  MLL: MultilingualEdition
+  NED: NewEdition
+  NUM: EditionWithNumberedCopies
+  PRB: PreboundEdition
+  REV: Revised
+  SCH: SchoolEdition
+  SMP: SimplifiedLanguageEdition
+  SPE: SpecialEdition
+  STU: StudentEdition
+  TCH: TeachersEdition
+  UBR: Unabridged
+  ULP: UltraLargePrint
+  UXP: Unexpurgated
+  VAR: Variorum

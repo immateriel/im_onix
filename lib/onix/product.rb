@@ -13,6 +13,235 @@ require 'onix/territory'
 require 'onix/error'
 
 module ONIX
+  # flattened supplies extractor
+  module ProductSuppliesExtractor
+    # class must define a product_supplies returning an Array of objects responding to :
+    # - availability_date (Date)
+    # - countries (country code Array)
+
+    # :category: High level
+    # flattened supplies with prices
+    #
+    # supplies is a hash symbol array in the form :
+    #   [{:available=>bool,
+    #     :availability_date=>date,
+    #     :including_tax=>bool,
+    #     :currency=>string,
+    #     :territory=>string,
+    #     :prices=>[{:amount=>int,
+    #                :from_date=>date,
+    #                :until_date=>date}]}]
+    def supplies
+      supplies=[]
+
+      # add territories if missing
+      if self.product_supplies
+        self.product_supplies.each do |ps|
+          ps.supply_details.each do |sd|
+            sd.prices.each do |p|
+              supply={}
+              supply[:available]=sd.available?
+              supply[:availability_date]=sd.availability_date
+
+              unless supply[:availability_date]
+                  if ps.availability_date
+                    supply[:availability_date]=ps.market_publishing_detail.availability_date
+                  end
+              end
+              supply[:price]=p.amount
+              supply[:including_tax]=p.including_tax?
+              if !p.territory or p.territory.countries.length==0
+                supply[:territory]=[]
+                supply[:territory]=ps.countries
+
+                if supply[:territory].length==0
+                  if @publishing_detail
+                    supply[:territory]=self.countries_rights
+                  end
+                end
+              else
+                supply[:territory]=p.territory.countries
+              end
+              supply[:from_date]=p.from_date
+              supply[:until_date]=p.until_date
+              supply[:currency]=p.currency
+
+              unless supply[:availability_date]
+                if @publishing_detail
+                  supply[:availability_date]=@publishing_detail.publication_date
+                end
+              end
+
+              supplies << supply
+            end
+          end
+        end
+      end
+
+      grouped_supplies={}
+      supplies.each do |supply|
+        pr_key="#{supply[:available]}_#{supply[:including_tax]}_#{supply[:currency]}_#{supply[:territory].join('_')}"
+        grouped_supplies[pr_key]||=[]
+        grouped_supplies[pr_key] << supply
+      end
+
+      # render prices sequentially with dates
+      grouped_supplies.each do |ksup, supply|
+        if supply.length > 1
+          global_price=supply.select{|p| not p[:from_date] and not p[:until_date]}
+          global_price=global_price.first
+
+          if global_price
+            new_supply = []
+            supply.each do |p|
+              if p!=global_price
+                if p[:from_date]
+                  global_price[:until_date]=p[:from_date]
+                end
+
+                if p[:until_date]
+                  np=global_price.dup
+                  np[:from_date]=p[:until_date]
+                  np[:until_date]=nil
+                  new_supply << np
+                end
+              end
+            end
+
+            grouped_supplies[ksup] += new_supply
+
+          else
+            # remove explicit from date
+            explicit_from=supply.select{|p| p[:from_date] and not supply.select{|sp| sp[:until_date] and sp[:until_date]<=p[:from_date]}.first}.first
+            if explicit_from
+              explicit_from[:from_date]=nil
+            end
+          end
+
+
+        else
+          supply.each do |s|
+            if s[:from_date] and s[:availability_date] and s[:from_date] >= s[:availability_date]
+              s[:availability_date]=s[:from_date]
+            end
+            s[:from_date]=nil
+
+          end
+        end
+      end
+
+      # merge by territories
+      grouped_territories_supplies={}
+      grouped_supplies.each do |ksup,supply|
+        fsupply=supply.first
+        pr_key="#{fsupply[:available]}_#{fsupply[:including_tax]}_#{fsupply[:currency]}"
+        supply.each do |s|
+          pr_key+="_#{s[:price]}_#{s[:from_date]}_#{s[:until_date]}"
+        end
+        grouped_territories_supplies[pr_key]||=[]
+        grouped_territories_supplies[pr_key] << supply
+      end
+
+      supplies=[]
+
+      grouped_territories_supplies.each do |ksup,supply|
+        fsupply=supply.first.first
+        supplies << {:including_tax=>fsupply[:including_tax],:currency=>fsupply[:currency],
+                     :territory=>supply.map{|fs| fs.map{|s| s[:territory]}}.flatten.uniq,
+                     :available=>fsupply[:available],
+                     :availability_date=>fsupply[:availability_date],
+                     :prices=>supply.first.map{|s|
+
+                       s[:amount]=s[:price]
+                       s.delete(:price)
+                       s.delete(:available)
+                       s.delete(:currency)
+                       s.delete(:availability_date)
+                       s.delete(:including_tax)
+                       s.delete(:territory)
+                       s
+                     }}
+      end
+
+      supplies
+    end
+
+    # :category: High level
+    # flattened supplies only including taxes
+    def supplies_including_tax
+      self.supplies.select{|p| p[:including_tax]}
+    end
+
+    # :category: High level
+    # flattened supplies only excluding taxes
+    def supplies_excluding_tax
+      self.supplies.select{|p| not p[:including_tax]}
+    end
+
+    # :category: High level
+    # flattened supplies with default tax (excluding tax for US and CA, including otherwise)
+    def supplies_with_default_tax
+      self.supplies_including_tax + self.supplies_excluding_tax.select{|s| ["CAD","USD"].include?(s[:currency])}
+    end
+
+    # :category: High level
+    # flattened supplies for country
+    def supplies_for_country(country,currency=nil)
+      country_supplies=self.supplies
+      if currency
+        country_supplies=country_supplies.select{|s| s[:currency]==currency}
+      end
+      country_supplies.select{|s|
+        if s[:territory].include?(country)
+          true
+        else
+          false
+        end
+      }
+    end
+
+    # :category: High level
+    # price amount for given +currency+ and country at time
+    def at_time_price_amount_for(time,currency,country=nil)
+      sups=self.supplies_with_default_tax.select { |p| p[:currency]==currency }
+      if country
+        sups=sups.select{|p| p[:territory].include?(country)}
+      end
+      if sups.length > 0
+        # exclusive
+        sup=sups.first[:prices].select { |p|
+          (!p[:from_date] or p[:from_date].to_date <= time.to_date) and
+              (!p[:until_date] or p[:until_date].to_date > time.to_date)
+        }.first
+
+        if sup
+          sup[:amount]
+        else
+          # or inclusive
+          sup=sups.first[:prices].select { |p|
+            (!p[:from_date] or p[:from_date].to_date <= time.to_date) and
+                (!p[:until_date] or p[:until_date].to_date >= time.to_date)
+          }.first
+
+          if sup
+            sup[:amount]
+          else
+            nil
+          end
+        end
+
+      else
+        nil
+      end
+    end
+
+    # :category: High level
+    # current price amount for given +currency+ and country
+    def current_price_amount_for(currency,country=nil)
+      at_time_price_amount_for(Time.now,currency,country)
+    end
+  end
+
   class Product < SubsetDSL
     include EanMethods
     include ProprietaryIdMethods
@@ -37,6 +266,7 @@ module ONIX
     # default code from ONIXMessage
     attr_accessor :default_currency_code
 
+    include ProductSuppliesExtractor
 
     # :category: High level
     # product title string
@@ -248,7 +478,7 @@ module ONIX
     end
 
     def reflowable?
-      return @descriptive_detail.reflowable?
+      @descriptive_detail.reflowable?
     end
 
     # :category: High level
@@ -385,6 +615,12 @@ module ONIX
     end
 
     # :category: High level
+    # return every related subset
+    def related
+      (@related_material.related_products + @related_material.related_works)
+    end
+
+    # :category: High level
     # paper linking RelatedProduct
     def part_of_product
       if @related_material
@@ -428,230 +664,6 @@ module ONIX
       countries.uniq
     end
 
-    # :category: High level
-    # flattened supplies with prices
-    #
-    # supplies is a hash symbol array in the form :
-    #   [{:available=>bool,
-    #     :availability_date=>date,
-    #     :including_tax=>bool,
-    #     :currency=>string,
-    #     :territory=>string,
-    #     :prices=>[{:amount=>int,
-    #                :from_date=>date,
-    #                :until_date=>date}]}]
-    def supplies
-      supplies=[]
-
-      # add territories if missing
-      if @product_supplies
-        @product_supplies.each do |ps|
-          ps.supply_details.each do |sd|
-            sd.prices.each do |p|
-              supply={}
-              supply[:available]=sd.available?
-              supply[:availability_date]=sd.availability_date
-
-              unless supply[:availability_date]
-                if ps.market_publishing_detail
-                  if ps.market_publishing_detail.availability_date
-                    supply[:availability_date]=ps.market_publishing_detail.availability_date
-                  end
-                end
-              end
-              supply[:price]=p.amount
-              supply[:including_tax]=p.including_tax?
-              if !p.territory or p.territory.countries.length==0
-                supply[:territory]=[]
-                if ps.markets
-                  supply[:territory]=ps.markets.map{|m| m.territory.countries}.flatten.uniq
-                end
-                if supply[:territory].length==0
-                  if @publishing_detail
-                    supply[:territory]=self.countries_rights
-                  end
-                end
-              else
-                supply[:territory]=p.territory.countries
-              end
-              supply[:from_date]=p.from_date
-              supply[:until_date]=p.until_date
-              supply[:currency]=p.currency
-
-              unless supply[:availability_date]
-                if @publishing_detail
-                  supply[:availability_date]=@publishing_detail.publication_date
-                end
-              end
-
-              supplies << supply
-            end
-          end
-        end
-      end
-
-      grouped_supplies={}
-      supplies.each do |supply|
-        pr_key="#{supply[:available]}_#{supply[:including_tax]}_#{supply[:currency]}_#{supply[:territory].join('_')}"
-        grouped_supplies[pr_key]||=[]
-        grouped_supplies[pr_key] << supply
-      end
-
-      # render prices sequentially with dates
-      grouped_supplies.each do |ksup, supply|
-        if supply.length > 1
-          global_price=supply.select{|p| not p[:from_date] and not p[:until_date]}
-          global_price=global_price.first
-
-          if global_price
-            new_supply = []
-            supply.each do |p|
-              if p!=global_price
-                if p[:from_date]
-                  global_price[:until_date]=p[:from_date]
-                end
-
-                if p[:until_date]
-                  np=global_price.dup
-                  np[:from_date]=p[:until_date]
-                  np[:until_date]=nil
-                  new_supply << np
-                end
-              end
-            end
-
-            grouped_supplies[ksup] += new_supply
-
-          else
-            # remove explicit from date
-            explicit_from=supply.select{|p| p[:from_date] and not supply.select{|sp| sp[:until_date] and sp[:until_date]<=p[:from_date]}.first}.first
-            if explicit_from
-              explicit_from[:from_date]=nil
-            end
-          end
-
-
-        else
-          supply.each do |s|
-            if s[:from_date] and s[:availability_date] and s[:from_date] >= s[:availability_date]
-              s[:availability_date]=s[:from_date]
-            end
-            s[:from_date]=nil
-
-          end
-        end
-      end
-
-      # merge by territories
-      grouped_territories_supplies={}
-      grouped_supplies.each do |ksup,supply|
-        fsupply=supply.first
-        pr_key="#{fsupply[:available]}_#{fsupply[:including_tax]}_#{fsupply[:currency]}"
-        supply.each do |s|
-          pr_key+="_#{s[:price]}_#{s[:from_date]}_#{s[:until_date]}"
-        end
-        grouped_territories_supplies[pr_key]||=[]
-        grouped_territories_supplies[pr_key] << supply
-      end
-
-      supplies=[]
-
-      grouped_territories_supplies.each do |ksup,supply|
-        fsupply=supply.first.first
-        supplies << {:including_tax=>fsupply[:including_tax],:currency=>fsupply[:currency],
-                     :territory=>supply.map{|fs| fs.map{|s| s[:territory]}}.flatten.uniq,
-                     :available=>fsupply[:available],
-                     :availability_date=>fsupply[:availability_date],
-                     :prices=>supply.first.map{|s|
-
-                       s[:amount]=s[:price]
-                       s.delete(:price)
-                       s.delete(:available)
-                       s.delete(:currency)
-                       s.delete(:availability_date)
-                       s.delete(:including_tax)
-                       s.delete(:territory)
-                       s
-                     }}
-      end
-
-      supplies
-    end
-
-    # :category: High level
-    # flattened supplies only including taxes
-    def supplies_including_tax
-      self.supplies.select{|p| p[:including_tax]}
-    end
-
-    # :category: High level
-    # flattened supplies only excluding taxes
-    def supplies_excluding_tax
-      self.supplies.select{|p| not p[:including_tax]}
-    end
-
-    # :category: High level
-    # flattened supplies with default tax (excluding tax for US and CA, including otherwise)
-    def supplies_with_default_tax
-      self.supplies_including_tax + self.supplies_excluding_tax.select{|s| ["CAD","USD"].include?(s[:currency])}
-    end
-
-    # :category: High level
-    # flattened supplies for country
-    def supplies_for_country(country,currency=nil)
-      country_supplies=self.supplies
-      if currency
-        country_supplies=country_supplies.select{|s| s[:currency]==currency}
-      end
-      country_supplies.select{|s|
-        if s[:territory].include?(country)
-          true
-        else
-          false
-        end
-      }
-    end
-
-    # :category: High level
-    # price amount for given +currency+ and country at time
-    def at_time_price_amount_for(time,currency,country=nil)
-      sups=self.supplies_with_default_tax.select { |p| p[:currency]==currency }
-      if country
-        sups=sups.select{|p| p[:territory].include?(country)}
-      end
-      if sups.length > 0
-        # exclusive
-        sup=sups.first[:prices].select { |p|
-          (!p[:from_date] or p[:from_date].to_date <= time.to_date) and
-              (!p[:until_date] or p[:until_date].to_date > time.to_date)
-        }.first
-
-        if sup
-          sup[:amount]
-        else
-          # or inclusive
-          sup=sups.first[:prices].select { |p|
-            (!p[:from_date] or p[:from_date].to_date <= time.to_date) and
-                (!p[:until_date] or p[:until_date].to_date >= time.to_date)
-          }.first
-
-          if sup
-            sup[:amount]
-          else
-            nil
-          end
-        end
-
-      else
-        nil
-      end
-    end
-
-    # :category: High level
-    # current price amount for given +currency+ and country
-    def current_price_amount_for(currency,country=nil)
-      at_time_price_amount_for(Time.now,currency,country)
-    end
 
     def available_product_supplies
       @product_supplies.select{|ps| ps.available?}
@@ -688,6 +700,13 @@ module ONIX
         sri.sales_restrictions.select{|sr| (!sr.start_date or sr.start_date <= Date.today) and (!sr.end_date or sr.end_date >= Date.today)}.map{|sr|
           sr.sales_outlets.select{|so|
             so.identifier.type.human=="OnixSalesOutletIdCode"}.map{|so| so.identifier.value}}}.flatten
+    end
+
+    def parse(n)
+      super
+      parts.each do |part|
+        part.part_of=self
+      end
     end
   end
 end

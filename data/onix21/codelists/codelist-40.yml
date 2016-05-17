@@ -1,0 +1,8 @@
+---
+:codelist:
+  '01': Url
+  '02': Doi
+  '03': Purl
+  '04': Urn
+  '05': FtpAddress
+  '06': Filename

@@ -1,0 +1,6 @@
+---
+:codelist:
+  '01': SuppliersSalesClassification
+  '02': SuppliersBonusEligibility
+  '03': PublishersSalesClassification
+  '04': SuppliersPricingRestrictionClassification

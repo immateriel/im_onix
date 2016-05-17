@@ -1,0 +1,10 @@
+---
+:codelist:
+  '00': Unrated
+  '01': AnyAdultAudience
+  '02': ContentWarning
+  '03': ContentWarningSex
+  '04': ContentWarningViolence
+  '05': ContentWarningDrugtaking
+  '06': ContentWarningLanguage
+  '07': ContentWarningIntolerance

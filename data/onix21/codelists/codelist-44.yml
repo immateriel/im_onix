@@ -1,0 +1,27 @@
+---
+:codelist:
+  '01': Proprietary
+  '02': Proprietary
+  '03': DnbPublisherIdentifier
+  '04': BörsenvereinVerkehrsnummer
+  '05': GermanIsbnAgencyPublisherIdentifier
+  '06': Gln
+  '07': San
+  '10': CentraalBoekhuisRelatieId
+  '13': FondscodeBoekenbank
+  '15': Ytunnus
+  '16': Isni
+  '17': Pnd
+  '18': Lccn
+  '19': JapanesePublisherIdentifier
+  '20': Gkd
+  '21': Orcid
+  '22': GappPublisherIdentifier
+  '23': VatIdentityNumber
+  '24': JpDistributionIdentifier
+  '25': Gnd
+  '26': Duns
+  '27': RinggoldId
+  '28': IdentifiantEditeurElectre
+  '30': IdentifiantMarqueElectre
+  '32': FundrefDoi

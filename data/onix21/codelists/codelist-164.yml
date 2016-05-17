@@ -1,0 +1,7 @@
+---
+:codelist:
+  '01': ManifestationOf
+  '02': DerivedFrom
+  '03': RelatedWorkIsDerivedFromThis
+  '04': OtherWorkInSameCollection
+  '05': OtherWorkBySameContributor

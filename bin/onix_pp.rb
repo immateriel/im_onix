@@ -21,9 +21,6 @@ if filename
   if msg.sent_date_time
     puts "Sent date: #{msg.sent_date_time}"
   end
-  if msg.sent_date_time
-    puts "Number of products: #{msg.products.count}"
-  end
 
   msg.products.each do |product|
 #  pp product
@@ -202,6 +199,9 @@ if filename
       puts " Not sold separately"
     end
   end
+  puts "---"
+  puts "Number of products: #{msg.products.count}"
+
 else
   puts "ONIX 3.0 pretty printer"
   puts "Usage: onix_pp.rb onix.xml"

@@ -1,0 +1,30 @@
+---
+:codelist:
+  A103: Mp3
+  A104: Wav
+  A105: RealAudio
+  A106: Wma
+  A107: Aac
+  A111: Aiff
+  D101: RealVideo
+  D102: Quicktime
+  D103: Avi
+  D104: Wmv
+  D105: Mpeg4
+  D106: Flv
+  D107: Swf
+  D108: 3gp
+  D109: Webm
+  D401: Pdf
+  D501: Gif
+  D502: Jpeg
+  D503: Png
+  D504: Tiff
+  E101: Epub
+  E105: Html
+  E107: Pdf
+  E113: Xhtml
+  E115: Xps
+  E116: AmazonKindle
+  E139: Ceb
+  E140: Cebx

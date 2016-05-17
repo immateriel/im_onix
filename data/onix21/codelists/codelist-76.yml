@@ -1,0 +1,14 @@
+---
+:codelist:
+  '0': AllRegions
+  '1': DvdRegion1
+  '2': DvdRegion2
+  '3': DvdRegion3
+  '4': DvdRegion4
+  '5': DvdRegion5
+  '6': DvdRegion6
+  '7': DvdRegion7
+  '8': DvdRegion8
+  A: BlurayRegionA
+  B: BlurayRegionB
+  C: BlurayRegionC

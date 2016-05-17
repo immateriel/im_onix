@@ -11,6 +11,8 @@ require 'onix/contributor'
 require 'onix/product_supply'
 require 'onix/product'
 
+require 'onix/onix21'
+
 module ONIX
 
   class Sender < SubsetDSL
@@ -92,31 +94,18 @@ module ONIX
       end
 
       @products.each do |product|
-        if product.related_material
-          product.related_material.related_products.each do |rp|
-            rp.identifiers.each do |ident|
-              if @vault[ident.uniq_id]
-                rp.product=@vault[ident.uniq_id]
-              end
-
-            end
-          end
-
-          product.related_material.related_works.each do |rw|
-            rw.identifiers.each do |ident|
-              if @vault[ident.uniq_id]
-                rw.product=@vault[ident.uniq_id]
-              end
+        product.related.each do |rel|
+          rel.identifiers.each do |ident|
+            if @vault[ident.uniq_id]
+              rel.product=@vault[ident.uniq_id]
             end
           end
         end
 
-        if product.descriptive_detail
-          product.descriptive_detail.parts.each do |prt|
-            prt.identifiers.each do |ident|
-              if @vault[ident.uniq_id]
-                prt.product=@vault[ident.uniq_id]
-              end
+        product.parts.each do |prt|
+          prt.identifiers.each do |ident|
+            if @vault[ident.uniq_id]
+              prt.product=@vault[ident.uniq_id]
             end
           end
         end
@@ -170,7 +159,12 @@ module ONIX
                   end
                 end
               when tag_match("Product")
-                product=Product.parse(e)
+                product=nil
+                if @release =~ /^3.0/
+                  product=Product.parse(e)
+                else
+                  product=ONIX21::Product.parse(e)
+                end
                 product.default_language_of_text=@default_language_of_text
                 product.default_currency_code=@default_currency_code
                 @products << product

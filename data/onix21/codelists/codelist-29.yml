@@ -1,0 +1,30 @@
+---
+:codelist:
+  '01': OnixAudienceCodes
+  '02': Proprietary
+  '03': MpaaRating
+  '04': BbfcRating
+  '05': FskRating
+  '06': BtlfAudienceCode
+  '07': ElectreAudienceCode
+  08: AneleTipo
+  09: Avi
+  '10': UskRating
+  '11': Aws
+  '12': Schulform
+  '13': Bundesland
+  '14': Ausbildungsberuf
+  '15': SuomalainenKouluasteluokitus
+  '16': CbgAgeGuidance
+  '17': NielsenBookAudienceCode
+  '18': AviRevised
+  '19': LexileMeasure
+  '20': FryReadabilityScore
+  '21': JapaneseChildrensAudienceCode
+  '22': OnixAdultAudienceRating
+  '23': CommonEuropeanFrameworkForLanguageLearning
+  '24': KoreanPublicationEthicsCommissionRating
+  '25': IoeBookBand
+  '26': FskLehrinfoprogramm
+  '27': IntendedAudienceLanguage
+  '28': PegiRating
