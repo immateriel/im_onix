@@ -617,7 +617,11 @@ module ONIX
     # :category: High level
     # return every related subset
     def related
-      (@related_material.related_products + @related_material.related_works)
+      if @related_material
+        (@related_material.related_products + @related_material.related_works)
+      else
+        []
+      end
     end
 
     # :category: High level
