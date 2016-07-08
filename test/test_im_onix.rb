@@ -591,7 +591,7 @@ class TestImOnix < Minitest::Test
     end
   end
 
-  context "unqualified (default) prices and promotional offer price" do
+  context "unqualified (default) prices and a single promotional offer price" do
     setup do
       message = ONIX::ONIXMessage.new
       message.parse('test/fixtures/unqualified-prices.xml')
@@ -606,7 +606,6 @@ class TestImOnix < Minitest::Test
 
       assert_equal 3, prices.size
 
-      puts prices[0].inspect
       # the first one: 8.99 € (default price) until 2016-07-07
       assert_equal 899, prices[0][:amount]
       assert_equal nil, prices[0][:from_date]

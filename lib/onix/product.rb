@@ -553,22 +553,21 @@ module ONIX
           if global_price
             new_supply = []
             supply.each do |p|
-              if p!=global_price
-                if p[:from_date]
-                  global_price[:until_date]=p[:from_date]
-                end
+              next if p == global_price
 
-                if p[:until_date]
-                  np=global_price.dup
-                  np[:from_date]=p[:until_date]
-                  np[:until_date]=nil
-                  new_supply << np
-                end
+              if p[:from_date]
+                global_price[:until_date]=p[:from_date]-1
+              end
+
+              if p[:until_date]
+                np=global_price.dup
+                np[:from_date]=p[:until_date]+1
+                np[:until_date]=nil
+                new_supply << np
               end
             end
 
             grouped_supplies[ksup] += new_supply
-
           else
             # remove explicit from date
             explicit_from=supply.select{|p| p[:from_date] and not supply.select{|sp| sp[:until_date] and sp[:until_date]<=p[:from_date]}.first}.first
