@@ -128,16 +128,18 @@ module ONIX
     end
 
     # parse filename or file
-    def parse(arg, force_encoding=nil)
+    def parse(arg, force_encoding=nil, force_release=nil)
 
       xml=open(arg, force_encoding)
       @products=[]
 
       root = xml.root
-
       case root
         when tag_match("ONIXMessage")
           @release=root["release"]
+          if force_release
+            @release=force_release.to_s
+          end
           root.elements.each do |e|
             case e
               when tag_match("Header")

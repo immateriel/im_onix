@@ -21,7 +21,7 @@ module ONIX
       end
 
       def self.get_class(name)
-        if ONIX::ONIX21.const_defined?(name)
+        if ONIX::ONIX21.const_defined?(name,false)
           ONIX::ONIX21.const_get(name)
         else
           ONIX.const_get(name)
@@ -84,7 +84,6 @@ module ONIX
       element "Text", :text
 
       def type
-        pp @text_type_code
         @text_type_code
       end
     end
@@ -197,6 +196,35 @@ module ONIX
       end
     end
 
+    class MainSubject < SubsetDSL
+      element "SubjectCode", :text
+      element "SubjectHeadingText", :text
+      element "MainSubjectSchemeIdentifier", :subset, :klass=>"SubjectSchemeIdentifier"
+      element "SubjectSchemeName", :text
+      element "SubjectSchemeVersion", :text
+
+      # shortcuts
+      def code
+        @subject_code
+      end
+
+      def heading_text
+        @subject_heading_text
+      end
+
+      def scheme_identifier
+        @main_subject_scheme_identifier
+      end
+
+      def scheme_name
+        @subject_scheme_name
+      end
+
+      def scheme_version
+        @subject_scheme_version
+      end
+    end
+
     class Product < SubsetDSL
       include EanMethods
       include ProprietaryIdMethods
@@ -225,6 +253,7 @@ module ONIX
       elements "NotForSale", :subset
 
       element "BASICMainSubject", :text
+      elements "MainSubject", :subset
       elements "Subject", :subset
 
       element "PublishingStatus", :text
@@ -271,18 +300,17 @@ module ONIX
         if @basic_main_subject
           cats << @basic_main_subject
         end
-        cats+=@subjects.select { |s| s.scheme_identifier.human=="BisacSubjectHeading" }.map{|s| s.code}
+        cats+=(@main_subjects + @subjects).select { |s| s.scheme_identifier.human=="BisacSubjectHeading" }.map{|s| s.code}
         cats
       end
 
-      # TODO ?
       def clil_categories_codes
-        []
+        (@main_subjects + @subjects).select { |s| s.scheme_identifier.human=="Clil" }.map{|s| s.code}
       end
 
-      # TODO
       def keywords
-        []
+        kws=(@main_subjects + @subjects).select { |s| s.scheme_identifier.human=="Keywords" }.map { |kw| kw.heading_text }.compact
+        kws.map { |kw| kw.split(/;|,|\n/) }.flatten.map { |kw| kw.strip }
       end
 
       # doesn't apply
@@ -395,6 +423,10 @@ module ONIX
         @supply_details.select { |sd| sd.available? }.length > 0
       end
 
+      def available_for_country?(country)
+        self.supplies_for_country(country).select{|s| s[:available]}.length > 0 and self.available?
+      end
+
       def pages
         nil
       end
@@ -440,6 +472,11 @@ module ONIX
 
       def print_product
         @related_products.select { |rp| rp.code=="13" }.first
+      end
+
+      # DEPRECATED see print_product instead
+      def paper_linking
+        self.print_product
       end
 
       def method_missing(method)
