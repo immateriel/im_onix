@@ -57,7 +57,7 @@ module ONIX
     end
 
     def file_format
-      if ["DownloadableFile", "LinkableResource"].include?(@form.human)
+      if ["DownloadableFile", "LinkableResource"].include?(@resource_form.human)
         if file_format_feature
           file_format_feature.value.human
         end
@@ -65,7 +65,7 @@ module ONIX
     end
 
     def file_mimetype
-      if ["DownloadableFile", "LinkableResource"].include?(@form.human)
+      if ["DownloadableFile", "LinkableResource"].include?(@resource_form.human)
         if file_format_feature
           file_format_feature.value.mimetype
         end
@@ -73,7 +73,7 @@ module ONIX
     end
 
     def image_width_feature
-      @features.select { |i| i.type.human=="ImageWidthInPixels" }.first
+      @resource_version_features.select { |i| i.type.human=="ImageWidthInPixels" }.first
     end
 
     def image_height_feature

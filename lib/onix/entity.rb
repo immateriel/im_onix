@@ -3,7 +3,7 @@ require 'onix/identifier'
 require 'onix/website'
 
 module ONIX
-  class Entity < Subset
+  class Entity < SubsetDSL
     # entity name
     attr_accessor :name
     # entity role
@@ -14,6 +14,7 @@ module ONIX
     include GlnMethods
 
     def initialize
+      super
       @identifiers = []
     end
 
@@ -30,6 +31,7 @@ module ONIX
     end
 
     def parse(n)
+      super
       n.children.each do |t|
         case t
           when tag_match(self.class.name_tag)
@@ -90,6 +92,8 @@ module ONIX
   end
 
   class Supplier < Entity
+    elements "Website", :subset
+
     private
     def self.prefix
       "Supplier"
@@ -105,23 +109,11 @@ module ONIX
   end
 
   class Publisher < Entity
-    attr_accessor :websites
+    elements "Website", :subset
 
     def initialize
       super
       @websites = []
-    end
-
-    def parse(n)
-      super
-      n.elements.each do |t|
-        case t
-          when tag_match("Website")
-            @websites << Website.parse(t)
-          else
-
-        end
-      end
     end
 
     private
