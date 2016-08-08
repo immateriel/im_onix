@@ -188,7 +188,7 @@ module ONIX
     end
 
     def self.registered_elements
-      @elements
+      @elements||{}
     end
 
     def initialize
