@@ -73,7 +73,7 @@ module ONIX
     end
 
     def image_width_feature
-      @features.select { |i| i.type.human=="ImageWidthInPixels" }.first
+      @resource_version_features.select { |i| i.type.human=="ImageWidthInPixels" }.first
     end
 
     def image_height_feature
