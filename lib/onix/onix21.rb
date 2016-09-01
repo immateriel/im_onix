@@ -479,6 +479,10 @@ module ONIX
         self.print_product
       end
 
+      def publisher_gln
+        nil
+      end
+
       def method_missing(method)
         raise "WARN #{method} not found"
       end
