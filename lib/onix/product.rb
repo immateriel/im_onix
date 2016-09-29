@@ -420,6 +420,13 @@ module ONIX
       end
     end
 
+    # date of embargo
+    def embargo_date
+      if @publishing_detail
+        @publishing_detail.embargo_date
+      end
+    end
+
     def sales_restriction
       if @publishing_detail
         @publishing_detail.sales_restriction
