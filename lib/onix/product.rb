@@ -663,6 +663,13 @@ module ONIX
       end
     end
 
+    # date of embargo
+    def embargo_date
+      if @publishing_detail
+        @publishing_detail.embargo_date
+      end
+    end
+
     # :category: High level
     # product countries rights string array
     def countries_rights
