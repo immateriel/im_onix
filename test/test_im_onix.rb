@@ -82,6 +82,10 @@ class TestImOnix < Minitest::Test
       assert_equal Date.new(2012,9,6), @product.publication_date
     end
 
+    should "be no embargo date" do
+      assert_equal nil, @product.embargo_date
+    end
+
     should "be in french" do
       assert_equal "fre", @product.language_code_of_text
     end
@@ -589,6 +593,10 @@ class TestImOnix < Minitest::Test
     should "be published" do
       assert_equal Date.new(2011, 8, 31), @product.publication_date
     end
+
+    should "be no embargo date" do
+      assert_equal nil, @product.embargo_date
+    end
   end
 
   context "unqualified (default) prices and a single promotional offer price" do
@@ -620,6 +628,23 @@ class TestImOnix < Minitest::Test
       assert_equal 899, prices[2][:amount]
       assert_equal Date.new(2016, 7, 9), prices[2][:from_date]
       assert_equal nil, prices[2][:until_date]
+    end
+  end
+
+  context "with embargo date" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/embargo-date.xml')
+
+      @product = message.products.last
+    end
+
+    should "be published" do
+      assert_equal Date.new(2011, 8, 31), @product.publication_date
+    end
+
+    should "be no embargo date" do
+      assert_equal Date.new(2012, 9, 21), @product.embargo_date
     end
   end
 end
