@@ -670,6 +670,18 @@ module ONIX
       end
     end
 
+    def preorder_embargo_date
+      if @publishing_detail
+        @publishing_detail.preorder_embargo_date
+      end
+    end
+
+    def sales_restriction
+      if @publishing_detail
+        @publishing_detail.sales_restriction
+      end
+    end
+
     # :category: High level
     # product countries rights string array
     def countries_rights
