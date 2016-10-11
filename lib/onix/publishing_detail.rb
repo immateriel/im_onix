@@ -170,6 +170,15 @@ module ONIX
       end
     end
 
+    def preorder_embargo_date
+      pub=@publishing_dates.select{|pd| pd.role.human=="PreorderEmbargoDate"}.first
+      if pub
+        pub.date.date
+      else
+        nil
+      end
+    end
+
     def sales_restriction
       @sales_restriction
     end
