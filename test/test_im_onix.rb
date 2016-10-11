@@ -647,4 +647,38 @@ class TestImOnix < Minitest::Test
       assert_equal Date.new(2012, 9, 21), @product.embargo_date
     end
   end
+
+  context "with public announcement date" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/public-announcement-date.xml')
+
+      @product = message.products.last
+    end
+
+    should "be published" do
+      assert_equal Date.new(2011, 8, 31), @product.publication_date
+    end
+
+    should "have a public announcement date" do
+      assert_equal Date.new(2011, 8, 21), @product.public_announcement_date
+    end
+  end
+
+  context "with preorder embargo date" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/preorder-embargo-date.xml')
+
+      @product = message.products.last
+    end
+
+    should "be published" do
+      assert_equal Date.new(2011, 8, 31), @product.publication_date
+    end
+
+    should "have a preorder embargo date" do
+      assert_equal Date.new(2011, 8, 21), @product.preorder_embargo_date
+    end
+  end
 end

@@ -427,6 +427,18 @@ module ONIX
       end
     end
 
+    def preorder_embargo_date
+      if @publishing_detail
+        @publishing_detail.preorder_embargo_date
+      end
+    end
+
+    def public_announcement_date
+      if @publishing_detail
+        @publishing_detail.public_announcement_date
+      end
+    end
+
     def sales_restriction
       if @publishing_detail
         @publishing_detail.sales_restriction

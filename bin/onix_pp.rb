@@ -36,6 +36,15 @@ msg.products.each do |product|
   if product.publication_date
     puts " Publication date: #{product.publication_date}"
   end
+  if product.embargo_date
+    puts " Embargo date: #{product.embargo_date}"
+  end
+  if product.preorder_embargo_date
+    puts " Preorder embargo date: #{product.preorder_embargo_date}"
+  end
+  if product.public_announcement_date
+    puts " Public announcement date: #{product.public_announcement_date}"
+  end
   if product.pages
     puts " Pages: #{product.pages}"
   end
