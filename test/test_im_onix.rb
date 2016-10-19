@@ -500,6 +500,48 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context "epub with one epub sample" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/9782752906700.xml")
+      @product=@message.products.last
+    end
+
+    should "have an URL to an excerpt" do
+      assert_equal 'http://telechargement.immateriel.fr/fr/web_service/preview/12279/epub-preview.epub', @product.excerpts.first[:url]
+      assert_equal 'Epub', @product.excerpts.first[:format_code]
+      assert_equal '20121015T220000+0000', @product.excerpts.first[:updated_at]
+    end
+
+    should "have 1 sample URL" do
+      assert_equal 1, @product.excerpts.size
+    end
+  end
+
+  context "book with several samples, including 2 URLs and 1 image" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/streaming.xml")
+      @product=@message.products.last
+    end
+
+    should "have 2 sample URL" do
+      assert_equal 2, @product.excerpts.size
+    end
+  end
+
+  context "book without any sample" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/9782707154298.xml")
+      @product=@message.products.last
+    end
+
+    should "have 0 sample URL" do
+      assert_equal 0, @product.excerpts.size
+    end
+  end
+
   context "epub not yet available" do
     setup do
       @message = ONIX::ONIXMessage.new
