@@ -358,6 +358,18 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context "book without any sample" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/9782707154298.xml")
+      @product=@message.products.last
+    end
+
+    should "have 0 sample URL" do
+      assert_equal 0, @product.excerpts.size
+    end
+  end
+
   context "multiple publishers" do
     setup do
       @message = ONIX::ONIXMessage.new
