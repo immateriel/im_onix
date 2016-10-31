@@ -576,6 +576,7 @@ module ONIX
         grouped_supplies[pr_key] << supply
       end
 
+      nb_suppliers = supplies.map{|s| s[:suppliers][0].name}.uniq.length
       # render prices sequentially with dates
       grouped_supplies.each do |ksup, supply|
         if supply.length > 1
@@ -583,23 +584,12 @@ module ONIX
           global_price=global_price.first
 
           if global_price
-            new_supply = []
-            supply.each do |p|
-              next if p == global_price
-
-              if p[:from_date]
-                global_price[:until_date]=p[:from_date]-1
-              end
-
-              if p[:until_date]
-                np=global_price.dup
-                np[:from_date]=p[:until_date]+1
-                np[:until_date]=nil
-                new_supply << np
-              end
+            if nb_suppliers > 1
+              grouped_supplies[ksup] += self.manage_prices(supply, global_price)
+            else
+              grouped_supplies[ksup] = self.manage_prices(supply, global_price)
             end
-
-            grouped_supplies[ksup] += new_supply
+            grouped_supplies[ksup].uniq!
           else
             # remove explicit from date
             explicit_from=supply.select{|p| p[:from_date] and not supply.select{|sp| sp[:until_date] and sp[:until_date]<=p[:from_date]}.first}.first
@@ -808,6 +798,59 @@ module ONIX
         end
       end
 
+    end
+
+    def manage_prices(supply, global_price)
+      # filter date not nil and sort by this field
+      supplies_not_empty = supply.select{ |value| value[:from_date] && value[:until_date] }.sort_by { |hsh| hsh[:from_date] }
+      starts_supplies = supply.select{ |value| value[:from_date] && !value[:until_date] }.sort_by { |hsh| hsh[:from_date] }
+      ends_supplies = supply.select{ |value| !value[:from_date] && value[:until_date] }.sort_by { |hsh| hsh[:until_date] }
+
+      return [global_price] if supplies_not_empty.length == 0 && starts_supplies.length == 0 && ends_supplies.length == 0
+
+      new_suppliers = []
+      if supplies_not_empty.length > 0
+        supplies_not_empty.each.with_index do |p, index|
+          if index == 0
+            ns = global_price.dup
+            ns[:until_date] = p[:from_date] - 1
+            new_suppliers << ns
+          end
+
+          if index > 0 && index != supplies_not_empty.length
+            ns = global_price.dup
+            ns[:from_date] = supplies_not_empty[index - 1][:until_date] + 1
+            ns[:until_date] = p[:from_date] - 1
+            new_suppliers << ns
+          end
+
+          new_suppliers << p
+
+          if index == supplies_not_empty.length - 1
+            ns = global_price.dup
+            ns[:from_date] = p[:until_date] + 1
+            new_suppliers << ns
+          end
+        end
+      elsif starts_supplies.length > 0 && supplies_not_empty.length == 0 && ends_supplies.length == 0
+        starts_supplies.each do |p|
+          ns = global_price.dup
+          ns[:until_date] = p[:from_date] - 1
+          new_suppliers << ns
+
+          new_suppliers << p
+        end
+      elsif ends_supplies.length > 0 && supplies_not_empty.length == 0 && starts_supplies.length == 0
+        ends_supplies.each do |p|
+          ns = global_price.dup
+          ns[:from_date] = p[:until_date] + 1
+          new_suppliers << ns
+
+          new_suppliers << p
+        end
+      end
+
+      new_suppliers
     end
   end
 end
