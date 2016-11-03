@@ -7,8 +7,8 @@
   '05': ReplacedBy
   '06': AlternativeFormat
   '07': HasAncillaryProduct
-  08: IsAncillaryTo
-  09: IsRemainderedAs
+  '08': IsAncillaryTo
+  '09': IsRemainderedAs
   '10': IsRemainderOf
   '11': IsOtherlanguageVersionOf
   '12': PublishersSuggestedAlternative
@@ -30,3 +30,8 @@
   '28': EnhancedVersionAvailableAs
   '29': BasicVersionAvailableAs
   '30': ProductInSameCollection
+  '31': HasAlternativeInDifferentMarketSector
+  '32': HasEquivalentIntendedForDifferentMarket
+  '33': HasAlternativeIntendedForDifferentMarket
+  '34': Cites
+  '35': IsCitedBy
