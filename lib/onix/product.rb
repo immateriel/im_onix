@@ -28,9 +28,11 @@ module ONIX
     #     :including_tax=>bool,
     #     :currency=>string,
     #     :territory=>string,
+    #     :suppliers=>[Supplier,...],
     #     :prices=>[{:amount=>int,
     #                :from_date=>date,
-    #                :until_date=>date}]}]
+    #                :until_date=>date,
+    #                :tax=>{:amount=>int, :rate_percent=>float}}]}]
     def supplies
       supplies=[]
 
@@ -40,6 +42,7 @@ module ONIX
           ps.supply_details.each do |sd|
             sd.prices.each do |p|
               supply={}
+              supply[:suppliers]=sd.suppliers
               supply[:available]=sd.available?
               supply[:availability_date]=sd.availability_date
 
@@ -65,6 +68,7 @@ module ONIX
               supply[:from_date]=p.from_date
               supply[:until_date]=p.until_date
               supply[:currency]=p.currency
+              supply[:tax]=p.tax
 
               unless supply[:availability_date]
                 if @publishing_detail
@@ -150,6 +154,7 @@ module ONIX
                      :territory=>supply.map{|fs| fs.map{|s| s[:territory]}}.flatten.uniq,
                      :available=>fsupply[:available],
                      :availability_date=>fsupply[:availability_date],
+                     :suppliers=>fsupply[:suppliers],
                      :prices=>supply.first.map{|s|
 
                        s[:amount]=s[:price]
@@ -672,7 +677,6 @@ module ONIX
 
       countries.uniq
     end
-
 
     def available_product_supplies
       @product_supplies.select{|ps| ps.available?}

@@ -120,6 +120,10 @@ class TestImOnix < Minitest::Test
       assert_equal "Julie Otsuka", @product.contributors.first.name
     end
 
+    should "have supplier named" do
+      assert_equal "immatériel·fr", @product.supplies_for_country("FR","EUR").first[:suppliers].first.name
+    end
+
     should "be available in France" do
       assert_equal true, @product.supplies_for_country("FR","EUR").first[:available]
     end
@@ -298,6 +302,33 @@ class TestImOnix < Minitest::Test
 
     should "be priced in Switzerland at change date" do
       assert_equal 250, @product.at_time_price_amount_for(Time.new(2013,6,10),"CHF","CH")
+    end
+
+  end
+
+  context "price with tax" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices4.xml")
+      @product=@message.products.last
+    end
+
+    should "have a tax amount and a tax rate" do
+      assert_equal 109, @product.supplies_for_country('FR','EUR').first[:prices].first[:tax].amount
+      assert_equal 5.5, @product.supplies_for_country('FR','EUR').first[:prices].first[:tax].rate_percent
+    end
+
+  end
+
+  context "prices without taxes" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices1.xml")
+      @product=@message.products.last
+    end
+
+    should "not have a tax" do
+      assert_nil @product.supplies_for_country('FR','EUR').first[:prices].first[:tax]
     end
 
   end
