@@ -419,6 +419,10 @@
           <ResourceVersionFeatureType>01</ResourceVersionFeatureType>
           <FeatureValue>E101</FeatureValue>
         </ResourceVersionFeature>
+        <ResourceVersionFeature>
+          <ResourceVersionFeatureType>06</ResourceVersionFeatureType>
+          <FeatureValue>e32ef9a1c1e63c96567b542f6e691530</FeatureValue>
+        </ResourceVersionFeature>
         <ResourceLink>http://telechargement.immateriel.fr/fr/web_service/preview/12279/epub-preview.epub</ResourceLink>
         <ContentDate>
           <ContentDateRole>17</ContentDateRole>
