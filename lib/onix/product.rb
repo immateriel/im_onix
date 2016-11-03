@@ -675,6 +675,7 @@ module ONIX
       @collateral_detail.supporting_resources.select {|sr| (sr.mode.human=='Text' || sr.mode.human='Multimode') && sr.type.human=='SampleContent'}.map do |resource|
         {
           :url => resource.versions.last.links.first.strip,
+          :form => resource.versions.last.form.human,
           :format_code => resource.versions.last.file_format,
           :updated_at => resource.versions.last.last_updated_utc
         }
