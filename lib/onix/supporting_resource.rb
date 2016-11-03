@@ -97,8 +97,8 @@ module ONIX
     end
 
     def md5_hash
-      if self.md5_hash
-        self.md5_hash.value
+      if self.md5_hash_feature
+        self.md5_hash_feature.value
       end
     end
 
