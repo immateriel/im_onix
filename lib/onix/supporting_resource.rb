@@ -111,6 +111,12 @@ module ONIX
         self.last_updated_content_date.date
       end
     end
+
+    def last_updated_utc
+      if self.last_updated_content_date
+        self.last_updated_content_date.date.to_time.utc.strftime('%Y%m%dT%H%M%S%z')
+      end
+    end
   end
 
   class ResourceFeature < SubsetDSL
