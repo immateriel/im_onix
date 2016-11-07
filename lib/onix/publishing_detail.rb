@@ -61,6 +61,15 @@ module ONIX
       end
     end
 
+    def public_announcement_date
+      pub=@publishing_dates.select{|pd| pd.role.human=="PublicAnnouncementDate"}.first
+      if pub
+        pub.date
+      else
+        nil
+      end
+    end
+
     def status
       @publising_status
     end
