@@ -800,57 +800,68 @@ module ONIX
 
     end
 
-    def manage_prices(supply, global_price)
+    # add missing from_date and until_date when they can be guessed
+    def manage_prices(supplies, global_price)
       # filter date not nil and sort by this field
-      supplies_not_empty = supply.select{ |value| value[:from_date] && value[:until_date] }.sort_by { |hsh| hsh[:from_date] }
-      starts_supplies = supply.select{ |value| value[:from_date] && !value[:until_date] }.sort_by { |hsh| hsh[:from_date] }
-      ends_supplies = supply.select{ |value| !value[:from_date] && value[:until_date] }.sort_by { |hsh| hsh[:until_date] }
+      complete_supplies = supplies.select{ |supply| supply[:from_date] && supply[:until_date] }.sort_by { |supply| supply[:from_date] }
+      missing_start_period_supplies = supplies.select{ |supply| supply[:from_date] && !supply[:until_date] }.sort_by { |supply| supply[:from_date] }
+      missing_end_period_supplies = supplies.select{ |supply| !supply[:from_date] && supply[:until_date] }.sort_by { |supply| supply[:until_date] }
 
-      return [global_price] if supplies_not_empty.length == 0 && starts_supplies.length == 0 && ends_supplies.length == 0
+      return [global_price] if [complete_supplies, missing_start_period_supplies, missing_end_period_supplies].all? {|supply| supply.empty? }
 
-      new_suppliers = []
-      if supplies_not_empty.length > 0
-        supplies_not_empty.each.with_index do |p, index|
-          if index == 0
-            ns = global_price.dup
-            ns[:until_date] = p[:from_date] - 1
-            new_suppliers << ns
-          end
+      new_supplies = []
+      if !complete_supplies.empty?
+        new_supplies = self.add_between_period_prices(complete_supplies, global_price)
+      elsif missing_start_period_supplies.length == 1 && complete_supplies.empty? && missing_end_period_supplies.empty?
+        new_supplies = self.add_starting_period(missing_start_period_supplies[0], global_price)
+      elsif missing_end_period_supplies.length == 1 && complete_supplies.empty? && missing_start_period_supplies.empty?
+        new_supplies = self.add_ending_period(missing_end_period_supplies[0], global_price)
+      end
 
-          if index > 0 && index != supplies_not_empty.length
-            ns = global_price.dup
-            ns[:from_date] = supplies_not_empty[index - 1][:until_date] + 1
-            ns[:until_date] = p[:from_date] - 1
-            new_suppliers << ns
-          end
+      new_supplies
+    end
 
-          new_suppliers << p
+    def add_between_period_prices(supplies, global_price)
+      new_supplies = []
 
-          if index == supplies_not_empty.length - 1
-            ns = global_price.dup
-            ns[:from_date] = p[:until_date] + 1
-            new_suppliers << ns
-          end
+      supplies.each.with_index do |supply, index|
+        if index == 0
+          missing_supply = global_price.dup
+          missing_supply[:until_date] = supply[:from_date] - 1
+          new_supplies << missing_supply
         end
-      elsif starts_supplies.length > 0 && supplies_not_empty.length == 0 && ends_supplies.length == 0
-        starts_supplies.each do |p|
-          ns = global_price.dup
-          ns[:until_date] = p[:from_date] - 1
-          new_suppliers << ns
 
-          new_suppliers << p
+        if index > 0 && index != supplies.length
+          missing_supply = global_price.dup
+          missing_supply[:from_date] = supplies[index - 1][:until_date] + 1
+          missing_supply[:until_date] = supply[:from_date] - 1
+          new_supplies << missing_supply
         end
-      elsif ends_supplies.length > 0 && supplies_not_empty.length == 0 && starts_supplies.length == 0
-        ends_supplies.each do |p|
-          ns = global_price.dup
-          ns[:from_date] = p[:until_date] + 1
-          new_suppliers << ns
 
-          new_suppliers << p
+        new_supplies << supply
+
+        if index == supplies.length - 1
+          missing_supply = global_price.dup
+          missing_supply[:from_date] = supply[:until_date] + 1
+          new_supplies << missing_supply
         end
       end
 
-      new_suppliers
+      new_supplies
+    end
+
+    def add_starting_period(supply, global_price)
+      missing_supply = global_price.dup
+      missing_supply[:until_date] = supply[:from_date] - 1
+
+      [missing_supply].concat([supply])
+    end
+
+    def add_ending_period(supply, global_price)
+      missing_supply = global_price.dup
+      missing_supply[:from_date] = supply[:until_date] + 1
+
+      [supply].concat([missing_supply])
     end
   end
 end
