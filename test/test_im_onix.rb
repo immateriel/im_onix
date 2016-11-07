@@ -33,6 +33,10 @@ class TestImOnix < Minitest::Test
       assert_equal "9782752908643", @product.ean
     end
 
+    should "have an ISBN-13" do
+      assert_equal "9782752908643", @product.isbn13
+    end
+
     should "have a named proprietary id" do
       assert_equal 'O192530', @product.proprietary_ids.first.value
       assert_equal 'SKU', @product.proprietary_ids.first.name
@@ -44,6 +48,10 @@ class TestImOnix < Minitest::Test
 
     should "have no format" do
       assert_equal nil, @product.file_format
+    end
+
+    should "have no format details" do
+      assert_equal [], @product.form_details
     end
 
     should "have one publisher named Phébus" do
@@ -112,6 +120,10 @@ class TestImOnix < Minitest::Test
       assert_equal "Julie Otsuka", @product.contributors.first.name
     end
 
+    should "have supplier named" do
+      assert_equal "immatériel·fr", @product.supplies_for_country("FR","EUR").first[:suppliers].first.name
+    end
+
     should "be available in France" do
       assert_equal true, @product.supplies_for_country("FR","EUR").first[:available]
     end
@@ -142,15 +154,19 @@ class TestImOnix < Minitest::Test
   end
 
   context "reflowable epub" do
-      setup do
-        @message = ONIX::ONIXMessage.new
-        @message.parse("test/fixtures/reflowable.xml")
-        @product = @message.products.last
-      end
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/reflowable.xml")
+      @product = @message.products.last
+    end
 
-      should "be reflowable" do
-        assert_equal true, @product.reflowable?
-      end
+    should "be reflowable" do
+      assert_equal true, @product.reflowable?
+    end
+
+    should "have format details" do
+      assert_equal 2, @product.form_details.length
+    end
   end
 
   context "epub fixed layout" do
@@ -180,6 +196,10 @@ class TestImOnix < Minitest::Test
       parent = @product.part_of_product
       assert_equal "9782752908643", parent.ean
       assert_equal "O192530", parent.proprietary_ids.first.value
+    end
+
+    should "have format details" do
+      assert_equal 1, @product.form_details.length
     end
   end
 
@@ -286,6 +306,33 @@ class TestImOnix < Minitest::Test
 
   end
 
+  context "price with tax" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices4.xml")
+      @product=@message.products.last
+    end
+
+    should "have a tax amount and a tax rate" do
+      assert_equal 109, @product.supplies_for_country('FR','EUR').first[:prices].first[:tax].amount
+      assert_equal 5.5, @product.supplies_for_country('FR','EUR').first[:prices].first[:tax].rate_percent
+    end
+
+  end
+
+  context "prices without taxes" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices1.xml")
+      @product=@message.products.last
+    end
+
+    should "not have a tax" do
+      assert_nil @product.supplies_for_country('FR','EUR').first[:prices].first[:tax]
+    end
+
+  end
+
   context "file full-sender.xml" do
     setup do
       @message = ONIX::ONIXMessage.new
@@ -299,10 +346,27 @@ class TestImOnix < Minitest::Test
     end
   end
 
-  context "audio product" do
+  context "audio product specified as 'downloadable audio file'" do
     setup do
       @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/audio.xml")
+      @message.parse("test/fixtures/audio1.xml")
+      @product=@message.products.last
+    end
+
+    should "be an audio product" do
+      assert @product.audio?
+    end
+
+    should "be an Mp3Format product" do
+      assert_equal "Mp3Format", @product.audio_format
+    end
+
+  end
+
+  context "audio product specified as 'digital content delivered by download only'" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/audio2.xml")
       @product=@message.products.last
     end
 
