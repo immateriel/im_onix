@@ -97,8 +97,8 @@ module ONIX
     end
 
     def md5_hash
-      if self.md5_hash
-        self.md5_hash.value
+      if self.md5_hash_feature
+        self.md5_hash_feature.value
       end
     end
 
@@ -109,6 +109,12 @@ module ONIX
     def last_updated
       if self.last_updated_content_date
         self.last_updated_content_date.date
+      end
+    end
+
+    def last_updated_utc
+      if self.last_updated_content_date
+        self.last_updated_content_date.date.to_time.utc.strftime('%Y%m%dT%H%M%S%z')
       end
     end
   end
