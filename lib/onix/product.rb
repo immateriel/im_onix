@@ -679,6 +679,23 @@ module ONIX
     end
 
     # :category: High level
+    def illustrations
+      return [] unless @collateral_detail && @collateral_detail.supporting_resources
+
+      @collateral_detail.supporting_resources.select {|sr| sr.mode.human=='Image'}.map do |image_resource|
+        {
+          :url => image_resource.versions.last.links.first.strip,
+          :type => image_resource.type.human,
+          :width => image_resource.versions.last.image_width,
+          :height => image_resource.versions.last.image_height,
+          :caption => image_resource.caption,
+          :format_code => image_resource.versions.last.file_format,
+          :updated_at => image_resource.versions.last.last_updated_utc
+        }
+      end
+    end
+
+    # :category: High level
     def excerpts
       return [] unless @collateral_detail && @collateral_detail.supporting_resources
 

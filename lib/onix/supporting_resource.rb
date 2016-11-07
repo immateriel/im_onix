@@ -159,7 +159,17 @@ module ONIX
     end
 
     def features
-      @resource_versions
+      @resource_features
+    end
+
+    def caption_feature
+      self.features.select{|i| i.type.human=="Caption"}.first
+    end
+
+    def caption
+      if self.caption_feature
+        self.caption_feature.value
+      end
     end
 
     def target_audience
