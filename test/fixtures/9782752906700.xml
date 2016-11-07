@@ -77,6 +77,11 @@
       <UnpricedItemType>03</UnpricedItemType>
     </SupplyDetail>
   </ProductSupply>
+  <PublishingDetail>
+    <SalesRestriction>
+      <SalesRestrictionType>09</SalesRestrictionType>
+    </SalesRestriction>
+  </PublishingDetail>
 </Product>
 <!-- Certaines n'avaient jamais vu la mer (110336) multi-format : Epub - Watermark (3019002489901) -->
 <Product>

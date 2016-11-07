@@ -4,6 +4,7 @@ module ONIX
   class PublishingDetail < SubsetDSL
     element "PublishingStatus", :subset
     elements "SalesRights", :subset, {:pluralize=>false}
+    element "SalesRestriction", :subset
     element "ROWSalesRightsType", :subset, {:klass=>"SalesRightsType"}
     elements "PublishingDate", :subset
     elements "Publisher", :subset
