@@ -163,7 +163,7 @@ module ONIX
     end
 
     def caption_feature
-      @features.select{|i| i.type.human=="Caption"}.first
+      self.features.select{|i| i.type.human=="Caption"}.first
     end
 
     def caption
