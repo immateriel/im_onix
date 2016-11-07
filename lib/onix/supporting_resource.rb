@@ -159,7 +159,7 @@ module ONIX
     end
 
     def features
-      @resource_versions
+      @resource_features
     end
 
     def caption_feature
