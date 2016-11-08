@@ -8,6 +8,7 @@ module ONIX
     element "PersonName", :text
     element "PersonNameInverted", :text
     element "ContributorRole", :subset
+    element "ContributorPlace", :subset
     element "BiographicalNote", :text
     element "SequenceNumber", :integer
     elements "Website", :subset
@@ -19,6 +20,10 @@ module ONIX
 
     def identifiers
       @name_identifiers
+    end
+
+    def place
+      @contributor_place
     end
 
     # :category: High level
@@ -38,6 +43,12 @@ module ONIX
     end
 
     # :category: High level
+    # inverted flatten person name
+    def inverted_name
+      @person_name_inverted
+    end
+
+    # :category: High level
     # biography string with HTML
     def biography
       @biography_note
@@ -51,6 +62,19 @@ module ONIX
       else
         nil
       end
+    end
+  end
+
+  class ContributorPlace < SubsetDSL
+    element "ContributorPlaceRelator", :subset
+    element "CountryCode", :subset
+
+    def relator
+      @contributor_place_relator
+    end
+
+    def country_code
+      @country_code.code
     end
   end
 end

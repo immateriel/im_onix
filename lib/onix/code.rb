@@ -199,6 +199,7 @@ module ONIX
       45
     end
   end
+
   class SalesRightsType < CodeFromYaml
     private
     def self.code_ident
@@ -406,6 +407,13 @@ module ONIX
     private
     def self.code_ident
       150
+    end
+  end
+
+  class ContributorPlaceRelator < CodeFromYaml
+    private
+    def self.code_ident
+      151
     end
   end
 
