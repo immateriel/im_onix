@@ -752,6 +752,15 @@ module ONIX
     end
 
     # :category: High level
+    # is product price to be announced ?
+    def price_to_be_announced?
+      unless self.product_supplies.empty? || self.product_supplies.first.supply_details.empty?
+        unpriced_item_type = self.product_supplies.first.supply_details.first.unpriced_item_type
+      end
+      unpriced_item_type ? unpriced_item_type.human=="PriceToBeAnnounced" : false
+    end
+
+    # :category: High level
     # is a deletion notification ?
     def delete?
       self.notification_type.human=="Delete"
