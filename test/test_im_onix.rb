@@ -374,6 +374,18 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context "price with past from date" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices5.xml")
+      @product=@message.products.last
+    end
+
+    should "have a from date even if it's passed" do
+      assert_equal Time.new(2013,10,01), @product.supplies(true).first[:prices].first[:from_date]
+    end
+  end
+
   context "file full-sender.xml" do
     setup do
       @message = ONIX::ONIXMessage.new
