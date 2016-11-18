@@ -128,6 +128,10 @@ class TestImOnix < Minitest::Test
       assert_equal "Otsuka, Julie", @product.contributors.first.inverted_name
     end
 
+    should "have author biography" do
+      assert_equal "<p>Julie Otsuka est n&eacute;e en 1962 en Californie. Dipl&ocirc;m&eacute;e en art, elle abandonne une carri&egrave;re de peintre (elle a &eacute;tudi&eacute; cette discipline &agrave; l'universit&eacute; de Yale) pour l'&eacute;criture. Elle publie son premier roman en 2002, <em>Quand l'empereur &eacute;tait un dieu </em>(Ph&eacute;bus, 2004 ; 10/18, 2008) largement inspir&eacute; de la vie de ses grands-parents. Son deuxi&egrave;me roman, <em>Certaines n'avaient jamais vu la mer </em>(Ph&eacute;bus, 2012) a &eacute;t&eacute; consid&eacute;r&eacute; aux &Eacute;tats-Unis, d&egrave;s sa sortie, comme un chef-d'oeuvre. Julie Otsuka vit &agrave; New York.</p>", @product.contributors.first.biography
+    end
+
     should "not have author place" do
       assert_nil @product.contributors.first.place
     end

@@ -51,7 +51,7 @@ module ONIX
     # :category: High level
     # biography string with HTML
     def biography
-      @biography_note
+      @biographical_note
     end
 
     # :category: High level
