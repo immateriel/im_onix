@@ -26,6 +26,10 @@ module ONIX
       @contributor_place
     end
 
+    def name_before_key
+      @names_before_key
+    end
+
     # :category: High level
     # flatten person name (firstname lastname)
     def name
