@@ -41,6 +41,13 @@ module ONIX
     end
   end
 
+  class ImprintIdentifier < Identifier
+    element "ImprintIDType", :subset
+    def type
+      @imprint_id_type
+    end
+  end
+
   class PublisherIdentifier < Identifier
     element "PublisherIDType", :subset
     def type

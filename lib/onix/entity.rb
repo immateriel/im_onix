@@ -83,7 +83,7 @@ module ONIX
     end
 
     def self.identifier_class
-      nil
+      ImprintIdentifier
     end
 
     def self.role_class
