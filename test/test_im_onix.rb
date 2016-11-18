@@ -405,6 +405,10 @@ class TestImOnix < Minitest::Test
       assert_equal 'FreeOfCharge', free_supply[:unpriced_item_type]
       assert_equal 8, free_supply[:territory].size
     end
+
+    should "merge similar free of charge supplies" do
+      assert_equal 2, @product.supplies.size
+    end
   end
 
   context "file full-sender.xml" do
