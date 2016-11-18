@@ -138,6 +138,29 @@ module ONIX
       def territory
         Territory.new(@country_codes)
       end
+
+      def tax
+        nil
+      end
+    end
+
+
+    class Supplier
+      attr_accessor :name
+      attr_accessor :role
+
+      def initialize(name,role)
+        @name = name
+        @role = role
+      end
+
+      def identifiers
+        []
+      end
+
+      def websites
+        []
+      end
     end
 
     class SupplyDetail < SubsetDSL
@@ -156,6 +179,10 @@ module ONIX
 
       def available?
         @product_availability=="20"
+      end
+
+      def suppliers
+        [Supplier.new(self.supplier_name,self.supplier_role)]
       end
     end
 
