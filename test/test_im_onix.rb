@@ -64,6 +64,14 @@ class TestImOnix < Minitest::Test
       assert_equal "3052859400019", @product.publisher_gln
     end
 
+    should "have one imprint named Phébus" do
+      assert_equal "Phébus", @product.imprint_name
+    end
+
+    should "have one imprint GLN" do
+      assert_equal "3052859400019", @product.imprint_gln
+    end
+
     should "have one distributor named immatériel·fr" do
       assert_equal 1, @product.distributors.length
       assert_equal "immatériel·fr", @product.distributor_name
