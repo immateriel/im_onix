@@ -79,7 +79,7 @@ class TestImOnix < Minitest::Test
     end
 
     should "be published" do
-      assert_equal Date.new(2012,9,6), @product.publication_date
+      assert_equal Date.new(2012, 9, 6), @product.publication_date
     end
 
     should "be no embargo date" do
@@ -133,23 +133,23 @@ class TestImOnix < Minitest::Test
     end
 
     should "have supplier named" do
-      assert_equal "immatériel·fr", @product.supplies_for_country("FR","EUR").first[:suppliers].first.name
+      assert_equal "immatériel·fr", @product.supplies_for_country("FR", "EUR").first[:suppliers].first.name
     end
 
     should "be available in France" do
-      assert_equal true, @product.supplies_for_country("FR","EUR").first[:available]
+      assert_equal true, @product.supplies_for_country("FR", "EUR").first[:available]
     end
 
     should "be priced in France" do
-      assert_equal 1099, @product.supplies_for_country("FR","EUR").first[:prices].first[:amount]
+      assert_equal 1099, @product.supplies_for_country("FR", "EUR").first[:prices].first[:amount]
     end
 
     should "be available in Switzerland" do
-      assert_equal true, @product.supplies_for_country("CH","CHF").first[:available]
+      assert_equal true, @product.supplies_for_country("CH", "CHF").first[:available]
     end
 
     should "be priced in Switzerland" do
-      assert_equal 1400, @product.supplies_for_country("CH","CHF").first[:prices].first[:amount]
+      assert_equal 1400, @product.supplies_for_country("CH", "CHF").first[:prices].first[:amount]
     end
   end
 
@@ -236,19 +236,19 @@ class TestImOnix < Minitest::Test
     end
 
     should "be available in France" do
-      assert_equal true, @product.supplies_for_country("FR","EUR").first[:available]
+      assert_equal true, @product.supplies_for_country("FR", "EUR").first[:available]
     end
 
     should "be currently priced in France" do
-      assert_equal 1499, @product.current_price_amount_for("EUR","FR")
+      assert_equal 1499, @product.current_price_amount_for("EUR", "FR")
     end
 
     should "be priced in France at past date" do
-      assert_equal 499, @product.at_time_price_amount_for(Time.new(2013,3,1),"EUR","FR")
+      assert_equal 499, @product.at_time_price_amount_for(Time.new(2013, 3, 1), "EUR", "FR")
     end
 
     should "be priced in France at change date" do
-      assert_equal 1499, @product.at_time_price_amount_for(Time.new(2013,4,27),"EUR","FR")
+      assert_equal 1499, @product.at_time_price_amount_for(Time.new(2013, 4, 27), "EUR", "FR")
     end
 
     should "not have a price to be announced" do
@@ -265,31 +265,31 @@ class TestImOnix < Minitest::Test
     end
 
     should "be available in France" do
-      assert_equal true, @product.supplies_for_country("FR","EUR").first[:available]
+      assert_equal true, @product.supplies_for_country("FR", "EUR").first[:available]
     end
 
     should "be currently priced in France" do
-      assert_equal 399, @product.current_price_amount_for("EUR","FR")
+      assert_equal 399, @product.current_price_amount_for("EUR", "FR")
     end
 
     should "be priced in France at future date" do
-      assert_equal 399, @product.at_time_price_amount_for(Time.new(2013,12,1),"EUR","FR")
+      assert_equal 399, @product.at_time_price_amount_for(Time.new(2013, 12, 1), "EUR", "FR")
     end
 
     should "be priced in France at change date" do
-      assert_equal 399, @product.at_time_price_amount_for(Time.new(2013,10,1),"EUR","FR")
+      assert_equal 399, @product.at_time_price_amount_for(Time.new(2013, 10, 1), "EUR", "FR")
     end
 
     should "be available in Switzerland" do
-      assert_equal true, @product.supplies_for_country("CH","CHF").first[:available]
+      assert_equal true, @product.supplies_for_country("CH", "CHF").first[:available]
     end
 
     should "be currently priced in Switzerland" do
-      assert_equal 500, @product.current_price_amount_for("CHF","CH")
+      assert_equal 500, @product.current_price_amount_for("CHF", "CH")
     end
 
     should "be priced in Switzerland at future date" do
-      assert_equal 500, @product.at_time_price_amount_for(Time.new(2013,12,1),"CHF","CH")
+      assert_equal 500, @product.at_time_price_amount_for(Time.new(2013, 12, 1), "CHF", "CH")
     end
 
     should "not have a price to be announced" do
@@ -305,35 +305,35 @@ class TestImOnix < Minitest::Test
     end
 
     should "be available in France" do
-      assert_equal true, @product.supplies_for_country("FR","EUR").first[:available]
+      assert_equal true, @product.supplies_for_country("FR", "EUR").first[:available]
     end
 
     should "be currently priced in France" do
-      assert_equal 199, @product.current_price_amount_for("EUR","FR")
+      assert_equal 199, @product.current_price_amount_for("EUR", "FR")
     end
 
     should "be priced in France at past date" do
-      assert_equal 299, @product.at_time_price_amount_for(Time.new(2013,5,1),"EUR","FR")
+      assert_equal 299, @product.at_time_price_amount_for(Time.new(2013, 5, 1), "EUR", "FR")
     end
 
     should "be priced in France at change date" do
-      assert_equal 199, @product.at_time_price_amount_for(Time.new(2013,6,10),"EUR","FR")
+      assert_equal 199, @product.at_time_price_amount_for(Time.new(2013, 6, 10), "EUR", "FR")
     end
 
     should "be available in Switzerland" do
-      assert_equal true, @product.supplies_for_country("CH","CHF").first[:available]
+      assert_equal true, @product.supplies_for_country("CH", "CHF").first[:available]
     end
 
     should "be currently priced in Switzerland" do
-      assert_equal 250, @product.current_price_amount_for("CHF","CH")
+      assert_equal 250, @product.current_price_amount_for("CHF", "CH")
     end
 
     should "be priced in Switzerland at past date" do
-      assert_equal 400, @product.at_time_price_amount_for(Time.new(2013,5,1),"CHF","CH")
+      assert_equal 400, @product.at_time_price_amount_for(Time.new(2013, 5, 1), "CHF", "CH")
     end
 
     should "be priced in Switzerland at change date" do
-      assert_equal 250, @product.at_time_price_amount_for(Time.new(2013,6,10),"CHF","CH")
+      assert_equal 250, @product.at_time_price_amount_for(Time.new(2013, 6, 10), "CHF", "CH")
     end
 
     should "not have a price to be announced" do
@@ -349,8 +349,8 @@ class TestImOnix < Minitest::Test
     end
 
     should "have a tax amount and a tax rate" do
-      assert_equal 109, @product.supplies_for_country('FR','EUR').first[:prices].first[:tax].amount
-      assert_equal 5.5, @product.supplies_for_country('FR','EUR').first[:prices].first[:tax].rate_percent
+      assert_equal 109, @product.supplies_for_country('FR', 'EUR').first[:prices].first[:tax].amount
+      assert_equal 5.5, @product.supplies_for_country('FR', 'EUR').first[:prices].first[:tax].rate_percent
     end
 
     should "not have a price to be announced" do
@@ -366,7 +366,7 @@ class TestImOnix < Minitest::Test
     end
 
     should "not have a tax" do
-      assert_nil @product.supplies_for_country('FR','EUR').first[:prices].first[:tax]
+      assert_nil @product.supplies_for_country('FR', 'EUR').first[:prices].first[:tax]
     end
 
     should "not have a price to be announced" do
@@ -382,7 +382,7 @@ class TestImOnix < Minitest::Test
     end
 
     should "have a from date even if it's passed" do
-      assert_equal Time.new(2013,10,01), @product.supplies(true).first[:prices].first[:from_date]
+      assert_equal Time.new(2013, 10, 01), @product.supplies(true).first[:prices].first[:from_date]
     end
   end
 
@@ -541,7 +541,7 @@ class TestImOnix < Minitest::Test
     end
 
     should "have two authors" do
-      assert_equal 2, @product.contributors.select{|c| c.role.human=="ByAuthor"}.length
+      assert_equal 2, @product.contributors.select { |c| c.role.human=="ByAuthor" }.length
     end
 
   end
@@ -736,6 +736,32 @@ class TestImOnix < Minitest::Test
       assert_equal 899, prices[4][:amount]
       assert_equal Date.new(2016, 8, 16), prices[4][:from_date]
       assert_equal nil, prices[4][:until_date]
+    end
+  end
+
+
+  context "ONIX 2.1" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/onix2.xml")
+      @product=@message.products.last
+    end
+
+    should "have an EAN13" do
+      assert_equal "9782346032532", @product.ean
+    end
+
+    should "have title" do
+      assert_equal "La Physiologie de l'esprit", @product.title
+    end
+
+
+    should "have a main publisher named BnF-Partenariats" do
+      assert_equal "BnF-Partenariats", @product.publisher_name
+    end
+
+    should "be priced in France" do
+      assert_equal 149, @product.supplies_for_country("FR", "EUR").first[:prices].first[:amount]
     end
   end
 end
