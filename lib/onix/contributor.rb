@@ -26,6 +26,10 @@ module ONIX
       @contributor_place
     end
 
+    def name_before_key
+      @names_before_key
+    end
+
     # :category: High level
     # flatten person name (firstname lastname)
     def name
@@ -51,7 +55,7 @@ module ONIX
     # :category: High level
     # biography string with HTML
     def biography
-      @biography_note
+      @biographical_note
     end
 
     # :category: High level
