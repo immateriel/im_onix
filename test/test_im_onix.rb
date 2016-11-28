@@ -833,4 +833,18 @@ class TestImOnix < Minitest::Test
       assert_equal nil, prices[4][:until_date]
     end
   end
+
+  context "with illustration last updated date" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/bad_content_date_format.xml')
+
+      @product = message.products.last
+    end
+
+    should "have no last updated date for its illustration" do
+      assert_equal 1, @product.illustrations.size
+      assert_equal nil, @product.illustrations[0][:updated_at]
+    end
+  end
 end
