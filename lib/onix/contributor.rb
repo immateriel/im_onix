@@ -37,8 +37,8 @@ module ONIX
         @person_name
       else
         if @key_names
-          if @name_before_key
-            "#{@name_before_key} #{@key_names}"
+          if @names_before_key
+            "#{@names_before_key} #{@key_names}"
           else
             @key_names
           end

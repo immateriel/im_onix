@@ -214,6 +214,9 @@ module ONIX
       element "RelationCode", :text
       elements "ProductIdentifier", :subset
 
+      def product=v
+      end
+
       def identifiers
         @product_identifiers
       end
@@ -423,6 +426,18 @@ module ONIX
       end
 
       def availability_date
+        nil
+      end
+
+      def embargo_date
+        nil
+      end
+
+      def preorder_embargo_date
+        nil
+      end
+
+      def public_announcement_date
         nil
       end
 
