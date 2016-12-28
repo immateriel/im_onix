@@ -847,4 +847,17 @@ class TestImOnix < Minitest::Test
       assert_equal nil, @product.illustrations[0][:updated_at]
     end
   end
+
+  context "with YYYY date format" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/test_YYYY_date_format.xml')
+
+      @product = message.products.last
+    end
+
+    should "have a correct date format" do
+      assert_equal Date.new(1989, 01, 01), @product.publication_date
+    end
+  end
 end

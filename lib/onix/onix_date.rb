@@ -1,5 +1,5 @@
 module ONIX
-  # FIXME : support only 00,01 and 14 date format
+  # FIXME : support only 00,01,05 and 14 date format
   class OnixDate < Subset
     attr_accessor :format, :date
 
@@ -33,6 +33,8 @@ module ONIX
           @date=Date.strptime(date_txt, format)
         when "01"
           @date=Date.strptime(date_txt, format)
+        when "05"
+          @date=Date.strptime(date_txt, format)
         when "14"
           @date=Time.strptime(date_txt, format)
         else
@@ -50,6 +52,8 @@ module ONIX
         "%Y%m%d"
       when "01"
         "%Y%m"
+      when "05"
+        "%Y"
       when "14"
         "%Y%m%dT%H%M%S%z"
       else
@@ -67,6 +71,8 @@ module ONIX
           "%Y%m%d"
         when /^\d{4}\d{2}$/
           "%Y%m"
+        when /^\d{4}$/
+          "%Y"
         else
           nil
       end
