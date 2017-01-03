@@ -672,16 +672,19 @@ class TestImOnix < Minitest::Test
 
       # the first one: 8.99 € (default price) until 2016-07-07
       assert_equal 899, prices[0][:amount]
+      assert_equal 'UnqualifiedPrice', prices[0][:qualifier]
       assert_equal nil, prices[0][:from_date]
       assert_equal Date.new(2016, 7, 7), prices[0][:until_date]
 
       # the second one: 4.99 € (promotional price) from 2016-07-08 to 2016-07-08 (single day)
       assert_equal 499, prices[1][:amount]
+      assert_equal 'PromotionalOfferPrice', prices[1][:qualifier]
       assert_equal Date.new(2016, 7, 8), prices[1][:from_date]
       assert_equal Date.new(2016, 7, 8), prices[1][:until_date]
 
       # the third one: 8.99 € (default price) from 2016-07-09
       assert_equal 899, prices[2][:amount]
+      assert_equal 'UnqualifiedPrice', prices[2][:qualifier]
       assert_equal Date.new(2016, 7, 9), prices[2][:from_date]
       assert_equal nil, prices[2][:until_date]
     end
