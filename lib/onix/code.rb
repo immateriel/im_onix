@@ -272,6 +272,13 @@ module ONIX
     end
   end
 
+  class PriceQualifier < CodeFromYaml
+    private
+    def self.code_ident
+      59
+    end
+  end
+
   class PriceDateRole < CodeFromYaml
     private
     def self.code_ident
