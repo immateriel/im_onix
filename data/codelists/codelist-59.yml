@@ -8,5 +8,5 @@
   '05': ConsumerPrice
   '06': CorporatePrice
   '07': ReservationOrderPrice
-  08: PromotionalOfferPrice
-  09: LinkedPrice
+  '08': PromotionalOfferPrice
+  '09': LinkedPrice

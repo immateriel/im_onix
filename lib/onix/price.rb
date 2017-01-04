@@ -33,7 +33,7 @@ module ONIX
   end
 
   class Price < Subset
-    attr_accessor :amount, :type, :currency, :dates, :territory, :discount, :tax
+    attr_accessor :amount, :type, :qualifier, :currency, :dates, :territory, :discount, :tax
 
     def initialize
       @dates=[]
@@ -76,6 +76,8 @@ module ONIX
             @territory=Territory.from_xml(t)
           when tag_match("PriceType")
             @type=PriceType.from_code(t.text)
+          when tag_match("PriceQualifier")
+            @qualifier=PriceQualifier.from_code(t.text)
           when tag_match("PriceAmount")
             @amount=(t.text.to_f * 100).round
           when tag_match("Tax")
