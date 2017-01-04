@@ -793,4 +793,17 @@ class TestImOnix < Minitest::Test
       assert_equal 149, @product.supplies_for_country("FR", "EUR").first[:prices].first[:amount]
     end
   end
+
+  context "with YYYY date format" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/test_YYYY_date_format.xml')
+
+      @product = message.products.last
+    end
+
+    should "have a correct date format" do
+      assert_equal Date.new(1989, 01, 01), @product.publication_date
+    end
+  end
 end
