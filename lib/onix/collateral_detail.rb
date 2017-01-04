@@ -63,7 +63,7 @@ module ONIX
     end
 
     def epub_sample_resource
-      es=@supporting_resources.select { |sr| sr.type.human=="SampleContent" }.select{|sr| sr.versions.last.file_format=="Epub"}.first
+      es=@supporting_resources.select { |sr| sr.type.human=="SampleContent" }.select{|sr| sr.versions.last and sr.versions.last.file_format=="Epub"}.first
       if es
         es.versions.last
       end
