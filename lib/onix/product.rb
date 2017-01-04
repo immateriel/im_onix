@@ -52,6 +52,7 @@ module ONIX
                   end
               end
               supply[:price]=p.amount
+              supply[:qualifier]=p.qualifier.human if p.qualifier
               supply[:including_tax]=p.including_tax?
               if !p.territory or p.territory.countries.length==0
                 supply[:territory]=[]
