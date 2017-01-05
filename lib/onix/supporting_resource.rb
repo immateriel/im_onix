@@ -103,7 +103,7 @@ module ONIX
     end
 
     def last_updated_content_date
-      @content_dates.select { |cd| cd.role.human=="LastUpdated" && cd.date.date }.first
+      @content_dates.select { |cd| cd.role.human=="LastUpdated" && cd.date }.first
     end
 
     def last_updated

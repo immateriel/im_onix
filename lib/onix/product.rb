@@ -767,7 +767,7 @@ module ONIX
       @publishing_detail.sales_rights.map{|sri|
         sri.sales_restrictions.select{|sr| (!sr.start_date or sr.start_date <= Date.today) and (!sr.end_date or sr.end_date >= Date.today)}.map{|sr|
           sr.sales_outlets.select{|so|
-            so.identifier.type.human=="OnixSalesOutletIdCode"}.map{|so| so.identifier.value}}}.flatten
+            so.identifier and so.identifier.type.human=="OnixSalesOutletIdCode"}.map{|so| so.identifier.value}}}.flatten
     end
 
     def parse(n)
