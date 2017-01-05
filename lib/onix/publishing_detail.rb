@@ -18,7 +18,7 @@ module ONIX
       if main_publishers.length == 1
         main_publishers.first
       else
-        raise ExpectsOneButHasSeveral, Publisher
+        raise ExpectsOneButHasSeveral, main_publishers.map(&:name)
       end
     end
 
@@ -27,7 +27,7 @@ module ONIX
         if @imprints.length==1
           @imprints.first
         else
-          raise ExpectsOneButHasSeveral, Imprint
+          raise ExpectsOneButHasSeveral, @imprints.map(&:name)
         end
       else
         nil

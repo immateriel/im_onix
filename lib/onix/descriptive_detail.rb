@@ -435,7 +435,7 @@ module ONIX
         if @epub_technical_protections.length == 1
           @epub_technical_protections.first.human
         else
-          raise ExpectsOneButHasSeveral, @epub_technical_protections.map(&:type)
+          raise ExpectsOneButHasSeveral, @epub_technical_protections.map(&:human)
         end
       end
     end
