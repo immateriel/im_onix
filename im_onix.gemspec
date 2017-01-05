@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
     "bin/onix3_to_onix2.rb",
     "bin/onix3_to_onix3.rb",
     "bin/onix_bench.rb",
-    "bin/onix_db.rb",
     "bin/onix_pp.rb",
     "bin/onix_split.rb",
     "data/codelists/codelist-1.yml",
