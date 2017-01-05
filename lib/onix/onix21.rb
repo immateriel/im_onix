@@ -107,7 +107,7 @@ module ONIX
     class Price < SubsetDSL
       element "PriceTypeCode", :subset, :klass => "PriceType"
       element "PriceAmount", :float, {:lambda => lambda { |v| (v*100).round }}
-      element "PriceQualifier", :subset, :klass => "PriceQualifier"
+      element "PriceQualifier", :subset
       element "DiscountCoded", :subset
       element "CurrencyCode", :text
       elements "CountryCode", :text
