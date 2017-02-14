@@ -29,14 +29,19 @@ module ONIX
       end
       @date = OnixDate.from_xml(n)
     end
-
   end
 
   class Price < Subset
-    attr_accessor :amount, :type, :qualifier, :currency, :dates, :territory, :discount, :tax
+    attr_accessor :amount, :type, :qualifier, :currency, :dates, :territory, :discount, :tax, :unpriced_item_type
 
     def initialize
       @dates=[]
+    end
+
+    def amount
+      return 0 if @unpriced_item_type && @unpriced_item_type.human == 'FreeOfCharge'
+
+      @amount
     end
 
     def from_date
@@ -84,6 +89,8 @@ module ONIX
             @tax=Tax.from_xml(t)
           when tag_match("DiscountCoded")
             @discount = Discount.from_xml(t)
+          when tag_match("UnpricedItemType")
+            @unpriced_item_type = UnpricedItemType.from_code(t.text)
         end
       end
     end
