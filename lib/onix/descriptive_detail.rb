@@ -188,6 +188,20 @@ module ONIX
     end
 
     # :category: High level
+    # List of protections type string (None, Watermarking, DRM, AdobeDRM)
+    def protections
+      if product
+        product.protections
+      else
+        if part_of
+          part_of.protections
+        else
+          nil
+        end
+      end
+    end
+
+    # :category: High level
     # digital file filesize in bytes
     def filesize
       if product
@@ -438,6 +452,12 @@ module ONIX
           raise ExpectsOneButHasSeveral, @epub_technical_protections.map(&:type)
         end
       end
+    end
+
+    def protections
+      return nil if @epub_technical_protections.length == 0
+
+      @epub_technical_protections.map(&:human)
     end
 
     def language_of_text
