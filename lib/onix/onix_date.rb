@@ -13,6 +13,7 @@ module ONIX
             @format=DateFormat.from_code(t.text)
           when tag_match("Date")
             date_txt=t.text
+            @format=DateFormat.from_code(t.attribute('dateformat').text) unless t.attribute('dateformat').nil?
         end
       end
 
