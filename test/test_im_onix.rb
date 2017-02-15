@@ -888,6 +888,19 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context "with dateformat attribute on Date element" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/test_dateformat_attr.xml')
+
+      @product = message.products.last
+    end
+
+    should "have a correct publication date" do
+      assert_equal '2016-08-23T06:00:00+0200', @product.publication_date.strftime('%Y-%m-%dT%H:%M:%S%z')
+    end
+  end
+
   context "with several protections in the same product" do
     setup do
       message = ONIX::ONIXMessage.new
