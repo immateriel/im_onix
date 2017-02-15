@@ -407,6 +407,30 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context "product that contains a price free of charge" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices7.xml")
+      @product=@message.products.last
+    end
+
+    should "have a supply with a price in Franec" do
+      supply = @product.supplies.first
+
+      assert_equal 1, supply[:prices].size
+      assert_equal 0, supply[:prices].first[:amount]
+      assert_equal 7, supply[:territory].size
+    end
+
+    should "have a supply free of charge for 8 countries" do
+      supply = @product.supplies.last
+
+      assert_equal 1, supply[:prices].size
+      assert_equal 3000, supply[:prices].first[:amount]
+      assert_equal ['FR'], supply[:territory]
+    end
+  end
+
   context "file full-sender.xml" do
     setup do
       @message = ONIX::ONIXMessage.new
