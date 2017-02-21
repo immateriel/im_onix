@@ -841,4 +841,17 @@ class TestImOnix < Minitest::Test
       assert_equal Date.new(1989, 01, 01), @product.publication_date
     end
   end
+
+  context "with several protections in the same product" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/test_several_protections.xml')
+
+      @product = message.products.last
+    end
+
+    should "have all the protections" do
+      assert_equal ["AdobeDrm", "Readium LCP DRM"], @product.protections
+    end
+  end
 end
