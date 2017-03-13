@@ -406,9 +406,15 @@ module ONIX
     end
 
     # :category: High level
+    # List of protections type string (None, Watermarking, DRM, AdobeDRM)
+    def protections
+      @descriptive_detail.protections
+    end
+
+    # :category: High level
     # product has DRM ?
     def drmized?
-      if @descriptive_detail.protection_type =~ /Drm/
+      if @protections.any? {|p| p =~ /Drm/ }
         true
       else
         false
