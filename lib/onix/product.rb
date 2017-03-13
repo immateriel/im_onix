@@ -161,6 +161,60 @@ module ONIX
       supplies
     end
 
+    # add missing periods when they can be guessed
+    def prices_with_periods(supplies, global_supply)
+      complete_supplies = supplies.select{ |supply| supply[:from_date] && supply[:until_date] }.sort_by { |supply| supply[:from_date] }
+      missing_start_period_supplies = supplies.select{ |supply| supply[:from_date] && !supply[:until_date] }.sort_by { |supply| supply[:from_date] }
+      missing_end_period_supplies = supplies.select{ |supply| !supply[:from_date] && supply[:until_date] }.sort_by { |supply| supply[:until_date] }
+
+      return [global_supply] if [complete_supplies, missing_start_period_supplies, missing_end_period_supplies].all? {|supply| supply.empty? }
+
+      return self.add_missing_periods(complete_supplies, global_supply) unless complete_supplies.empty?
+
+      without_start = missing_start_period_supplies.length == 1 && complete_supplies.empty? && missing_end_period_supplies.empty?
+      without_end = missing_end_period_supplies.length == 1 && complete_supplies.empty? && missing_start_period_supplies.empty?
+
+      return self.add_starting_period(missing_start_period_supplies.first, global_supply) if without_start
+      return self.add_ending_period(missing_end_period_supplies.first, global_supply) if without_end
+
+      [global_supply]
+    end
+
+    def add_missing_periods(supplies, global_supply)
+      new_supplies = []
+
+      supplies.each.with_index do |supply, index|
+        new_supplies << global_supply.dup.tap{ |start_sup| start_sup[:until_date] = supply[:from_date] - 1 } if index == 0
+
+        if index > 0 && index != supplies.length
+          new_supplies << global_supply.dup.tap do |missing_supply|
+            missing_supply[:from_date] = supplies[index - 1][:until_date] + 1
+            missing_supply[:until_date] = supply[:from_date] - 1
+          end
+        end
+
+        new_supplies << supply
+
+        new_supplies << global_supply.dup.tap{ |end_sup| end_sup[:from_date] = supply[:until_date] + 1 } if index == supplies.length - 1
+      end
+
+      new_supplies
+    end
+
+    def add_starting_period(supply, global_supply)
+      missing_supply = global_supply.dup
+      missing_supply[:until_date] = supply[:from_date] - 1
+
+      [missing_supply, supply]
+    end
+
+    def add_ending_period(supply, global_supply)
+      missing_supply = global_supply.dup
+      missing_supply[:from_date] = supply[:until_date] + 1
+
+      [supply, missing_supply]
+    end
+
     # :category: High level
     # flattened supplies only including taxes
     def supplies_including_tax
@@ -771,10 +825,14 @@ module ONIX
     # :category: High level
     # List of ONIX outlets values
     def onix_outlets_values
-      @publishing_detail.sales_rights.map{|sri|
-        sri.sales_restrictions.select{|sr| (!sr.start_date or sr.start_date <= Date.today) and (!sr.end_date or sr.end_date >= Date.today)}.map{|sr|
-          sr.sales_outlets.select{|so|
-            so.identifier and so.identifier.type.human=="OnixSalesOutletIdCode"}.map{|so| so.identifier.value}}}.flatten
+      if @publishing_detail
+        @publishing_detail.sales_rights.map { |sri|
+          sri.sales_restrictions.select { |sr| (!sr.start_date or sr.start_date <= Date.today) and (!sr.end_date or sr.end_date >= Date.today) }.map { |sr|
+            sr.sales_outlets.select { |so|
+              so.identifier and so.identifier.type.human=="OnixSalesOutletIdCode" }.map { |so| so.identifier.value } } }.flatten
+      else
+        []
+      end
     end
 
     def parse(n)
@@ -784,58 +842,5 @@ module ONIX
       end
     end
 
-    # add missing periods when they can be guessed
-    def prices_with_periods(supplies, global_supply)
-      complete_supplies = supplies.select{ |supply| supply[:from_date] && supply[:until_date] }.sort_by { |supply| supply[:from_date] }
-      missing_start_period_supplies = supplies.select{ |supply| supply[:from_date] && !supply[:until_date] }.sort_by { |supply| supply[:from_date] }
-      missing_end_period_supplies = supplies.select{ |supply| !supply[:from_date] && supply[:until_date] }.sort_by { |supply| supply[:until_date] }
-
-      return [global_supply] if [complete_supplies, missing_start_period_supplies, missing_end_period_supplies].all? {|supply| supply.empty? }
-
-      return self.add_missing_periods(complete_supplies, global_supply) unless complete_supplies.empty?
-
-      without_start = missing_start_period_supplies.length == 1 && complete_supplies.empty? && missing_end_period_supplies.empty?
-      without_end = missing_end_period_supplies.length == 1 && complete_supplies.empty? && missing_start_period_supplies.empty?
-
-      return self.add_starting_period(missing_start_period_supplies.first, global_supply) if without_start
-      return self.add_ending_period(missing_end_period_supplies.first, global_supply) if without_end
-
-      [global_supply]
-    end
-
-    def add_missing_periods(supplies, global_supply)
-      new_supplies = []
-
-      supplies.each.with_index do |supply, index|
-        new_supplies << global_supply.dup.tap{ |start_sup| start_sup[:until_date] = supply[:from_date] - 1 } if index == 0
-
-        if index > 0 && index != supplies.length
-          new_supplies << global_supply.dup.tap do |missing_supply|
-            missing_supply[:from_date] = supplies[index - 1][:until_date] + 1
-            missing_supply[:until_date] = supply[:from_date] - 1
-          end
-        end
-
-        new_supplies << supply
-
-        new_supplies << global_supply.dup.tap{ |end_sup| end_sup[:from_date] = supply[:until_date] + 1 } if index == supplies.length - 1
-      end
-
-      new_supplies
-    end
-
-    def add_starting_period(supply, global_supply)
-      missing_supply = global_supply.dup
-      missing_supply[:until_date] = supply[:from_date] - 1
-
-      [missing_supply, supply]
-    end
-
-    def add_ending_period(supply, global_supply)
-      missing_supply = global_supply.dup
-      missing_supply[:from_date] = supply[:until_date] + 1
-
-      [supply, missing_supply]
-    end
   end
 end

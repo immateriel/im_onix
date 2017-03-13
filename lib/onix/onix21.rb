@@ -111,6 +111,8 @@ module ONIX
       element "DiscountCoded", :subset
       element "CurrencyCode", :text
       elements "CountryCode", :text
+      element "PriceEffectiveFrom", :text
+      element "PriceEffectiveUntil", :text
 
       def amount
         @price_amount
@@ -133,11 +135,15 @@ module ONIX
       end
 
       def from_date
-        nil
+        if @price_effective_from
+          Date.strptime(@price_effective_from,"%Y%m%d")
+        end
       end
 
       def until_date
-        nil
+        if @price_effective_until
+          Date.strptime(@price_effective_until,"%Y%m%d")
+        end
       end
 
       def territory
@@ -183,7 +189,7 @@ module ONIX
       end
 
       def available?
-        @product_availability=="20"
+        @product_availability=="20" or @availability_code == "IP"
       end
 
       def suppliers
