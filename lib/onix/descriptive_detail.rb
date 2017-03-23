@@ -72,9 +72,9 @@ module ONIX
     end
 
     def collection_title_element
-      distinctive_title=@title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first
+      distinctive_title=@title_details.select { |td| td.type.human=~/DistinctiveTitle/}.first
       if distinctive_title
-        distinctive_title.title_elements.select { |te| te.level.human=~/CollectionLevel/ }.first
+        distinctive_title.title_elements.select { |te| te.level.human=~/CollectionLevel/ or te.level.human=~/Subcollection/ }.first
       end
     end
 
