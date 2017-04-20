@@ -283,6 +283,8 @@ module ONIX
       elements "Extent", :subset
       elements "Language", :subset
 
+      element "NumberOfPages", :text
+
       elements "Publisher", :subset
       elements "Imprint", :subset
 
@@ -481,7 +483,9 @@ module ONIX
       end
 
       def pages
-        nil
+        if @number_of_pages
+          @number_of_pages.to_i
+        end
       end
 
       def distributor_name
