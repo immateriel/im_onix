@@ -371,6 +371,27 @@
       <SubjectSchemeIdentifier>20</SubjectSchemeIdentifier>
       <SubjectHeadingText>destin de femmes, États-Unis d'Amérique, Asie, Oubli, Amérique du Nord, Guerre, Prix Femina étranger 2012, Exil, Amérique, Japon, mariage forcé</SubjectHeadingText>
     </Subject>
+    <Subject>
+      <SubjectSchemeIdentifier>24</SubjectSchemeIdentifier>
+      <SubjectSchemeName>dummy-subject-scheme</SubjectSchemeName>
+      <SubjectCode>100</SubjectCode>
+      <SubjectHeadingText>Dummy Subject</SubjectHeadingText>
+    </Subject>
+    <Subject>
+      <SubjectSchemeIdentifier>24</SubjectSchemeIdentifier>
+      <SubjectSchemeName>dctr:cdfam</SubjectSchemeName>
+      <SubjectCode>200</SubjectCode>
+    </Subject>
+    <Subject>
+      <SubjectSchemeIdentifier>24</SubjectSchemeIdentifier>
+      <SubjectSchemeName>dctr:cdfam</SubjectSchemeName>
+      <SubjectCode>200.20001</SubjectCode>
+    </Subject>
+    <Subject>
+      <SubjectSchemeIdentifier>24</SubjectSchemeIdentifier>
+      <SubjectSchemeName>dctr:cdfam</SubjectSchemeName>
+      <SubjectCode>200.20001.2000115</SubjectCode>
+    </Subject>
   </DescriptiveDetail>
   <CollateralDetail>
     <TextContent>
