@@ -913,4 +913,29 @@ class TestImOnix < Minitest::Test
       assert_equal ["AdobeDrm", "Readium LCP DRM"], @product.protections
     end
   end
+
+  context "with proprietary subject" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/9782752906700.xml')
+
+      @product = message.products.last
+    end
+
+    should "have proprietary subjects" do
+      assert_equal 4, @product.proprietary_categories.size
+
+      assert_equal 'dummy-subject-scheme', @product.proprietary_categories[0].scheme_name
+      assert_equal 'dctr:cdfam', @product.proprietary_categories[1].scheme_name
+      assert_equal 'dctr:cdfam', @product.proprietary_categories[2].scheme_name
+      assert_equal 'dctr:cdfam', @product.proprietary_categories[3].scheme_name
+
+      assert_equal '100', @product.proprietary_categories[0].code
+      assert_equal 'Dummy Subject', @product.proprietary_categories[0].heading_text
+
+      assert_equal '200', @product.proprietary_categories[1].code
+      assert_equal '200.20001', @product.proprietary_categories[2].code
+      assert_equal '200.20001.2000115', @product.proprietary_categories[3].code
+    end
+  end
 end

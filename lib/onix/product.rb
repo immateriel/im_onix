@@ -170,6 +170,11 @@ module ONIX
       self.clil_categories.map{|c| c.code}.uniq
     end
 
+    # Proprietary categories Subject
+    def proprietary_categories
+      @descriptive_detail.proprietary_categories
+    end
+
     # :category: High level
     # keywords string array
     def keywords

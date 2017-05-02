@@ -488,6 +488,10 @@ module ONIX
       @subjects.select{|s| s.scheme_identifier.human=="Clil"}
     end
 
+    def proprietary_categories
+      @subjects.select{|s| s.scheme_identifier.human=="ProprietarySubjectScheme"}
+    end
+
     def keywords
       kws=@subjects.select{|s| s.scheme_identifier.human=="Keywords"}.map{|kw| kw.heading_text}.compact
       kws.map{|kw| kw.split(/;|,|\n/)}.flatten.map{|kw| kw.strip}
