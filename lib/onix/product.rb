@@ -509,7 +509,6 @@ module ONIX
     # supplies is a hash symbol array in the form :
     #   [{:available=>bool,
     #     :availability_date=>date,
-    #     :supply_dates=>[SupplyDate,...],
     #     :including_tax=>bool,
     #     :currency=>string,
     #     :territory=>string,
@@ -544,7 +543,6 @@ module ONIX
               supply[:suppliers]=sd.suppliers
               supply[:available]=sd.available?
               supply[:availability_date]=availability_date
-              supply[:supply_dates]=sd.supply_dates
 
               supply[:price]=p.amount
               supply[:qualifier]=p.qualifier.human if p.qualifier
@@ -571,7 +569,6 @@ module ONIX
               unpriced_items << {
                 :suppliers => sd.suppliers,
                 :available => sd.available?,
-                :supply_dates => sd.supply_dates,
                 :availability_date => availability_date,
                 :unpriced_item_type => sd.unpriced_item_type.human,
                 :territory => market_territories
@@ -650,7 +647,6 @@ module ONIX
                      :territory=>supply.map{|fs| fs.map{|s| s[:territory]}}.flatten.uniq,
                      :available=>fsupply[:available],
                      :availability_date=>fsupply[:availability_date],
-                     :supply_dates=>fsupply[:supply_dates],
                      :suppliers=>fsupply[:suppliers],
                      :prices=>supply.first.map{|s|
                        s[:amount]=s[:price]

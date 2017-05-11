@@ -746,14 +746,6 @@ class TestImOnix < Minitest::Test
     should "have a public announcement date" do
       assert_equal Date.new(2011, 8, 21), @product.public_announcement_date
     end
-
-    should "have a supply dates" do
-      supply_dates = @product.supplies.first[:supply_dates]
-
-      assert_equal 1, supply_dates.length
-      assert_equal "ExpectedAvailabilityDate", supply_dates.first.role.human
-      assert_equal Date.new(2011, 8, 31), supply_dates.first.date.date
-    end
   end
 
   context "with preorder embargo date" do
