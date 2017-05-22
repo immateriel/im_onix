@@ -13,6 +13,19 @@ class TestImOnix < Minitest::Test
     assert_equal "04", discount.code
   end
 
+  context "wiley 2.1 xml file" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_wiley_data.xml")
+      @product=@message.products.last
+    end
+
+    should "have an edition number" do
+      assert_equal 1, @product.edition_number
+    end
+
+  end
+
   context "certaines n'avaient jamais vu la mer" do
     setup do
       @message = ONIX::ONIXMessage.new
@@ -35,6 +48,10 @@ class TestImOnix < Minitest::Test
 
     should "have an ISBN-13" do
       assert_equal "9782752908643", @product.isbn13
+    end
+
+    should "have an edition number" do
+      assert_equal 1, @product.edition_number
     end
 
     should "have a named proprietary id" do

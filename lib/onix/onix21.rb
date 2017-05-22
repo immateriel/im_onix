@@ -311,6 +311,7 @@ module ONIX
       element "EpubFormat", :text
       element "EpubTypeNote", :text
 
+      element "EditionNumber", :integer
       element "NoEdition", :ignore
       element "NoSeries", :ignore
 
@@ -486,6 +487,10 @@ module ONIX
         if @number_of_pages
           @number_of_pages.to_i
         end
+      end
+
+      def edition_number
+        @edition_number
       end
 
       def distributor_name
