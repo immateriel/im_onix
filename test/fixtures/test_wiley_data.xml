@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ONIXMessage SYSTEM "http://www.editeur.org/onix/2.1/reference/onix-international.dtd">
+<ONIXMessage release="2.1">
+   <Header>
+      <FromSAN>2003372</FromSAN>
+      <FromCompany>Joergen</FromCompany>
+      <FromPerson>Kaare BasseBastard</FromPerson>
+      <FromEmail>test@test.com</FromEmail>
+      <SentDate>20160430</SentDate>
+   </Header>
+   <Product>
+      <RecordReference>9780470020043</RecordReference>
+      <NotificationType>03</NotificationType>
+      <ProductIdentifier>
+         <ProductIDType>03</ProductIDType>
+         <IDValue>9780470020043</IDValue>
+      </ProductIdentifier>
+      <ProductIdentifier>
+         <ProductIDType>15</ProductIDType>
+         <IDValue>9780470020043</IDValue>
+      </ProductIdentifier>
+      <Barcode>00</Barcode>
+      <ProductForm>DG</ProductForm>
+      <EpubType>002</EpubType>
+      <EpubTypeDescription>Adobe Ebook Reader</EpubTypeDescription>
+      <EpubFormat>02</EpubFormat>
+      <Series>
+         <SeriesIdentifier>
+            <SeriesIDType>01</SeriesIDType>
+            <IDValue>7576</IDValue>
+         </SeriesIdentifier>
+         <TitleOfSeries textcase="02">The TEST Finance Series</TitleOfSeries>
+      </Series>
+      <Title textcase="02">
+         <TitleType>01</TitleType>
+         <TitleText>Modern Banking</TitleText>
+      </Title>
+      <WorkIdentifier>
+         <WorkIDType>15</WorkIDType>
+         <IDValue>9780470095003</IDValue>
+      </WorkIdentifier>
+      <Contributor>
+         <SequenceNumber>1</SequenceNumber>
+         <ContributorRole>A01</ContributorRole>
+         <PersonName>Shelagh Heffernan  </PersonName>
+         <PersonNameInverted>Heffernan, Shelagh</PersonNameInverted>
+         <NamesBeforeKey>Shelagh</NamesBeforeKey>
+         <KeyNames>Heffernan</KeyNames>
+         <ProfessionalAffiliation>
+            <Affiliation>Cass Business School, London, UK</Affiliation>
+         </ProfessionalAffiliation>
+      </Contributor>
+      <EditionNumber>1</EditionNumber>
+      <Language>
+         <LanguageRole>01</LanguageRole>
+         <LanguageCode>eng</LanguageCode>
+      </Language>
+      <NumberOfPages>736</NumberOfPages>
+      <BASICMainSubject>BUS004000</BASICMainSubject>
+      <BASICVersion>2015</BASICVersion>
+      <MainSubject>
+         <MainSubjectSchemeIdentifier>26</MainSubjectSchemeIdentifier>
+         <SubjectSchemeVersion>2.0</SubjectSchemeVersion>
+         <SubjectCode>9783</SubjectCode>
+      </MainSubject>
+      <Subject>
+         <SubjectSchemeIdentifier>23</SubjectSchemeIdentifier>
+
+         <SubjectHeadingText>General Finance &amp; Investments</SubjectHeadingText>
+      </Subject>
+      <AudienceCode>06</AudienceCode>
+      <OtherText>
+         <TextTypeCode>01</TextTypeCode>
+         <TextFormat>02</TextFormat>
+         <Text textformat="02"><![CDATA[<b><i>Modern Banking</i></b> focuses on the theory and practice of banking, and its prospects in the new millennium. The book is written for courses in banking and finance at Masters/MBA level, or undergraduate degrees specialising in this area. Bank practitioners wishing to deepen and broaden their understanding of banking issues may also be attracted to this book. While they often have exceptional and detailed knowledge of the areas they have worked in, busy bankers may be all too unaware of the key broader issues. Consider the fundamental questions: <i>What is unique about a bank?</i> and <i>What differentiates it from other financial institutions?</i> Answering these questions begins to show how banks should evolve and adapt - or fail. If bankers know the underlying reasons for <i>why</i> profitable banks exist, it will help them to devise strategies for sustained growth. <p><b><i>Modern Banking</i></b> concludes with a set of case studies that give practical insight into the key issues covered in the book:</p> <ul> <li>The core banking functions</li> <li>Different types of banks and diversification of bank activities</li> <li>Risk management: issues and techniques</li> <li>Global regulation: Basel 1 and Basel 2.</li> <li>Bank regulation in the UK, US, EU, and Japan</li> <li>Banking in emerging markets</li> <li>Bank failure and financial crises</li> <li>Competitive issues, from cost efficiency to mergers and acquisitions</li> <li>Case Studies including: Goldman Sachs, Bankers Trust/Deutsche Bank, Sumitomo Mitsui, Bancomer</li> </ul>]]></Text>
+      </OtherText>
+      <OtherText>
+         <TextTypeCode>04</TextTypeCode>
+         <TextFormat>02</TextFormat>
+         <Text textformat="02"><![CDATA[<b>ACKNOWLEDGEMENTS<i>.</i></b> <p><b>PREFACE<i>.</i></b></p> <p><b>C</b><b>HAPTER</b> <b>1: What are Banks and What Do They Do?</b></p> <p>1.1 Introduction<i>.</i></p> <p>1.2 The Meaning of Banking<i>.</i></p> <p>1.3 Organisational Structures<i>.</i></p> <p>1.4 Banking Structures<i>.</i></p> <p>1.5 Financial Conglomerates.</p> <p>1.6 Central Banking<i>.</i></p> <p>1.7 Summary: Why are Banks Special?</p> <p>1.8 Conclusion<i>.</i></p> <p><b>C</b><b>HAPTER</b> <b>2: Diversification of Banking Activities.</b></p> <p>2.1 Introduction<i>.</i></p> <p>2.2 The Expansion of Banks into Non-banking Financial Services<i>.</i></p> <p>2.3 The Effect of Non-interest Income on Banks’ Total Income.</p> <p>2.4 Global Markets and Centres<i>.</i></p> <p>2.5 International Banking.</p> <p>2.6 Banking Issues in the 21st Century<i>.</i></p> <p>2.7 Conclusion<i>.</i></p> <p><b>C</b><b>HAPTER</b> <b>3: Management of Risks in Banking.</b></p> <p>3.1 Introduction<i>.</i></p> <p>3.2 Key Financial Risks in the 21st Century<i>.</i></p> <p>3.3 Approaches to the Management of Financial Risks<i>.</i></p> <p>3.4 Financial Derivatives and Risk Management<i>.</i></p> <p>3.5 Management of Market Risk<i>.</i></p> <p>3.6 Management of Credit Risk<i>.</i></p> <p>3.7 Risk Management by Major Global Bank<i>.</i></p> <p>3.8 Conclusion<i>.</i></p> <p><b>C</b><b>HAPTER</b> <b>4: Global Regulation of Banks.</b></p> <p>4.1 Introduction<i>.</i></p> <p>4.2 Why Regulate?</p> <p>4.3 International Regulation<i>.</i></p> <p>4.4 Basel 2 – The Three Pillar Approach<i>.</i></p> <p>4.5 Alternative or Complementary Approaches to Basel.</p> <p>4.6 International Financial Architecture<i>.</i></p> <p>4.7 Conclusion.</p> <p><b>C</b><b>HAPTER</b> <b>5: Bank Structure and Regulation: UK, USA, Japan, EU.</b></p> <p>5.1 Introduction<i>.</i></p> <p>5.2 Bank Structure and Regulation in the UK<i>.</i></p> <p>5.3 Bank Structure and Regulation in the USA<i>.</i></p> <p>5.4 Bank Structure and Regulation in Japan<i>.</i></p> <p>5.5 Bank Structure and Regulation in the EU<i>.</i></p> <p>5.6 Conclusions: Structure and Regulation of Banks<i>.</i></p> <p><b>C</b><b>HAPTER</b> <b>6: Banking in Emerging Economies.</b></p> <p>6.1 Introduction<i>.</i></p> <p>6.2 Financial Repression and Evolving Financial Systems<i>.</i></p> <p>6.3 Banking Reforms in Russia, China and India<i>.</i></p> <p>6.4 Islamic Banking<i>.</i></p> <p>6.5 Sovereign and Political Risk Analysis<i>.</i></p> <p>6.6 Conclusion<i>.</i></p> <p><b>C</b><b>HAPTER</b> <b>7: Bank Failures.</b></p> <p>7.1 Introduction<i>.</i></p> <p>7.2 Bank Failure – Definitions<i>.</i></p> <p>7.3 Case Studies on Bank Failure<i>.</i></p> <p>7.4 The Determinants of Bank Failure: A Qualitative Review<i>.</i></p> <p>7.5 Bank Failure: Quantitative Models.</p> <p>7.6 Conclusion<i>.</i></p> <p><b>C</b><b>HAPTER</b> <b>8: Financial Crises.</b></p> <p>8.1 Introduction.</p> <p>8.2 Definitions and Controversies<i>.</i></p> <p>8.3 The South East Asian Financial Crisis, 1997–99<i>.</i></p> <p>8.4 The Japanese Banking Crisis<i>.</i></p> <p>8.5 Scandinavian Banking Crises<i>.</i></p> <p>8.6 Long Term Capital Management (LTCM)<i>.</i></p> <p>8.7 Lender of Last Resort.</p> <p>8.8 Conclusions<i>.</i></p> <p>Appendix 8.1 Japanese Financial Reforms (Big Bang, 1996)<i>.</i></p> <p>Appendix 8.2 Reform of the Regulators<i>.</i></p> <p><b>C</b><b>HAPTER</b> <b>9: Competitive Issues in Banking.</b></p> <p>9.1 Introduction<i>.</i></p> <p>9.2 Measuring Bank Output<i>.</i></p> <p>9.3 X-efficiency, Scale Economies and Scope Economies<i>.</i></p> <p>9.4 Empirical Models of Competition in Banking<i>.</i></p> <p>9.5 Consolidation in the Banking Sector<i>.</i></p> <p>9.6 Conclusion<i>.</i></p> <p><b>C</b><b>HAPTER</b> <b>10: Case Studies.</b></p> <p>10.1 Introduction<i>.</i></p> <p>10.2 Goldman Sachs<i>.</i></p> <p>Appendix<i>.</i></p> <p>10.3 Kidder Peabody Group<i>.</i></p> <p>10.4 From Sakura to Sumitomo Mitsui Financial Group<i>.</i></p> <p>10.5 Bancomer: A Study of an Emerging Market Bank<i>.</i></p> <p>10.6 Credit Lyonnais<i>.</i></p> <p>10.7 Continental Illinois Bank and Trust Company<i>.</i></p> <p>10.8 Bankers Trust: From a Commercial/Investment Bank to Takeover by Deutsche Bank<i>.</i></p> <p><b>REFERENCES/BIBLIOGRAPHY.</b></p> <p><b>INDEX.</b></p>]]></Text>
+      </OtherText>
+      <OtherText>
+         <TextTypeCode>13</TextTypeCode>
+         <TextFormat>02</TextFormat>
+         <Text textformat="02"><![CDATA[<b>Professor Shelagh Heffernan</b> is currently Professor of Banking and Finance at Cass Business School, City University, London and has been a visiting Professor at several universities. <b><i>Modern Banking</i></b> is her fourth book.<br /> A former Commonwealth Scholar at Oxford University, Professor Heffernan is also a past beneficiary of a Leverhulme Trust Research Award, which funded new research on competition in banking, and recently received a second award from the Leverhulme Trust. She publishes in top academic journals - her paper, ‘How do UK Institutions Really Price their Banking Products?’ (<i>Journal of Banking and Finance</i>) was chosen as one of the top 50 published articles by Emerald Management Review.<br /> Current research includes: SMEs and banking services, the conversion of mutuals to bank stock firms, monetary policy and pass through (funded by an ESRC grant), and M&As in banking. Professor Heffernan is an Associate Member of the Higher Education Academy and has received two Distinguished Teaching and Learning awards.]]></Text>
+      </OtherText>
+      <OtherText>
+         <TextTypeCode>18</TextTypeCode>
+         <TextFormat>02</TextFormat>
+         <Text textformat="02"><![CDATA[<b><i>Modern Banking</i></b> is a sequel to the highly successful <b><i>Modern Banking in Theory and Practice</i></b>, first published in 1996. Over the last decade many aspects of banking have changed considerably, though the key features that distinguish banks from other financial institutions remain. Some might question the need for a book on banking rather than one on financial institutions - while banks remain special and unique to the financial sector, books need to be devoted to them. <p><b><i>Modern Banking</i></b> focuses on the theory and practice of banking, and its prospects in the new millennium. The book is written for courses in banking and finance at Masters/MBA level, or undergraduate degrees specialising in this area. Bank practitioners wishing to deepen and broaden their understanding of banking issues may also be attracted to this book. While they often have exceptional and detailed knowledge of the areas they have worked in, busy bankers may be all too unaware of the key broader issues. Consider the fundamental questions: <i>What is unique about a bank?</i> and <i>What differentiates it from other financial institutions?</i> Answering these questions begins to show how banks should evolve and adapt - or fail. If bankers know the underlying reasons for <i>why</i> profitable banks exist, it will help them to devise strategies for sustained growth.</p> <p><b><i>Modern Banking</i></b> concludes with a set of case studies that give practical insight into the key issues covered in the book:</p> <ul> <li>The core banking functions</li> <li>Different types of banks and diversification of bank activities</li> <li>Risk management: issues and techniques</li> <li>Global regulation: Basel 1 and Basel 2.</li> <li>Bank regulation in the UK, US, EU, and Japan</li> <li>Banking in emerging markets</li> <li>Bank failure and financial crises</li> <li>Competitive issues, from cost efficiency to mergers and acquisitions</li> <li>Case Studies including: Goldman Sachs, Bankers Trust/Deutsche Bank, Sumitomo Mitsui, Bancomer</li> </ul>]]></Text>
+      </OtherText>
+      <MediaFile>
+         <MediaFileTypeCode>04</MediaFileTypeCode>
+         <MediaFileFormatCode>03</MediaFileFormatCode>
+         <MediaFileLinkTypeCode>01</MediaFileLinkTypeCode>
+         <MediaFileLink>http://TEST.com/images/db/jimages/9780470095003.jpg</MediaFileLink>
+      </MediaFile>
+      <Imprint>
+
+         <NameCodeType>02</NameCodeType>
+         <NameCodeTypeName>Test Imprint Code List</NameCodeTypeName>
+         <NameCodeValue>JW</NameCodeValue>
+
+         <ImprintName>Test</ImprintName>
+      </Imprint>
+      <Publisher>
+         <PublishingRole>01</PublishingRole>
+         <PublisherName>Test</PublisherName>
+         <Website>
+            <WebsiteRole>18</WebsiteRole>
+            <WebsiteLink>http://www.test.com</WebsiteLink>
+         </Website>
+      </Publisher>
+      <CountryOfPublication>GB</CountryOfPublication>
+      <PublishingStatus>04</PublishingStatus>
+      <PublicationDate>20050505</PublicationDate>
+      <CopyrightYear>1984</CopyrightYear>
+      <SalesRights>
+         <SalesRightsType>01</SalesRightsType>
+         <RightsTerritory>WORLD</RightsTerritory>
+      </SalesRights>
+      <RelatedProduct>
+         <RelationCode>13</RelationCode>
+         <ProductIdentifier>
+            <ProductIDType>03</ProductIDType>
+            <IDValue>9780470095003</IDValue>
+         </ProductIdentifier>
+         <ProductIdentifier>
+            <ProductIDType>15</ProductIDType>
+            <IDValue>9780470095003</IDValue>
+         </ProductIdentifier>
+         <ProductForm>BC</ProductForm>
+      </RelatedProduct>
+      <SupplyDetail>
+         <SupplierSAN>2002272</SupplierSAN>
+         <SupplierName>Kaare</SupplierName>
+         <TelephoneNumber>877-762-2974</TelephoneNumber>
+         <FaxNumber>000-597-3399</FaxNumber>
+         <EmailAddress>test@test.com</EmailAddress>
+         <ReturnsCodeType>02</ReturnsCodeType>
+         <ReturnsCode>C</ReturnsCode>
+         <AvailabilityCode>IP</AvailabilityCode>
+         <ProductAvailability>21</ProductAvailability>
+         <Stock>
+            <LocationIdentifier>
+               <LocationIDType>02</LocationIDType>
+               <IDTypeName>76</IDTypeName>
+               <IDValue>2</IDValue>
+            </LocationIdentifier>
+            <LocationName>Test-1</LocationName>
+            <OnHand>1111111</OnHand>
+         </Stock>
+         <Price>
+            <PriceTypeCode>01</PriceTypeCode>
+            <DiscountCoded>
+               <DiscountCodeType>02</DiscountCodeType>
+
+               <DiscountCode>P</DiscountCode>
+            </DiscountCoded>
+            <PriceAmount>10000.40</PriceAmount>
+            <CurrencyCode>USD</CurrencyCode>
+         </Price>
+      </SupplyDetail>
+   </Product>
+</ONIXMessage>
