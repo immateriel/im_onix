@@ -630,7 +630,7 @@ module ONIX
       grouped_territories_supplies={}
       grouped_supplies.each do |ksup,supply|
         fsupply=supply.first
-        pr_key="#{fsupply[:available]}_#{fsupply[:including_tax]}_#{fsupply[:currency]}"
+        pr_key="#{fsupply[:available]}_#{fsupply[:including_tax]}_#{fsupply[:currency]}_#{fsupply[:territory].join('_')}"
         supply.each do |s|
           pr_key+="_#{s[:price]}_#{s[:from_date]}_#{s[:until_date]}"
         end
