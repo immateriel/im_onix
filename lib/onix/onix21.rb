@@ -59,6 +59,27 @@ module ONIX
       end
     end
 
+    class MediaFileTypeCode < CodeFromYaml
+      private
+      def self.code_ident
+        38
+      end
+    end
+
+    class MediaFileFormatCode < CodeFromYaml
+      private
+      def self.code_ident
+        36
+      end
+    end
+
+    class MediaFileLinkTypeCode < CodeFromYaml
+      private
+      def self.code_ident
+        37
+      end
+    end
+
     # ONIX 2.1 subset
 
     class Title < SubsetDSL
@@ -85,6 +106,29 @@ module ONIX
 
       def type
         @text_type_code
+      end
+    end
+
+    class MediaFile < SubsetDSL
+      element "MediaFileTypeCode", :subset
+      element "MediaFileFormatCode", :subset
+      element "MediaFileLinkTypeCode", :subset
+      element "MediaFileLink", :text
+
+      def type
+        @media_file_type_code
+      end
+
+      def format
+        @media_file_format_code
+      end
+
+      def link_type
+        @media_file_link_type_code
+      end
+
+      def link
+        @media_file_link
       end
     end
 
@@ -282,6 +326,7 @@ module ONIX
 
       elements "Extent", :subset
       elements "Language", :subset
+      elements "MediaFile", :subset
 
       element "NumberOfPages", :text
 
@@ -497,6 +542,15 @@ module ONIX
         nil
       end
 
+      def frontcover_url
+        fc=@media_files.select { |mf| mf.media_file_type_code.human=="ImageFrontCover" && mf.media_file_link_type_code.human=="Url"}
+        if fc.length > 0
+          fc.first.link
+        else
+          nil
+        end
+      end
+
       # TODO
       def publisher_collection_title
         nil
@@ -521,10 +575,6 @@ module ONIX
 
       # doesn't apply
       def protection_type
-        nil
-      end
-
-      def frontcover_url
         nil
       end
 
