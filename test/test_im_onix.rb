@@ -24,6 +24,9 @@ class TestImOnix < Minitest::Test
       assert_equal 1, @product.edition_number
     end
 
+    should "have a frontcover_url" do
+      assert_equal "http://TEST.com/images/db/jimages/9780470095003.jpg", @product.frontcover_url
+    end
   end
 
   context "certaines n'avaient jamais vu la mer" do
