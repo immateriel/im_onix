@@ -98,6 +98,11 @@ class TestImOnix < Minitest::Test
       assert_equal "fre", @product.language_code_of_text
     end
 
+    should "have some keywords" do
+      assert_equal 11, @product.keywords.length
+      assert_equal ["destin de femmes", "États-Unis d'Amérique", "Asie", "Oubli", "Amérique du Nord", "Guerre", "Prix Femina étranger 2012", "Exil", "Amérique", "Japon", "mariage forcé"], @product.keywords
+    end
+
     should "be bundle" do
       assert_equal true, @product.bundle?
     end
