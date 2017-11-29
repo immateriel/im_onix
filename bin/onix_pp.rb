@@ -2,10 +2,11 @@
 require 'im_onix'
 
 filename=ARGV[0]
+version=ARGV[1]
 
 if filename
   msg=ONIX::ONIXMessage.new
-  msg.parse(filename)
+  msg.parse(filename,nil,version)
 
 #m=File.open("test.dump","wb")
 #m.write Marshal.dump(msg)
