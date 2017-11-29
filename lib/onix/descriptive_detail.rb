@@ -490,7 +490,6 @@ module ONIX
     def keywords
       kws=@subjects.select { |s| s.scheme_identifier.human=="Keywords" }.map { |kw| kw.heading_text }.compact
       kws=kws.flat_map { |kw| kw.split(/;|,|\n/) }.map { |kw| kw.strip }
-      pp kws
       kws.delete_if{|k| k==""}
       kws
     end
