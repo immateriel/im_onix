@@ -441,7 +441,7 @@ module ONIX
     end
 
     def file_description
-      @form_description
+      @product_form_description
     end
 
     def protection_type
