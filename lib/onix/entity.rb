@@ -48,6 +48,22 @@ module ONIX
       end
     end
 
+    def serialize(xml)
+      @identifiers.each do |identifier|
+        xml.send(self.class.identifier_tag,nil){
+          identifier.serialize(xml)
+        }
+      end
+      if @name
+        xml.send(self.class.name_tag,@name)
+      end
+      if @role
+        xml.send(self.class.role_tag,nil) {
+          @role.serialize(xml)
+        }
+      end
+    end
+
     private
     def self.prefix
     end

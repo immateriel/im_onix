@@ -34,6 +34,9 @@ module ONIX
     def parse(n)
     end
 
+    def serialize(xml)
+    end
+
     def unsupported(tag)
 #      raise SubsetUnsupported,tag.name
 #      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{ShortToRef.names[tag.name]})"
@@ -50,7 +53,7 @@ module ONIX
   end
 
   class ElementParser
-    attr_accessor :type, :name
+    attr_accessor :type, :name, :short
 
     def self.inflectors
       [['ox', 'oxes'],
@@ -83,6 +86,7 @@ module ONIX
       @name=name
       @type=type
       @pluralize=true
+      @short = false
       @array=false
       @lambda=nil
       if options[:array]
@@ -159,11 +163,10 @@ module ONIX
     def self.element(name, type, options={})
       @elements ||= {}
       @elements[name]=ElementParser.new(name, type, options)
-#      puts "#{self.name} REGISTER ELEMENT #{name} #{@elements[name].to_instance}"
       short_name=self.ref_to_short(name)
       if short_name
-        @elements[short_name]=@elements[name]
-#        puts "#{self.name} REGISTER SHORT ELEMENT #{short_name} #{@elements[name].to_instance}"
+        @elements[short_name]=@elements[name].dup
+        @elements[short_name].short = true
       end
       attr_accessor @elements[name].to_sym
     end
@@ -215,10 +218,6 @@ module ONIX
     def parse(n)
       n.elements.each do |t|
         name = t.name
-#        short_name=self.class.short_to_ref(name)
-#        if short_name
-#          name=short_name
-#        end
         e=self.class.ancestors_registered_elements[name]
         if e
           case e.type
@@ -247,6 +246,45 @@ module ONIX
           end
         else
           unsupported(t)
+        end
+      end
+    end
+
+    def serialize(xml)
+      self.class.ancestors_registered_elements.each do |n, e|
+        unless e.short
+          v = instance_variable_get(e.to_instance)
+          if v
+            if e.is_array?
+              v.each do |vv|
+                case e.type
+                  when :subset
+                    xml.send(n, nil) {
+                      vv.serialize(xml)
+                    }
+                  when :text, :integer, :float, :bool
+                    unless vv.respond_to?(:empty?) ? !!vv.empty? : !vv # rails blank?
+                      xml.send(n, vv)
+                    end
+                  when :ignore
+                  else
+                end
+              end
+            else
+              case e.type
+                when :subset
+                  xml.send(n, nil) {
+                    v.serialize(xml)
+                  }
+                when :text, :integer, :float, :bool
+                  unless v.respond_to?(:empty?) ? !!v.empty? : !v # rails blank?
+                    xml.send(n, v)
+                  end
+                when :ignore
+                else
+              end
+            end
+          end
         end
       end
     end

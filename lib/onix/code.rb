@@ -13,6 +13,10 @@ module ONIX
       @human=self.class.hash[n.text]
     end
 
+    def serialize(xml)
+      xml.text(@code)
+    end
+
     # create Code from string ONIX code
     def self.from_code(code)
       o=self.new

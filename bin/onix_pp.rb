@@ -3,14 +3,12 @@ require 'im_onix'
 
 filename=ARGV[0]
 version=ARGV[1]
+encoding=ARGV[2]
 
 if filename
   msg=ONIX::ONIXMessage.new
-  msg.parse(filename,nil,version)
+  msg.parse(filename,encoding,version)
 
-#m=File.open("test.dump","wb")
-#m.write Marshal.dump(msg)
-#m.close
   puts "Release: #{msg.release}"
 
   if msg.sender
