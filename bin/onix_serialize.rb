@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 require 'im_onix'
-
+require 'onix/serializer'
 filename=ARGV[0]
 version=ARGV[1]
 
@@ -11,7 +11,8 @@ if filename
     xml.ONIXMessage {
       msg.products.each do |product|
         xml.Product {
-          product.serialize(xml)
+          ONIX::Serializer::Default::Subset.recursive_serialize(xml, product)
+#          product.serialize(xml, nil)
         }
       end
     }

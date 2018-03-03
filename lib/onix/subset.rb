@@ -34,9 +34,6 @@ module ONIX
     def parse(n)
     end
 
-    def serialize(xml)
-    end
-
     def unsupported(tag)
 #      raise SubsetUnsupported,tag.name
 #      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{ShortToRef.names[tag.name]})"
@@ -256,45 +253,6 @@ module ONIX
           end
         else
           unsupported(t)
-        end
-      end
-    end
-
-    def serialize(xml)
-      self.class.ancestors_registered_elements.each do |n, e|
-        unless e.short
-          v = instance_variable_get(e.to_instance)
-          if v
-            if e.is_array?
-              v.each do |vv|
-                case e.type
-                  when :subset
-                    xml.send(n, nil) {
-                      vv.serialize(xml)
-                    }
-                  when :text, :integer, :float, :bool
-                    unless vv.respond_to?(:empty?) ? !!vv.empty? : !vv # rails blank?
-                      xml.send(n, vv)
-                    end
-                  when :ignore
-                  else
-                end
-              end
-            else
-              case e.type
-                when :subset
-                  xml.send(n, nil) {
-                    v.serialize(xml)
-                  }
-                when :text, :integer, :float, :bool
-                  unless v.respond_to?(:empty?) ? !!v.empty? : !v # rails blank?
-                    xml.send(n, e.serialize_lambda(v))
-                  end
-                when :ignore
-                else
-              end
-            end
-          end
         end
       end
     end

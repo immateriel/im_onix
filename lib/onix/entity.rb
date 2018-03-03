@@ -3,6 +3,8 @@ require 'onix/identifier'
 require 'onix/website'
 
 module ONIX
+  module EntityHelper
+  end
   class Entity < SubsetDSL
     # entity name
     attr_accessor :name
@@ -12,6 +14,7 @@ module ONIX
     attr_accessor :identifiers
 
     include GlnMethods
+    include EntityHelper
 
     def initialize
       super
@@ -45,22 +48,6 @@ module ONIX
               @identifiers << self.class.identifier_class.parse(t)
             end
         end
-      end
-    end
-
-    def serialize(xml)
-      if @role
-        xml.send(self.class.role_tag,nil) {
-          @role.serialize(xml)
-        }
-      end
-      @identifiers.each do |identifier|
-        xml.send(self.class.identifier_tag,nil){
-          identifier.serialize(xml)
-        }
-      end
-      if @name
-        xml.send(self.class.name_tag,@name)
       end
     end
 

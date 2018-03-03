@@ -25,10 +25,6 @@ module ONIX
         @feature_value=SupportingResourceFileFormat.from_code(@feature_value)
       end
     end
-
-    def serialize(xml)
-      super
-    end
   end
 
   class ResourceVersion < SubsetDSL

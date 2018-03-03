@@ -50,14 +50,6 @@ module ONIX
       end
     end
 
-    def serialize_date(xml)
-      xml.DateFormat {
-        @date_format.serialize(xml)
-      }
-      code_format=format_from_code(@date_format.code)
-      xml.Date(@date.strftime(code_format))
-    end
-
     def format_from_code(code)
       case code
         when "00"
@@ -109,11 +101,6 @@ module ONIX
       super
       parse_date(n)
     end
-
-    def serialize(xml)
-      super
-      serialize_date(xml)
-    end
   end
 
   class PriceDate < SubsetDSL
@@ -129,11 +116,6 @@ module ONIX
     def parse(n)
       super
       parse_date(n)
-    end
-
-    def serialize(xml)
-      super
-      serialize_date(xml)
     end
   end
 
@@ -151,11 +133,6 @@ module ONIX
       super
       parse_date(n)
     end
-
-    def serialize(xml)
-      super
-      serialize_date(xml)
-    end
   end
 
   class PublishingDate < SubsetDSL
@@ -172,11 +149,6 @@ module ONIX
       super
       parse_date(n)
     end
-
-    def serialize(xml)
-      super
-      serialize_date(xml)
-    end
   end
 
   class ContentDate < SubsetDSL
@@ -192,11 +164,6 @@ module ONIX
     def parse(n)
       super
       parse_date(n)
-    end
-
-    def serialize(xml)
-      super
-      serialize_date(xml)
     end
   end
 end
