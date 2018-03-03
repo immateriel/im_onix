@@ -4,7 +4,7 @@ module ONIX
   class ResourceVersionFeature < SubsetDSL
     element "ResourceVersionFeatureType", :subset
     elements "FeatureNote", :text
-    element "FeatureValue", :text
+    element "FeatureValue", :text, :serialize_lambda => lambda {|v| v.class == SupportingResourceFileFormat ? v.code : v}
 
     def type
       @resource_version_feature_type
@@ -25,13 +25,17 @@ module ONIX
         @feature_value=SupportingResourceFileFormat.from_code(@feature_value)
       end
     end
+
+    def serialize(xml)
+      super
+    end
   end
 
   class ResourceVersion < SubsetDSL
     element "ResourceForm", :subset
+    elements "ResourceVersionFeature", :subset
     elements "ResourceLink", :text
     elements "ContentDate", :subset
-    elements "ResourceVersionFeature", :subset
 
     # shortcuts
     def form

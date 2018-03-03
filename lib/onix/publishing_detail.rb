@@ -2,15 +2,15 @@ require 'onix/sales_rights'
 require 'onix/date'
 module ONIX
   class PublishingDetail < SubsetDSL
-    element "PublishingStatus", :subset
-    elements "SalesRights", :subset, {:pluralize=>false}
-    element "SalesRestriction", :subset
-    element "ROWSalesRightsType", :subset, {:klass=>"SalesRightsType"}
-    elements "PublishingDate", :subset
+    elements "Imprint", :subset
     elements "Publisher", :subset
     element "CityOfPublication", :text
     element "CountryOfPublication", :text
-    elements "Imprint", :subset
+    element "PublishingStatus", :subset
+    elements "PublishingDate", :subset
+    elements "SalesRights", :subset, {:pluralize=>false}
+    element "ROWSalesRightsType", :subset, {:klass=>"SalesRightsType"}
+    element "SalesRestriction", :subset
 
     def publisher
       main_publishers = @publishers.select { |p| p.role.human=="Publisher" }

@@ -1,11 +1,11 @@
 module ONIX
   class Subject < SubsetDSL
-    element "SubjectCode", :text
-    element "SubjectHeadingText", :text
+    element "MainSubject", :bool
     element "SubjectSchemeIdentifier", :subset
     element "SubjectSchemeName", :text
     element "SubjectSchemeVersion", :text
-    element "MainSubject", :bool
+    element "SubjectCode", :text
+    element "SubjectHeadingText", :text
 
     # shortcuts
     def code

@@ -88,16 +88,18 @@ module ONIX
       @pluralize=true
       @short = false
       @array=false
-      @lambda=nil
+      @parse_lambda = nil
+      @serialize_lambda = nil
       if options[:array]
         @array=true
       end
       if options[:pluralize]==false
         @pluralize=false
       end
-      if options[:lambda]
-        @lambda=options[:lambda]
-      end
+
+      @parse_lambda=options[:parse_lambda]
+      @serialize_lambda=options[:serialize_lambda]
+
       if options[:klass]
         @klass_name=options[:klass]
       else
@@ -105,9 +107,17 @@ module ONIX
       end
     end
 
-    def lambda(v)
-      if @lambda
-        @lambda.call(v)
+    def parse_lambda(v)
+      if @parse_lambda
+        @parse_lambda.call(v)
+      else
+        v
+      end
+    end
+
+    def serialize_lambda(v)
+      if @serialize_lambda
+        @serialize_lambda.call(v)
       else
         v
       end
@@ -241,7 +251,7 @@ module ONIX
             if e.is_array?
               instance_variable_get(e.to_instance).send(:push, val)
             else
-              instance_variable_set(e.to_instance, e.lambda(val))
+              instance_variable_set(e.to_instance, e.parse_lambda(val))
             end
           end
         else
@@ -278,7 +288,7 @@ module ONIX
                   }
                 when :text, :integer, :float, :bool
                   unless v.respond_to?(:empty?) ? !!v.empty? : !v # rails blank?
-                    xml.send(n, v)
+                    xml.send(n, e.serialize_lambda(v))
                   end
                 when :ignore
                 else

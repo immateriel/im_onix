@@ -150,7 +150,7 @@ module ONIX
 
     class Price < SubsetDSL
       element "PriceTypeCode", :subset, :klass => "PriceType"
-      element "PriceAmount", :float, {:lambda => lambda { |v| (v*100).round }}
+      element "PriceAmount", :float, {:parse_lambda => lambda { |v| (v*100).round }}
       element "PriceQualifier", :subset
       element "DiscountCoded", :subset
       element "CurrencyCode", :text
@@ -225,7 +225,7 @@ module ONIX
 
       element "AvailabilityCode", :text
       element "ProductAvailability", :text
-      element "OnSaleDate", :text, {:lambda => lambda { |v| Date.strptime(v, "%Y%m%d") }}
+      element "OnSaleDate", :text, {:parse_lambda => lambda { |v| Date.strptime(v, "%Y%m%d") }}
       elements "Price", :subset
 
       def availability_date
@@ -345,7 +345,7 @@ module ONIX
       elements "Subject", :subset
 
       element "PublishingStatus", :text
-      element "PublicationDate", :text, {:lambda => lambda { |v| Date.strptime(v, "%Y%m%d") }}
+      element "PublicationDate", :text, {:parse_lambda => lambda { |v| Date.strptime(v, "%Y%m%d") }}
 
       elements "RelatedProduct", :subset
 

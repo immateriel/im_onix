@@ -1,10 +1,10 @@
 module ONIX
   class TextContent < SubsetDSL
     element "TextType", :subset
-    element "Text", :text
-    element "SourceTitle", :text
-    element "TextAuthor", :text
     element "ContentAudience", :subset
+    element "Text", :text
+    element "TextAuthor", :text
+    element "SourceTitle", :text
 
     # shortcuts
     def type

@@ -305,28 +305,35 @@ module ONIX
   end
 
   class DescriptiveDetail < SubsetDSL
-    elements "TitleDetail", :subset
-    elements "Contributor", :subset
-    elements "Collection", :subset
-    elements "Extent", :subset
-    element "EditionNumber", :integer
-    element "EditionType", :subset
-    elements "Language", :subset
     element "ProductComposition", :subset
     element "ProductForm", :subset
+    elements "ProductFormDetail", :subset
     elements "ProductFormFeature", :subset
     element "ProductFormDescription", :text
-    elements "ProductFormDetail", :subset
     element "PrimaryContentType", :subset, {:klass=>"ProductContentType"}
     elements "ProductContentType", :subset
     elements "EpubTechnicalProtection", :subset
     elements "EpubUsageConstraint", :subset
-    elements "AudienceCode", :subset
     elements "ProductPart", :subset
-    elements "Subject", :subset
-    element "NoEdition", :ignore
+
+    elements "Collection", :subset
     element "NoCollection", :ignore
 
+    elements "TitleDetail", :subset
+
+    elements "Contributor", :subset
+
+    element "EditionType", :subset
+    element "EditionNumber", :integer
+    element "NoEdition", :ignore
+
+    elements "Language", :subset
+
+    elements "Extent", :subset
+
+    elements "Subject", :subset
+
+    elements "AudienceCode", :subset
 
     # shortcuts
     def form

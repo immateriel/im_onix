@@ -4,15 +4,19 @@ require 'onix/date'
 
 module ONIX
   class Price < SubsetDSL
-    elements "PriceDate", :subset
-    element "CurrencyCode", :text
-    element "Territory", :subset
     element "PriceType", :subset
     element "PriceQualifier", :subset
-    element "PriceAmount", :float, {:lambda=>lambda{|v| (v*100).round}}
-    element "PriceStatus", :subset
-    element "Tax", :subset
     element "DiscountCoded", :subset
+    element "PriceStatus", :subset
+    elements "PriceDate", :subset
+    element "PriceAmount", :float,
+            {
+                :parse_lambda => lambda { |v| (v*100).round },
+                :serialize_lambda => lambda {|v| v/100.0}
+            }
+    element "Tax", :subset
+    element "CurrencyCode", :text
+    element "Territory", :subset
 
     # shortcuts
     def dates
@@ -40,7 +44,7 @@ module ONIX
     end
 
     def from_date
-      dt=@price_dates.select{|d| d.role.human=="FromDate"}.first
+      dt=@price_dates.select { |d| d.role.human=="FromDate" }.first
       if dt
         dt.date
       else

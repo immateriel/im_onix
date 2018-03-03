@@ -297,13 +297,13 @@ module ONIX
     include ProprietaryIdMethods
 
     element "RecordReference", :text
-    elements "ProductIdentifier", :subset
     element "NotificationType", :subset
     element "RecordSourceName", :text
-    element "RelatedMaterial", :subset
+    elements "ProductIdentifier", :subset
     element "DescriptiveDetail", :subset
     element "CollateralDetail", :subset
     element "PublishingDetail", :subset
+    element "RelatedMaterial", :subset
     elements "ProductSupply", :subset
 
     # shortcuts

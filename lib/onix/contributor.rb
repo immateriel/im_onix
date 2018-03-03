@@ -3,16 +3,19 @@ require 'onix/website'
 
 module ONIX
   class Contributor < SubsetDSL
-    element "NamesBeforeKey", :text
-    element "KeyNames", :text
+    element "SequenceNumber", :integer
+    element "ContributorRole", :subset
+    elements "NameIdentifier", :subset
+
     element "PersonName", :text
     element "PersonNameInverted", :text
-    element "ContributorRole", :subset
-    element "ContributorPlace", :subset
+
+    element "NamesBeforeKey", :text
+    element "KeyNames", :text
+
     element "BiographicalNote", :text
-    element "SequenceNumber", :integer
     elements "Website", :subset
-    elements "NameIdentifier", :subset
+    element "ContributorPlace", :subset
 
     def role
       @contributor_role

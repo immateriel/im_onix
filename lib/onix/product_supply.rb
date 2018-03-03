@@ -8,9 +8,9 @@ module ONIX
   end
 
   class MarketPublishingDetail < SubsetDSL
-    elements "MarketDate", :subset
-    element "MarketPublishingStatus", :subset
     elements "PublisherRepresentative", :subset, {:klass=>"Agent"}
+    element "MarketPublishingStatus", :subset
+    elements "MarketDate", :subset
 
     def availability_date
       av=@market_dates.select{|sd| sd.role.human=="PublicationDate" || sd.role.human=="EmbargoDate"}.first
@@ -23,8 +23,8 @@ module ONIX
   end
 
   class SupplyDetail < SubsetDSL
-    element "ProductAvailability", :subset
     elements "Supplier", :subset
+    element "ProductAvailability", :subset
     elements "SupplyDate", :subset
     elements "Price", :subset
     element "UnpricedItemType", :subset
@@ -56,9 +56,9 @@ module ONIX
   end
 
   class ProductSupply < SubsetDSL
-    elements "SupplyDetail", :subset
     elements "Market", :subset
     element "MarketPublishingDetail", :subset
+    elements "SupplyDetail", :subset
 
     def availability_date
       if @market_publishing_detail
