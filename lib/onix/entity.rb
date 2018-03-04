@@ -51,7 +51,6 @@ module ONIX
       end
     end
 
-    private
     def self.prefix
     end
 
@@ -65,7 +64,6 @@ module ONIX
   end
 
   class Agent < Entity
-    private
     def self.prefix
       "Agent"
     end
@@ -80,7 +78,6 @@ module ONIX
   end
 
   class Imprint < Entity
-    private
     def self.prefix
       "Imprint"
     end
@@ -97,7 +94,6 @@ module ONIX
   class Supplier < Entity
     elements "Website", :subset
 
-    private
     def self.prefix
       "Supplier"
     end
@@ -119,7 +115,6 @@ module ONIX
       @websites = []
     end
 
-    private
     def self.prefix
       "Publisher"
     end
