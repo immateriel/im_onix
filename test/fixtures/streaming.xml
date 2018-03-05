@@ -180,7 +180,7 @@
 			<SupportingResource>
 				<ResourceContentType>15</ResourceContentType>
 				<ContentAudience>00</ContentAudience>
-				<ResourceMode>03</ResourceMode>
+				<ResourceMode>04</ResourceMode>
 				<ResourceFeature>
 					<ResourceFeatureType>02</ResourceFeatureType>
 					<FeatureValue>Extrait</FeatureValue>

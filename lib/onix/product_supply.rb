@@ -13,7 +13,7 @@ module ONIX
     elements "MarketDate", :subset
 
     def availability_date
-      av=@market_dates.select{|sd| sd.role.human=="PublicationDate" || sd.role.human=="EmbargoDate"}.first
+      av=@market_dates.availability.first
       if av
         av.date
       else
@@ -46,7 +46,7 @@ module ONIX
     end
 
     def availability_date
-      av=@supply_dates.select{|sd| sd.role.human=="ExpectedAvailabilityDate" || sd.role.human=="EmbargoDate"}.first
+      av=@supply_dates.availability.first
       if av
         av.date
       else

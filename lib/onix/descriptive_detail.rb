@@ -10,6 +10,9 @@ module ONIX
     element "PartNumber", :integer
     element "SequenceNumber", :integer
 
+    scope :product_level, lambda { human_code_match(:title_element_level, /Product/)}
+    scope :collection_level, lambda { human_code_match(:title_element_level, /collection/i)}
+
     # shortcuts
     def level
       @title_element_level
@@ -36,8 +39,21 @@ module ONIX
     element "TitleType", :subset
     elements "TitleElement", :subset
 
+    scope :distinctive_title, lambda { human_code_match(:title_type, /DistinctiveTitle/)}
+
     def type
       @title_type
+    end
+
+    # :category: High level
+    # flatten title string
+    def title
+      title_element = @title_elements.product_level #select { |te| te.level.human=~/Product/ }
+      if title_element.size > 0
+        title_element.first.title
+      else
+        nil
+      end
     end
   end
 
@@ -45,6 +61,8 @@ module ONIX
     element "CollectionType", :subset
     elements "CollectionIdentifier", :subset
     elements "TitleDetail", :subset
+
+    scope :publisher, lambda { human_code_match(:title_type, "PublisherCollection")}
 
     # shortcuts
     def type
@@ -72,9 +90,11 @@ module ONIX
     end
 
     def collection_title_element
-      distinctive_title=@title_details.select { |td| td.type.human=~/DistinctiveTitle/}.first
+      distinctive_title=@title_details.distinctive_title.first
+      #select { |td| td.type.human=~/DistinctiveTitle/}.first
       if distinctive_title
-        distinctive_title.title_elements.select { |te| te.level.human=~/CollectionLevel/ or te.level.human=~/Subcollection/ }.first
+        distinctive_title.title_elements.collection_level.first
+            #select { |te| te.level.human=~/CollectionLevel/ or te.level.human=~/Subcollection/ }.first
       end
     end
 
@@ -208,6 +228,9 @@ module ONIX
     element "ExtentUnit", :subset
     element "ExtentValue", :text
 
+    scope :filesize, lambda { human_code_match(:extent_type, /Filesize/)}
+    scope :page, lambda { human_code_match(:extent_type, /Page/)}
+
     # shortcuts
     def type
       @extent_type
@@ -274,6 +297,8 @@ module ONIX
   class Language < SubsetDSL
     element "LanguageRole", :subset
     element "LanguageCode", :subset
+
+    scope :of_text, lambda{human_code_match(:language_role, "LanguageOfText")}
 
     # shortcuts
     def role
@@ -373,11 +398,11 @@ module ONIX
     end
 
     def product_title_element
-      @title_details.select { |td| td.type.human=~/DistinctiveTitle/ }.first.title_elements.select { |te| te.level.human=~/Product/ }.first
+      @title_details.distinctive_title.first.title_elements.product_level.first
     end
 
     def pages_extent
-      @extents.select { |e| e.type.human=~/PageCount/ || e.type.human=~/NumberOfPage/ }.first
+      @extents.page.first
     end
 
     def pages
@@ -389,7 +414,7 @@ module ONIX
     end
 
     def filesize_extent
-      @extents.select { |e| e.type.human=="Filesize" }.first
+      @extents.filesize.first
     end
 
     def filesize
@@ -468,7 +493,7 @@ module ONIX
     end
 
     def language_of_text
-      l=@languages.select { |l| l.role.human=="LanguageOfText" }.first
+      l=@languages.of_text.first
       if l
         l.code
       else
@@ -477,7 +502,7 @@ module ONIX
     end
 
     def publisher_collection
-      @collections.select { |c| c.type.human=="PublisherCollection" }.first
+      @collections.publisher.first
     end
 
     def publisher_collection_title
@@ -487,15 +512,15 @@ module ONIX
     end
 
     def bisac_categories
-      @subjects.select { |s| s.scheme_identifier.human=="BisacSubjectHeading" }
+      @subjects.bisac
     end
 
     def clil_categories
-      @subjects.select { |s| s.scheme_identifier.human=="Clil" }
+      @subjects.clil
     end
 
     def keywords
-      kws=@subjects.select { |s| s.scheme_identifier.human=="Keywords" }.map { |kw| kw.heading_text }.compact
+      kws=@subjects.keyword.map { |kw| kw.heading_text }.compact
       kws=kws.flat_map { |kw| kw.split(/;|,|\n/) }.map { |kw| kw.strip }
       kws.reject!{|k| k==""}
       kws

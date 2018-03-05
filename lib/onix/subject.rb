@@ -7,6 +7,10 @@ module ONIX
     element "SubjectCode", :text
     element "SubjectHeadingText", :text
 
+    scope :bisac, lambda{ human_code_match(:subject_scheme_identifier, "BisacSubjectHeading") }
+    scope :clil, lambda{ human_code_match(:subject_scheme_identifier, "Clil") }
+    scope :keyword, lambda{ human_code_match(:subject_scheme_identifier, "Keywords") }
+
     # shortcuts
     def code
       @subject_code

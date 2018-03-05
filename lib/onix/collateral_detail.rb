@@ -6,6 +6,9 @@ module ONIX
     element "TextAuthor", :text
     element "SourceTitle", :text
 
+    scope :description, lambda { human_code_match(:text_type, "Description")}
+    scope :short_description, lambda { human_code_match(:text_type, "ShortDescriptionannotation")}
+
     # shortcuts
     def type
       @text_type
@@ -17,7 +20,7 @@ module ONIX
     elements "SupportingResource", :subset
 
     def description
-      desc_contents=@text_contents.select{|tc| tc.type.human=="Description"} + @text_contents.select{|tc| tc.type.human=="ShortDescriptionannotation"}
+      desc_contents=@text_contents.description + @text_contents.short_description
       if desc_contents.length > 0
         desc_contents.first.text
       else
@@ -27,7 +30,7 @@ module ONIX
 
     # largest frontcover if multiple
     def frontcover_resource
-      fc=@supporting_resources.select { |sr| sr.type.human=="FrontCover" }
+      fc=@supporting_resources.front_cover
       if fc.length > 0
         if fc.length > 1
           best_found=fc.select{|c| c.versions.last and c.versions.last.image_width}.sort { |c1, c2| c2.versions.last.image_width <=> c1.versions.last.image_width }.first
@@ -63,7 +66,7 @@ module ONIX
     end
 
     def epub_sample_resource
-      es=@supporting_resources.select { |sr| sr.type.human=="SampleContent" }.select{|sr| sr.versions.last and sr.versions.last.file_format=="Epub"}.first
+      es=@supporting_resources.sample_content.select{|sr| sr.versions.last and sr.versions.last.file_format=="Epub"}.first
       if es
         es.versions.last
       end

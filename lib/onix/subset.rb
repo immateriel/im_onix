@@ -166,7 +166,47 @@ module ONIX
     end
   end
 
+  class SubsetArray < Array
+    def human_code_match(k, p)
+      case p
+        when Regexp
+          self.class.new(self.select { |v|
+            code=v.instance_variable_get("@"+k.to_s)
+            code.human =~ p
+          })
+        when Array
+          self.class.new(self.select { |v|
+            code=v.instance_variable_get("@"+k.to_s)
+            p.include?(code.human)
+          })
+        else
+          self.class.new(self.select { |v| v.instance_variable_get("@"+k.to_s).human == p })
+      end
+    end
+
+    def code_match(k, p)
+      case p
+        when Regexp
+          self.class.new(self.select { |v|
+            code=v.instance_variable_get("@"+k.to_s)
+            code.code =~ p
+          })
+        else
+          self.class.new(self.select { |v| v.instance_variable_get("@"+k.to_s).code == p })
+      end
+    end
+  end
+
   class SubsetDSL < Subset
+    def self.scope(name, lambda)
+      @scopes ||= {}
+      @scopes[name] = lambda
+    end
+
+    def self.registered_scopes
+      @scopes||{}
+    end
+
     def self.element(name, type, options={})
       @elements ||= {}
       @elements[name]=ElementParser.new(name, type, options)
@@ -205,7 +245,19 @@ module ONIX
       # initialize plural as Array
       self.class.ancestors_registered_elements.each do |k, e|
         if e.is_array?
-          instance_variable_set(e.to_instance, [])
+          # register a contextual SubsetArray class
+          subset_array = Class.new(SubsetArray).new
+          subset_klass = self.class.get_class(e.class_name)
+          if subset_klass.respond_to? :registered_scopes
+            subset_klass.registered_scopes.each do |n, l|
+              unless subset_array.respond_to? n.to_s
+                subset_array.class.send(:define_method, n.to_s) do
+                  instance_exec(&l)
+                end
+              end
+            end
+          end
+          instance_variable_set(e.to_instance, subset_array)
         end
       end
     end
@@ -219,7 +271,7 @@ module ONIX
     end
 
     def self.get_class(name)
-      ONIX.const_get(name)
+      ONIX.const_get(name) if ONIX.const_defined? name
     end
 
     def parse(n)
@@ -243,7 +295,6 @@ module ONIX
             else
               val=t.text
           end
-
           if val
             if e.is_array?
               instance_variable_get(e.to_instance).send(:push, val)

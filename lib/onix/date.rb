@@ -93,6 +93,8 @@ module ONIX
     element "DateFormat", :ignore
     element "MarketDateRole", :subset
 
+    scope :availability, lambda { human_code_match(:market_date_role, ["PublicationDate","EmbargoDate"])}
+
     def role
       @market_date_role
     end
@@ -108,6 +110,9 @@ module ONIX
     element "Date", :ignore
     element "DateFormat", :ignore
     element "PriceDateRole", :subset
+
+    scope :from, lambda { human_code_match(:price_date_role, "FromDate")}
+    scope :until, lambda { human_code_match(:price_date_role, "UntilDate")}
 
     def role
       @price_date_role
@@ -125,6 +130,8 @@ module ONIX
     element "DateFormat", :ignore
     element "SupplyDateRole", :subset
 
+    scope :availability, lambda { human_code_match(:supply_date_role, ["ExpectedAvailabilityDate","EmbargoDate"])}
+
     def role
       @supply_date_role
     end
@@ -140,6 +147,11 @@ module ONIX
     element "Date", :ignore
     element "DateFormat", :ignore
     element "PublishingDateRole", :subset
+
+    scope :publication, lambda { human_code_match(:publishing_date_role, ["PublicationDate","PublicationDateOfPrintCounterpart"])}
+    scope :embargo, lambda { human_code_match(:publishing_date_role, "EmbargoDate")}
+    scope :preorder_embargo, lambda { human_code_match(:publishing_date_role, "PreorderEmbargoDate")}
+    scope :public_announcement, lambda { human_code_match(:publishing_date_role, "PublicAnnouncementDate")}
 
     def role
       @publishing_date_role

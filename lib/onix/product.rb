@@ -757,7 +757,7 @@ module ONIX
     def illustrations
       return [] unless @collateral_detail && @collateral_detail.supporting_resources
 
-      @collateral_detail.supporting_resources.select {|sr| sr.mode.human=='Image'}.map do |image_resource|
+      @collateral_detail.supporting_resources.image.map do |image_resource|
         {
           :url => image_resource.versions.last.links.first.strip,
           :type => image_resource.type.human,
@@ -774,7 +774,7 @@ module ONIX
     def excerpts
       return [] unless @collateral_detail && @collateral_detail.supporting_resources
 
-      @collateral_detail.supporting_resources.select {|sr| (sr.mode.human=='Text' || sr.mode.human='Multimode') && sr.type.human=='SampleContent'}.map do |resource|
+      @collateral_detail.supporting_resources.sample_content.human_code_match(:resource_mode,["Text","Multimode"]).map do |resource|
         {
           :url => resource.versions.last.links.first.strip,
           :form => resource.versions.last.form.human,

@@ -145,6 +145,12 @@ module ONIX
     elements "ResourceVersion", :subset
     elements "ResourceFeature", :subset
 
+    scope :front_cover, lambda { human_code_match(:resource_content_type, "FrontCover")}
+    scope :sample_content, lambda { human_code_match(:resource_content_type, "SampleContent")}
+
+    scope :image, lambda {human_code_match(:resource_mode, "Image")}
+    scope :text, lambda {human_code_match(:resource_mode, "Text")}
+
     # shortcuts
     def type
       @resource_content_type
