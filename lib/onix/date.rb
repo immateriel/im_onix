@@ -169,6 +169,8 @@ module ONIX
     element "DateFormat", :ignore
     element "ContentDateRole", :subset
 
+    scope :last_updated, lambda { human_code_match(:content_date_role, "LastUpdated")}
+
     def role
       @content_date_role
     end

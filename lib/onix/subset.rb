@@ -203,6 +203,20 @@ module ONIX
       @scopes[name] = lambda
     end
 
+    def self._ancestor_registered_scopes
+      els=self.registered_scopes
+      sup=self
+      while sup.respond_to?(:registered_scopes)
+        els.merge!(sup.registered_scopes) if sup.registered_scopes
+        sup=sup.superclass
+      end
+      els
+    end
+
+    def self.ancestor_registered_scopes
+      @ancestors_registered_scopes||=_ancestor_registered_scopes
+    end
+
     def self.registered_scopes
       @scopes||{}
     end
@@ -245,13 +259,13 @@ module ONIX
       # initialize plural as Array
       self.class.ancestors_registered_elements.each do |k, e|
         if e.is_array?
-          # register a contextual SubsetArray class
-          subset_array = Class.new(SubsetArray).new
+          # register a contextual SubsetArray object
+          subset_array = SubsetArray.new
           subset_klass = self.class.get_class(e.class_name)
           if subset_klass.respond_to? :registered_scopes
             subset_klass.registered_scopes.each do |n, l|
               unless subset_array.respond_to? n.to_s
-                subset_array.class.send(:define_method, n.to_s) do
+                subset_array.define_singleton_method(n.to_s) do
                   instance_exec(&l)
                 end
               end
