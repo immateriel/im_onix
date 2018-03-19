@@ -331,6 +331,7 @@ module ONIX
                   :composition,
                   :form, :form_details, :form_features, :form_description, :parts,
                   :edition_number,
+                  :edition_type,
                   :contributors,
                   :subjects,
                   :collections,
@@ -511,6 +512,8 @@ module ONIX
             @extents << Extent.from_xml(t)
           when tag_match("EditionNumber")
             @edition_number=t.text.to_i
+          when tag_match("EditionType")
+            @edition_type=t.text.to_i
           when tag_match("Language")
             @languages << Language.from_xml(t)
           when tag_match("ProductComposition")
