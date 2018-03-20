@@ -26,7 +26,7 @@ class TestImOnix < Minitest::Test
 
     should "have a named sender without GLN" do
       assert_equal "immatériel·fr", @message.sender.name
-      assert_equal nil, @message.sender.gln
+      assert_nil @message.sender.gln
     end
 
     should "have an EAN13" do
@@ -47,7 +47,7 @@ class TestImOnix < Minitest::Test
     end
 
     should "have no format" do
-      assert_equal nil, @product.file_format
+      assert_nil @product.file_format
     end
 
     should "have no format details" do
@@ -83,7 +83,7 @@ class TestImOnix < Minitest::Test
     end
 
     should "be no embargo date" do
-      assert_equal nil, @product.embargo_date
+      assert_nil @product.embargo_date
     end
 
     should "be in french" do
@@ -100,7 +100,7 @@ class TestImOnix < Minitest::Test
 
     should "have parts that do not provide info about fixed layout or not" do
       @product.parts.each do |part|
-        assert_equal nil, part.reflowable?
+        assert_nil part.reflowable?
       end
     end
 
@@ -117,7 +117,7 @@ class TestImOnix < Minitest::Test
     end
 
     should "not provide info about fixed layout or not" do
-      assert_equal nil, @product.reflowable?
+      assert_nil @product.reflowable?
     end
 
     should "have author named" do
@@ -558,13 +558,13 @@ class TestImOnix < Minitest::Test
     should "have an URL to a downloadable excerpt" do
       assert_equal '9780000000000_preview.epub', @product.excerpts.first[:url]
       assert_equal 'DownloadableFile', @product.excerpts.first[:form]
-      assert_equal nil, @product.excerpts.first[:md5]
+      assert_nil @product.excerpts.first[:md5]
     end
 
     should "have an URL to an embeddable application excerpt" do
       assert_equal 'http://www.xxxxxxx.com/preview-9780000000000-XXXXX', @product.excerpts.last[:url]
       assert_equal 'EmbeddableApplication', @product.excerpts.last[:form]
-      assert_equal nil, @product.excerpts.last[:md5]
+      assert_nil @product.excerpts.last[:md5]
     end
   end
 
@@ -675,7 +675,7 @@ class TestImOnix < Minitest::Test
     end
 
     should "be no embargo date" do
-      assert_equal nil, @product.embargo_date
+      assert_nil @product.embargo_date
     end
   end
 
@@ -697,7 +697,7 @@ class TestImOnix < Minitest::Test
       # the first one: 8.99 € (default price) until 2016-07-07
       assert_equal 899, prices[0][:amount]
       assert_equal 'UnqualifiedPrice', prices[0][:qualifier]
-      assert_equal nil, prices[0][:from_date]
+      assert_nil prices[0][:from_date]
       assert_equal Date.new(2016, 7, 7), prices[0][:until_date]
 
       # the second one: 4.99 € (promotional price) from 2016-07-08 to 2016-07-08 (single day)
@@ -710,7 +710,7 @@ class TestImOnix < Minitest::Test
       assert_equal 899, prices[2][:amount]
       assert_equal 'UnqualifiedPrice', prices[2][:qualifier]
       assert_equal Date.new(2016, 7, 9), prices[2][:from_date]
-      assert_equal nil, prices[2][:until_date]
+      assert_nil prices[2][:until_date]
     end
   end
 
@@ -782,13 +782,13 @@ class TestImOnix < Minitest::Test
 
       # the first one: 8.99 € (default price) until 2016-07-07
       assert_equal 899, prices[0][:amount]
-      assert_equal nil, prices[0][:from_date]
+      assert_nil prices[0][:from_date]
       assert_equal Date.new(2016, 7, 7), prices[0][:until_date]
 
       # the second one: 4.99 € from 2016-07-08
       assert_equal 499, prices[1][:amount]
       assert_equal Date.new(2016, 7, 8), prices[1][:from_date]
-      assert_equal nil, prices[1][:until_date]
+      assert_nil prices[1][:until_date]
     end
   end
 
@@ -809,13 +809,13 @@ class TestImOnix < Minitest::Test
 
       # the first one: 4.99 € until 2016-07-07
       assert_equal 499, prices[0][:amount]
-      assert_equal nil, prices[0][:from_date]
+      assert_nil prices[0][:from_date]
       assert_equal Date.new(2016, 7, 7), prices[0][:until_date]
 
       # the second one: 8.99 € (default price) from 2016-07-08
       assert_equal 899, prices[1][:amount]
       assert_equal Date.new(2016, 7, 8), prices[1][:from_date]
-      assert_equal nil, prices[1][:until_date]
+      assert_nil prices[1][:until_date]
     end
   end
 
@@ -836,7 +836,7 @@ class TestImOnix < Minitest::Test
 
       # the first one: 8.99 € (default price) until 2016-07-07
       assert_equal 899, prices[0][:amount]
-      assert_equal nil, prices[0][:from_date]
+      assert_nil prices[0][:from_date]
       assert_equal Date.new(2016, 7, 7), prices[0][:until_date]
 
       # the second one: 4.99 € (promo 1) from 2016-07-08 to 2016-07-08 (single day)
@@ -857,7 +857,7 @@ class TestImOnix < Minitest::Test
       #the fifth one: 8.99 € (default) from 2016-08-16
       assert_equal 899, prices[4][:amount]
       assert_equal Date.new(2016, 8, 16), prices[4][:from_date]
-      assert_equal nil, prices[4][:until_date]
+      assert_nil prices[4][:until_date]
     end
   end
 
@@ -871,7 +871,7 @@ class TestImOnix < Minitest::Test
 
     should "have no last updated date for its illustration" do
       assert_equal 1, @product.illustrations.size
-      assert_equal nil, @product.illustrations[0][:updated_at]
+      assert_nil @product.illustrations[0][:updated_at]
     end
   end
 
