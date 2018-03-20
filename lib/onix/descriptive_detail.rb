@@ -513,7 +513,7 @@ module ONIX
           when tag_match("EditionNumber")
             @edition_number=t.text.to_i
           when tag_match("EditionType")
-            @edition_type=t.text.to_i
+            @edition_type=t.text
           when tag_match("Language")
             @languages << Language.from_xml(t)
           when tag_match("ProductComposition")

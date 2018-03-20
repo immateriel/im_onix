@@ -938,4 +938,17 @@ class TestImOnix < Minitest::Test
       assert_equal '200.20001.2000115', @product.proprietary_categories[3].code
     end
   end
+
+  context "with a edition type" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/9782752906700.xml')
+
+      @product = message.products.last
+    end
+
+    should "have edition type" do
+      assert_equal 'ILL', @product.edition_type
+    end
+  end
 end
