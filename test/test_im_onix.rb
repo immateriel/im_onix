@@ -947,8 +947,8 @@ class TestImOnix < Minitest::Test
       @product = message.products.last
     end
 
-    should "have edition type" do
-      assert_equal 'ILL', @product.edition_type
+    should "have edition types" do
+      assert_equal ['ILL', 'ENH'], @product.edition_types
     end
   end
 end

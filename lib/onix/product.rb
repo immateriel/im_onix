@@ -119,8 +119,8 @@ module ONIX
 
     # :category: High level
     # product edition type
-    def edition_type
-      @descriptive_detail.edition_type
+    def edition_types
+      @descriptive_detail.edition_types
     end
 
     # product LanguageCode of text
