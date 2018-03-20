@@ -939,7 +939,7 @@ class TestImOnix < Minitest::Test
     end
   end
 
-  context "with a edition type" do
+  context "with an edition type" do
     setup do
       message = ONIX::ONIXMessage.new
       message.parse('test/fixtures/9782752906700.xml')
