@@ -123,6 +123,14 @@ module ONIX
       @descriptive_detail.edition_types
     end
 
+    def illustrated?
+      @descriptive_detail.illustrated?
+    end
+
+    def enhanced?
+      @descriptive_detail.enhanced?
+    end
+
     # product LanguageCode of text
     def language_of_text
       @descriptive_detail.language_of_text || @default_language_of_text

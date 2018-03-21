@@ -498,6 +498,14 @@ module ONIX
       kws.map{|kw| kw.split(/;|,|\n/)}.flatten.map{|kw| kw.strip}
     end
 
+    def illustrated?
+      @edition_types.include?('ILL')
+    end
+
+    def enhanced?
+      @edition_types.include?('ENH')
+    end
+
     def parse(n)
 
       n.children.each do |t|
