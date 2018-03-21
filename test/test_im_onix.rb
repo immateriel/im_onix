@@ -950,5 +950,13 @@ class TestImOnix < Minitest::Test
     should "have edition types" do
       assert_equal ['ILL', 'ENH'], @product.edition_types
     end
+
+    should "be illustrated" do
+      assert_equal true, @product.illustrated?
+    end
+
+    should "be enhanced" do
+      assert_equal true, @product.enhanced?
+    end
   end
 end
