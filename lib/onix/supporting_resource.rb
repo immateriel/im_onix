@@ -4,7 +4,11 @@ module ONIX
   class ResourceVersionFeature < SubsetDSL
     element "ResourceVersionFeatureType", :subset
     elements "FeatureNote", :text
-    element "FeatureValue", :text
+    element "FeatureValue", :text, :serialize_lambda => lambda {|v| v.class == SupportingResourceFileFormat ? v.code : v}
+
+    scope :image_pixels_width, lambda { human_code_match(:resource_version_feature_type,"ImageWidthInPixels") }
+    scope :image_pixels_height, lambda { human_code_match(:resource_version_feature_type,"ImageHeightInPixels") }
+    scope :md5_hash, lambda { human_code_match(:resource_version_feature_type,"Md5HashValue")}
 
     def type
       @resource_version_feature_type
@@ -29,9 +33,9 @@ module ONIX
 
   class ResourceVersion < SubsetDSL
     element "ResourceForm", :subset
+    elements "ResourceVersionFeature", :subset
     elements "ResourceLink", :text
     elements "ContentDate", :subset
-    elements "ResourceVersionFeature", :subset
 
     # shortcuts
     def form
@@ -73,15 +77,15 @@ module ONIX
     end
 
     def image_width_feature
-      @resource_version_features.select { |i| i.type.human=="ImageWidthInPixels" }.first
+      @resource_version_features.image_pixels_width.first
     end
 
     def image_height_feature
-      @resource_version_features.select { |i| i.type.human=="ImageHeightInPixels" }.first
+      @resource_version_features.image_pixels_height.first
     end
 
     def md5_hash_feature
-      @resource_version_features.select { |i| i.type.human=="Md5HashValue" }.first
+      @resource_version_features.md5_hash.first
     end
 
     def image_width
@@ -103,7 +107,7 @@ module ONIX
     end
 
     def last_updated_content_date
-      @content_dates.select { |cd| cd.role.human=="LastUpdated" && cd.date }.first
+      @content_dates.last_updated.first
     end
 
     def last_updated
@@ -113,7 +117,7 @@ module ONIX
     end
 
     def last_updated_utc
-      if self.last_updated_content_date
+      if self.last_updated_content_date and self.last_updated_content_date.date
         self.last_updated_content_date.date.to_time.utc.strftime('%Y%m%dT%H%M%S%z')
       end
     end
@@ -123,6 +127,8 @@ module ONIX
     element "ResourceFeatureType", :subset
     element "FeatureValue", :text
     elements "FeatureNotes", :text
+
+    scope :caption, lambda { human_code_match(:resource_feature_type, "Caption")}
 
     # shortcuts
     def type
@@ -145,6 +151,12 @@ module ONIX
     elements "ResourceVersion", :subset
     elements "ResourceFeature", :subset
 
+    scope :front_cover, lambda { human_code_match(:resource_content_type, "FrontCover")}
+    scope :sample_content, lambda { human_code_match(:resource_content_type, "SampleContent")}
+
+    scope :image, lambda {human_code_match(:resource_mode, "Image")}
+    scope :text, lambda {human_code_match(:resource_mode, "Text")}
+
     # shortcuts
     def type
       @resource_content_type
@@ -163,7 +175,7 @@ module ONIX
     end
 
     def caption_feature
-      self.features.select{|i| i.type.human=="Caption"}.first
+      self.features.caption.first
     end
 
     def caption

@@ -2,15 +2,15 @@ require 'onix/sales_rights'
 require 'onix/date'
 module ONIX
   class PublishingDetail < SubsetDSL
-    element "PublishingStatus", :subset
-    elements "SalesRights", :subset, {:pluralize=>false}
-    element "SalesRestriction", :subset
-    element "ROWSalesRightsType", :subset, {:klass=>"SalesRightsType"}
-    elements "PublishingDate", :subset
+    elements "Imprint", :subset
     elements "Publisher", :subset
     element "CityOfPublication", :text
     element "CountryOfPublication", :text
-    elements "Imprint", :subset
+    element "PublishingStatus", :subset
+    elements "PublishingDate", :subset
+    elements "SalesRights", :subset, {:pluralize=>false}
+    element "ROWSalesRightsType", :subset, {:klass=>"SalesRightsType"}
+    element "SalesRestriction", :subset
 
     def publisher
       main_publishers = @publishers.select { |p| p.role.human=="Publisher" }
@@ -35,7 +35,7 @@ module ONIX
     end
 
     def publication_date
-      pub=@publishing_dates.select{|pd| pd.role.human=="PublicationDate" or pd.role.human=="PublicationDateOfPrintCounterpart"}.first
+      pub=@publishing_dates.publication.first
       if pub
         pub.date
       else
@@ -44,7 +44,7 @@ module ONIX
     end
 
     def embargo_date
-      pub=@publishing_dates.select{|pd| pd.role.human=="EmbargoDate"}.first
+      pub=@publishing_dates.embargo.first
       if pub
         pub.date
       else
@@ -53,7 +53,7 @@ module ONIX
     end
 
     def preorder_embargo_date
-      pub=@publishing_dates.select{|pd| pd.role.human=="PreorderEmbargoDate"}.first
+      pub=@publishing_dates.preorder_embargo.first
       if pub
         pub.date
       else
@@ -62,7 +62,7 @@ module ONIX
     end
 
     def public_announcement_date
-      pub=@publishing_dates.select{|pd| pd.role.human=="PublicAnnouncementDate"}.first
+      pub=@publishing_dates.public_announcement.first
       if pub
         pub.date
       else

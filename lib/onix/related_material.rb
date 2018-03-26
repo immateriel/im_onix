@@ -2,8 +2,8 @@ require 'onix/related_product'
 require 'onix/related_work'
 module ONIX
   class RelatedMaterial < SubsetDSL
-    elements "RelatedProduct", :subset
     elements "RelatedWork", :subset
+    elements "RelatedProduct", :subset
 
     def linking(human)
       @related_products.select{|rp| rp.code.human==human}

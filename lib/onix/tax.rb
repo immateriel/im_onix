@@ -1,11 +1,11 @@
 module ONIX
 
   class Tax < SubsetDSL
-    element "TaxAmount", :float, {:lambda=>lambda{|v| (v*100).round}}
-    element "TaxableAmount", :float, {:lambda=>lambda{|v| (v*100).round}}
-    element "TaxRatePercent", :float
-    element "TaxRateCode", :subset
     element "TaxType", :subset
+    element "TaxRateCode", :subset
+    element "TaxRatePercent", :float
+    element "TaxableAmount", :float, {:parse_lambda=>lambda{|v| (v*100).round}}
+    element "TaxAmount", :float, {:parse_lambda=>lambda{|v| (v*100).round}}
 
     # shortcuts
     def rate_code

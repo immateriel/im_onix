@@ -3,6 +3,8 @@ require 'onix/identifier'
 require 'onix/website'
 
 module ONIX
+  module EntityHelper
+  end
   class Entity < SubsetDSL
     # entity name
     attr_accessor :name
@@ -12,6 +14,7 @@ module ONIX
     attr_accessor :identifiers
 
     include GlnMethods
+    include EntityHelper
 
     def initialize
       super
@@ -48,7 +51,6 @@ module ONIX
       end
     end
 
-    private
     def self.prefix
     end
 
@@ -62,7 +64,6 @@ module ONIX
   end
 
   class Agent < Entity
-    private
     def self.prefix
       "Agent"
     end
@@ -77,7 +78,6 @@ module ONIX
   end
 
   class Imprint < Entity
-    private
     def self.prefix
       "Imprint"
     end
@@ -94,7 +94,6 @@ module ONIX
   class Supplier < Entity
     elements "Website", :subset
 
-    private
     def self.prefix
       "Supplier"
     end
@@ -116,7 +115,6 @@ module ONIX
       @websites = []
     end
 
-    private
     def self.prefix
       "Publisher"
     end

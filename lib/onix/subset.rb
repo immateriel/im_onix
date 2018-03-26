@@ -50,7 +50,7 @@ module ONIX
   end
 
   class ElementParser
-    attr_accessor :type, :name
+    attr_accessor :type, :name, :short
 
     def self.inflectors
       [['ox', 'oxes'],
@@ -83,17 +83,20 @@ module ONIX
       @name=name
       @type=type
       @pluralize=true
+      @short = false
       @array=false
-      @lambda=nil
+      @parse_lambda = nil
+      @serialize_lambda = nil
       if options[:array]
         @array=true
       end
       if options[:pluralize]==false
         @pluralize=false
       end
-      if options[:lambda]
-        @lambda=options[:lambda]
-      end
+
+      @parse_lambda=options[:parse_lambda]
+      @serialize_lambda=options[:serialize_lambda]
+
       if options[:klass]
         @klass_name=options[:klass]
       else
@@ -101,9 +104,17 @@ module ONIX
       end
     end
 
-    def lambda(v)
-      if @lambda
-        @lambda.call(v)
+    def parse_lambda(v)
+      if @parse_lambda
+        @parse_lambda.call(v)
+      else
+        v
+      end
+    end
+
+    def serialize_lambda(v)
+      if @serialize_lambda
+        @serialize_lambda.call(v)
       else
         v
       end
@@ -155,15 +166,68 @@ module ONIX
     end
   end
 
+  class SubsetArray < Array
+    def human_code_match(k, p)
+      case p
+        when Regexp
+          self.class.new(self.select { |v|
+            code=v.instance_variable_get("@"+k.to_s)
+            code.human =~ p
+          })
+        when Array
+          self.class.new(self.select { |v|
+            code=v.instance_variable_get("@"+k.to_s)
+            p.include?(code.human)
+          })
+        else
+          self.class.new(self.select { |v| v.instance_variable_get("@"+k.to_s).human == p })
+      end
+    end
+
+    def code_match(k, p)
+      case p
+        when Regexp
+          self.class.new(self.select { |v|
+            code=v.instance_variable_get("@"+k.to_s)
+            code.code =~ p
+          })
+        else
+          self.class.new(self.select { |v| v.instance_variable_get("@"+k.to_s).code == p })
+      end
+    end
+  end
+
   class SubsetDSL < Subset
+    def self.scope(name, lambda)
+      @scopes ||= {}
+      @scopes[name] = lambda
+    end
+
+    def self._ancestor_registered_scopes
+      els=self.registered_scopes
+      sup=self
+      while sup.respond_to?(:registered_scopes)
+        els.merge!(sup.registered_scopes) if sup.registered_scopes
+        sup=sup.superclass
+      end
+      els
+    end
+
+    def self.ancestor_registered_scopes
+      @ancestors_registered_scopes||=_ancestor_registered_scopes
+    end
+
+    def self.registered_scopes
+      @scopes||{}
+    end
+
     def self.element(name, type, options={})
       @elements ||= {}
       @elements[name]=ElementParser.new(name, type, options)
-#      puts "#{self.name} REGISTER ELEMENT #{name} #{@elements[name].to_instance}"
       short_name=self.ref_to_short(name)
       if short_name
-        @elements[short_name]=@elements[name]
-#        puts "#{self.name} REGISTER SHORT ELEMENT #{short_name} #{@elements[name].to_instance}"
+        @elements[short_name]=@elements[name].dup
+        @elements[short_name].short = true
       end
       attr_accessor @elements[name].to_sym
     end
@@ -195,7 +259,19 @@ module ONIX
       # initialize plural as Array
       self.class.ancestors_registered_elements.each do |k, e|
         if e.is_array?
-          instance_variable_set(e.to_instance, [])
+          # register a contextual SubsetArray object
+          subset_array = SubsetArray.new
+          subset_klass = self.class.get_class(e.class_name)
+          if subset_klass.respond_to? :registered_scopes
+            subset_klass.registered_scopes.each do |n, l|
+              unless subset_array.respond_to? n.to_s
+                subset_array.define_singleton_method(n.to_s) do
+                  instance_exec(&l)
+                end
+              end
+            end
+          end
+          instance_variable_set(e.to_instance, subset_array)
         end
       end
     end
@@ -209,16 +285,12 @@ module ONIX
     end
 
     def self.get_class(name)
-      ONIX.const_get(name)
+      ONIX.const_get(name) if ONIX.const_defined? name
     end
 
     def parse(n)
       n.elements.each do |t|
         name = t.name
-#        short_name=self.class.short_to_ref(name)
-#        if short_name
-#          name=short_name
-#        end
         e=self.class.ancestors_registered_elements[name]
         if e
           case e.type
@@ -237,12 +309,11 @@ module ONIX
             else
               val=t.text
           end
-
           if val
             if e.is_array?
               instance_variable_get(e.to_instance).send(:push, val)
             else
-              instance_variable_set(e.to_instance, e.lambda(val))
+              instance_variable_set(e.to_instance, e.parse_lambda(val))
             end
           end
         else

@@ -2,16 +2,30 @@
 require 'yaml'
 
 module ONIX
+  module CodeHelper
+    def parse(n)
+      @code=n.text
+      @human=self.class.hash[n.text]
+    end
+
+    # Humanized string code
+    def human
+      @human
+    end
+
+    # ONIX code
+    def onix
+      @code
+    end
+  end
+
   class Code < Subset
     # code as defined in ONIX documentation codelist
     attr_accessor :code
     # humanized string (eg: "Digital watermarking" become DigitalWatermarking, "PDF" become Pdf, "BISAC Subject Heading" become BisacSubjectHeading, etc)
     attr_accessor :human
 
-    def parse(n)
-      @code=n.text
-      @human=self.class.hash[n.text]
-    end
+    include CodeHelper
 
     # create Code from string ONIX code
     def self.from_code(code)
@@ -27,16 +41,6 @@ module ONIX
       o.human=human
       o.code=self.hash.key(human)
       o
-    end
-
-    # Humanized string code
-    def human
-      @human
-    end
-
-    # ONIX code
-    def onix
-      @code
     end
 
     private
