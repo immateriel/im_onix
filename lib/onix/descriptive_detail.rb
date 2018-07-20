@@ -62,7 +62,7 @@ module ONIX
     elements "CollectionIdentifier", :subset
     elements "TitleDetail", :subset
 
-    scope :publisher, lambda { human_code_match(:title_type, "PublisherCollection")}
+    scope :publisher, lambda { human_code_match(:collection_type, "PublisherCollection")}
 
     # shortcuts
     def type

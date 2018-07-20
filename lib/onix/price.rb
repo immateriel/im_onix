@@ -44,7 +44,7 @@ module ONIX
     end
 
     def from_date
-      dt=@price_dates.from.first
+      dt=@price_dates.from_date.first
       if dt
         dt.date
       else
@@ -53,7 +53,7 @@ module ONIX
     end
 
     def until_date
-      dt=@price_dates.until.first
+      dt=@price_dates.until_date.first
       if dt
         dt.date
       else
