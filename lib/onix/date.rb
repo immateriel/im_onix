@@ -111,8 +111,8 @@ module ONIX
     element "DateFormat", :ignore
     element "PriceDateRole", :subset
 
-    scope :from, lambda { human_code_match(:price_date_role, "FromDate")}
-    scope :until, lambda { human_code_match(:price_date_role, "UntilDate")}
+    scope :from_date, lambda { human_code_match(:price_date_role, "FromDate")}
+    scope :until_date, lambda { human_code_match(:price_date_role, "UntilDate")}
 
     def role
       @price_date_role
