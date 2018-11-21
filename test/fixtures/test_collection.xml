@@ -1,0 +1,24 @@
+<Collection>
+  <CollectionType>10</CollectionType>
+  <CollectionIdentifier>
+    <CollectionIDType>01</CollectionIDType>
+    <IDTypeName>Serie</IDTypeName>
+    <IDValue>237</IDValue>
+  </CollectionIdentifier>
+  <CollectionSequence>
+    <CollectionSequenceType>03</CollectionSequenceType>
+    <CollectionSequenceNumber>3</CollectionSequenceNumber>
+  </CollectionSequence>
+  <TitleDetail>
+    <TitleType>01</TitleType><TitleElement>
+      <TitleElementLevel>02</TitleElementLevel>
+      <TitleText><![CDATA[Hors Collection]]></TitleText>
+      </TitleElement><TitleElement>
+      <TitleElementLevel>03</TitleElementLevel>
+      <TitleText><![CDATA[Nom de Série]]></TitleText>
+      </TitleElement><TitleElement>
+      <TitleElementLevel>01</TitleElementLevel>
+      <TitleText><![CDATA[Tome 3]]></TitleText>
+      </TitleElement><TitleStatement><![CDATA[Un test pour les collections]]></TitleStatement>
+  </TitleDetail>
+</Collection>
