@@ -57,10 +57,29 @@ module ONIX
     end
   end
 
+  class CollectionSequence < SubsetDSL
+    element "CollectionSequenceType", :subset
+    element "CollectionSequenceTypeName", :string
+    element "CollectionSequenceNumber", :string
+
+    def type
+      @collection_sequence_number
+    end
+
+    def number
+      @collection_sequence_number
+    end
+
+    def type_name
+      @collection_sequence_type_name
+    end
+  end
+
   class Collection < SubsetDSL
     element "CollectionType", :subset
     elements "CollectionIdentifier", :subset
     elements "TitleDetail", :subset
+    elements "CollectionSequence", :subset
 
     scope :publisher, lambda { human_code_match(:collection_type, "PublisherCollection")}
 
@@ -71,6 +90,10 @@ module ONIX
 
     def identifiers
       @collection_identifiers
+    end
+
+    def sequences
+      @collection_sequences
     end
 
     # :category: High level

@@ -400,6 +400,13 @@ module ONIX
     end
   end
 
+  class CollectionSequenceType < CodeFromYaml
+    private
+    def self.code_ident
+      197
+    end
+  end
+
   class TitleElementLevel < CodeFromYaml
     private
     def self.code_ident
