@@ -304,17 +304,17 @@ module ONIX
   end
 
   class AudienceRange < Subset
-    attr_accessor :qualifier, :precision, :value
+    attr_accessor :limits
     def parse(n)
-      n.children.each do |t|
-        case t
-        when tag_match("AudienceRangeQualifier")
-          @qualifier=AudienceRangeQualifier.from_code(t.text)
-        when tag_match("AudienceRangePrecision")
-          @precision=AudienceRangePrecision.from_code(t.text)
-        when tag_match("AudienceRangeValue")
-          @value=t.text
-        end
+      @limits = Array.new
+      qualifier = n.xpath("./AudienceRangeQualifier")
+      precisions = n.xpath("./AudienceRangePrecision")
+      values = n.xpath("./AudienceRangeValue")
+
+      for i in 0..precisions.children.size-1
+        @limits << { :qualifier => AudienceRangeQualifier.from_code(qualifier[0].content),
+                     :precision => AudienceRangePrecision.from_code(precisions[i].content),
+                     :value => values[i].content}
       end
     end
   end
@@ -562,8 +562,11 @@ module ONIX
             @parts << part
           when tag_match("Subject")
             @subjects << Subject.from_xml(t)
-          when tag_match("AudienceRange")
-            @audience_range << AudienceRange.from_xml(t)
+        when tag_match("AudienceRange")
+            audience_ranges = AudienceRange.from_xml(t)
+            audience_ranges.limits.each do |limit|
+              @audience_range << {:qualifier => limit[:qualifier], :precision => limit[:precision], :value => limit[:value]}
+            end
         end
       end
 

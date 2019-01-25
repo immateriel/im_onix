@@ -155,13 +155,13 @@ class TestImOnix < Minitest::Test
     should "have an audience range" do
       assert_equal 2, @product.descriptive_detail.audience_range.size
 
-      assert_equal "17", @product.descriptive_detail.audience_range.first.qualifier.code
-      assert_equal "03", @product.descriptive_detail.audience_range.first.precision.code
-      assert_equal "5", @product.descriptive_detail.audience_range.first.value
+      assert_equal "17", @product.descriptive_detail.audience_range.first[:qualifier].code
+      assert_equal "03", @product.descriptive_detail.audience_range.first[:precision].code
+      assert_equal "5", @product.descriptive_detail.audience_range.first[:value]
 
-      assert_equal "17", @product.descriptive_detail.audience_range.last.qualifier.code
-      assert_equal "04", @product.descriptive_detail.audience_range.last.precision.code
-      assert_equal "8", @product.descriptive_detail.audience_range.last.value
+      assert_equal "17", @product.descriptive_detail.audience_range.last[:qualifier].code
+      assert_equal "04", @product.descriptive_detail.audience_range.last[:precision].code
+      assert_equal "8", @product.descriptive_detail.audience_range.last[:value]
     end
   end
 
@@ -601,6 +601,18 @@ class TestImOnix < Minitest::Test
 
     should "have a price to be announced" do
       assert_equal true, @product.price_to_be_announced?
+    end
+
+    should "have an audience range" do
+      assert_equal 2, @product.descriptive_detail.audience_range.size
+
+      assert_equal "17", @product.descriptive_detail.audience_range.first[:qualifier].code
+      assert_equal "03", @product.descriptive_detail.audience_range.first[:precision].code
+      assert_equal "13", @product.descriptive_detail.audience_range.first[:value]
+
+      assert_equal "17", @product.descriptive_detail.audience_range.last[:qualifier].code
+      assert_equal "04", @product.descriptive_detail.audience_range.last[:precision].code
+      assert_equal "99", @product.descriptive_detail.audience_range.last[:value]
     end
   end
 
