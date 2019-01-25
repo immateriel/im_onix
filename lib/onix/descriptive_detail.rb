@@ -303,6 +303,22 @@ module ONIX
     end
   end
 
+  class AudienceRange < Subset
+    attr_accessor :qualifier, :precision, :value
+    def parse(n)
+      n.children.each do |t|
+        case t
+        when tag_match("AudienceRangeQualifier")
+          @qualifier=AudienceRangeQualifier.from_code(t.text)
+        when tag_match("AudienceRangePrecision")
+          @precision=AudienceRangePrecision.from_code(t.text)
+        when tag_match("AudienceRangeValue")
+          @value=t.text
+        end
+      end
+    end
+  end
+
   class ProductFormFeature < Subset
     attr_accessor :type, :value, :descriptions
 
@@ -336,7 +352,8 @@ module ONIX
                   :subjects,
                   :collections,
                   :extents,
-                  :epub_technical_protections
+                  :epub_technical_protections,
+                  :audience_range
 
     def initialize
       @title_details=[]
@@ -352,6 +369,7 @@ module ONIX
       @form_details=[]
       @form_features=[]
       @edition_types=[]
+      @audience_range=[]
     end
 
     # :category: High level
@@ -544,6 +562,8 @@ module ONIX
             @parts << part
           when tag_match("Subject")
             @subjects << Subject.from_xml(t)
+          when tag_match("AudienceRange")
+            @audience_range << AudienceRange.from_xml(t)
         end
       end
 

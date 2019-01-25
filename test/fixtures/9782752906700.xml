@@ -394,6 +394,16 @@
       <SubjectSchemeName>dctr:cdfam</SubjectSchemeName>
       <SubjectCode>200.20001.2000115</SubjectCode>
     </Subject>
+    <AudienceRange>
+      <AudienceRangeQualifier>17</AudienceRangeQualifier>
+      <AudienceRangePrecision>03</AudienceRangePrecision>
+      <AudienceRangeValue>5</AudienceRangeValue>
+    </AudienceRange>
+    <AudienceRange>
+      <AudienceRangeQualifier>17</AudienceRangeQualifier>
+      <AudienceRangePrecision>04</AudienceRangePrecision>
+      <AudienceRangeValue>8</AudienceRangeValue>
+    </AudienceRange>
   </DescriptiveDetail>
   <CollateralDetail>
     <TextContent>

@@ -151,6 +151,18 @@ class TestImOnix < Minitest::Test
     should "be priced in Switzerland" do
       assert_equal 1400, @product.supplies_for_country("CH","CHF").first[:prices].first[:amount]
     end
+
+    should "have an audience range" do
+      assert_equal 2, @product.descriptive_detail.audience_range.size
+
+      assert_equal "17", @product.descriptive_detail.audience_range.first.qualifier.code
+      assert_equal "03", @product.descriptive_detail.audience_range.first.precision.code
+      assert_equal "5", @product.descriptive_detail.audience_range.first.value
+
+      assert_equal "17", @product.descriptive_detail.audience_range.last.qualifier.code
+      assert_equal "04", @product.descriptive_detail.audience_range.last.precision.code
+      assert_equal "8", @product.descriptive_detail.audience_range.last.value
+    end
   end
 
   context 'streaming version of "Certaines n’avaient jamais vu la mer"' do
