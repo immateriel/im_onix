@@ -86,7 +86,7 @@ module ONIX
     end
 
     def available?
-      ["Available","NotYetAvailable","InStock","ToOrder","Pod"].include?(@availability.human)
+      ["Available","InStock","ToOrder","Pod"].include?(@availability.human)
     end
 
     def sold_separately?
