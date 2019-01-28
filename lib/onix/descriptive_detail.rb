@@ -303,6 +303,22 @@ module ONIX
     end
   end
 
+  class AudienceRange < Subset
+    attr_accessor :limits
+    def parse(n)
+      @limits = Array.new
+      qualifier = n.xpath("./AudienceRangeQualifier")
+      precisions = n.xpath("./AudienceRangePrecision")
+      values = n.xpath("./AudienceRangeValue")
+
+      for i in 0..precisions.children.size-1
+        @limits << { :qualifier => AudienceRangeQualifier.from_code(qualifier[0].content),
+                     :precision => AudienceRangePrecision.from_code(precisions[i].content),
+                     :value => values[i].content}
+      end
+    end
+  end
+
   class ProductFormFeature < Subset
     attr_accessor :type, :value, :descriptions
 
@@ -336,7 +352,8 @@ module ONIX
                   :subjects,
                   :collections,
                   :extents,
-                  :epub_technical_protections
+                  :epub_technical_protections,
+                  :audience_range
 
     def initialize
       @title_details=[]
@@ -352,6 +369,7 @@ module ONIX
       @form_details=[]
       @form_features=[]
       @edition_types=[]
+      @audience_range=[]
     end
 
     # :category: High level
@@ -544,6 +562,11 @@ module ONIX
             @parts << part
           when tag_match("Subject")
             @subjects << Subject.from_xml(t)
+        when tag_match("AudienceRange")
+            audience_ranges = AudienceRange.from_xml(t)
+            audience_ranges.limits.each do |limit|
+              @audience_range << {:qualifier => limit[:qualifier], :precision => limit[:precision], :value => limit[:value]}
+            end
         end
       end
 

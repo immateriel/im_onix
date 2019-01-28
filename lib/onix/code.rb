@@ -475,4 +475,18 @@ module ONIX
     end
   end
 
+  class AudienceRangeQualifier < CodeFromYaml
+    private
+    def self.code_ident
+      30
+    end
+  end
+
+  class AudienceRangePrecision < CodeFromYaml
+    private
+    def self.code_ident
+      31
+    end
+  end
+
 end
