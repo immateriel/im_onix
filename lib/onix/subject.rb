@@ -4,6 +4,7 @@ module ONIX
 
 
     def parse(n)
+      @main=false
       n.children.each do |t|
         case t
           when tag_match("MainSubject")
