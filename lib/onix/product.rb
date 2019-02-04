@@ -556,6 +556,7 @@ module ONIX
               supply={}
               supply[:suppliers]=sd.suppliers
               supply[:available]=sd.available?
+              supply[:availability]=sd.availability
               supply[:availability_date]=availability_date
 
               supply[:price]=p.amount
@@ -583,6 +584,7 @@ module ONIX
               unpriced_items << {
                 :suppliers => sd.suppliers,
                 :available => sd.available?,
+                :availability => sd.availability,
                 :availability_date => availability_date,
                 :unpriced_item_type => sd.unpriced_item_type.human,
                 :territory => market_territories
