@@ -960,6 +960,9 @@ class TestImOnix < Minitest::Test
       assert_equal '200', @product.proprietary_categories[1].code
       assert_equal '200.20001', @product.proprietary_categories[2].code
       assert_equal '200.20001.2000115', @product.proprietary_categories[3].code
+
+      assert_equal true, @product.proprietary_categories[0].main
+      assert_equal false, @product.proprietary_categories[1].main
     end
   end
 

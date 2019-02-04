@@ -1,11 +1,14 @@
 module ONIX
   class Subject < Subset
-    attr_accessor :code, :heading_text, :scheme_identifier, :scheme_name, :scheme_version
+    attr_accessor :code, :heading_text, :scheme_identifier, :scheme_name, :scheme_version, :main
 
 
     def parse(n)
+      @main=false
       n.children.each do |t|
         case t
+          when tag_match("MainSubject")
+            @main=true
           when tag_match("SubjectHeadingText")
             @heading_text=t.text.strip
           when tag_match("SubjectCode")
