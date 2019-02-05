@@ -522,6 +522,7 @@ module ONIX
     #
     # supplies is a hash symbol array in the form :
     #   [{:available=>bool,
+    #     :availability=>string,
     #     :availability_date=>date,
     #     :including_tax=>bool,
     #     :currency=>string,
@@ -556,6 +557,7 @@ module ONIX
               supply={}
               supply[:suppliers]=sd.suppliers
               supply[:available]=sd.available?
+              supply[:availability]=sd.availability
               supply[:availability_date]=availability_date
 
               supply[:price]=p.amount
@@ -583,6 +585,7 @@ module ONIX
               unpriced_items << {
                 :suppliers => sd.suppliers,
                 :available => sd.available?,
+                :availability => sd.availability,
                 :availability_date => availability_date,
                 :unpriced_item_type => sd.unpriced_item_type.human,
                 :territory => market_territories
@@ -594,7 +597,7 @@ module ONIX
 
       # filter on availability, date, type and territories because suppliers are always the same
       unpriced_items.uniq! do |i|
-        i.select {|k,v| [:available, :availability_date, :unpriced_item_type, :territory].include?(k) }.hash
+        i.select {|k,v| [:available, :availability_date, :availability, :unpriced_item_type, :territory].include?(k) }.hash
       end
 
       grouped_supplies={}
@@ -660,6 +663,7 @@ module ONIX
                      :currency=>fsupply[:currency],
                      :territory=>supply.map{|fs| fs.map{|s| s[:territory]}}.flatten.uniq,
                      :available=>fsupply[:available],
+                     :availability=>fsupply[:availability],
                      :availability_date=>fsupply[:availability_date],
                      :suppliers=>fsupply[:suppliers],
                      :prices=>supply.first.map{|s|

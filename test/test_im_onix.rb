@@ -140,6 +140,11 @@ class TestImOnix < Minitest::Test
       assert_equal true, @product.supplies_for_country("FR","EUR").first[:available]
     end
 
+    should "have 'Available' availability" do
+      assert_equal "Available", @product.supplies_for_country("FR","EUR").first[:availability].human
+      assert_equal "20", @product.supplies_for_country("FR","EUR").first[:availability].code
+    end
+
     should "be priced in France" do
       assert_equal 1099, @product.supplies_for_country("FR","EUR").first[:prices].first[:amount]
     end
