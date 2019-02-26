@@ -411,17 +411,17 @@ module ONIX
     # :category: High level
     # product title string
     def title
-      product_title_element.title
+      product_title_element.title if product_title_element
     end
 
     # :category: High level
     # product subtitle string
     def subtitle
-      product_title_element.subtitle
+      product_title_element.subtitle if product_title_element
     end
 
     def product_title_element
-      @title_details.distinctive_title.first.title_elements.product_level.first
+      @title_details.distinctive_title.first.title_elements.product_level.first if @title_details.distinctive_title.first
     end
 
     def pages_extent
