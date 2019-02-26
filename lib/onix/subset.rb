@@ -172,15 +172,18 @@ module ONIX
         when Regexp
           self.class.new(self.select { |v|
             code=v.instance_variable_get("@"+k.to_s)
-            code.human =~ p
+            code and code.human =~ p
           })
         when Array
           self.class.new(self.select { |v|
             code=v.instance_variable_get("@"+k.to_s)
-            p.include?(code.human)
+            code and p.include?(code.human)
           })
         else
-          self.class.new(self.select { |v| v.instance_variable_get("@"+k.to_s).human == p })
+          self.class.new(self.select { |v|
+            code=v.instance_variable_get("@"+k.to_s)
+            code and code.human == p
+          })
       end
     end
 
