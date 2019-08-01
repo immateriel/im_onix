@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.date = "2016-08-08"
   s.description = "immat\u{e9}riel.fr onix parser"
   s.email = "jboulnois@immateriel.fr"
+  s.license = "MIT"
   s.executables = ["html_codelist_to_yml.rb", "onix3_to_onix2.rb", "onix3_to_onix3.rb", "onix_bench.rb", "onix_pp.rb", "onix_split.rb"]
   s.extra_rdoc_files = [
     "README.md"

@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 require 'im_onix'
 require 'onix/serializer'
 filename=ARGV[0]
