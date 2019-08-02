@@ -14,8 +14,8 @@ pp message.products.first.identifiers.first
 Ruby elements variables are underscored, lowercase of ONIX tags (Product -> product, DescriptiveDetail -> descriptive_detail) and pluralized in case of array (ProductSupply -> product_supplies).
 
 ### High level API
-High level methods give abstracted and simplified access to the most important data.
-See http://nu.immateriel.fr/im_onix/doc/ONIX/Product.html for high level API rdoc and onix_pp.rb, onix3_to_onix2.rb and onix3_to_onix3.rb sample in bin/
+High level methods give abstracted and simplified access to the most important data.  
+See https://www.rubydoc.info/gems/im_onix/ONIX/Product for high level API rdoc and onix_pp.rb, onix3_to_onix2.rb and onix3_to_onix3.rb sample in bin/
 
 Usage :
 ```shell
