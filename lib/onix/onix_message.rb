@@ -14,7 +14,6 @@ require 'onix/product'
 require 'onix/onix21'
 
 module ONIX
-
   class Sender < SubsetDSL
     include GlnMethods
 
@@ -52,8 +51,8 @@ module ONIX
   class ONIXMessage < Subset
     attr_accessor :sender, :adressee, :sent_date_time,
                   :default_language_of_text, :default_currency_code,
-                  :products,
-                  :release
+                  :products, :release
+    attr_reader :raw_header_xml
 
     def initialize
       @products=[]
@@ -129,7 +128,6 @@ module ONIX
 
     # parse filename or file
     def parse(arg, force_encoding=nil, force_release=nil)
-
       xml=open(arg, force_encoding)
       @products=[]
 
@@ -143,6 +141,8 @@ module ONIX
           root.elements.each do |e|
             case e
               when tag_match("Header")
+                @raw_header_xml = e
+
                 e.elements.each do |t|
                   case t
                     when tag_match("Sender")
@@ -183,5 +183,4 @@ module ONIX
       init_vault
     end
   end
-
 end

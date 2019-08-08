@@ -229,6 +229,18 @@ class TestImOnix < Minitest::Test
       @product = @message.products.last
     end
 
+    should "return the file's header as raw xml" do
+      raw_header_xml = "<Header>\n  <Sender>\n    <SenderName>immatériel·fr</SenderName>\n  </Sender>\n  <SentDateTime>20130802</SentDateTime>\n  <DefaultLanguageOfText>fre</DefaultLanguageOfText>\n</Header>"
+
+      assert_equal raw_header_xml, @message.raw_header_xml.to_s
+    end
+
+    should "return the product's raw xml" do
+      raw_product_xml = "<Product>\n  <RecordReference>immateriel.fr-RP64127</RecordReference>\n  <NotificationType>03</NotificationType>\n  <ProductIdentifier>\n    <ProductIDType>01</ProductIDType>\n    <IDValue>RP64127</IDValue>\n  </ProductIdentifier>\n  <ProductIdentifier>\n    <ProductIDType>03</ProductIDType>\n    <IDValue>3019002489901</IDValue>\n  </ProductIdentifier>\n  <DescriptiveDetail>\n    <ProductComposition>00</ProductComposition>\n    <ProductForm>ED</ProductForm>\n    <ProductFormDetail>E101</ProductFormDetail>\n    <ProductFormDetail>E201</ProductFormDetail>\n    <ProductFormDescription>ePub fixed layout avec Tatouage</ProductFormDescription>\n    <ProductContentType>10</ProductContentType>\n    <EpubTechnicalProtection>02</EpubTechnicalProtection>\n    <EpubUsageConstraint>\n      <EpubUsageType>02</EpubUsageType>\n      <EpubUsageStatus>01</EpubUsageStatus>\n    </EpubUsageConstraint>\n    <EpubUsageConstraint>\n      <EpubUsageType>03</EpubUsageType>\n      <EpubUsageStatus>01</EpubUsageStatus>\n    </EpubUsageConstraint>\n    <EpubUsageConstraint>\n      <EpubUsageType>04</EpubUsageType>\n      <EpubUsageStatus>01</EpubUsageStatus>\n    </EpubUsageConstraint>\n    <TitleDetail>\n      <TitleType>01</TitleType>\n      <TitleElement>\n        <TitleElementLevel>01</TitleElementLevel>\n        <TitleText>Certaines n'avaient jamais vu la mer</TitleText>\n      </TitleElement>\n    </TitleDetail>\n    <Extent>\n      <ExtentType>22</ExtentType>\n      <ExtentValue>480211</ExtentValue>\n      <ExtentUnit>17</ExtentUnit>\n    </Extent>\n  </DescriptiveDetail>\n  <RelatedMaterial>\n    <RelatedProduct>\n      <ProductRelationCode>02</ProductRelationCode>\n      <ProductIdentifier>\n        <ProductIDType>01</ProductIDType>\n        <IDValue>O192530</IDValue>\n      </ProductIdentifier>\n      <ProductIdentifier>\n        <ProductIDType>03</ProductIDType>\n        <IDValue>9782752908643</IDValue>\n      </ProductIdentifier>\n      <ProductIdentifier>\n        <ProductIDType>15</ProductIDType>\n        <IDValue>9782752908643</IDValue>\n      </ProductIdentifier>\n    </RelatedProduct>\n  </RelatedMaterial>\n  <ProductSupply>\n    <SupplyDetail>\n      <Supplier>\n        <SupplierRole>03</SupplierRole>\n        <SupplierIdentifier>\n          <SupplierIDType>02</SupplierIDType>\n          <IDValue>D1</IDValue>\n        </SupplierIdentifier>\n        <SupplierIdentifier>\n          <SupplierIDType>06</SupplierIDType>\n          <IDValue>3012410001000</IDValue>\n        </SupplierIdentifier>\n        <SupplierName>immatériel·fr</SupplierName>\n      </Supplier>\n      <ProductAvailability>45</ProductAvailability>\n      <UnpricedItemType>03</UnpricedItemType>\n    </SupplyDetail>\n  </ProductSupply>\n</Product>"
+
+      assert_equal raw_product_xml, @product.raw_xml.to_s
+    end
+
     should "not be reflowable" do
       assert_equal false, @product.reflowable?
     end
@@ -296,7 +308,6 @@ class TestImOnix < Minitest::Test
       assert_equal false, @product.price_to_be_announced?
     end
   end
-
 
   context "prices starting free with date" do
     setup do
@@ -836,6 +847,18 @@ class TestImOnix < Minitest::Test
       @product=@message.products.last
     end
 
+    should "return the file's header as raw xml" do
+      raw_header_xml = "<Header>\n    <FromCompany>Jouve</FromCompany>\n    <ToCompany>BnF</ToCompany>\n    <SentDate>20160114</SentDate>\n  </Header>"
+
+      assert_equal raw_header_xml, @message.raw_header_xml.to_s
+    end
+
+    should "return the product's raw xml" do
+      raw_product_xml = "<Product>\n    <RecordReference>9782346032532</RecordReference>\n    <NotificationType>03</NotificationType>\n    <ProductIdentifier>\n      <ProductIDType>15</ProductIDType>\n      <IDValue>9782346032532</IDValue>\n    </ProductIdentifier>\n    <ProductForm>DG</ProductForm>\n    <EpubType>029</EpubType>\n    <EpubTypeVersion>3.0</EpubTypeVersion>\n    <Title>\n      <TitleType>01</TitleType>\n      <TitleText>La Physiologie de l'esprit</TitleText>\n    </Title>\n    <Language>\n      <LanguageRole>01</LanguageRole>\n      <LanguageCode>fre</LanguageCode>\n      <CountryCode>FR</CountryCode>\n    </Language>\n    <Contributor>\n      <SequenceNumber>1</SequenceNumber>\n      <ContributorRole>A01</ContributorRole>\n      <PersonNameInverted>Paulhan, Frédéric</PersonNameInverted>\n      <PersonName>Frédéric Paulhan</PersonName>\n      <NamesBeforeKey>Frédéric</NamesBeforeKey>\n      <KeyNames>Paulhan</KeyNames>\n    </Contributor>\n    <Imprint>\n      <ImprintName>F. Alcan (Paris)</ImprintName>\n    </Imprint>\n    <Publisher>\n      <PublishingRole>01</PublishingRole>\n      <PublisherName>BnF-Partenariats</PublisherName>\n    </Publisher>\n    <NumberOfPages>197</NumberOfPages>\n    <BASICMainSubject>SOC000000</BASICMainSubject>\n    <MainSubject>\n      <MainSubjectSchemeIdentifier>01</MainSubjectSchemeIdentifier>\n      <SubjectCode>150</SubjectCode>\n    </MainSubject>\n    <MainSubject>\n      <MainSubjectSchemeIdentifier>29</MainSubjectSchemeIdentifier>\n      <SubjectCode>3080</SubjectCode>\n    </MainSubject>\n    <MainSubject>\n      <MainSubjectSchemeIdentifier>20</MainSubjectSchemeIdentifier>\n      <SubjectHeadingText>Psychologie</SubjectHeadingText>\n    </MainSubject>\n    <OtherText>\n      <TextTypeCode>01</TextTypeCode>\n      <TextFormat>02</TextFormat>\n      <Text><![CDATA[<p>L’esprit étant l’ensemble des fonctions de relation de l’être vivant et des manières d’être internes qui s’y rapportent le plus directement, peut être considéré, à un certain point de vue, comme l’expression de l’organisme. Il est en quelque sorte l’activité même de cet organisme, et c’est de son nom que nous appelons cet ensemble de fonctions qui reçoit les impressions du dehors, qui les trie, les analyse, puis les classe, les compare, les synthétise et réagit selon sa nature propre, en des manières très diverses.</p><p>Fruit d’une sélection réalisée au sein des fonds de la Bibliothèque nationale de France, <i>Collection XIX</i> a pour ambition de faire découvrir des textes classiques et moins classiques dans les meilleures éditions du XIX<sup>e</sup> siècle.</p>]]></Text>\n    </OtherText>\n    <SupplyDetail>\n      <SupplierName>Jouve</SupplierName>\n      <ProductAvailability>20</ProductAvailability>\n      <Price>\n        <PriceTypeCode>04</PriceTypeCode>\n        <CurrencyCode>EUR</CurrencyCode>\n        <PriceAmount>1.49</PriceAmount>\n      </Price>\n    </SupplyDetail>\n  </Product>"
+
+      assert_equal raw_product_xml, @product.raw_xml.to_s
+    end
+
     should "have an EAN13" do
       assert_equal "9782346032532", @product.ean
     end
@@ -843,7 +866,6 @@ class TestImOnix < Minitest::Test
     should "have title" do
       assert_equal "La Physiologie de l'esprit", @product.title
     end
-
 
     should "have a main publisher named BnF-Partenariats" do
       assert_equal "BnF-Partenariats", @product.publisher_name
