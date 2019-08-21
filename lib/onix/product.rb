@@ -324,6 +324,16 @@ module ONIX
       @descriptive_detail.title
     end
 
+    def authors
+      authors = contributors.select { |c| c.contributor_role.human == "ByAuthor" }
+      authors.map(&:person_name)
+    end
+
+    def narrators
+      narrators = contributors.select { |c| c.contributor_role.human == "ReadBy" }
+      narrators.map(&:person_name)
+    end
+
     # :category: High level
     # product subtitle string
     def subtitle

@@ -45,6 +45,12 @@ module ONIX
       end
     end
 
+    class ProductForm < CodeFromYaml
+      def self.code_ident
+        7
+      end
+    end
+
     class EpubType < CodeFromYaml
       private
       def self.code_ident
@@ -333,7 +339,7 @@ module ONIX
       elements "Publisher", :subset
       elements "Imprint", :subset
 
-      element "ProductForm", :text
+      element "ProductForm", :subset
 
       elements "OtherText", :subset
 
@@ -372,6 +378,16 @@ module ONIX
 
       def title
         product_title.title
+      end
+
+      def authors
+        authors = contributors.select { |c| c.contributor_role.human == "ByAuthor" }
+        authors.map(&:person_name)
+      end
+
+      def narrators
+        narrators = contributors.select { |c| c.contributor_role.human == "ReadBy" }
+        narrators.map(&:person_name)
       end
 
       # :category: High level

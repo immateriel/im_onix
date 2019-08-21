@@ -36,6 +36,14 @@ class TestImOnix < Minitest::Test
       @product=@message.products.last
     end
 
+    should "have authors" do
+      assert_equal ["Julie Otsuka"], @product.authors
+    end
+
+    should "have empty list when no narrator" do
+      assert_equal [], @product.narrators
+    end
+
     should "have record reference" do
       assert_equal "immateriel.fr-O192530", @product.record_reference
     end
@@ -859,12 +867,24 @@ class TestImOnix < Minitest::Test
       assert_equal raw_product_xml, @product.raw_xml.to_s
     end
 
+    should "have authors" do
+      assert_equal ["Frédéric Paulhan"], @product.authors
+    end
+
+    should "have empty list when no narrator" do
+      assert_equal [], @product.narrators
+    end
+
     should "have an EAN13" do
       assert_equal "9782346032532", @product.ean
     end
 
     should "have title" do
       assert_equal "La Physiologie de l'esprit", @product.title
+    end
+
+    should "have product_form" do
+      assert_equal "DG", @product.product_form.code
     end
 
     should "have a main publisher named BnF-Partenariats" do
