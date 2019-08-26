@@ -318,6 +318,7 @@ module ONIX
 
     class Product < SubsetDSL
       include EanMethods
+      include IsbnMethods
       include ProprietaryIdMethods
 
       element "RecordReference", :text
@@ -559,9 +560,33 @@ module ONIX
       end
 
       def frontcover_url
-        fc=@media_files.select { |mf| mf.media_file_type_code.human=="ImageFrontCover" && mf.media_file_link_type_code.human=="Url"}
+        fc=@media_files.select do |mf|
+          mf.media_file_type_code.human=="ImageFrontCover" && mf.media_file_link_type_code.human=="Url"
+        end
         if fc.length > 0
           fc.first.link
+        else
+          nil
+        end
+      end
+
+      def high_quality_frontcover_url
+        fc=@media_files.select do |mf|
+          mf.media_file_type_code.human=="ImageFrontCoverHighQuality" && mf.media_file_link_type_code.human=="Url"
+        end
+        if fc.length > 0
+          fc.first.link
+        else
+          nil
+        end
+      end
+
+      def audio_sample_url
+        audio=@media_files.select do |mf|
+          mf.media_file_type_code.human=="AudioSampleContent" && mf.media_file_link_type_code.human=="Url"
+        end
+        if audio.length > 0
+          audio.first.link
         else
           nil
         end

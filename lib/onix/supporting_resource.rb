@@ -156,6 +156,7 @@ module ONIX
 
     scope :image, lambda {human_code_match(:resource_mode, "Image")}
     scope :text, lambda {human_code_match(:resource_mode, "Text")}
+    scope :audio, lambda {human_code_match(:resource_mode, "Audio")}
 
     # shortcuts
     def type

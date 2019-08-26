@@ -72,6 +72,13 @@ module ONIX
       end
     end
 
+    def audio_sample_url
+      audio = @supporting_resources.audio.first.versions.last
+      if audio
+        audio.links.first.strip
+      end
+    end
+
     def epub_sample_url
       if self.epub_sample_resource
         self.epub_sample_resource.links.first.strip

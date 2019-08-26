@@ -102,9 +102,9 @@
         <Text>XXXXXXX</Text>
       </TextContent>
       <SupportingResource>
-        <ResourceContentType>01</ResourceContentType>
+        <ResourceContentType>15</ResourceContentType>
         <ContentAudience>00</ContentAudience>
-        <ResourceMode>03</ResourceMode>
+        <ResourceMode>02</ResourceMode>
         <ResourceFeature>
           <ResourceFeatureType>02</ResourceFeatureType>
           <FeatureValue>Première de couverture</FeatureValue>
@@ -128,7 +128,7 @@
             <ResourceVersionFeatureType>02</ResourceVersionFeatureType>
             <FeatureValue>1462</FeatureValue>
           </ResourceVersionFeature>
-          <ResourceLink>http://xxx/xxx.jpg</ResourceLink>
+          <ResourceLink>http://xxx/xxx.mp3</ResourceLink>
           <ContentDate>
             <ContentDateRole>17</ContentDateRole>
             <DateFormat>14</DateFormat>

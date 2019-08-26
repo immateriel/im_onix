@@ -358,6 +358,12 @@ module ONIX
       end
     end
 
+    def audio_sample_url
+      if @collateral_detail
+        @collateral_detail.audio_sample_url
+      end
+    end
+
     # :category: High level
     # product larger front cover last updated date
     def frontcover_last_updated

@@ -474,6 +474,9 @@ class TestImOnix < Minitest::Test
       assert_equal "Mp3Format", @product.audio_format
     end
 
+    should "be the audio sample url" do
+      assert_equal "http://xxx/xxx.mp3", @product.audio_sample_url
+    end
   end
 
   context "audio product specified as 'digital content delivered by download only'" do
@@ -877,6 +880,10 @@ class TestImOnix < Minitest::Test
 
     should "have an EAN13" do
       assert_equal "9782346032532", @product.ean
+    end
+
+    should "have an ISBN-13" do
+      assert_equal "9782346032532", @product.isbn13
     end
 
     should "have title" do
