@@ -341,6 +341,14 @@
       <Website>
         <WebsiteLink>http://www.julieotsuka.com/</WebsiteLink>
       </Website>
+      <ContributorDate>
+        <ContributorDateRole>50</ContributorDateRole>
+        <Date>19891109</Date>
+      </ContributorDate>
+      <ContributorDate>
+        <ContributorDateRole>51</ContributorDateRole>
+        <Date>20190902</Date>
+      </ContributorDate>
     </Contributor>
     <EditionNumber>1</EditionNumber>
     <Language>

@@ -269,6 +269,26 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context "author with date informations" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/9782752906700.xml")
+      @product=@message.products.last
+    end
+
+    should "have two dates" do
+      assert_equal 2, @product.contributors.first.dates.length
+    end
+
+    should "have author birth date" do
+      assert_equal Time.new(1989, 11, 9), @product.contributors.first.birth_date
+    end
+
+    should "have author death date" do
+      assert_equal Time.new(2019, 9, 2), @product.contributors.first.death_date
+    end
+  end
+
   context "prices with past change time" do
     setup do
       @message = ONIX::ONIXMessage.new
