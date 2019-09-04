@@ -17,6 +17,8 @@ module ONIX
     elements "Website", :subset
     element "ContributorPlace", :subset
 
+    elements "ContributorDate", :subset
+
     def role
       @contributor_role
     end
@@ -31,6 +33,10 @@ module ONIX
 
     def name_before_key
       @names_before_key
+    end
+
+    def dates
+      @contributor_dates
     end
 
     # :category: High level
@@ -66,6 +72,26 @@ module ONIX
     def raw_biography
       if self.biography
         Helper.strip_html(self.biography).gsub(/\s+/, " ")
+      else
+        nil
+      end
+    end
+
+    # :category: High level
+    # date of birth
+    def birth_date
+      if contributor_date = @contributor_dates.find { |d| d.role.human == "DateOfBirth" }
+        contributor_date.date.to_time
+      else
+        nil
+      end
+    end
+
+    # :category: High level
+    # date of death
+    def death_date
+      if contributor_date = @contributor_dates.find { |d| d.role.human == "DateOfDeath" }
+        contributor_date.date.to_time
       else
         nil
       end

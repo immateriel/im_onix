@@ -180,4 +180,20 @@ module ONIX
       parse_date(n)
     end
   end
+
+  class ContributorDate < SubsetDSL
+    include DateHelper
+    element "Date", :ignore
+    element "DateFormat", :ignore
+    element "ContributorDateRole", :subset
+
+    def role
+      @contributor_date_role
+    end
+
+    def parse(n)
+      super
+      parse_date(n)
+    end
+  end
 end
