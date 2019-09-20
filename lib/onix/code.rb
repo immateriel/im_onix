@@ -533,6 +533,13 @@ module ONIX
     end
   end
 
+  class ContributorDateRole < CodeFromYaml
+    private
+    def self.code_ident
+      177
+    end
+  end
+
   class SupportingResourceFileFormat < CodeFromYamlWithMime
     private
     def self.code_ident
