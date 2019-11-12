@@ -13,6 +13,9 @@ module ONIX
     element "NamesBeforeKey", :text
     element "KeyNames", :text
 
+    element "CorporateName", :text
+    element "CorporateNameInverted", :text
+
     element "BiographicalNote", :text
     elements "Website", :subset
     element "ContributorPlace", :subset
@@ -42,23 +45,23 @@ module ONIX
     # :category: High level
     # flatten person name (firstname lastname)
     def name
-      if @person_name
-        @person_name
-      else
-        if @key_names
-          if @names_before_key
-            "#{@names_before_key} #{@key_names}"
-          else
-            @key_names
-          end
+      return @person_name if @person_name
+
+      if @key_names
+        if @names_before_key
+          return "#{@names_before_key} #{@key_names}"
+        else
+          return @key_names
         end
       end
+
+      @corporate_name
     end
 
     # :category: High level
     # inverted flatten person name
     def inverted_name
-      @person_name_inverted
+      @person_name_inverted || @corporate_name_inverted
     end
 
     # :category: High level
