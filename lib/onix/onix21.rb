@@ -88,6 +88,10 @@ module ONIX
 
     # ONIX 2.1 subset
 
+    class Header < SubsetDSL
+      element "FromCompany", :text
+    end
+
     class Title < SubsetDSL
       element "TitleType", :subset
       element "TitleText", :text
