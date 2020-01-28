@@ -67,6 +67,7 @@
         <PriceAmount>1.49</PriceAmount>
       </Price>
     </SupplyDetail>
+    <PublishingStatus>04</PublishingStatus>
     <SalesRestriction>
       <SalesRestrictionType>01</SalesRestrictionType>
     </SalesRestriction>

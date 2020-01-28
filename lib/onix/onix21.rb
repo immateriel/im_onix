@@ -360,7 +360,7 @@ module ONIX
       elements "MainSubject", :subset
       elements "Subject", :subset
 
-      element "PublishingStatus", :text
+      element "PublishingStatus", :subset
       element "PublicationDate", :text, {:parse_lambda => lambda { |v| Date.strptime(v, "%Y%m%d") }}
 
       elements "RelatedProduct", :subset
