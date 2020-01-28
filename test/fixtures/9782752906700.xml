@@ -60,6 +60,11 @@
     </RelatedProduct>
   </RelatedMaterial>
   <ProductSupply>
+    <Market>
+      <SalesRestriction>
+        <SalesRestrictionType>06</SalesRestrictionType>
+      </SalesRestriction>
+    </Market>
     <SupplyDetail>
       <Supplier>
         <SupplierRole>03</SupplierRole>

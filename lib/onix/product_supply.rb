@@ -5,6 +5,7 @@ module ONIX
 
   class Market < SubsetDSL
     element "Territory", :subset
+    elements "SalesRestriction", :subset
   end
 
   class MarketPublishingDetail < SubsetDSL

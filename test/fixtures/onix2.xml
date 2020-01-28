@@ -67,5 +67,16 @@
         <PriceAmount>1.49</PriceAmount>
       </Price>
     </SupplyDetail>
+    <SalesRestriction>
+      <SalesRestrictionType>01</SalesRestrictionType>
+    </SalesRestriction>
+    <MarketRepresentation>
+      <MarketCountry>US CA</MarketCountry>
+      <MarketPublishingStatus>04</MarketPublishingStatus>
+      <MarketDate>
+          <MarketDateRole>01</MarketDateRole>
+          <Date>20200101</Date>
+      </MarketDate>
+    </MarketRepresentation>
   </Product>
 </ONIXMessage>

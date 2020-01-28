@@ -251,6 +251,11 @@ module ONIX
       end
     end
 
+    class MarketRepresentation < SubsetDSL
+      element "MarketPublishingStatus", :subset
+      elements "MarketDate", :subset
+    end
+
     class SalesRights < SubsetDSL
       element "SalesRightsType", :text
       element "RightsCountry", :text
@@ -361,6 +366,10 @@ module ONIX
       elements "RelatedProduct", :subset
 
       elements "SupplyDetail", :subset
+
+      elements "SalesRestriction", :subset
+
+      elements "MarketRepresentation", :subset
 
       element "EpubType", :subset
       element "EpubTypeDescription", :text
