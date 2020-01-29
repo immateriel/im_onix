@@ -13,6 +13,7 @@
   '10': Remaindered
   '11': WithdrawnFromSale
   '12': Recalled
+  '13': ActiveButNotSoldSeparately
   '15': Recalled
   '16': TemporarilyWithdrawnFromSale
   '17': PermanentlyWithdrawnFromSale
