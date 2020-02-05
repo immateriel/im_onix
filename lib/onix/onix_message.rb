@@ -48,6 +48,13 @@ module ONIX
     end
   end
 
+  class Header < SubsetDSL
+    include GlnMethods
+
+    element "FromCompany", :text
+    element "DefaultLanguageOfText", :subset
+  end
+
   class ONIXMessage < Subset
     attr_accessor :sender, :adressee, :sent_date_time,
                   :default_language_of_text, :default_currency_code,
@@ -142,6 +149,7 @@ module ONIX
             case e
               when tag_match("Header")
                 @raw_header_xml = e
+                @header = Header.parse(e)
                 if @release =~ /^3.0/
                   e.elements.each do |t|
                     case t
@@ -160,8 +168,6 @@ module ONIX
                       unsupported(t)
                     end
                   end
-                else
-                  @header = ONIX21::Header.parse(e)
                 end
               when tag_match("Product")
                 product=nil

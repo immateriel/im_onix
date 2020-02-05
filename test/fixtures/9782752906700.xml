@@ -5,7 +5,7 @@
     <SenderName>immatériel·fr</SenderName>
   </Sender>
   <SentDateTime>20130802</SentDateTime>
-  <DefaultLanguageOfText>fre</DefaultLanguageOfText>
+  <DefaultLanguageOfText>spa</DefaultLanguageOfText>
 </Header>
 <!-- Certaines n'avaient jamais vu la mer (110336) multi-format : Accès streaming - Online reader (3019002489208) -->
 <Product>
@@ -351,6 +351,10 @@
     <Language>
       <LanguageRole>01</LanguageRole>
       <LanguageCode>fre</LanguageCode>
+    </Language>
+    <Language>
+      <LanguageRole>08</LanguageRole>
+      <LanguageCode>eng</LanguageCode>
     </Language>
     <Extent>
       <ExtentType>00</ExtentType>

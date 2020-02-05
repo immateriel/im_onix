@@ -36,6 +36,11 @@ class TestImOnix < Minitest::Test
       @product=@message.products.last
     end
 
+    should "have a the default language" do
+      assert_equal "Spanish", @product.default_language_of_text.human
+      assert_equal "Spanish", @message.header.default_language_of_text.human
+    end
+
     should "have authors" do
       assert_equal ["Julie Otsuka"], @product.authors
     end
@@ -122,8 +127,12 @@ class TestImOnix < Minitest::Test
       assert_equal nil, @product.embargo_date
     end
 
-    should "be in french" do
+    should "have text language French" do
       assert_equal "fre", @product.language_code_of_text
+    end
+
+    should "have audio track language English" do
+      assert_equal "English", @product.language_name_of_audio_track
     end
 
     should "have some keywords" do
@@ -866,14 +875,18 @@ class TestImOnix < Minitest::Test
       assert_equal "Jouve", @message.header.from_company
     end
 
+    should "return the default language in header" do
+      assert_equal "English", @message.header.default_language_of_text.human
+    end
+
     should "return the file's header as raw xml" do
-      raw_header_xml = "<Header>\n    <FromCompany>Jouve</FromCompany>\n    <ToCompany>BnF</ToCompany>\n    <SentDate>20160114</SentDate>\n  </Header>"
+      raw_header_xml = "<Header>\n    <FromCompany>Jouve</FromCompany>\n    <ToCompany>BnF</ToCompany>\n    <SentDate>20160114</SentDate>\n    <DefaultLanguageOfText>eng</DefaultLanguageOfText>\n  </Header>"
 
       assert_equal raw_header_xml, @message.raw_header_xml.to_s
     end
 
     should "return the product's raw xml" do
-      raw_product_xml = "<Product>\n    <RecordReference>9782346032532</RecordReference>\n    <NotificationType>03</NotificationType>\n    <ProductIdentifier>\n      <ProductIDType>15</ProductIDType>\n      <IDValue>9782346032532</IDValue>\n    </ProductIdentifier>\n    <ProductForm>DG</ProductForm>\n    <EpubType>029</EpubType>\n    <EpubTypeVersion>3.0</EpubTypeVersion>\n    <Title>\n      <TitleType>01</TitleType>\n      <TitleText>La Physiologie de l'esprit</TitleText>\n    </Title>\n    <Language>\n      <LanguageRole>01</LanguageRole>\n      <LanguageCode>fre</LanguageCode>\n      <CountryCode>FR</CountryCode>\n    </Language>\n    <Contributor>\n      <SequenceNumber>1</SequenceNumber>\n      <ContributorRole>A01</ContributorRole>\n      <PersonNameInverted>Paulhan, Frédéric</PersonNameInverted>\n      <PersonName>Frédéric Paulhan</PersonName>\n      <NamesBeforeKey>Frédéric</NamesBeforeKey>\n      <KeyNames>Paulhan</KeyNames>\n    </Contributor>\n    <Imprint>\n      <ImprintName>F. Alcan (Paris)</ImprintName>\n    </Imprint>\n    <Publisher>\n      <PublishingRole>01</PublishingRole>\n      <PublisherName>BnF-Partenariats</PublisherName>\n    </Publisher>\n    <NumberOfPages>197</NumberOfPages>\n    <BASICMainSubject>SOC000000</BASICMainSubject>\n    <MainSubject>\n      <MainSubjectSchemeIdentifier>01</MainSubjectSchemeIdentifier>\n      <SubjectCode>150</SubjectCode>\n    </MainSubject>\n    <MainSubject>\n      <MainSubjectSchemeIdentifier>29</MainSubjectSchemeIdentifier>\n      <SubjectCode>3080</SubjectCode>\n    </MainSubject>\n    <MainSubject>\n      <MainSubjectSchemeIdentifier>20</MainSubjectSchemeIdentifier>\n      <SubjectHeadingText>Psychologie</SubjectHeadingText>\n    </MainSubject>\n    <OtherText>\n      <TextTypeCode>01</TextTypeCode>\n      <TextFormat>02</TextFormat>\n      <Text><![CDATA[<p>L’esprit étant l’ensemble des fonctions de relation de l’être vivant et des manières d’être internes qui s’y rapportent le plus directement, peut être considéré, à un certain point de vue, comme l’expression de l’organisme. Il est en quelque sorte l’activité même de cet organisme, et c’est de son nom que nous appelons cet ensemble de fonctions qui reçoit les impressions du dehors, qui les trie, les analyse, puis les classe, les compare, les synthétise et réagit selon sa nature propre, en des manières très diverses.</p><p>Fruit d’une sélection réalisée au sein des fonds de la Bibliothèque nationale de France, <i>Collection XIX</i> a pour ambition de faire découvrir des textes classiques et moins classiques dans les meilleures éditions du XIX<sup>e</sup> siècle.</p>]]></Text>\n    </OtherText>\n    <SupplyDetail>\n      <SupplierName>Jouve</SupplierName>\n      <ProductAvailability>20</ProductAvailability>\n      <Price>\n        <PriceTypeCode>04</PriceTypeCode>\n        <CurrencyCode>EUR</CurrencyCode>\n        <PriceAmount>1.49</PriceAmount>\n      </Price>\n    </SupplyDetail>\n    <PublishingStatus>04</PublishingStatus>\n    <SalesRestriction>\n      <SalesRestrictionType>01</SalesRestrictionType>\n    </SalesRestriction>\n    <MarketRepresentation>\n      <MarketCountry>US CA</MarketCountry>\n      <MarketPublishingStatus>04</MarketPublishingStatus>\n      <MarketDate>\n          <MarketDateRole>01</MarketDateRole>\n          <Date>20200101</Date>\n      </MarketDate>\n    </MarketRepresentation>\n  </Product>"
+      raw_product_xml = "<Product>\n    <RecordReference>9782346032532</RecordReference>\n    <NotificationType>03</NotificationType>\n    <ProductIdentifier>\n      <ProductIDType>15</ProductIDType>\n      <IDValue>9782346032532</IDValue>\n    </ProductIdentifier>\n    <ProductForm>DG</ProductForm>\n    <EpubType>029</EpubType>\n    <EpubTypeVersion>3.0</EpubTypeVersion>\n    <Title>\n      <TitleType>01</TitleType>\n      <TitleText>La Physiologie de l'esprit</TitleText>\n    </Title>\n    <Language>\n      <LanguageRole>01</LanguageRole>\n      <LanguageCode>fre</LanguageCode>\n      <CountryCode>FR</CountryCode>\n    </Language>\n    <Language>\n      <LanguageRole>08</LanguageRole>\n      <LanguageCode>eng</LanguageCode>\n      <CountryCode>US</CountryCode>\n    </Language>\n    <Contributor>\n      <SequenceNumber>1</SequenceNumber>\n      <ContributorRole>A01</ContributorRole>\n      <PersonNameInverted>Paulhan, Frédéric</PersonNameInverted>\n      <PersonName>Frédéric Paulhan</PersonName>\n      <NamesBeforeKey>Frédéric</NamesBeforeKey>\n      <KeyNames>Paulhan</KeyNames>\n    </Contributor>\n    <Imprint>\n      <ImprintName>F. Alcan (Paris)</ImprintName>\n    </Imprint>\n    <Publisher>\n      <PublishingRole>01</PublishingRole>\n      <PublisherName>BnF-Partenariats</PublisherName>\n    </Publisher>\n    <NumberOfPages>197</NumberOfPages>\n    <BASICMainSubject>SOC000000</BASICMainSubject>\n    <MainSubject>\n      <MainSubjectSchemeIdentifier>01</MainSubjectSchemeIdentifier>\n      <SubjectCode>150</SubjectCode>\n    </MainSubject>\n    <MainSubject>\n      <MainSubjectSchemeIdentifier>29</MainSubjectSchemeIdentifier>\n      <SubjectCode>3080</SubjectCode>\n    </MainSubject>\n    <MainSubject>\n      <MainSubjectSchemeIdentifier>20</MainSubjectSchemeIdentifier>\n      <SubjectHeadingText>Psychologie</SubjectHeadingText>\n    </MainSubject>\n    <OtherText>\n      <TextTypeCode>01</TextTypeCode>\n      <TextFormat>02</TextFormat>\n      <Text><![CDATA[<p>L’esprit étant l’ensemble des fonctions de relation de l’être vivant et des manières d’être internes qui s’y rapportent le plus directement, peut être considéré, à un certain point de vue, comme l’expression de l’organisme. Il est en quelque sorte l’activité même de cet organisme, et c’est de son nom que nous appelons cet ensemble de fonctions qui reçoit les impressions du dehors, qui les trie, les analyse, puis les classe, les compare, les synthétise et réagit selon sa nature propre, en des manières très diverses.</p><p>Fruit d’une sélection réalisée au sein des fonds de la Bibliothèque nationale de France, <i>Collection XIX</i> a pour ambition de faire découvrir des textes classiques et moins classiques dans les meilleures éditions du XIX<sup>e</sup> siècle.</p>]]></Text>\n    </OtherText>\n    <SupplyDetail>\n      <SupplierName>Jouve</SupplierName>\n      <ProductAvailability>20</ProductAvailability>\n      <Price>\n        <PriceTypeCode>04</PriceTypeCode>\n        <CurrencyCode>EUR</CurrencyCode>\n        <PriceAmount>1.49</PriceAmount>\n      </Price>\n    </SupplyDetail>\n    <PublishingStatus>04</PublishingStatus>\n    <SalesRestriction>\n      <SalesRestrictionType>01</SalesRestrictionType>\n    </SalesRestriction>\n    <MarketRepresentation>\n      <MarketCountry>US CA</MarketCountry>\n      <MarketPublishingStatus>04</MarketPublishingStatus>\n      <MarketDate>\n          <MarketDateRole>01</MarketDateRole>\n          <Date>20200101</Date>\n      </MarketDate>\n    </MarketRepresentation>\n  </Product>"
 
       assert_equal raw_product_xml, @product.raw_xml.to_s
     end
@@ -925,6 +938,14 @@ class TestImOnix < Minitest::Test
     should "have a market publishing date" do
       assert_equal "PublicationDate", @product.market_representations.first.market_dates.first.market_date_role.human
       assert_equal Date.new(2020, 01, 01), @product.market_representations.first.market_dates.first.date
+    end
+
+    should "have text language French" do
+      assert_equal "French", @product.language_of_text.human
+    end
+
+    should "have audio track language English" do
+      assert_equal "English", @product.language_of_audio_track.human
     end
   end
 

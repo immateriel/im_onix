@@ -431,6 +431,22 @@ module ONIX
       end
     end
 
+    def language_of_audio_track
+      @descriptive_detail.language_of_audio_track
+    end
+
+    def language_code_of_audio_track
+      if self.language_of_audio_track
+        self.language_of_audio_track.code
+      end
+    end
+
+    def language_name_of_audio_track
+      if self.language_of_audio_track
+        self.language_of_audio_track.human
+      end
+    end
+
     # :category: High level
     # publisher collection title
     def publisher_collection_title

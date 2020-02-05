@@ -88,10 +88,6 @@ module ONIX
 
     # ONIX 2.1 subset
 
-    class Header < SubsetDSL
-      element "FromCompany", :text
-    end
-
     class Title < SubsetDSL
       element "TitleType", :subset
       element "TitleText", :text
@@ -457,6 +453,20 @@ module ONIX
         if self.language_of_text
           self.language_of_text.human
         end
+      end
+
+      def language_of_audio_track
+        @languages
+          .detect { |l| l.role.human == 'LanguageOfAudioTrack' }
+          &.code
+      end
+
+      def language_code_of_audio_track
+        language_of_audio_track&.code
+      end
+
+      def language_name_of_audio_track
+        language_of_audio_track&.human
       end
 
       def publisher_name

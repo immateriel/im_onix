@@ -322,6 +322,7 @@ module ONIX
     element "LanguageCode", :subset
 
     scope :of_text, lambda{human_code_match(:language_role, "LanguageOfText")}
+    scope :of_audio_track, lambda{human_code_match(:language_role, "LanguageOfAudioTrack")}
 
     # shortcuts
     def role
@@ -516,12 +517,11 @@ module ONIX
     end
 
     def language_of_text
-      l=@languages.of_text.first
-      if l
-        l.code
-      else
-        nil
-      end
+      @languages.of_text.first&.code
+    end
+
+    def language_of_audio_track
+      @languages.of_audio_track.first&.code
     end
 
     def publisher_collection

@@ -84,6 +84,13 @@ module ONIX
     end
   end
 
+  class DefaultLanguageOfText < CodeFromYaml
+    private
+    def self.code_ident
+      74
+    end
+  end
+
   class NotificationType < CodeFromYaml
     private
     def self.code_ident

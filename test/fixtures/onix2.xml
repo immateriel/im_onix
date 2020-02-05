@@ -4,6 +4,7 @@
     <FromCompany>Jouve</FromCompany>
     <ToCompany>BnF</ToCompany>
     <SentDate>20160114</SentDate>
+    <DefaultLanguageOfText>eng</DefaultLanguageOfText>
   </Header>
   <Product>
     <RecordReference>9782346032532</RecordReference>
@@ -23,6 +24,11 @@
       <LanguageRole>01</LanguageRole>
       <LanguageCode>fre</LanguageCode>
       <CountryCode>FR</CountryCode>
+    </Language>
+    <Language>
+      <LanguageRole>08</LanguageRole>
+      <LanguageCode>eng</LanguageCode>
+      <CountryCode>US</CountryCode>
     </Language>
     <Contributor>
       <SequenceNumber>1</SequenceNumber>
