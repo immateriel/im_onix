@@ -24,6 +24,14 @@ class TestImOnix < Minitest::Test
       assert_equal 1, @product.edition_number
     end
 
+    should "have an EAN13" do
+      assert_equal "9780470020043", @product.ean
+    end
+
+    should "have an ISBN-13" do
+      assert_equal "9780470020043", @product.isbn13
+    end
+
     should "have a frontcover_url" do
       assert_equal "http://TEST.com/images/db/jimages/9780470095003.jpg", @product.frontcover_url
     end
