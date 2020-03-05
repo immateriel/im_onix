@@ -32,6 +32,20 @@
     </Language>
     <Contributor>
       <SequenceNumber>1</SequenceNumber>
+      <ContributorRole>E07</ContributorRole>
+      <PersonNameInverted>Tester, Test1</PersonNameInverted>
+      <PersonName>Test1 Tester</PersonName>
+      <NamesBeforeKey>Tester</NamesBeforeKey>
+    </Contributor>
+    <Contributor>
+      <SequenceNumber>2</SequenceNumber>
+      <ContributorRole>E03</ContributorRole>
+      <PersonNameInverted>Tester, Test2</PersonNameInverted>
+      <PersonName>Test2 Tester</PersonName>
+      <NamesBeforeKey>Tester</NamesBeforeKey>
+    </Contributor>
+    <Contributor>
+      <SequenceNumber>1</SequenceNumber>
       <ContributorRole>A01</ContributorRole>
       <PersonNameInverted>Paulhan, Frédéric</PersonNameInverted>
       <PersonName>Frédéric Paulhan</PersonName>

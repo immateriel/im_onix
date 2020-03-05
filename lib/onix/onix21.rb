@@ -401,7 +401,10 @@ module ONIX
       end
 
       def narrators
-        narrators = contributors.select { |c| c.contributor_role.human == "ReadBy" }
+        narrators = contributors.select do |c|
+          ["ReadBy", "Narrator"].include?(c.contributor_role.human)
+        end
+
         narrators.map(&:person_name)
       end
 
