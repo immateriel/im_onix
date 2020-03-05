@@ -402,6 +402,7 @@ module ONIX
 
       def narrators
         narrators = contributors.select { |c| c.contributor_role.human == "ReadBy" }
+        narrators += contributors.select { |c| c.contributor_role.human == "Narrator" }
         narrators.map(&:person_name)
       end
 
