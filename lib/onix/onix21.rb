@@ -402,7 +402,7 @@ module ONIX
 
       def narrators
         narrators = contributors.select do |c|
-          ["ReadBy", "Narrator"].include?(c.contributor_role.human)
+          ["ReadBy", "Narrator", "PerformedBy"].include?(c.contributor_role.human)
         end
 
         narrators.map(&:person_name)
