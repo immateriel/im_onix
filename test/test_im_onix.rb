@@ -427,6 +427,37 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context "price for rest of world" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices_with_rest_of_world.xml")
+      @product=@message.products.last
+    end
+
+    should "have two prices" do
+      assert_equal 2, @product
+        .product_supplies.first
+        .supply_details.first
+        .prices.length
+    end
+
+    should "have a price for the US" do
+      assert_equal false, @product
+        .product_supplies.first
+        .supply_details.first
+        .prices[0]
+        .territory.rest_of_world?
+    end
+
+    should "have a price for the rest of the world" do
+      assert_equal true, @product
+        .product_supplies.first
+        .supply_details.first
+        .prices[1]
+        .territory.rest_of_world?
+    end
+  end
+
   context "prices without taxes" do
     setup do
       @message = ONIX::ONIXMessage.new

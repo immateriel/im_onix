@@ -29,6 +29,14 @@ module ONIX
       self.class.worldwide?(self.countries)
     end
 
+    def rest_of_world?
+      if @regions_included
+        @regions_included == 'ROW'
+      else
+        false
+      end
+    end
+
     def countries=v
       if (v.uniq & CountryCode.list).length==CountryCode.list.length
         @regions_included="WORLD"
