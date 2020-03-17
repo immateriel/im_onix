@@ -35,22 +35,27 @@ module ONIX
     #                :tax=>{:amount=>int, :rate_percent=>float}}]}]
     def supplies(keep_all_prices_dates=false)
       supplies=[]
+      unpriced_items=[]
 
       # add territories if missing
       if self.product_supplies
         self.product_supplies.each do |ps|
           ps.supply_details.each do |sd|
+
+            availability_date=sd.availability_date
+            unless availability_date
+                if ps.availability_date
+                  availability_date=ps.market_publishing_detail.availability_date
+                end
+            end
+
             sd.prices.each do |p|
               supply={}
               supply[:suppliers]=sd.suppliers
               supply[:available]=sd.available?
-              supply[:availability_date]=sd.availability_date
+              supply[:availability_date]=availability_date
 
-              unless supply[:availability_date]
-                  if ps.availability_date
-                    supply[:availability_date]=ps.market_publishing_detail.availability_date
-                  end
-              end
+
               supply[:price]=p.amount
               supply[:qualifier]=p.qualifier.human if p.qualifier
               supply[:including_tax]=p.including_tax?
@@ -79,8 +84,23 @@ module ONIX
 
               supplies << supply
             end
+
+            if sd.unpriced_item_type
+              unpriced_items << {
+                :suppliers => sd.suppliers,
+                :available => sd.available?,
+                :availability_date => availability_date,
+                :unpriced_item_type => sd.unpriced_item_type.human,
+                :territory => ps.markets ? ps.markets.map{|m| m.territory.countries}.flatten.uniq : []
+             }
+            end
           end
         end
+      end
+
+      # filter on availability, date, type and territories because suppliers are always the same
+      unpriced_items.uniq! do |i|
+        i.select {|k,v| [:available, :availability_date, :unpriced_item_type, :territory].include?(k) }.hash
       end
 
       grouped_supplies={}
@@ -158,7 +178,7 @@ module ONIX
                      }}
       end
 
-      supplies
+      supplies.concat(unpriced_items)
     end
 
     # add missing periods when they can be guessed
