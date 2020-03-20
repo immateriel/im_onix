@@ -202,6 +202,13 @@ module ONIX
     end
   end
 
+  class ContributorNameIdentifierNameIDType < CodeFromYaml
+    private
+    def self.code_ident
+      44
+    end
+  end
+
   class ContentAudience < CodeFromYaml
     private
     def self.code_ident

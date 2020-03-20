@@ -2,7 +2,7 @@ require 'onix/subset'
 
 module ONIX
   class Contributor < Subset
-    attr_accessor :name_before_key, :key_names, :person_name, :inverted_name, :role, :biography_note, :place, :sequence_number
+    attr_accessor :name_before_key, :key_names, :person_name, :inverted_name, :role, :biography_note, :place, :sequence_number, :name_identifier
 
     # :category: High level
     # flatten person name (firstname lastname)
@@ -61,6 +61,8 @@ module ONIX
             @role=ContributorRole.from_code(t.text)
           when tag_match("ContributorPlace")
             @place=ContributorPlace.from_xml(t)
+          when tag_match("NameIdentifier")
+            @name_identifier=ContributorNameIdentifier.from_xml(t)
         end
       end
     end
@@ -80,5 +82,19 @@ module ONIX
       end
     end
 
+    class ContributorNameIdentifier < Subset
+      attr_accessor :name_id_type, :id_value
+
+      def parse(p)
+        p.children.each do |t|
+          case t.name
+            when 'NameIDType'
+              @name_id_type = ContributorNameIdentifierNameIDType.from_code(t.text)
+            when 'IDValue'
+              @id_value = t.text
+          end
+        end
+      end
+    end
   end
 end
