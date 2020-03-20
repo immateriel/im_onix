@@ -124,6 +124,11 @@ class TestImOnix < Minitest::Test
       assert_equal "Julie Otsuka", @product.contributors.first.name
     end
 
+    should "have an author NameIdentifier" do
+      assert_equal "0000000464113354", @product.contributors.first.name_identifier.id_value
+      assert_equal "16", @product.contributors.first.name_identifier.name_id_type.code
+    end
+
     should "have author inverted named" do
       assert_equal "Otsuka, Julie", @product.contributors.first.inverted_name
     end
@@ -134,7 +139,7 @@ class TestImOnix < Minitest::Test
 
     should "have supplier named" do
       assert_equal "immatériel·fr", @product.supplies_for_country("FR","EUR").first[:suppliers].first.name
-    end
+      end
 
     should "be available in France" do
       assert_equal true, @product.supplies_for_country("FR","EUR").first[:available]
@@ -926,6 +931,7 @@ class TestImOnix < Minitest::Test
     end
 
     should "have a correct publication date" do
+      binding.pry
       assert_equal '2016-08-23T06:00:00+0200', @product.publication_date.strftime('%Y-%m-%dT%H:%M:%S%z')
     end
   end
