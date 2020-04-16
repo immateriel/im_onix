@@ -1001,4 +1001,17 @@ class TestImOnix < Minitest::Test
       assert_equal ["AdobeDrm", "Readium LCP DRM"], @product.protections
     end
   end
+
+  context "with narrators" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/with_narrators.xml')
+
+      @product = message.products.last
+    end
+
+    should 'have a narrator' do
+      assert_equal ['Jose A'], @product.narrators
+    end
+  end
 end
