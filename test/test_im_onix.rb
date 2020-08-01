@@ -888,6 +888,13 @@ class TestImOnix < Minitest::Test
     should "be priced in France" do
       assert_equal 149, @product.supplies_for_country("FR", "EUR").first[:prices].first[:amount]
     end
+
+    should "have an excerpt with a link" do
+      other_text_excerpt_code = "23"
+      excerpt = @product.other_texts.select {|other_text| other_text.text_type_code.code == other_text_excerpt_code}[0]
+      assert_equal "https://dummy.excerpt.link", excerpt.text_link
+      assert_equal "01", excerpt.text_link_type
+    end
   end
 
   context "with YYYY date format" do

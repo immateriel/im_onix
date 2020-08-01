@@ -103,6 +103,8 @@ module ONIX
       element "TextTypeCode", :subset
       element "TextFormat", :text
       element "Text", :text
+      element "TextLinkType", :text
+      element "TextLink", :text
 
       def type
         @text_type_code
