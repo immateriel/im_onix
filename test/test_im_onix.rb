@@ -455,6 +455,18 @@ class TestImOnix < Minitest::Test
     end
   end
 
+  context "price with multiple default EUR prices and only one EUR discount" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices6.xml")
+      @product=@message.products.last
+    end
+
+    should "have only one EUR prices group" do
+      assert_equal 1, @product.supplies.select{|s| s[:currency]=="EUR"}.count
+    end
+  end
+
   context "file full-sender.xml" do
     setup do
       @message = ONIX::ONIXMessage.new

@@ -83,11 +83,13 @@ module ONIX
         end
       end
 
-      grouped_supplies={}
+      grouped_supplies = {}
       supplies.each do |supply|
-        pr_key="#{supply[:available]}_#{supply[:including_tax]}_#{supply[:currency]}_#{supply[:territory].join('_')}"
-        grouped_supplies[pr_key]||=[]
-        grouped_supplies[pr_key] << supply
+        supply[:territory].each do |territory|
+          pr_key = "#{supply[:available]}_#{supply[:including_tax]}_#{supply[:currency]}_#{territory}"
+          grouped_supplies[pr_key] ||= []
+          grouped_supplies[pr_key] << supply
+        end
       end
 
       nb_suppliers = supplies.map{|s| s[:suppliers][0].name}.uniq.length
@@ -111,15 +113,12 @@ module ONIX
               explicit_from[:from_date]=nil unless keep_all_prices_dates
             end
           end
-
-
         else
           supply.each do |s|
             if s[:from_date] and s[:availability_date] and s[:from_date] >= s[:availability_date]
               s[:availability_date]=s[:from_date]
             end
             s[:from_date]=nil unless keep_all_prices_dates
-
           end
         end
       end
