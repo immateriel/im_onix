@@ -10,7 +10,7 @@ class TestTitle < Minitest::Test
 
   context "when it has a title element for level 1" do
     setup do
-      @title_detail = create_title_detail <<~XML
+      @title_detail = create_title_detail <<XML
         <TitleDetail>
           <TitleType>01</TitleType>
           <TitleElement>
@@ -26,7 +26,7 @@ class TestTitle < Minitest::Test
             <TitleText><![CDATA[Le Titre]]></TitleText>
           </TitleElement>
         </TitleDetail>
-      XML
+XML
     end
 
     should "retrieve the title" do
@@ -36,7 +36,7 @@ class TestTitle < Minitest::Test
 
   context "when it has a title statement" do
     setup do
-      @title_detail = create_title_detail <<~XML
+      @title_detail = create_title_detail <<XML
           <TitleDetail>
             <TitleType>01</TitleType>
             <TitleElement>
@@ -45,7 +45,7 @@ class TestTitle < Minitest::Test
             </TitleElement>
             <TitleStatement><![CDATA[Le Titre à afficher]]></TitleStatement>
           </TitleDetail>
-      XML
+XML
     end
 
     should "retrieve the title from the title statement" do
