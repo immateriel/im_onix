@@ -1,5 +1,8 @@
 require 'rubygems'
 require 'bundler'
+
+$VERBOSE = nil
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
