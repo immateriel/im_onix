@@ -1,24 +1,11 @@
 require 'onix/sales_outlet'
 module ONIX
   class SalesRestriction < SubsetDSL
-    element "SalesRestrictionType", :subset
+    element "SalesRestrictionType", :subset, :shortcut => :type
     elements "SalesOutlet", :subset
-    element "SalesRestrictionNote", :text
+    element "SalesRestrictionNote", :text, :shortcut => :note
 
     attr_accessor :start_date, :end_date
-
-    # shortcuts
-    def type
-      @sales_restriction_type
-    end
-
-    def note
-      @sales_restriction_note
-    end
-
-    def initialize
-      @sales_outlets=[]
-    end
 
     def parse(n)
       super

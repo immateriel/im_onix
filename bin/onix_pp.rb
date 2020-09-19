@@ -22,7 +22,6 @@ if filename
   end
 
   msg.products.each do |product|
-#  pp product
     puts "---"
     puts " EAN: #{product.ean}"
     puts " Title: #{product.title}"
@@ -75,7 +74,6 @@ if filename
       puts " Publisher: #{product.publisher_name}"
     end
 
-#  puts " Publisher: #{product.publisher_name}"
     if product.imprint_name
       puts " Imprint: #{product.imprint_name}"
     end
@@ -115,8 +113,8 @@ if filename
           if part.file_description
             puts "  Description: #{part.raw_file_description}"
           end
-          if part.protection_type
-            puts "  Protection: #{part.protection_type}"
+          product.protections.each do |protection|
+            puts " Protection: #{protection}"
           end
           if part.filesize
             puts "  Filesize: #{part.filesize} bytes"
@@ -129,8 +127,8 @@ if filename
         if product.file_description
           puts " Description: #{product.raw_file_description}"
         end
-        if product.protection_type
-          puts " Protection: #{product.protection_type}"
+        product.protections.each do |protection|
+          puts " Protection: #{protection}"
         end
         if product.filesize
           puts " Filesize: #{product.filesize} bytes"
@@ -141,8 +139,6 @@ if filename
         puts " Paper EAN: #{product.print_product.ean}"
       end
     end
-
-#  pp product.supplies
 
     current_price=product.current_price_amount_for('EUR', 'FR')
     if current_price

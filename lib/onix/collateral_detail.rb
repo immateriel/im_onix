@@ -1,6 +1,6 @@
 module ONIX
   class TextContent < SubsetDSL
-    element "TextType", :subset
+    element "TextType", :subset, :shortcut => :type
     element "ContentAudience", :subset
     element "Text", :text
     element "TextAuthor", :text
@@ -8,16 +8,13 @@ module ONIX
 
     scope :description, lambda { human_code_match(:text_type, "Description")}
     scope :short_description, lambda { human_code_match(:text_type, "ShortDescriptionannotation")}
-
-    # shortcuts
-    def type
-      @text_type
-    end
   end
 
   class CollateralDetail < SubsetDSL
     elements "TextContent", :subset
     elements "SupportingResource", :subset
+
+    # @!group High level
 
     def description
       desc_contents=@text_contents.description + @text_contents.short_description
@@ -72,23 +69,31 @@ module ONIX
       end
     end
 
+    # Epub sample URL
+    # @return [String]
     def epub_sample_url
       if self.epub_sample_resource
         self.epub_sample_resource.links.first.strip
       end
     end
 
+    # Epub sample last updated
+    # @return [Date]
     def epub_sample_last_updated
       if self.epub_sample_resource
         self.epub_sample_resource.last_updated
       end
     end
 
+    # Epub sample mimetype
+    # @return [String]
     def epub_sample_mimetype
       if self.epub_sample_resource
         self.epub_sample_resource.file_mimetype
       end
     end
+
+    # @!endgroup
 
   end
 end

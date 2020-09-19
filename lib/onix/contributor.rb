@@ -4,13 +4,13 @@ require 'onix/website'
 module ONIX
   class Contributor < SubsetDSL
     element "SequenceNumber", :integer
-    element "ContributorRole", :subset
-    elements "NameIdentifier", :subset
+    element "ContributorRole", :subset, :shortcut => :role
+    elements "NameIdentifier", :subset, :shortcut => :identifiers
 
     element "PersonName", :text
     element "PersonNameInverted", :text
 
-    element "NamesBeforeKey", :text
+    element "NamesBeforeKey", :text, :shortcut => :name_before_key
     element "KeyNames", :text
 
     element "CorporateName", :text
@@ -18,32 +18,13 @@ module ONIX
 
     element "BiographicalNote", :text
     elements "Website", :subset
-    element "ContributorPlace", :subset
+    element "ContributorPlace", :subset, :shortcut => :place
 
-    elements "ContributorDate", :subset
+    elements "ContributorDate", :subset, :shortcut => :dates
 
-    def role
-      @contributor_role
-    end
-
-    def identifiers
-      @name_identifiers
-    end
-
-    def place
-      @contributor_place
-    end
-
-    def name_before_key
-      @names_before_key
-    end
-
-    def dates
-      @contributor_dates
-    end
-
-    # :category: High level
+    # @!group High level
     # flatten person name (firstname lastname)
+    # @return [String]
     def name
       return @person_name if @person_name
 
@@ -58,20 +39,20 @@ module ONIX
       @corporate_name
     end
 
-    # :category: High level
     # inverted flatten person name
+    # @return [String]
     def inverted_name
       @person_name_inverted || @corporate_name_inverted
     end
 
-    # :category: High level
     # biography string with HTML
+    # @return [String]
     def biography
       @biographical_note
     end
 
-    # :category: High level
     # raw biography string without HTML
+    # @return [String]
     def raw_biography
       if self.biography
         Helper.strip_html(self.biography).gsub(/\s+/, " ")
@@ -80,8 +61,8 @@ module ONIX
       end
     end
 
-    # :category: High level
     # date of birth
+    # @return [Time]
     def birth_date
       if contributor_date = @contributor_dates.find { |d| d.role.human == "DateOfBirth" }
         contributor_date.date.to_time
@@ -90,8 +71,8 @@ module ONIX
       end
     end
 
-    # :category: High level
     # date of death
+    # @return [Time]
     def death_date
       if contributor_date = @contributor_dates.find { |d| d.role.human == "DateOfDeath" }
         contributor_date.date.to_time
@@ -99,6 +80,8 @@ module ONIX
         nil
       end
     end
+
+    # @!endgroup
   end
 
   class ContributorPlace < SubsetDSL

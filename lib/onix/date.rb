@@ -91,13 +91,9 @@ module ONIX
     include DateHelper
     element "Date", :ignore
     element "DateFormat", :ignore
-    element "MarketDateRole", :subset
+    element "MarketDateRole", :subset, :shortcut => :role
 
     scope :availability, lambda { human_code_match(:market_date_role, ["PublicationDate","EmbargoDate"])}
-
-    def role
-      @market_date_role
-    end
 
     def parse(n)
       super
@@ -109,14 +105,10 @@ module ONIX
     include DateHelper
     element "Date", :ignore
     element "DateFormat", :ignore
-    element "PriceDateRole", :subset
+    element "PriceDateRole", :subset, :shortcut => :role
 
     scope :from_date, lambda { human_code_match(:price_date_role, "FromDate")}
     scope :until_date, lambda { human_code_match(:price_date_role, "UntilDate")}
-
-    def role
-      @price_date_role
-    end
 
     def parse(n)
       super
@@ -128,13 +120,9 @@ module ONIX
     include DateHelper
     element "Date", :ignore
     element "DateFormat", :ignore
-    element "SupplyDateRole", :subset
+    element "SupplyDateRole", :subset, :shortcut => :role
 
     scope :availability, lambda { human_code_match(:supply_date_role, ["ExpectedAvailabilityDate","EmbargoDate"])}
-
-    def role
-      @supply_date_role
-    end
 
     def parse(n)
       super
@@ -146,16 +134,12 @@ module ONIX
     include DateHelper
     element "Date", :ignore
     element "DateFormat", :ignore
-    element "PublishingDateRole", :subset
+    element "PublishingDateRole", :subset, :shortcut => :role
 
     scope :publication, lambda { human_code_match(:publishing_date_role, ["PublicationDate","PublicationDateOfPrintCounterpart"])}
     scope :embargo, lambda { human_code_match(:publishing_date_role, "EmbargoDate")}
     scope :preorder_embargo, lambda { human_code_match(:publishing_date_role, "PreorderEmbargoDate")}
     scope :public_announcement, lambda { human_code_match(:publishing_date_role, "PublicAnnouncementDate")}
-
-    def role
-      @publishing_date_role
-    end
 
     def parse(n)
       super
@@ -167,13 +151,9 @@ module ONIX
     include DateHelper
     element "Date", :ignore
     element "DateFormat", :ignore
-    element "ContentDateRole", :subset
+    element "ContentDateRole", :subset, :shortcut => :role
 
     scope :last_updated, lambda { human_code_match(:content_date_role, "LastUpdated")}
-
-    def role
-      @content_date_role
-    end
 
     def parse(n)
       super
@@ -185,11 +165,7 @@ module ONIX
     include DateHelper
     element "Date", :ignore
     element "DateFormat", :ignore
-    element "ContributorDateRole", :subset
-
-    def role
-      @contributor_date_role
-    end
+    element "ContributorDateRole", :subset, :shortcut => :role
 
     def parse(n)
       super

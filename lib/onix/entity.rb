@@ -110,11 +110,6 @@ module ONIX
   class Publisher < Entity
     elements "Website", :subset
 
-    def initialize
-      super
-      @websites = []
-    end
-
     def self.prefix
       "Publisher"
     end

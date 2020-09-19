@@ -4,8 +4,8 @@ require 'yaml'
 module ONIX
   module CodeHelper
     def parse(n)
-      @code=n.text
-      @human=self.class.hash[n.text]
+      @code = n.text
+      @human = self.class.hash[n.text]
     end
 
     # Humanized string code
@@ -20,30 +20,37 @@ module ONIX
   end
 
   class Code < Subset
-    # code as defined in ONIX documentation codelist
+    # @!attribute code
+    #   @return [String] code as defined in ONIX documentation codelist
     attr_accessor :code
-    # humanized string (eg: "Digital watermarking" become DigitalWatermarking, "PDF" become Pdf, "BISAC Subject Heading" become BisacSubjectHeading, etc)
+    # @!attribute human
+    #   @return [String] humanized string (eg: "Digital watermarking" become DigitalWatermarking, "PDF" become Pdf, "BISAC Subject Heading" become BisacSubjectHeading, etc)
     attr_accessor :human
 
     include CodeHelper
 
-    # create Code from string ONIX code
+    # create Code from ONIX code
+    # @param [String] code ONIX code
+    # @return [Code]
     def self.from_code(code)
-      o=self.new
-      o.code=code
-      o.human=self.hash[code]
+      o = self.new
+      o.code = code
+      o.human = self.hash[code]
       o
     end
 
-    # create Code from humanized string code
+    # create Code from human readable code
+    # @param [String] human human readable code
+    # @return [Code]
     def self.from_human(human)
-      o=self.new
-      o.human=human
-      o.code=self.hash.key(human)
+      o = self.new
+      o.human = human
+      o.code = self.hash.key(human)
       o
     end
 
     private
+
     def self.hash
       {}
     end
@@ -52,11 +59,11 @@ module ONIX
 
   class CodeFromYaml < Code
     def self.hash
-      @hash||=YAML.load(File.open(File.dirname(__FILE__) + "/../../data/codelists/codelist-#{self.code_ident}.yml"))[:codelist]
+      @hash ||= YAML.load(File.open(File.dirname(__FILE__) + "/../../data/codelists/codelist-#{self.code_ident}.yml"))[:codelist]
     end
 
     def self.list
-      self.hash.to_a.map{|h| h.first}
+      self.hash.to_a.map { |h| h.first }
     end
 
     def self.code_ident
@@ -68,24 +75,25 @@ module ONIX
     # main formats
     def mimetype
       case self.human
-        when "Epub"
-          "application/epub"
-        when "Pdf"
-          "application/pdf"
-        when "Mobipocket"
-          "application/x-mobipocket-ebook"
-        when "Gif"
-          "image/gif"
-        when "Jpeg"
-          "image/jpeg"
-        when "Png"
-          "image/png"
+      when "Epub"
+        "application/epub"
+      when "Pdf"
+        "application/pdf"
+      when "Mobipocket"
+        "application/x-mobipocket-ebook"
+      when "Gif"
+        "image/gif"
+      when "Jpeg"
+        "image/jpeg"
+      when "Png"
+        "image/png"
       end
     end
   end
 
   class NotificationType < CodeFromYaml
     private
+
     def self.code_ident
       1
     end
@@ -93,6 +101,7 @@ module ONIX
 
   class ProductComposition < CodeFromYaml
     private
+
     def self.code_ident
       2
     end
@@ -100,6 +109,7 @@ module ONIX
 
   class ProductIDType < CodeFromYaml
     private
+
     def self.code_ident
       5
     end
@@ -107,6 +117,7 @@ module ONIX
 
   class CollectionIDType < CodeFromYaml
     private
+
     def self.code_ident
       13
     end
@@ -114,6 +125,7 @@ module ONIX
 
   class TitleType < CodeFromYaml
     private
+
     def self.code_ident
       15
     end
@@ -121,6 +133,7 @@ module ONIX
 
   class WorkIDType < CodeFromYaml
     private
+
     def self.code_ident
       16
     end
@@ -128,6 +141,7 @@ module ONIX
 
   class ContributorRole < CodeFromYaml
     private
+
     def self.code_ident
       17
     end
@@ -135,6 +149,7 @@ module ONIX
 
   class EditionType < CodeFromYaml
     private
+
     def self.code_ident
       21
     end
@@ -142,6 +157,7 @@ module ONIX
 
   class LanguageRole < CodeFromYaml
     private
+
     def self.code_ident
       22
     end
@@ -149,6 +165,7 @@ module ONIX
 
   class ExtentType < CodeFromYaml
     private
+
     def self.code_ident
       23
     end
@@ -156,6 +173,7 @@ module ONIX
 
   class ExtentUnit < CodeFromYaml
     private
+
     def self.code_ident
       24
     end
@@ -163,6 +181,7 @@ module ONIX
 
   class SubjectSchemeIdentifier < CodeFromYaml
     private
+
     def self.code_ident
       27
     end
@@ -170,6 +189,7 @@ module ONIX
 
   class AudienceCode < CodeFromYaml
     private
+
     def self.code_ident
       28
     end
@@ -177,6 +197,7 @@ module ONIX
 
   class IDType < CodeFromYaml
     private
+
     def self.code_ident
       44
     end
@@ -199,6 +220,7 @@ module ONIX
 
   class PublishingRole < CodeFromYaml
     private
+
     def self.code_ident
       45
     end
@@ -206,6 +228,7 @@ module ONIX
 
   class SalesRightsType < CodeFromYaml
     private
+
     def self.code_ident
       46
     end
@@ -213,6 +236,7 @@ module ONIX
 
   class RegionCode < CodeFromYaml
     private
+
     def self.code_ident
       49
     end
@@ -220,6 +244,7 @@ module ONIX
 
   class ProductRelationCode < CodeFromYaml
     private
+
     def self.code_ident
       51
     end
@@ -227,6 +252,7 @@ module ONIX
 
   class DateFormat < CodeFromYaml
     private
+
     def self.code_ident
       55
     end
@@ -234,6 +260,7 @@ module ONIX
 
   class UnpricedItemType < CodeFromYaml
     private
+
     def self.code_ident
       57
     end
@@ -241,6 +268,7 @@ module ONIX
 
   class PriceType < CodeFromYaml
     private
+
     def self.code_ident
       58
     end
@@ -248,6 +276,7 @@ module ONIX
 
   class PriceQualifier < CodeFromYaml
     private
+
     def self.code_ident
       59
     end
@@ -255,6 +284,7 @@ module ONIX
 
   class PriceStatus < CodeFromYaml
     private
+
     def self.code_ident
       61
     end
@@ -262,6 +292,7 @@ module ONIX
 
   class TaxRateCode < CodeFromYaml
     private
+
     def self.code_ident
       62
     end
@@ -269,6 +300,7 @@ module ONIX
 
   class PublishingStatus < CodeFromYaml
     private
+
     def self.code_ident
       64
     end
@@ -276,6 +308,7 @@ module ONIX
 
   class ProductAvailability < CodeFromYaml
     private
+
     def self.code_ident
       65
     end
@@ -283,6 +316,7 @@ module ONIX
 
   class MarketPublishingStatus < CodeFromYaml
     private
+
     def self.code_ident
       68
     end
@@ -290,6 +324,7 @@ module ONIX
 
   class AgentRole < CodeFromYaml
     private
+
     def self.code_ident
       69
     end
@@ -297,6 +332,7 @@ module ONIX
 
   class SalesRestrictionType < CodeFromYaml
     private
+
     def self.code_ident
       71
     end
@@ -304,6 +340,7 @@ module ONIX
 
   class WebsiteRole < CodeFromYaml
     private
+
     def self.code_ident
       73
     end
@@ -311,6 +348,7 @@ module ONIX
 
   class LanguageCode < CodeFromYaml
     private
+
     def self.code_ident
       74
     end
@@ -318,6 +356,7 @@ module ONIX
 
   class ProductFormFeatureType < CodeFromYaml
     private
+
     def self.code_ident
       79
     end
@@ -325,6 +364,7 @@ module ONIX
 
   class ProductContentType < CodeFromYaml
     private
+
     def self.code_ident
       81
     end
@@ -332,6 +372,7 @@ module ONIX
 
   class CountryCode < CodeFromYaml
     private
+
     def self.code_ident
       91
     end
@@ -339,6 +380,7 @@ module ONIX
 
   class SupplierIDType < CodeFromYaml
     private
+
     def self.code_ident
       92
     end
@@ -346,6 +388,7 @@ module ONIX
 
   class AgentIDType < CodeFromYaml
     private
+
     def self.code_ident
       92
     end
@@ -353,6 +396,7 @@ module ONIX
 
   class SupplierRole < CodeFromYaml
     private
+
     def self.code_ident
       93
     end
@@ -360,6 +404,7 @@ module ONIX
 
   class SalesOutletIDType < CodeFromYaml
     private
+
     def self.code_ident
       102
     end
@@ -367,6 +412,7 @@ module ONIX
 
   class EpubTechnicalProtection < CodeFromYaml
     private
+
     def self.code_ident
       144
     end
@@ -374,6 +420,7 @@ module ONIX
 
   class EpubUsageType < CodeFromYaml
     private
+
     def self.code_ident
       145
     end
@@ -381,6 +428,7 @@ module ONIX
 
   class EpubUsageStatus < CodeFromYaml
     private
+
     def self.code_ident
       146
     end
@@ -388,6 +436,7 @@ module ONIX
 
   class EpubUsageUnit < CodeFromYaml
     private
+
     def self.code_ident
       147
     end
@@ -395,6 +444,7 @@ module ONIX
 
   class CollectionType < CodeFromYaml
     private
+
     def self.code_ident
       148
     end
@@ -402,6 +452,7 @@ module ONIX
 
   class CollectionSequenceType < CodeFromYaml
     private
+
     def self.code_ident
       197
     end
@@ -409,6 +460,7 @@ module ONIX
 
   class TitleElementLevel < CodeFromYaml
     private
+
     def self.code_ident
       149
     end
@@ -416,6 +468,7 @@ module ONIX
 
   class ProductForm < CodeFromYaml
     private
+
     def self.code_ident
       150
     end
@@ -423,6 +476,7 @@ module ONIX
 
   class ContributorPlaceRelator < CodeFromYaml
     private
+
     def self.code_ident
       151
     end
@@ -430,6 +484,7 @@ module ONIX
 
   class TextType < CodeFromYaml
     private
+
     def self.code_ident
       153
     end
@@ -437,6 +492,7 @@ module ONIX
 
   class ContentAudience < CodeFromYaml
     private
+
     def self.code_ident
       154
     end
@@ -444,6 +500,7 @@ module ONIX
 
   class ContentDateRole < CodeFromYaml
     private
+
     def self.code_ident
       155
     end
@@ -451,6 +508,7 @@ module ONIX
 
   class ResourceContentType < CodeFromYaml
     private
+
     def self.code_ident
       158
     end
@@ -458,6 +516,7 @@ module ONIX
 
   class ResourceMode < CodeFromYaml
     private
+
     def self.code_ident
       159
     end
@@ -465,6 +524,7 @@ module ONIX
 
   class ResourceFeatureType < CodeFromYaml
     private
+
     def self.code_ident
       160
     end
@@ -472,6 +532,7 @@ module ONIX
 
   class ResourceForm < CodeFromYaml
     private
+
     def self.code_ident
       161
     end
@@ -479,6 +540,7 @@ module ONIX
 
   class ResourceVersionFeatureType < CodeFromYaml
     private
+
     def self.code_ident
       162
     end
@@ -486,6 +548,7 @@ module ONIX
 
   class MarketDateRole < CodeFromYaml
     private
+
     def self.code_ident
       163
     end
@@ -493,6 +556,7 @@ module ONIX
 
   class PublishingDateRole < CodeFromYaml
     private
+
     def self.code_ident
       163
     end
@@ -500,6 +564,7 @@ module ONIX
 
   class WorkRelationCode < CodeFromYaml
     private
+
     def self.code_ident
       164
     end
@@ -507,6 +572,7 @@ module ONIX
 
   class SupplyDateRole < CodeFromYaml
     private
+
     def self.code_ident
       166
     end
@@ -514,6 +580,7 @@ module ONIX
 
   class TaxType < CodeFromYaml
     private
+
     def self.code_ident
       171
     end
@@ -521,6 +588,7 @@ module ONIX
 
   class PriceDateRole < CodeFromYaml
     private
+
     def self.code_ident
       173
     end
@@ -528,6 +596,7 @@ module ONIX
 
   class ProductFormDetail < CodeFromYamlWithMime
     private
+
     def self.code_ident
       175
     end
@@ -535,6 +604,7 @@ module ONIX
 
   class ContributorDateRole < CodeFromYaml
     private
+
     def self.code_ident
       177
     end
@@ -542,6 +612,7 @@ module ONIX
 
   class SupportingResourceFileFormat < CodeFromYamlWithMime
     private
+
     def self.code_ident
       178
     end

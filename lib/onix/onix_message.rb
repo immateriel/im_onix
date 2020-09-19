@@ -17,35 +17,17 @@ module ONIX
   class Sender < SubsetDSL
     include GlnMethods
 
-    elements "SenderIdentifier", :subset
-    element "SenderName", :text
+    elements "SenderIdentifier", :subset, :shortcut => :identifiers
+    element "SenderName", :text, :shortcut => :name
     element "ContactName", :text
     element "EmailAddress", :text
-
-    # shortcuts
-    def identifiers
-      @sender_identifiers
-    end
-
-    def name
-      @sender_name
-    end
   end
 
   class Addressee < SubsetDSL
     include GlnMethods
 
-    elements "AddresseeIdentifier", :subset
-    element "AddresseeName", :text
-
-    # shortcuts
-    def identifiers
-      @addressee_identifiers
-    end
-
-    def name
-      @addressee_name
-    end
+    elements "AddresseeIdentifier", :subset, :shortcut => :identifiers
+    element "AddresseeName", :text, :shortcut => :name
   end
 
   class ONIXMessage < Subset
@@ -129,7 +111,7 @@ module ONIX
     # release as an integer eg: 210, 300, 301
     def version
       if @release
-        @release.gsub(/\./,"").to_i * 10**(3 - @release.scan(".").length - 1)
+        @release.gsub(/\./, "").to_i * 10 ** (3 - @release.scan(".").length - 1)
       end
     end
 

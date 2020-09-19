@@ -33,47 +33,47 @@ module ONIX
     #                :from_date=>date,
     #                :until_date=>date,
     #                :tax=>{:amount=>int, :rate_percent=>float}}]}]
-    def supplies(keep_all_prices_dates=false)
-      supplies=[]
+    def supplies(keep_all_prices_dates = false)
+      supplies = []
 
       # add territories if missing
       if self.product_supplies
         self.product_supplies.each do |ps|
           ps.supply_details.each do |sd|
             sd.prices.each do |p|
-              supply={}
-              supply[:suppliers]=sd.suppliers
-              supply[:available]=sd.available?
-              supply[:availability_date]=sd.availability_date
+              supply = {}
+              supply[:suppliers] = sd.suppliers
+              supply[:available] = sd.available?
+              supply[:availability_date] = sd.availability_date
 
               unless supply[:availability_date]
-                  if ps.availability_date
-                    supply[:availability_date]=ps.market_publishing_detail.availability_date
-                  end
+                if ps.availability_date
+                  supply[:availability_date] = ps.market_publishing_detail.availability_date
+                end
               end
-              supply[:price]=p.amount
-              supply[:qualifier]=p.qualifier.human if p.qualifier
-              supply[:including_tax]=p.including_tax?
-              if !p.territory or p.territory.countries.length==0
-                supply[:territory]=[]
-                supply[:territory]=ps.countries
+              supply[:price] = p.amount
+              supply[:qualifier] = p.qualifier.human if p.qualifier
+              supply[:including_tax] = p.including_tax?
+              if !p.territory or p.territory.countries.length == 0
+                supply[:territory] = []
+                supply[:territory] = ps.countries
 
-                if supply[:territory].length==0
+                if supply[:territory].length == 0
                   if @publishing_detail
-                    supply[:territory]=self.countries_rights
+                    supply[:territory] = self.countries_rights
                   end
                 end
               else
-                supply[:territory]=p.territory.countries
+                supply[:territory] = p.territory.countries
               end
-              supply[:from_date]=p.from_date
-              supply[:until_date]=p.until_date
-              supply[:currency]=p.currency
-              supply[:tax]=p.tax
+              supply[:from_date] = p.from_date
+              supply[:until_date] = p.until_date
+              supply[:currency] = p.currency
+              supply[:tax] = p.tax
 
               unless supply[:availability_date]
                 if @publishing_detail
-                  supply[:availability_date]=@publishing_detail.publication_date
+                  supply[:availability_date] = @publishing_detail.publication_date
                 end
               end
 
@@ -92,12 +92,12 @@ module ONIX
         end
       end
 
-      nb_suppliers = supplies.map{|s| s[:suppliers][0].name}.uniq.length
+      nb_suppliers = supplies.map { |s| s[:suppliers][0].name }.uniq.length
       # render prices sequentially with dates
       grouped_supplies.each do |ksup, supply|
         if supply.length > 1
-          global_price=supply.select{|p| not p[:from_date] and not p[:until_date]}
-          global_price=global_price.first
+          global_price = supply.select { |p| not p[:from_date] and not p[:until_date] }
+          global_price = global_price.first
 
           if global_price
             if nb_suppliers > 1
@@ -108,45 +108,45 @@ module ONIX
             grouped_supplies[ksup].uniq!
           else
             # remove explicit from date
-            explicit_from=supply.select{|p| p[:from_date] and not supply.select{|sp| sp[:until_date] and sp[:until_date]<=p[:from_date]}.first}.first
+            explicit_from = supply.select { |p| p[:from_date] and not supply.select { |sp| sp[:until_date] and sp[:until_date] <= p[:from_date] }.first }.first
             if explicit_from
-              explicit_from[:from_date]=nil unless keep_all_prices_dates
+              explicit_from[:from_date] = nil unless keep_all_prices_dates
             end
           end
         else
           supply.each do |s|
             if s[:from_date] and s[:availability_date] and s[:from_date] >= s[:availability_date]
-              s[:availability_date]=s[:from_date]
+              s[:availability_date] = s[:from_date]
             end
-            s[:from_date]=nil unless keep_all_prices_dates
+            s[:from_date] = nil unless keep_all_prices_dates
           end
         end
       end
 
       # merge by territories
-      grouped_territories_supplies={}
-      grouped_supplies.each do |ksup,supply|
-        fsupply=supply.first
-        pr_key="#{fsupply[:available]}_#{fsupply[:including_tax]}_#{fsupply[:currency]}"
+      grouped_territories_supplies = {}
+      grouped_supplies.each do |ksup, supply|
+        fsupply = supply.first
+        pr_key = "#{fsupply[:available]}_#{fsupply[:including_tax]}_#{fsupply[:currency]}"
         supply.each do |s|
-          pr_key+="_#{s[:price]}_#{s[:from_date]}_#{s[:until_date]}"
+          pr_key += "_#{s[:price]}_#{s[:from_date]}_#{s[:until_date]}"
         end
-        grouped_territories_supplies[pr_key]||=[]
+        grouped_territories_supplies[pr_key] ||= []
         grouped_territories_supplies[pr_key] << supply
       end
 
-      supplies=[]
+      supplies = []
 
-      grouped_territories_supplies.each do |ksup,supply|
-        fsupply=supply.first.first
-        supplies << {:including_tax=>fsupply[:including_tax],:currency=>fsupply[:currency],
-                     :territory=>supply.map{|fs| fs.map{|s| s[:territory]}}.flatten.uniq,
-                     :available=>fsupply[:available],
-                     :availability_date=>fsupply[:availability_date],
-                     :suppliers=>fsupply[:suppliers],
-                     :prices=>supply.first.map{|s|
+      grouped_territories_supplies.each do |ksup, supply|
+        fsupply = supply.first.first
+        supplies << {:including_tax => fsupply[:including_tax], :currency => fsupply[:currency],
+                     :territory => supply.map { |fs| fs.map { |s| s[:territory] } }.flatten.uniq,
+                     :available => fsupply[:available],
+                     :availability_date => fsupply[:availability_date],
+                     :suppliers => fsupply[:suppliers],
+                     :prices => supply.first.map { |s|
 
-                       s[:amount]=s[:price]
+                       s[:amount] = s[:price]
                        s.delete(:price)
                        s.delete(:available)
                        s.delete(:currency)
@@ -162,11 +162,11 @@ module ONIX
 
     # add missing periods when they can be guessed
     def prices_with_periods(supplies, global_supply)
-      complete_supplies = supplies.select{ |supply| supply[:from_date] && supply[:until_date] }.sort_by { |supply| supply[:from_date] }
-      missing_start_period_supplies = supplies.select{ |supply| supply[:from_date] && !supply[:until_date] }.sort_by { |supply| supply[:from_date] }
-      missing_end_period_supplies = supplies.select{ |supply| !supply[:from_date] && supply[:until_date] }.sort_by { |supply| supply[:until_date] }
+      complete_supplies = supplies.select { |supply| supply[:from_date] && supply[:until_date] }.sort_by { |supply| supply[:from_date] }
+      missing_start_period_supplies = supplies.select { |supply| supply[:from_date] && !supply[:until_date] }.sort_by { |supply| supply[:from_date] }
+      missing_end_period_supplies = supplies.select { |supply| !supply[:from_date] && supply[:until_date] }.sort_by { |supply| supply[:until_date] }
 
-      return [global_supply] if [complete_supplies, missing_start_period_supplies, missing_end_period_supplies].all? {|supply| supply.empty? }
+      return [global_supply] if [complete_supplies, missing_start_period_supplies, missing_end_period_supplies].all? { |supply| supply.empty? }
 
       return self.add_missing_periods(complete_supplies, global_supply) unless complete_supplies.empty?
 
@@ -183,7 +183,7 @@ module ONIX
       new_supplies = []
 
       supplies.each.with_index do |supply, index|
-        new_supplies << global_supply.dup.tap{ |start_sup| start_sup[:until_date] = supply[:from_date] - 1 } if index == 0
+        new_supplies << global_supply.dup.tap { |start_sup| start_sup[:until_date] = supply[:from_date] - 1 } if index == 0
 
         if index > 0 && index != supplies.length
           new_supplies << global_supply.dup.tap do |missing_supply|
@@ -194,7 +194,7 @@ module ONIX
 
         new_supplies << supply
 
-        new_supplies << global_supply.dup.tap{ |end_sup| end_sup[:from_date] = supply[:until_date] + 1 } if index == supplies.length - 1
+        new_supplies << global_supply.dup.tap { |end_sup| end_sup[:from_date] = supply[:until_date] + 1 } if index == supplies.length - 1
       end
 
       new_supplies
@@ -217,29 +217,29 @@ module ONIX
     # :category: High level
     # flattened supplies only including taxes
     def supplies_including_tax
-      self.supplies.select{|p| p[:including_tax]}
+      self.supplies.select { |p| p[:including_tax] }
     end
 
     # :category: High level
     # flattened supplies only excluding taxes
     def supplies_excluding_tax
-      self.supplies.select{|p| not p[:including_tax]}
+      self.supplies.select { |p| not p[:including_tax] }
     end
 
     # :category: High level
     # flattened supplies with default tax (excluding tax for US and CA, including otherwise)
     def supplies_with_default_tax
-      self.supplies_including_tax + self.supplies_excluding_tax.select{|s| ["CAD","USD"].include?(s[:currency])}
+      self.supplies_including_tax + self.supplies_excluding_tax.select { |s| ["CAD", "USD"].include?(s[:currency]) }
     end
 
     # :category: High level
     # flattened supplies for country
-    def supplies_for_country(country,currency=nil)
-      country_supplies=self.supplies
+    def supplies_for_country(country, currency = nil)
+      country_supplies = self.supplies
       if currency
-        country_supplies=country_supplies.select{|s| s[:currency]==currency}
+        country_supplies = country_supplies.select { |s| s[:currency] == currency }
       end
-      country_supplies.select{|s|
+      country_supplies.select { |s|
         if s[:territory].include?(country)
           true
         else
@@ -250,14 +250,14 @@ module ONIX
 
     # :category: High level
     # price amount for given +currency+ and country at time
-    def at_time_price_amount_for(time,currency,country=nil)
-      sups=self.supplies_with_default_tax.select { |p| p[:currency]==currency }
+    def at_time_price_amount_for(time, currency, country = nil)
+      sups = self.supplies_with_default_tax.select { |p| p[:currency] == currency }
       if country
-        sups=sups.select{|p| p[:territory].include?(country)}
+        sups = sups.select { |p| p[:territory].include?(country) }
       end
       if sups.length > 0
         # exclusive
-        sup=sups.first[:prices].select { |p|
+        sup = sups.first[:prices].select { |p|
           (!p[:from_date] or p[:from_date].to_date <= time.to_date) and
               (!p[:until_date] or p[:until_date].to_date > time.to_date)
         }.first
@@ -266,7 +266,7 @@ module ONIX
           sup[:amount]
         else
           # or inclusive
-          sup=sups.first[:prices].select { |p|
+          sup = sups.first[:prices].select { |p|
             (!p[:from_date] or p[:from_date].to_date <= time.to_date) and
                 (!p[:until_date] or p[:until_date].to_date >= time.to_date)
           }.first
@@ -285,8 +285,8 @@ module ONIX
 
     # :category: High level
     # current price amount for given +currency+ and country
-    def current_price_amount_for(currency,country=nil)
-      at_time_price_amount_for(Time.now,currency,country)
+    def current_price_amount_for(currency, country = nil)
+      at_time_price_amount_for(Time.now, currency, country)
     end
   end
 
@@ -298,39 +298,65 @@ module ONIX
     element "RecordReference", :text
     element "NotificationType", :subset
     element "RecordSourceName", :text
-    elements "ProductIdentifier", :subset
+    elements "ProductIdentifier", :subset, :shortcut => :identifiers
     element "DescriptiveDetail", :subset
     element "CollateralDetail", :subset
     element "PublishingDetail", :subset
     element "RelatedMaterial", :subset
     elements "ProductSupply", :subset
 
-    # shortcuts
-    def identifiers
-      @product_identifiers
-    end
-
     # default LanguageCode from ONIXMessage
     attr_accessor :default_language_of_text
     # default code from ONIXMessage
     attr_accessor :default_currency_code
 
+    # @!group Shortcuts
+
+    def subjects
+      @descriptive_detail.subjects
+    end
+
+    def form_details
+      @descriptive_detail.form_details
+    end
+
+    def publishers
+      @publishing_detail ? @publishing_detail.publishers : []
+    end
+
+    def publisher
+      @publishing_detail ? @publishing_detail.publisher : []
+    end
+
+    def imprint
+      @publishing_detail ? @publishing_detail.imprint : nil
+    end
+
+    # Contributor array
+    def contributors
+      @descriptive_detail.contributors
+    end
+
+    # !@endgroup
+
     include ProductSuppliesExtractor
 
-    # :category: High level
+    # @!group High level
+
     # product title string
+    # @return [String]
     def title
       @descriptive_detail.title
     end
 
-    # :category: High level
     # product subtitle string
+    # @return [String]
     def subtitle
       @descriptive_detail.subtitle
     end
 
-    # :category: High level
     # product description string including HTML
+    # @return [String]
     def description
       if @collateral_detail
         @collateral_detail.description
@@ -339,15 +365,14 @@ module ONIX
       end
     end
 
-    # :category: High level
     # product larger front cover URL string
+    # @return [String]
     def frontcover_url
       if @collateral_detail
         @collateral_detail.frontcover_url
       end
     end
 
-    # :category: High level
     # product larger front cover last updated date
     def frontcover_last_updated
       if @collateral_detail
@@ -355,7 +380,6 @@ module ONIX
       end
     end
 
-    # :category: High level
     # product larger front cover mimetype
     def frontcover_mimetype
       if @collateral_detail
@@ -363,7 +387,6 @@ module ONIX
       end
     end
 
-    # :category: High level
     # ePub sample URL string
     def epub_sample_url
       if @collateral_detail
@@ -371,7 +394,6 @@ module ONIX
       end
     end
 
-    # :category: High level
     # ePub sample last updated date
     def epub_sample_last_updated
       if @collateral_detail
@@ -379,7 +401,6 @@ module ONIX
       end
     end
 
-    # :category: High level
     # ePub sample mimetype
     def epub_sample_mimetype
       if @collateral_detail
@@ -387,7 +408,6 @@ module ONIX
       end
     end
 
-    # :category: High level
     # product edition number
     def edition_number
       @descriptive_detail.edition_number
@@ -398,7 +418,6 @@ module ONIX
       @descriptive_detail.language_of_text || @default_language_of_text
     end
 
-    # :category: High level
     # product language code string of text (eg: fre)
     def language_code_of_text
       if self.language_of_text
@@ -406,7 +425,6 @@ module ONIX
       end
     end
 
-    # :category: High level
     # product language name string of text (eg: French)
     def language_name_of_text
       if self.language_of_text
@@ -414,14 +432,9 @@ module ONIX
       end
     end
 
-    # :category: High level
     # publisher collection title
     def publisher_collection_title
       @descriptive_detail.publisher_collection_title
-    end
-
-    def subjects
-      @descriptive_detail.subjects
     end
 
     # BISAC categories Subject
@@ -429,10 +442,9 @@ module ONIX
       @descriptive_detail.bisac_categories
     end
 
-    # :category: High level
     # BISAC categories identifiers string array (eg: FIC000000)
     def bisac_categories_codes
-      self.bisac_categories.map{|c| c.code}.uniq
+      self.bisac_categories.map { |c| c.code }.uniq
     end
 
     # CLIL categories Subject
@@ -440,195 +452,155 @@ module ONIX
       @descriptive_detail.clil_categories
     end
 
-    # :category: High level
     # CLIL categories identifier string array
     def clil_categories_codes
-      self.clil_categories.map{|c| c.code}.uniq
+      self.clil_categories.map { |c| c.code }.uniq
     end
 
-    # :category: High level
     # keywords string array
     def keywords
       @descriptive_detail.keywords
     end
 
-    # :category: High level
     # Protection type string (None, Watermarking, Drm, AdobeDrm)
+    # @return [String]
     def protection_type
       @descriptive_detail.protection_type
     end
 
-    # :category: High level
     # List of protections type string (None, Watermarking, DRM, AdobeDRM)
+    # @return [Array<String>]
     def protections
       @descriptive_detail.protections
     end
 
-    # :category: High level
     # product has DRM ?
+    # @return [Boolean]
     def drmized?
-      if @protections.any? {|p| p =~ /Drm/ }
+      if @protections.any? { |p| p =~ /Drm/ }
         true
       else
         false
       end
     end
 
-    # :category: High level
     # is product digital ?
+    # @return [Boolean]
     def digital?
       @descriptive_detail.digital?
     end
 
-    # :category: High level
     # is product audio ?
+    # @return [Boolean]
     def audio?
       @descriptive_detail.audio?
     end
 
-    # :category: High level
     # is product digital ?
+    # @return [Boolean]
     def streaming?
       @descriptive_detail.streaming?
     end
 
-    # :category: High level
     # is product a bundle of multiple parts ?
+    # @return [Boolean]
     def bundle?
       @descriptive_detail.bundle?
     end
 
+    # @return [Boolean]
     def sold_separately?
-      @product_supplies.map{|ps| ps.supply_details.map{|sd| sd.sold_separately?}.flatten}.flatten.uniq.first
+      @product_supplies.map { |ps| ps.supply_details.map { |sd| sd.sold_separately? }.flatten }.flatten.uniq.first
     end
 
-    # :category: High level
     # bundle ProductPart array
+    # @return [Boolean]
     def parts
       @descriptive_detail.parts
     end
 
-    # :category: High level
     # digital file filesize in bytes
     def filesize
       @descriptive_detail.filesize
     end
 
-    # :category: High level
     # audio formats array
     def audio_formats
       @descriptive_detail.audio_formats
     end
 
-    # :category: High level
     # audio format string ()
     def audio_format
       @descriptive_detail.audio_format
     end
 
-    # :category: High level
     # digital file format string (Epub,Pdf,Mobipocket)
     def file_format
       @descriptive_detail.file_format
     end
 
-    def form_details
-      @descriptive_detail.form_details
-    end
-
+    # @return [Boolean]
     def reflowable?
       @descriptive_detail.reflowable?
     end
 
-    # :category: High level
     # digital file mimetype (Epub,Pdf,Mobipocket)
     def file_mimetype
       @descriptive_detail.file_mimetype
     end
 
-    # :category: High level
     # digital file description string
     def file_description
       @descriptive_detail.file_description
     end
 
-    # :category: High level
     # raw file description string without HTML
     def raw_file_description
       if @descriptive_detail.file_description
-        Helper.strip_html(@descriptive_detail.file_description).gsub(/\s+/," ").strip
+        Helper.strip_html(@descriptive_detail.file_description).gsub(/\s+/, " ").strip
       else
         nil
       end
     end
 
-    # :category: High level
     # page count
     def pages
       @descriptive_detail.pages
     end
 
-    # :category: High level
     # raw book description string without HTML
+    # @return [String]
     def raw_description
       if self.description
-        Helper.strip_html(self.description).gsub(/\s+/," ").strip
+        Helper.strip_html(self.description).gsub(/\s+/, " ").strip
       else
         nil
       end
     end
 
-    def publishers
-      if @publishing_detail
-        @publishing_detail.publishers
-      else
-        []
-      end
-    end
-
-    def publisher
-      if @publishing_detail
-        @publishing_detail.publisher
-      else
-        nil
-      end
-    end
-
-    # :category: High level
     # publisher name string, if multiple publishers are found, then they are concatenated with " / "
+    # @return [String]
     def publisher_name
       if self.publishers.length > 0
-        self.publishers.map{|p| p.name}.join(" / ")
+        self.publishers.map { |p| p.name }.join(" / ")
       end
     end
 
-    # :category: High level
     # publisher GLN string, nil if multiple publishers are found
+    # @return [String]
     def publisher_gln
-      if self.publishers.length==1
+      if self.publishers.length == 1
         self.publisher.gln
       end
     end
 
-    def imprint
-      if @publishing_detail
-        @publishing_detail.imprint
-      else
-        nil
-      end
-    end
-
-    # :category: High level
     # imprint name string
     def imprint_name
       if self.imprint
         self.imprint.name
-      else
-        nil
       end
     end
 
-    # :category: High level
     # imprint GLN string
     def imprint_gln
       if self.imprint
@@ -636,24 +608,26 @@ module ONIX
       end
     end
 
+    # product distributors names
+    # @return [Array<String>]
     def distributors
-      @product_supplies.map{|ps| ps.distributors}.flatten.uniq{|d| d.name}
+      @product_supplies.map { |ps| ps.distributors }.flatten.uniq { |d| d.name }
     end
 
-    # product distributor
+    # product distributor name
+    # @return [String]
     def distributor
       if self.distributors.length > 0
-      if self.distributors.length==1
-        self.distributors.first
-      else
-        raise ExpectsOneButHasSeveral, self.distributors.map(&:name)
-      end
+        if self.distributors.length == 1
+          self.distributors.first
+        else
+          raise ExpectsOneButHasSeveral, self.distributors.map(&:name)
+        end
       else
         nil
       end
     end
 
-    # :category: High level
     # product distributor name string
     def distributor_name
       if self.distributor
@@ -663,7 +637,6 @@ module ONIX
       end
     end
 
-    # :category: High level
     # product distributor GLN string
     def distributor_gln
       if self.distributor
@@ -673,7 +646,6 @@ module ONIX
       end
     end
 
-    # :category: High level
     # return every related subset
     def related
       if @related_material
@@ -683,7 +655,6 @@ module ONIX
       end
     end
 
-    # :category: High level
     # paper linking RelatedProduct
     def part_of_product
       if @related_material
@@ -691,7 +662,6 @@ module ONIX
       end
     end
 
-      # :category: High level
     # paper linking RelatedProduct
     def print_product
       if @related_material
@@ -704,7 +674,6 @@ module ONIX
       self.print_product
     end
 
-    # :category: High level
     # date of publication
     def publication_date
       if @publishing_detail
@@ -737,107 +706,95 @@ module ONIX
       end
     end
 
-    # :category: High level
     # product countries rights string array
     def countries_rights
-      countries=[]
+      countries = []
       if @publishing_detail
-        countries+=@publishing_detail.sales_rights.map{|sr| sr.territory.countries}.flatten.uniq
+        countries += @publishing_detail.sales_rights.map { |sr| sr.territory.countries }.flatten.uniq
       end
 
       if @product_supplies
-        countries+=@product_supplies.map{|ps| ps.markets.map{|m| m.territory.countries}.flatten}.flatten.uniq
+        countries += @product_supplies.map { |ps| ps.markets.map { |m| m.territory.countries }.flatten }.flatten.uniq
       end
 
       countries.uniq
     end
 
-    # :category: High level
     def illustrations
       return [] unless @collateral_detail && @collateral_detail.supporting_resources
 
       @collateral_detail.supporting_resources.image.map do |image_resource|
         {
-          :url => image_resource.versions.last.links.first.strip,
-          :type => image_resource.type.human,
-          :width => image_resource.versions.last.image_width,
-          :height => image_resource.versions.last.image_height,
-          :caption => image_resource.caption,
-          :format_code => image_resource.versions.last.file_format,
-          :updated_at => image_resource.versions.last.last_updated_utc
+            :url => image_resource.versions.last.links.first.strip,
+            :type => image_resource.type.human,
+            :width => image_resource.versions.last.image_width,
+            :height => image_resource.versions.last.image_height,
+            :caption => image_resource.caption,
+            :format_code => image_resource.versions.last.file_format,
+            :updated_at => image_resource.versions.last.last_updated_utc
         }
       end
     end
 
-    # :category: High level
     def excerpts
       return [] unless @collateral_detail && @collateral_detail.supporting_resources
 
-      @collateral_detail.supporting_resources.sample_content.human_code_match(:resource_mode,["Text","Multimode"]).map do |resource|
+      @collateral_detail.supporting_resources.sample_content.human_code_match(:resource_mode, ["Text", "Multimode"]).map do |resource|
         {
-          :url => resource.versions.last.links.first.strip,
-          :form => resource.versions.last.form.human,
-          :md5 => resource.versions.last.md5_hash,
-          :format_code => resource.versions.last.file_format,
-          :updated_at => resource.versions.last.last_updated_utc
+            :url => resource.versions.last.links.first.strip,
+            :form => resource.versions.last.form.human,
+            :md5 => resource.versions.last.md5_hash,
+            :format_code => resource.versions.last.file_format,
+            :updated_at => resource.versions.last.last_updated_utc
         }
       end
     end
 
     def available_product_supplies
-      @product_supplies.select{|ps| ps.available?}
+      @product_supplies.select { |ps| ps.available? }
     end
 
-    # :category: High level
     # is product available ?
     def available?
       self.available_product_supplies.length > 0 and not self.delete?
     end
 
-    # :category: High level
     # is product available for given +country+ ?
     def available_for_country?(country)
-      self.supplies_for_country(country).select{|s| s[:available]}.length > 0 and self.available?
+      self.supplies_for_country(country).select { |s| s[:available] }.length > 0 and self.available?
     end
 
-    # :category: High level
     # is product price to be announced ?
     def price_to_be_announced?
       unless self.product_supplies.empty? || self.product_supplies.first.supply_details.empty?
         unpriced_item_type = self.product_supplies.first.supply_details.first.unpriced_item_type
       end
-      unpriced_item_type ? unpriced_item_type.human=="PriceToBeAnnounced" : false
+      unpriced_item_type ? unpriced_item_type.human == "PriceToBeAnnounced" : false
     end
 
-    # :category: High level
     # is a deletion notification ?
     def delete?
-      self.notification_type.human=="Delete"
+      self.notification_type.human == "Delete"
     end
 
-    # :category: High level
-    # Contributor array
-    def contributors
-      @descriptive_detail.contributors
-    end
-
-    # :category: High level
     # List of ONIX outlets values
     def onix_outlets_values
       if @publishing_detail
         @publishing_detail.sales_rights.map { |sri|
           sri.sales_restrictions.select { |sr| (!sr.start_date or sr.start_date <= Date.today) and (!sr.end_date or sr.end_date >= Date.today) }.map { |sr|
             sr.sales_outlets.select { |so|
-              so.identifier and so.identifier.type.human=="OnixSalesOutletIdCode" }.map { |so| so.identifier.value } } }.flatten
+              so.identifier and so.identifier.type.human == "OnixSalesOutletIdCode" }.map { |so| so.identifier.value } } }.flatten
       else
         []
       end
     end
 
+    # @!endgroup
+
     def parse(n)
       super
       parts.each do |part|
-        part.part_of=self
+        part.part_of = self
       end
     end
 

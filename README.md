@@ -3,7 +3,7 @@
 ### Low level API
 Whole structure is accessible through ONIX::ONIXMessage object :
 ```ruby
-message=ONIX::ONIXMessage.new
+message = ONIX::ONIXMessage.new
 message.parse("onix_file.xml")
 # first product
 pp message.products.first
