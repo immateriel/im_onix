@@ -34,6 +34,7 @@ module ONIX
       end
     end
 
+    # date of publication
     def publication_date
       pub = @publishing_dates.publication.first
       if pub
@@ -41,6 +42,7 @@ module ONIX
       end
     end
 
+    # date of embargo
     def embargo_date
       pub = @publishing_dates.embargo.first
       if pub

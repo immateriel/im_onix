@@ -5,6 +5,7 @@ require 'onix/website'
 module ONIX
   module EntityHelper
   end
+
   class Entity < SubsetDSL
     # entity name
     attr_accessor :name
@@ -37,16 +38,16 @@ module ONIX
       super
       n.children.each do |t|
         case t
-          when tag_match(self.class.name_tag)
-            @name=t.text
-          when tag_match(self.class.role_tag)
-            if self.class.role_class
-              @role=self.class.role_class.parse(t)
-            end
-          when tag_match(self.class.identifier_tag)
-            if self.class.identifier_class
-              @identifiers << self.class.identifier_class.parse(t)
-            end
+        when tag_match(self.class.name_tag)
+          @name = t.text
+        when tag_match(self.class.role_tag)
+          if self.class.role_class
+            @role = self.class.role_class.parse(t)
+          end
+        when tag_match(self.class.identifier_tag)
+          if self.class.identifier_class
+            @identifiers << self.class.identifier_class.parse(t)
+          end
         end
       end
     end
@@ -61,70 +62,40 @@ module ONIX
     def self.role_class
       nil
     end
+
+    def self.entity_setup prefix, identifier, role = nil
+      define_singleton_method :prefix do
+        return prefix
+      end
+      define_singleton_method :identifier_class do
+        return identifier
+      end
+      define_singleton_method :role_class do
+        return role
+      end
+    end
   end
 
   class Agent < Entity
-    def self.prefix
-      "Agent"
-    end
-
-    def self.identifier_class
-      AgentIdentifier
-    end
-
-    def self.role_class
-      AgentRole
-    end
+    entity_setup "Agent", AgentIdentifier, AgentRole
   end
 
   class Imprint < Entity
-    def self.prefix
-      "Imprint"
-    end
-
-    def self.identifier_class
-      ImprintIdentifier
-    end
-
-    def self.role_class
-      nil
-    end
+    entity_setup "Imprint", ImprintIdentifier
   end
 
   class Supplier < Entity
     elements "Website", :subset
-
-    def self.prefix
-      "Supplier"
-    end
-
-    def self.identifier_class
-      SupplierIdentifier
-    end
-
-    def self.role_class
-      SupplierRole
-    end
+    entity_setup "Supplier", SupplierIdentifier, SupplierRole
   end
 
   class Publisher < Entity
     elements "Website", :subset
+    entity_setup "Publisher", PublisherIdentifier, PublishingRole
 
-    def self.prefix
-      "Publisher"
-    end
-
+    # @note role tag is not PublisherRole but PublishingRole
     def self.role_tag
       "PublishingRole"
     end
-
-    def self.identifier_class
-      PublisherIdentifier
-    end
-
-    def self.role_class
-      PublishingRole
-    end
   end
-
 end

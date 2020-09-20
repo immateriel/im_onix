@@ -6,20 +6,15 @@ module ONIX
     element "SequenceNumber", :integer
     element "ContributorRole", :subset, :shortcut => :role
     elements "NameIdentifier", :subset, :shortcut => :identifiers
-
     element "PersonName", :text
     element "PersonNameInverted", :text
-
     element "NamesBeforeKey", :text, :shortcut => :name_before_key
     element "KeyNames", :text
-
     element "CorporateName", :text
     element "CorporateNameInverted", :text
-
     element "BiographicalNote", :text
     elements "Website", :subset
     element "ContributorPlace", :subset, :shortcut => :place
-
     elements "ContributorDate", :subset, :shortcut => :dates
 
     # @!group High level
@@ -56,8 +51,6 @@ module ONIX
     def raw_biography
       if self.biography
         Helper.strip_html(self.biography).gsub(/\s+/, " ")
-      else
-        nil
       end
     end
 
@@ -66,8 +59,6 @@ module ONIX
     def birth_date
       if contributor_date = @contributor_dates.find { |d| d.role.human == "DateOfBirth" }
         contributor_date.date.to_time
-      else
-        nil
       end
     end
 
@@ -76,8 +67,6 @@ module ONIX
     def death_date
       if contributor_date = @contributor_dates.find { |d| d.role.human == "DateOfDeath" }
         contributor_date.date.to_time
-      else
-        nil
       end
     end
 

@@ -43,7 +43,7 @@ class DSLHelpers
   end
 end
 
-class ElementDSLAttributeHandler < YARD::Handlers::Ruby::AttributeHandler
+class ElementDSLAttributeHandler < YARD::Handlers::Ruby::Base
   handles method_call(:element)
   namespace_only
 
@@ -81,7 +81,7 @@ class ElementDSLAttributeHandler < YARD::Handlers::Ruby::AttributeHandler
     if attrs[:shortcut]
       object = YARD::CodeObjects::MethodObject.new(namespace, attrs[:shortcut].to_s, :instance)
       object.dynamic = true
-      object[:docstring] =  "shortcut for {##{DSLHelpers.underscore(name)}}"
+      object[:docstring] = "shortcut for {##{DSLHelpers.underscore(name)}}"
       object.add_tag(returns) if returns
       object[:group] = 'Shortcuts'
       register(object)
@@ -89,7 +89,7 @@ class ElementDSLAttributeHandler < YARD::Handlers::Ruby::AttributeHandler
   end
 end
 
-class ElementsDSLAttributeHandler < YARD::Handlers::Ruby::AttributeHandler
+class ElementsDSLAttributeHandler < YARD::Handlers::Ruby::Base
   handles method_call(:elements)
   namespace_only
 
@@ -127,11 +127,28 @@ class ElementsDSLAttributeHandler < YARD::Handlers::Ruby::AttributeHandler
     if attrs[:shortcut]
       object = YARD::CodeObjects::MethodObject.new(namespace, attrs[:shortcut].to_s, :instance)
       object.dynamic = true
-      object[:docstring] =  "shortcut for {##{DSLHelpers.pluralize(DSLHelpers.underscore(name))}}"
+      object[:docstring] = "shortcut for {##{DSLHelpers.pluralize(DSLHelpers.underscore(name))}}"
       object.add_tag(returns) if returns
       object[:group] = 'Shortcuts'
       register(object)
     end
   end
 
+end
+
+
+class DefDelegatorAttributeHandler < YARD::Handlers::Ruby::Base
+  handles method_call(:def_delegator)
+  namespace_only
+
+  process do
+    obj = statement.parameters[0].jump(:tstring_content, :ident).source
+    method = statement.parameters[1].jump(:tstring_content, :ident).source
+    object = YARD::CodeObjects::MethodObject.new(namespace, method, :instance)
+    object.docstring = ["Forwarded to {#{obj.split("_").map(&:capitalize).join("")}##{method}}",
+                        "@return (see #{obj.split("_").map(&:capitalize).join("")}##{method})"
+    ].join("\n")
+    object[:group] = 'High level'
+    register(object)
+  end
 end

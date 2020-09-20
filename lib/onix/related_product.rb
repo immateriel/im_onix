@@ -9,13 +9,7 @@ module ONIX
     elements "ProductFormDetail", :subset, :shortcut => :form_details
 
     # full Product if referenced in ONIXMessage
-    def product
-      @product
-    end
-
-    def product= v
-      @product = v
-    end
+    attr_accessor :product
 
     # @!group High level
     def file_format

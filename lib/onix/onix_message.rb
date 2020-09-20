@@ -4,32 +4,15 @@ require 'time'
 require 'benchmark'
 
 require 'onix/subset'
-
 require 'onix/helper'
 require 'onix/code'
-require 'onix/contributor'
-require 'onix/product_supply'
+require 'onix/sender'
+require 'onix/addressee'
 require 'onix/product'
 
 require 'onix/onix21'
 
 module ONIX
-  class Sender < SubsetDSL
-    include GlnMethods
-
-    elements "SenderIdentifier", :subset, :shortcut => :identifiers
-    element "SenderName", :text, :shortcut => :name
-    element "ContactName", :text
-    element "EmailAddress", :text
-  end
-
-  class Addressee < SubsetDSL
-    include GlnMethods
-
-    elements "AddresseeIdentifier", :subset, :shortcut => :identifiers
-    element "AddresseeName", :text, :shortcut => :name
-  end
-
   class ONIXMessage < Subset
     attr_accessor :sender, :adressee, :sent_date_time,
                   :default_language_of_text, :default_currency_code,
