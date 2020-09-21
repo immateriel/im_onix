@@ -2,13 +2,13 @@ module ONIX
   module ONIX21
     class ShortToRef
       def self.names
-        @shortnames||=YAML.load(File.open(File.dirname(__FILE__) + "/../../data/onix21/shortnames.yml"))
+        @shortnames ||= YAML.load(File.open(File.dirname(__FILE__) + "/../../data/onix21/shortnames.yml"))
       end
     end
 
     class RefToShort
       def self.names
-        @refnames||=ShortToRef.names.invert
+        @refnames ||= ShortToRef.names.invert
       end
     end
 
@@ -16,12 +16,13 @@ module ONIX
       def self.short_to_ref(name)
         ONIX::ONIX21::ShortToRef.names[name]
       end
+
       def self.ref_to_short(name)
         ONIX::ONIX21::RefToShort.names[name]
       end
 
       def self.get_class(name)
-        if ONIX::ONIX21.const_defined?(name,false)
+        if ONIX::ONIX21.const_defined?(name, false)
           ONIX::ONIX21.const_get(name)
         else
           ONIX.const_get(name)
@@ -33,11 +34,11 @@ module ONIX
 
     class CodeFromYaml < Code
       def self.hash
-        @hash||=YAML.load(File.open(File.dirname(__FILE__) + "/../../data/onix21/codelists/codelist-#{self.code_ident}.yml"))[:codelist]
+        @hash ||= YAML.load(File.open(File.dirname(__FILE__) + "/../../data/onix21/codelists/codelist-#{self.code_ident}.yml"))[:codelist]
       end
 
       def self.list
-        self.hash.to_a.map{|h| h.first}
+        self.hash.to_a.map { |h| h.first }
       end
 
       def self.code_ident
@@ -47,6 +48,7 @@ module ONIX
 
     class EpubType < CodeFromYaml
       private
+
       def self.code_ident
         10
       end
@@ -54,6 +56,7 @@ module ONIX
 
     class TextTypeCode < CodeFromYaml
       private
+
       def self.code_ident
         33
       end
@@ -61,6 +64,7 @@ module ONIX
 
     class MediaFileTypeCode < CodeFromYaml
       private
+
       def self.code_ident
         38
       end
@@ -68,6 +72,7 @@ module ONIX
 
     class MediaFileFormatCode < CodeFromYaml
       private
+
       def self.code_ident
         36
       end
@@ -75,6 +80,7 @@ module ONIX
 
     class MediaFileLinkTypeCode < CodeFromYaml
       private
+
       def self.code_ident
         37
       end
@@ -83,97 +89,60 @@ module ONIX
     # ONIX 2.1 subset
 
     class Title < SubsetDSL
-      element "TitleType", :subset
-      element "TitleText", :text
+      element "TitleType", :subset, :shortcut => :type
+      element "TitleText", :text, :shortcut => :title
       element "TitlePrefix", :text
       element "TitleWithoutPrefix", :text
       element "AbbreviatedLength", :integer
       element "Subtitle", :text
-
-      def type
-        @title_type
-      end
-
-      def title
-        @title_text
-      end
     end
 
     class OtherText < SubsetDSL
-      element "TextTypeCode", :subset
+      element "TextTypeCode", :subset, :shortcut => :type
       element "TextFormat", :text
       element "Text", :text
       element "TextLinkType", :text
       element "TextLink", :text
-
-      def type
-        @text_type_code
-      end
     end
 
     class MediaFile < SubsetDSL
-      element "MediaFileTypeCode", :subset
-      element "MediaFileFormatCode", :subset
-      element "MediaFileLinkTypeCode", :subset
-      element "MediaFileLink", :text
-
-      def type
-        @media_file_type_code
-      end
-
-      def format
-        @media_file_format_code
-      end
-
-      def link_type
-        @media_file_link_type_code
-      end
-
-      def link
-        @media_file_link
-      end
+      element "MediaFileTypeCode", :subset, :shortcut => :type
+      element "MediaFileFormatCode", :subset, :shortcut => :format
+      element "MediaFileLinkTypeCode", :subset, :shortcut => :link_type
+      element "MediaFileLink", :text, :shortcut => :link
     end
 
     class Territory
       attr_accessor :countries
 
       def initialize(countries)
-        @countries=countries
+        @countries = countries
       end
 
-      def +v
+      def + v
         Territory.new((@countries + v.countries).uniq)
       end
 
-      def -v
+      def - v
         Territory.new((@countries - v.countries).uniq)
       end
     end
 
     class Price < SubsetDSL
       element "PriceTypeCode", :subset, :klass => "PriceType"
-      element "PriceAmount", :float, {:parse_lambda => lambda { |v| (v*100).round }}
-      element "PriceQualifier", :subset
+      element "PriceAmount", :float, {
+          :shortcut => :amount,
+          :parse_lambda => lambda { |v| (v * 100).round }
+      }
+      element "PriceQualifier", :subset, :shortcut => :qualifier
       element "DiscountCoded", :subset
-      element "CurrencyCode", :text
+      element "CurrencyCode", :text, :shortcut => :currency
       elements "CountryCode", :text
       element "PriceEffectiveFrom", :text
       element "PriceEffectiveUntil", :text
 
-      def amount
-        @price_amount
-      end
-
-      def currency
-        @currency_code
-      end
-
-      def qualifier
-        @price_qualifier
-      end
-
       def including_tax?
-        if @price_type_code.human =~/IncludingTax/
+        if @price_type_code.human =~ /IncludingTax/
           true
         else
           false
@@ -182,13 +151,13 @@ module ONIX
 
       def from_date
         if @price_effective_from
-          Date.strptime(@price_effective_from,"%Y%m%d")
+          Date.strptime(@price_effective_from, "%Y%m%d")
         end
       end
 
       def until_date
         if @price_effective_until
-          Date.strptime(@price_effective_until,"%Y%m%d")
+          Date.strptime(@price_effective_until, "%Y%m%d")
         end
       end
 
@@ -201,12 +170,11 @@ module ONIX
       end
     end
 
-
     class Supplier
       attr_accessor :name
       attr_accessor :role
 
-      def initialize(name,role)
+      def initialize(name, role)
         @name = name
         @role = role
       end
@@ -227,19 +195,18 @@ module ONIX
 
       element "AvailabilityCode", :text
       element "ProductAvailability", :text
-      element "OnSaleDate", :text, {:parse_lambda => lambda { |v| Date.strptime(v, "%Y%m%d") }}
+      element "OnSaleDate", :text, {
+          :shortcut => :availability_date,
+          :parse_lambda => lambda { |v| Date.strptime(v, "%Y%m%d") }
+      }
       elements "Price", :subset
 
-      def availability_date
-        @on_sale_date
-      end
-
       def available?
-        @product_availability=="20" or @availability_code == "IP"
+        @product_availability == "20" or @availability_code == "IP"
       end
 
       def suppliers
-        [Supplier.new(self.supplier_name,self.supplier_role)]
+        [Supplier.new(self.supplier_name, self.supplier_role)]
       end
     end
 
@@ -248,7 +215,7 @@ module ONIX
       element "RightsCountry", :text
 
       def not_for_sale?
-        ["03","04","05","06"].include?(@sales_rights_type)
+        ["03", "04", "05", "06"].include?(@sales_rights_type)
       end
 
       def territory
@@ -268,48 +235,22 @@ module ONIX
       include EanMethods
       include ProprietaryIdMethods
 
-      element "RelationCode", :text
-      elements "ProductIdentifier", :subset
+      element "RelationCode", :text, :shortcut => :code
+      elements "ProductIdentifier", :subset, :shortcut => :identifiers
 
-      def product=v
-      end
-
-      def identifiers
-        @product_identifiers
-      end
-
-      def code
-        @relation_code
+      def product= v
       end
     end
 
     class MainSubject < SubsetDSL
-      element "SubjectCode", :text
-      element "SubjectHeadingText", :text
-      element "MainSubjectSchemeIdentifier", :subset, :klass=>"SubjectSchemeIdentifier"
-      element "SubjectSchemeName", :text
-      element "SubjectSchemeVersion", :text
-
-      # shortcuts
-      def code
-        @subject_code
-      end
-
-      def heading_text
-        @subject_heading_text
-      end
-
-      def scheme_identifier
-        @main_subject_scheme_identifier
-      end
-
-      def scheme_name
-        @subject_scheme_name
-      end
-
-      def scheme_version
-        @subject_scheme_version
-      end
+      element "SubjectCode", :text, :shortcut => :code
+      element "SubjectHeadingText", :text, :shortcut => :heading_text
+      element "MainSubjectSchemeIdentifier", :subset, {
+          :shortcut => :scheme_identifier,
+          :klass => "SubjectSchemeIdentifier"
+      }
+      element "SubjectSchemeName", :text, :shortcut => :scheme_name
+      element "SubjectSchemeVersion", :text, :shortcut => :scheme_version
     end
 
     class Product < SubsetDSL
@@ -318,7 +259,7 @@ module ONIX
       include ProprietaryIdMethods
 
       element "RecordReference", :text
-      elements "ProductIdentifier", :subset
+      elements "ProductIdentifier", :subset, :shortcut => :identifiers
       element "NotificationType", :subset
       element "RecordSourceName", :text
       elements "Title", :subset
@@ -350,7 +291,7 @@ module ONIX
       element "PublishingStatus", :text
       element "PublicationDate", :text, {:parse_lambda => lambda { |v| Date.strptime(v, "%Y%m%d") }}
 
-      elements "RelatedProduct", :subset
+      elements "RelatedProduct", :subset, :shortcut => :related
 
       elements "SupplyDetail", :subset
 
@@ -363,45 +304,41 @@ module ONIX
       element "NoEdition", :ignore
       element "NoSeries", :ignore
 
-      # shortcuts
-      def identifiers
-        @product_identifiers
-      end
-
       # default LanguageCode from ONIXMessage
       attr_accessor :default_language_of_text
       # default code from ONIXMessage
       attr_accessor :default_currency_code
 
+      # @!group High level
+
       def title
         product_title.title
       end
 
-      # :category: High level
       # product subtitle string
       def subtitle
         product_title.subtitle
       end
 
       def product_title
-        @titles.select { |td| td.type.human=~/DistinctiveTitle/ }.first
+        @titles.select { |td| td.type.human =~ /DistinctiveTitle/ }.first
       end
 
       def bisac_categories_codes
-        cats=[]
+        cats = []
         if @basic_main_subject
           cats << @basic_main_subject
         end
-        cats+=(@main_subjects + @subjects).select { |s| s.scheme_identifier.human=="BisacSubjectHeading" }.map{|s| s.code}
+        cats += (@main_subjects + @subjects).select { |s| s.scheme_identifier.human == "BisacSubjectHeading" }.map { |s| s.code }
         cats
       end
 
       def clil_categories_codes
-        (@main_subjects + @subjects).select { |s| s.scheme_identifier.human=="Clil" }.map{|s| s.code}
+        (@main_subjects + @subjects).select { |s| s.scheme_identifier.human == "Clil" }.map { |s| s.code }
       end
 
       def keywords
-        kws=(@main_subjects + @subjects).select { |s| s.scheme_identifier.human=="Keywords" }.map { |kw| kw.heading_text }.compact
+        kws = (@main_subjects + @subjects).select { |s| s.scheme_identifier.human == "Keywords" }.map { |kw| kw.heading_text }.compact
         kws.map { |kw| kw.split(/;|,|\n/) }.flatten.map { |kw| kw.strip }
       end
 
@@ -412,10 +349,10 @@ module ONIX
 
       # product LanguageCode of text
       def language_of_text
-        lang=nil
-        l=@languages.select { |l| l.role.human=="LanguageOfText" }.first
+        lang = nil
+        l = @languages.select { |l| l.role.human == "LanguageOfText" }.first
         if l
-          lang=l.code
+          lang = l.code
         end
         lang || @default_language_of_text
       end
@@ -450,7 +387,7 @@ module ONIX
       end
 
       def description
-        desc_contents=@other_texts.select{|tc| tc.type.human=="MainDescription"} + @other_texts.select{|tc| tc.type.human=="LongDescription"} + @other_texts.select{|tc| tc.type.human=="ShortDescriptionannotation"}
+        desc_contents = @other_texts.select { |tc| tc.type.human == "MainDescription" } + @other_texts.select { |tc| tc.type.human == "LongDescription" } + @other_texts.select { |tc| tc.type.human == "ShortDescriptionannotation" }
         if desc_contents.length > 0
           desc_contents.first.text
         else
@@ -471,17 +408,17 @@ module ONIX
       end
 
       def countries
-        territory=Territory.new(CountryCode.list)
+        territory = Territory.new(CountryCode.list)
         @sales_rights.each do |sr|
           if sr.not_for_sale?
-            territory=territory-sr.territory
+            territory = territory - sr.territory
           else
-            territory=territory+sr.territory
+            territory = territory + sr.territory
           end
         end
 
         @not_for_sales.each do |sr|
-          territory=territory-sr.territory
+          territory = territory - sr.territory
         end
 
         territory.countries
@@ -505,10 +442,6 @@ module ONIX
 
       include ProductSuppliesExtractor
 
-      def related
-        @related_products
-      end
-
       # doesn't apply
       def parts
         []
@@ -520,7 +453,7 @@ module ONIX
       end
 
       def digital?
-        @product_form=="DG"
+        @product_form == "DG"
       end
 
       def available?
@@ -528,7 +461,7 @@ module ONIX
       end
 
       def available_for_country?(country)
-        self.supplies_for_country(country).select{|s| s[:available]}.length > 0 and self.available?
+        self.supplies_for_country(country).select { |s| s[:available] }.length > 0 and self.available?
       end
 
       def pages
@@ -546,7 +479,7 @@ module ONIX
       end
 
       def frontcover_url
-        fc=@media_files.select { |mf| mf.media_file_type_code.human=="ImageFrontCover" && mf.media_file_link_type_code.human=="Url"}
+        fc = @media_files.select { |mf| mf.media_file_type_code.human == "ImageFrontCover" && mf.media_file_link_type_code.human == "Url" }
         if fc.length > 0
           fc.first.link
         else
@@ -554,7 +487,7 @@ module ONIX
         end
       end
 
-      # TODO
+      # TODO
       def publisher_collection_title
         nil
       end
@@ -586,7 +519,7 @@ module ONIX
       end
 
       def print_product
-        @related_products.select { |rp| rp.code=="13" }.first
+        @related_products.select { |rp| rp.code == "13" }.first
       end
 
       # DEPRECATED see print_product instead
@@ -598,10 +531,11 @@ module ONIX
         nil
       end
 
+      # @!endgroup
+
       def method_missing(method)
         raise "WARN #{method} not found"
       end
-
     end
   end
 end

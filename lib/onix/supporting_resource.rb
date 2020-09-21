@@ -2,62 +2,40 @@ require 'onix/date'
 
 module ONIX
   class ResourceVersionFeature < SubsetDSL
-    element "ResourceVersionFeatureType", :subset
-    elements "FeatureNote", :text
-    element "FeatureValue", :text, :serialize_lambda => lambda {|v| v.class == SupportingResourceFileFormat ? v.code : v}
+    element "ResourceVersionFeatureType", :subset, :shortcut => :type
+    elements "FeatureNote", :text, :shortcut => :notes
+    element "FeatureValue", :text, {
+        :shortcut => :value,
+        :serialize_lambda => lambda { |v| v.class == SupportingResourceFileFormat ? v.code : v }
+    }
 
-    scope :image_pixels_width, lambda { human_code_match(:resource_version_feature_type,"ImageWidthInPixels") }
-    scope :image_pixels_height, lambda { human_code_match(:resource_version_feature_type,"ImageHeightInPixels") }
-    scope :md5_hash, lambda { human_code_match(:resource_version_feature_type,"Md5HashValue")}
-
-    def type
-      @resource_version_feature_type
-    end
-
-    def value
-      @feature_value
-    end
-
-    def notes
-      @feature_notes
-    end
+    scope :image_pixels_width, lambda { human_code_match(:resource_version_feature_type, "ImageWidthInPixels") }
+    scope :image_pixels_height, lambda { human_code_match(:resource_version_feature_type, "ImageHeightInPixels") }
+    scope :md5_hash, lambda { human_code_match(:resource_version_feature_type, "Md5HashValue") }
 
     def parse(n)
       super
 
-      if @resource_version_feature_type.human=="FileFormat"
-        @feature_value=SupportingResourceFileFormat.from_code(@feature_value)
+      if @resource_version_feature_type.human == "FileFormat"
+        @feature_value = SupportingResourceFileFormat.from_code(@feature_value)
       end
     end
   end
 
   class ResourceVersion < SubsetDSL
-    element "ResourceForm", :subset
-    elements "ResourceVersionFeature", :subset
-    elements "ResourceLink", :text
+    element "ResourceForm", :subset, :shortcut => :form
+    elements "ResourceVersionFeature", :subset, :shortcut => :features
+    elements "ResourceLink", :text, :shortcut => :links
     elements "ContentDate", :subset
 
-    # shortcuts
-    def form
-      @resource_form
-    end
-
-    def links
-      @resource_links
-    end
-
-    def features
-      @resource_version_features
-    end
-
     def filename
-      if @resource_form.human=="DownloadableFile"
+      if @resource_form.human == "DownloadableFile"
         @resource_links.first
       end
     end
 
     def file_format_feature
-      @resource_version_features.select { |f| f.type.human=="FileFormat" }.first
+      @resource_version_features.select { |f| f.type.human == "FileFormat" }.first
     end
 
     def file_format
@@ -124,55 +102,25 @@ module ONIX
   end
 
   class ResourceFeature < SubsetDSL
-    element "ResourceFeatureType", :subset
-    element "FeatureValue", :text
-    elements "FeatureNotes", :text
+    element "ResourceFeatureType", :subset, :shortcut => :type
+    element "FeatureValue", :text, :shortcut => :value
+    elements "FeatureNotes", :text, :shortcut => :notes
 
-    scope :caption, lambda { human_code_match(:resource_feature_type, "Caption")}
-
-    # shortcuts
-    def type
-      @resource_feature_type
-    end
-
-    def value
-      @feature_value
-    end
-
-    def notes
-      @feature_notes
-    end
+    scope :caption, lambda { human_code_match(:resource_feature_type, "Caption") }
   end
 
   class SupportingResource < SubsetDSL
-    element "ResourceContentType", :subset
-    element "ContentAudience", :subset
-    element "ResourceMode", :subset
-    elements "ResourceVersion", :subset
-    elements "ResourceFeature", :subset
+    element "ResourceContentType", :subset, :shortcut => :type
+    element "ContentAudience", :subset, :shortcut => :target_audience
+    element "ResourceMode", :subset, :shortcut => :mode
+    elements "ResourceVersion", :subset, :shortcut => :versions
+    elements "ResourceFeature", :subset, :shortcut => :features
 
-    scope :front_cover, lambda { human_code_match(:resource_content_type, "FrontCover")}
-    scope :sample_content, lambda { human_code_match(:resource_content_type, "SampleContent")}
+    scope :front_cover, lambda { human_code_match(:resource_content_type, "FrontCover") }
+    scope :sample_content, lambda { human_code_match(:resource_content_type, "SampleContent") }
 
-    scope :image, lambda {human_code_match(:resource_mode, "Image")}
-    scope :text, lambda {human_code_match(:resource_mode, "Text")}
-
-    # shortcuts
-    def type
-      @resource_content_type
-    end
-
-    def mode
-      @resource_mode
-    end
-
-    def versions
-      @resource_versions
-    end
-
-    def features
-      @resource_features
-    end
+    scope :image, lambda { human_code_match(:resource_mode, "Image") }
+    scope :text, lambda { human_code_match(:resource_mode, "Text") }
 
     def caption_feature
       self.features.caption.first
@@ -183,10 +131,5 @@ module ONIX
         self.caption_feature.value
       end
     end
-
-    def target_audience
-      @content_audience
-    end
-
   end
 end

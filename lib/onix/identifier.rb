@@ -1,15 +1,7 @@
 module ONIX
   class Identifier < SubsetDSL
-    element "IDValue", :text
-    element "IDTypeName", :text
-
-    def value
-      @id_value
-    end
-
-    def name
-      @id_type_name
-    end
+    element "IDValue", :text, :shortcut => :value
+    element "IDTypeName", :text, :shortcut => :name
 
     def type
       nil
@@ -21,80 +13,47 @@ module ONIX
   end
 
   class SenderIdentifier < Identifier
-    element "SenderIDType", :subset
-    def type
-      @sender_id_type
-    end
+    element "SenderIDType", :subset, :shortcut => :type
   end
 
   class AddresseeIdentifier < Identifier
-    element "AddresseeIDType", :subset
-    def type
-      @addressee_id_type
-    end
+    element "AddresseeIDType", :subset, :shortcut => :type
   end
 
   class AgentIdentifier < Identifier
-    element "AgentIDType", :subset
-    def type
-      @agent_id_type
-    end
+    element "AgentIDType", :subset, :shortcut => :type
   end
 
   class ImprintIdentifier < Identifier
-    element "ImprintIDType", :subset
-    def type
-      @imprint_id_type
-    end
+    element "ImprintIDType", :subset, :shortcut => :type
   end
 
   class PublisherIdentifier < Identifier
-    element "PublisherIDType", :subset
-    def type
-      @publisher_id_type
-    end
+    element "PublisherIDType", :subset, :shortcut => :type
   end
 
   class SupplierIdentifier < Identifier
-    element "SupplierIDType", :subset
-    def type
-      @supplier_id_type
-    end
+    element "SupplierIDType", :subset, :shortcut => :type
   end
 
   class NameIdentifier < Identifier
-    element "NameIDType", :subset
-    def type
-      @name_id_type
-    end
+    element "NameIDType", :subset, :shortcut => :type
   end
 
   class CollectionIdentifier < Identifier
-    element "CollectionIDType", :subset
-    def type
-      @collection_id_type
-    end
+    element "CollectionIDType", :subset, :shortcut => :type
   end
 
   class ProductIdentifier < Identifier
-    element "ProductIDType", :subset
-    def type
-      @product_id_type
-    end
+    element "ProductIDType", :subset, :shortcut => :type
   end
 
   class SalesOutletIdentifier < Identifier
-    element "SalesOutletIDType", :subset
-    def type
-      @sales_outlet_id_type
-    end
+    element "SalesOutletIDType", :subset, :shortcut => :type
   end
 
   class WorkIdentifier < Identifier
-    element "WorkIDType", :subset
-    def type
-      @work_id_type
-    end
+    element "WorkIDType", :subset, :shortcut => :type
   end
 
   module EanMethods

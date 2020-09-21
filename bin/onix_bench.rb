@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'benchmark'
 require 'im_onix'
 
 filename=ARGV[0]

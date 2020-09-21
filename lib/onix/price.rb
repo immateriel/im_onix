@@ -4,71 +4,51 @@ require 'onix/date'
 
 module ONIX
   class Price < SubsetDSL
-    element "PriceType", :subset
-    element "PriceQualifier", :subset
-    element "DiscountCoded", :subset
+    element "PriceType", :subset, :shortcut => :type
+    element "PriceQualifier", :subset, :shortcut => :qualifier
+    element "DiscountCoded", :subset, :shortcut => :discount
     element "PriceStatus", :subset
-    elements "PriceDate", :subset
+    elements "PriceDate", :subset, :shortcut => :dates
     element "PriceAmount", :float,
             {
-                :parse_lambda => lambda { |v| (v*100).round },
-                :serialize_lambda => lambda {|v| v/100.0}
+                :shortcut => :amount,
+                :parse_lambda => lambda { |v| (v * 100).round },
+                :serialize_lambda => lambda { |v| v / 100.0 }
             }
     element "Tax", :subset
-    element "CurrencyCode", :text
+    element "CurrencyCode", :text, :shortcut => :currency
     element "Territory", :subset
 
-    # shortcuts
-    def dates
-      @price_dates
-    end
+    # @!group High level
 
-    def amount
-      @price_amount
-    end
-
-    def type
-      @price_type
-    end
-
-    def currency
-      @currency_code
-    end
-
-    def qualifier
-      @price_qualifier
-    end
-
-    def discount
-      @discount_coded
-    end
-
+    # price from date
+    # @return [Date]
     def from_date
-      dt=@price_dates.from_date.first
+      dt = @price_dates.from_date.first
       if dt
         dt.date
-      else
-        nil
       end
     end
 
+    # price until date
+    # @return [Date]
     def until_date
-      dt=@price_dates.until_date.first
+      dt = @price_dates.until_date.first
       if dt
         dt.date
-      else
-        nil
       end
     end
 
+    # does the price include taxes ?
+    # @return [Boolean]
     def including_tax?
-      if self.type.human=~/IncludingTax/
+      if self.type.human =~ /IncludingTax/
         true
       else
         false
       end
     end
 
+    # @!endgroup
   end
-
 end

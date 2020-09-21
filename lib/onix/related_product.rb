@@ -3,43 +3,23 @@ module ONIX
     include EanMethods
     include ProprietaryIdMethods
 
-    element "ProductRelationCode", :subset
-    elements "ProductIdentifier", :subset
-    element "ProductForm", :subset
-    elements "ProductFormDetail", :subset
-
-    # shortcuts
-    def code
-      @product_relation_code
-    end
-
-    def identifiers
-      @product_identifiers
-    end
-
-    def form
-      @product_form
-    end
-
-    def form_details
-      @product_form_details
-    end
+    element "ProductRelationCode", :subset, :shortcut => :code
+    elements "ProductIdentifier", :subset, :shortcut => :identifiers
+    element "ProductForm", :subset, :shortcut => :form
+    elements "ProductFormDetail", :subset, :shortcut => :form_details
 
     # full Product if referenced in ONIXMessage
-    def product
-      @product
-    end
+    attr_accessor :product
 
-    def product=v
-      @product=v
-    end
-
+    # @!group High level
     def file_format
       file_formats.first.human if file_formats.first
     end
 
+    # @!endgroup
+
     def file_formats
-      @product_form_details.select{|fd| fd.code =~ /^E1.*/}
+      @product_form_details.select { |fd| fd.code =~ /^E1.*/ }
     end
   end
 end

@@ -1,53 +1,16 @@
 require 'nokogiri'
-require 'pp'
 require 'time'
-require 'benchmark'
 
 require 'onix/subset'
-
 require 'onix/helper'
 require 'onix/code'
-require 'onix/contributor'
-require 'onix/product_supply'
+require 'onix/sender'
+require 'onix/addressee'
 require 'onix/product'
 
 require 'onix/onix21'
 
 module ONIX
-  class Sender < SubsetDSL
-    include GlnMethods
-
-    elements "SenderIdentifier", :subset
-    element "SenderName", :text
-    element "ContactName", :text
-    element "EmailAddress", :text
-
-    # shortcuts
-    def identifiers
-      @sender_identifiers
-    end
-
-    def name
-      @sender_name
-    end
-  end
-
-  class Addressee < SubsetDSL
-    include GlnMethods
-
-    elements "AddresseeIdentifier", :subset
-    element "AddresseeName", :text
-
-    # shortcuts
-    def identifiers
-      @addressee_identifiers
-    end
-
-    def name
-      @addressee_name
-    end
-  end
-
   class ONIXMessage < Subset
     attr_accessor :sender, :adressee, :sent_date_time,
                   :default_language_of_text, :default_currency_code,
@@ -129,7 +92,7 @@ module ONIX
     # release as an integer eg: 210, 300, 301
     def version
       if @release
-        @release.gsub(/\./,"").to_i * 10**(3 - @release.scan(".").length - 1)
+        @release.gsub(/\./, "").to_i * 10 ** (3 - @release.scan(".").length - 1)
       end
     end
 
