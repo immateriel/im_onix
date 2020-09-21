@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Julien Boulnois"]
   spec.email         = ["jboulnois@immateriel.fr"]
 
-  spec.summary       = %q{immat\u{e9}riel.fr ONIX parser}
-  spec.description   = %q{immat\u{e9}riel.fr ONIX parser}
+  spec.summary       = "ONIX 3.0 & 2.1 parser for Ruby"
+  spec.description   = "ONIX 3.0 & 2.1 parser for Ruby"
   spec.homepage      = "http://github.com/immateriel/im_onix"
   spec.license       = "MIT"
 
