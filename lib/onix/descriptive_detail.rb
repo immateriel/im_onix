@@ -7,6 +7,8 @@ require 'onix/language'
 require 'onix/product_form_feature'
 require 'onix/product_part'
 require 'onix/title_detail'
+require 'onix/contributor'
+require 'onix/subject'
 
 module ONIX
   class DescriptiveDetail < SubsetDSL

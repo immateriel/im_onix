@@ -10,16 +10,15 @@ require 'yaml'
 class HTMLCodelist
 
   private
+
   def self.parse_codelist(codelist)
-    h={}
-#      puts "PARSE CODELIST #{codelist}"
-    html=Nokogiri::HTML.parse(File.open(codelist))
+    h = {}
+    html = Nokogiri::HTML.parse(File.open(codelist))
     html.search("//tr").each do |tr|
-#        pp tr
-      td_code=tr.at("./td[1]")
-      td_human=tr.at("./td[2]")
+      td_code = tr.at("./td[1]")
+      td_human = tr.at("./td[2]")
       if td_code and td_human
-        h[td_code.text.strip]=self.rename(td_human.text.strip)
+        h[td_code.text.strip] = self.rename(td_human.text.strip)
       end
     end
     h
@@ -27,20 +26,20 @@ class HTMLCodelist
 
   # from rails
   def self.rename(term)
-    term.gsub(/\(|\)|\,|\-|’|\/|“|”|‘|\.|\:|–|\||\+/,"").gsub(/\;/," Or ").gsub(/\s+/," ").split(" ").map{|t| t.capitalize}.join("")
+    term.gsub(/\(|\)|\,|\-|’|\/|“|”|‘|\.|\:|–|\||\+/, "").gsub(/\;/, " Or ").gsub(/\s+/, " ").split(" ").map { |t| t.capitalize }.join("")
   end
-
 end
 
-files=`ls #{ARGV[1]}/*.htm`.split(/\n/)
+files = `ls #{ARGV[1]}/*.htm`.split(/\n/)
 
-h={}
+h = {}
 
 files.sort.each do |file|
-  codelist=file.gsub(/.*onix\-codelist\-(.*)\.htm/,'\1').to_i
-  h=HTMLCodelist.parse_codelist(file)
+  codelist = file.gsub(/.*onix\-codelist\-(.*)\.htm/, '\1').to_i
+  h = HTMLCodelist.parse_codelist(file)
 
-  File.open("data/codelists/codelist-#{codelist}.yml",'w') do |fw| fw.write({:codelist=>h}.to_yaml) end
-
+  File.open("data/codelists/codelist-#{codelist}.yml", 'w') do |fw|
+    fw.write({:codelist => h}.to_yaml)
+  end
 end
 

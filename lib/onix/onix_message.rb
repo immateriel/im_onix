@@ -1,7 +1,5 @@
 require 'nokogiri'
-require 'pp'
 require 'time'
-require 'benchmark'
 
 require 'onix/subset'
 require 'onix/helper'
