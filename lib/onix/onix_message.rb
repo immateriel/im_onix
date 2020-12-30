@@ -4,6 +4,7 @@ require 'time'
 require 'onix/subset'
 require 'onix/helper'
 require 'onix/code'
+require 'onix/header'
 require 'onix/sender'
 require 'onix/addressee'
 require 'onix/product'
@@ -11,11 +12,18 @@ require 'onix/product'
 require 'onix/onix21'
 
 module ONIX
-  class ONIXMessage < Subset
-    attr_accessor :sender, :adressee, :sent_date_time,
-                  :default_language_of_text, :default_currency_code,
-                  :products,
-                  :release
+  class ONIXMessage < SubsetDSL
+    extend Forwardable
+    attr_accessor :release
+
+    element "Header", :subset, :cardinality => 1
+    elements "Product", :subset, :cardinality => 0..n
+
+    def_delegator :header, :sender
+    def_delegator :header, :addressee
+    def_delegator :header, :default_language_of_text
+    def_delegator :header, :default_currency_code
+    def_delegator :header, :sent_date_time
 
     def initialize
       @products = []
@@ -53,6 +61,8 @@ module ONIX
         product.identifiers.each do |ident|
           @vault[ident.uniq_id] = product
         end
+        product.default_language_of_text = self.default_language_of_text if @header
+        product.default_currency_code = self.default_currency_code if @header
       end
 
       @products.each do |product|
@@ -117,57 +127,31 @@ module ONIX
       end
     end
 
+    def product_klass
+      self.version >= 300 ? Product : ONIX21::Product
+    end
+
+    def get_class(name)
+      if name == "Product"
+        self.product_klass
+      else
+        super(name)
+      end
+    end
+
     # parse filename or file
     def parse(arg, force_encoding = nil, force_release = nil)
-      xml = open(arg, force_encoding)
       @products = []
+      xml = open(arg, force_encoding)
       root = xml.root
       set_release_from_xml(root, force_release)
       case root
-      when tag_match("ONIXMessage")
-        root.elements.each do |e|
-          case e
-          when tag_match("Header")
-            e.elements.each do |t|
-              case t
-              when tag_match("Sender")
-                @sender = Sender.parse(t)
-              when tag_match("Addressee")
-                @addressee = Addressee.parse(t)
-              when tag_match("SentDateTime")
-                tm = t.text
-                @sent_date_time = Time.strptime(tm, "%Y%m%dT%H%M%S") rescue Time.strptime(tm, "%Y%m%dT%H%M") rescue Time.strptime(tm, "%Y%m%d") rescue nil
-              when tag_match("DefaultLanguageOfText")
-                @default_language_of_text = LanguageCode.parse(t)
-              when tag_match("DefaultCurrencyCode")
-                @default_currency_code = t.text
-              else
-                unsupported(t)
-              end
-            end
-          when tag_match("Product")
-            product = nil
-            if self.version >= 300
-              product = Product.parse(e)
-            else
-              product = ONIX21::Product.parse(e)
-            end
-            product.default_language_of_text = @default_language_of_text
-            product.default_currency_code = @default_currency_code
-            @products << product
-          end
-        end
       when tag_match("Product")
-        product = nil
-        if self.version >= 300
-          product = Product.parse(root)
-        else
-          product = ONIX21::Product.parse(root)
-        end
-        product.default_language_of_text = @default_language_of_text
-        product.default_currency_code = @default_currency_code
-        @products << product
+        @products << self.product_klass.parse(root)
+      else # ONIXMessage
+        super(root)
       end
+
       init_vault
     end
   end

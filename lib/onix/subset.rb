@@ -308,14 +308,22 @@ module ONIX
       Float::INFINITY
     end
 
+    def get_registered_element(name)
+      self.class.ancestors_registered_elements[name]
+    end
+
+    def get_class(name)
+      self.class.get_class(name)
+    end
+
     def parse(n)
       n.elements.each do |t|
         name = t.name
-        e = self.class.ancestors_registered_elements[name]
+        e = self.get_registered_element(name)
         if e
           case e.type
           when :subset
-            val = self.class.get_class(e.class_name).parse(t)
+            val = self.get_class(e.class_name).parse(t)
           when :text
             val = t.text
           when :integer
