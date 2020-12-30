@@ -8,8 +8,8 @@
   '05': OnlineResourceAvailableContentPage
   '06': ContributorsOwnWebsite
   '07': PublishersWebsiteRelatingToSpecifiedContributor
-  08: OtherPublishersWebsiteRelatingToSpecifiedContributor
-  09: ThirdpartyWebsiteRelatingToSpecifiedContributor
+  '08': OtherPublishersWebsiteRelatingToSpecifiedContributor
+  '09': ThirdpartyWebsiteRelatingToSpecifiedContributor
   '10': ContributorsOwnWebsiteForSpecifiedWork
   '11': OtherPublishersWebsiteRelatingToSpecifiedWork
   '12': ThirdpartyWebsiteRelatingToSpecifiedWork
@@ -41,3 +41,5 @@
   '42': AuthorsSocialNetworkingUrl
   '43': PublishersSocialNetworkingUrl
   '44': SocialNetworkingUrlForSpecificArticleChapterOrContentItem
+  '45': PublishersOrThirdPartyWebsiteForPermissionsRequests
+  '46': PublishersOrThirdPartyWebsiteForPrivacyStatement

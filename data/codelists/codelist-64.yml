@@ -8,11 +8,12 @@
   '05': NoLongerOurProduct
   '06': OutOfStockIndefinitely
   '07': OutOfPrint
-  08: Inactive
-  09: Unknown
+  '08': Inactive
+  '09': Unknown
   '10': Remaindered
   '11': WithdrawnFromSale
   '12': Recalled
+  '13': ActiveButNotSoldSeparately
   '15': Recalled
   '16': TemporarilyWithdrawnFromSale
   '17': PermanentlyWithdrawnFromSale

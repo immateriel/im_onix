@@ -15,7 +15,7 @@
   AT: Austria
   AU: Australia
   AW: Aruba
-  AX: ÅlandIslands
+  AX: AlandIslands
   AZ: Azerbaijan
   BA: BosniaAndHerzegovina
   BB: Barbados
@@ -26,7 +26,7 @@
   BH: Bahrain
   BI: Burundi
   BJ: Benin
-  BL: SaintBarthélemy
+  BL: SaintBarthelemy
   BM: Bermuda
   BN: BruneiDarussalam
   BO: BoliviaPlurinationalStateOf
@@ -53,11 +53,11 @@
   CR: CostaRica
   CS: SerbiaAndMontenegro
   CU: Cuba
-  CV: CapeVerde
-  CW: Curaçao
+  CV: CaboVerde
+  CW: Curacao
   CX: ChristmasIsland
   CY: Cyprus
-  CZ: CzechRepublic
+  CZ: Czechia
   DE: Germany
   DJ: Djibouti
   DK: Denmark
@@ -140,12 +140,12 @@
   LY: Libya
   MA: Morocco
   MC: Monaco
-  MD: MoldovaRepubicOf
+  MD: MoldovaRepublicOf
   ME: Montenegro
   MF: SaintMartinFrenchPart
   MG: Madagascar
   MH: MarshallIslands
-  MK: MacedoniaTheFormerYugoslavRepublicOf
+  MK: NorthMacedonia
   ML: Mali
   MM: Myanmar
   MN: Mongolia
@@ -189,7 +189,7 @@
   PW: Palau
   PY: Paraguay
   QA: Qatar
-  RE: Réunion
+  RE: Reunion
   RO: Romania
   RS: Serbia
   RU: RussianFederation
@@ -214,7 +214,7 @@
   SV: ElSalvador
   SX: SintMaartenDutchPart
   SY: SyrianArabRepublic
-  SZ: Swaziland
+  SZ: Eswatini
   TC: TurksAndCaicosIslands
   TD: Chad
   TF: FrenchSouthernTerritories

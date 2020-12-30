@@ -3,3 +3,10 @@
   '01': LexileCode
   '02': LexileNumber
   '03': FryReadabilityScore
+  '04': IoeBookBand
+  '05': Fountas&PinnellTextLevelGradient
+  '06': LexileMeasure
+  '07': AtosForBooks
+  '08': FleschkincaidGradeLevel
+  '09': GuidedReadingLevel
+  '10': ReadingRecoveryLevel

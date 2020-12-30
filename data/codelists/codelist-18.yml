@@ -6,3 +6,5 @@
   '03': EarlierName
   '04': RealName
   '05': TransliteratedFormOfPrimaryName
+  '06': LaterName
+  '07': FictionalCharacterName

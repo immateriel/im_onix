@@ -4,4 +4,5 @@
   P: TaxPaidAtSourceItaly
   R: LowerRate
   S: StandardRate
+  T: SuperlowRate
   Z: Zerorated

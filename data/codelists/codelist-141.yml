@@ -8,5 +8,5 @@
   '05': Gtin135NoPriceEncoded
   '06': Upc12Itemspecific
   '07': Upc125Itemspecific
-  08: Upc12Pricepoint
-  09: Upc125Pricepoint
+  '08': Upc12Pricepoint
+  '09': Upc125Pricepoint

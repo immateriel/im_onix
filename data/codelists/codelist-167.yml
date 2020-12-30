@@ -4,4 +4,10 @@
   '01': IncludesUpdates
   '02': MustAlsoPurchaseUpdates
   '03': UpdatesAvailable
+  '04': LinkedSubsequentPurchasePrice
+  '05': LinkedPriorPurchasePrice
+  '06': LinkedPrice
+  '07': Autorenewing
   '10': RentalDuration
+  '11': RentalToPurchase
+  '12': RentalExtension

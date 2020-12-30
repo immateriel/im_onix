@@ -12,6 +12,7 @@
   A110: Flac
   A111: Aiff
   A112: Alac
+  A113: W3cAudiobookFormat
   A201: Daisy2FullAudioWithTitleOnlyNoNavigation
   A202: Daisy2FullAudioWithNavigationNoText
   A203: Daisy2FullAudioWithNavigationAndPartialText
@@ -28,6 +29,14 @@
   A302: ReadalongAudio
   A303: PlayalongAudio
   A304: SpeakalongAudio
+  A305: SynchronisedAudio
+  A310: SoundEffects
+  A311: BackgroundMusic
+  A410: Mono
+  A420: Stereo
+  A421: Stereo21
+  A441: Surround41
+  A451: Surround51
   B101: MassMarketRackPaperback
   B102: TradePaperbackUs
   B103: DigestFormatPaperback
@@ -40,11 +49,11 @@
   B110: JisB6SizeTankobon
   B111: A6SizeBunko
   B112: B40doriShinsho
-  B113: PocketSweden
+  B113: PocketSwedenNorwayFrance
   B114: StorpocketSweden
   B115: KartonnageSweden
   B116: FlexbandSweden
-  B117: Mook
+  B117: MookBookazine
   B118: Dwarsligger
   B119: 46Size
   B120: 46henkeiSize
@@ -58,6 +67,11 @@
   B128: KikuSize
   B129: KikuhenkeiSize
   B130: JisB4Size
+  B131: PaperbackDe
+  B132: LibroDeBolsillo
+  B133: Pocketsized
+  B134: A5
+  B135: MassMarketMaxPaperback
   B201: ColoringJointhedotBook
   B202: LifttheflapBook
   B204: MiniatureBook
@@ -71,11 +85,13 @@
   B213: Bookastoy
   B214: SofttotouchBook
   B215: FuzzyfeltBook
+  B216: PressoutPuzzlePieces
   B221: PictureBook
   B222: CarouselBook
-  B301: LooseLeafSheetsAndBinder
-  B302: LooseLeafBinderOnly
-  B303: LooseLeafSheetsOnly
+  B223: PullthetabBook
+  B301: LooseLeafOrPartworkSheetsPartsAndBinderWallet
+  B302: LooseLeafOrPartworkBinderWalletOnly
+  B303: LooseLeafOrPartworkSheetsPartsOnly
   B304: Sewn
   B305: UnsewnAdhesiveBound
   B306: LibraryBinding
@@ -86,6 +102,11 @@
   B311: CombBound
   B312: Wireo
   B313: ConcealedWire
+  B314: CoiledWireBound
+  B315: TradeBinding
+  B316: SwissBinding
+  B317: NotchedBinding
+  B400: Selfcovered
   B401: ClothOverBoards
   B402: PaperOverBoards
   B403: LeatherReal
@@ -99,6 +120,8 @@
   B413: Plasticcovered
   B414: Vinylcovered
   B415: LaminatedCover
+  B416: CardCover
+  B417: DuplexprintedCover
   B501: WithDustJacket
   B502: WithPrintedDustJacket
   B503: WithTranslucentDustCover
@@ -109,8 +132,19 @@
   B508: WithButtonSnapFastener
   B509: WithLeatherEdgeLining
   B510: RoughFront
+  B511: Foldout
+  B512: WideMargin
+  B513: WithFasteningStrap
+  B514: WithPerforatedPages
+  B515: AcidfreePaper
+  B516: ArchivalPaper
+  B517: WithElasticatedStrap
+  B518: WithSerializedAuthenticityToken
+  B519: WithDustJacketPoster
   B601: TurnaroundBook
   B602: UnflippedMangaFormat
+  B603: BacktobackBook
+  B610: Syllabification
   B701: UkUncontractedBraille
   B702: UkContractedBraille
   B703: UsBraille
@@ -118,6 +152,8 @@
   B705: UsContractedBraille
   B706: UnifiedEnglishBraille
   B707: Moon
+  B708: UnifiedEnglishUncontractedBraille
+  B709: UnifiedEnglishContractedBraille
   D101: RealVideoFormat
   D102: QuicktimeFormat
   D103: AviFormat
@@ -143,9 +179,17 @@
   D311: SonyPlaystation2
   D312: NintendoDualScreen
   D313: SonyPlaystation3
-  D314: Xbox360
+  D314: MicrosoftXbox360
   D315: NintendoWii
   D316: SonyPlaystationPortablePsp
+  D317: SonyPlaystation3
+  D318: SonyPlaystation4
+  D319: SonyPlaystationVita
+  D320: MicrosoftXboxOne
+  D321: NintendoSwitch
+  D322: NintendoWiiU
+  D323: SonyPlaystation5
+  D324: MicrosoftXboxSeriesXS
   E100: Other
   E101: Epub
   E102: Oeb
@@ -188,30 +232,64 @@
   E141: Ibook
   E142: Epib
   E143: Scorm
+  E144: Ebp
+  E145: PagePerfect
+  E146: Brf
+  E147: Erudit
+  E148: AmazonKindlePrintReplica
+  E149: ComicBookArchive
   E200: Reflowable
   E201: FixedFormat
   E202: ReadableOffline
   E203: RequiresNetworkConnection
   E204: ContentRemoved
+  E210: Landscape
+  E211: Portrait
+  E221: '54'
+  E222: '43'
+  E223: '32'
+  E224: '1610'
+  E225: '169'
   L101: Laminated
-  P101: DeskCalendar
-  P102: MiniCalendar
-  P103: EngagementCalendar
+  P101: DeskCalendarOrDiary
+  P102: MiniCalendarOrPocketDiary
+  P103: EngagementCalendarOrAppointmentDiary
   P104: DayByDayCalendar
   P105: PosterCalendar
   P106: WallCalendar
-  P107: PerpetualCalendar
+  P107: PerpetualCalendarOrDiary
   P108: AdventCalendar
   P109: BookmarkCalendar
-  P110: StudentCalendar
+  P110: StudentOrAcademicCalendarOrDiary
   P111: ProjectCalendar
   P112: AlmanacCalendar
-  P113: OtherCalendar
+  P113: OtherCalendarDiaryOrOrganiser
   P114: OtherCalendarOrOrganiserProduct
+  P115: FamilyPlanner
+  P116: PostcardCalendar
+  P120: PictureStoryCards
+  P121: FlashCards
+  P122: ReferenceCards
+  P123: RecreationCards
+  P124: Postcards
+  P125: GreetingCards
   P201: HardbackStationery
   P202: PaperbackSoftbackStationery
   P203: SpiralBoundStationery
   P204: LeatherFineBindingStationery
+  P301: WithHangingStrips
   V201: Pal
   V202: Ntsc
   V203: Secam
+  V205: Hd
+  V206: Uhd
+  V207: 3dVideo
+  V220: HomeUse
+  V221: ClassroomUse
+  Z101: Wooden
+  Z102: Plastic
+  Z103: Board
+  Z111: 3dPuzzle
+  Z112: NoisyKitPuzzleToy
+  Z113: Puppet
+  Z121: ExtraLargePieces

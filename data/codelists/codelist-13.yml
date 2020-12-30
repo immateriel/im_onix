@@ -8,3 +8,6 @@
   '06': Doi
   '15': Isbn13
   '22': Urn
+  '29': BnfControlNumber
+  '35': Ark
+  '38': Issnl

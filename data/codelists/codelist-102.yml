@@ -1,5 +1,6 @@
 ---
 :codelist:
   '01': Proprietary
-  '02': BicSalesOutletIdCode
-  '03': OnixSalesOutletIdCode
+  '03': OnixRetailSalesOutletIdCode
+  '04': RetailSalesOutletGln
+  '05': RetailSalesOutletSan

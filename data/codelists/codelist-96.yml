@@ -6,28 +6,29 @@
   ALL: Lek
   AMD: ArmenianDram
   ANG: NetherlandsAntillianGuilder
-  AOA: AngolanKwanza
+  AOA: Kwanza
   ARS: ArgentinePeso
-  ATS: AustriaSchilling
+  ATS: Schilling
   AUD: AustralianDollar
   AWG: ArubanFlorin
-  AZN: AzerbaijanianManat
+  AZN: AzerbaijanManat
   BAM: ConvertibleMarks
   BBD: BarbadosDollar
   BDT: Taka
-  BEF: BelgiumFranc
-  BGL: Lev
-  BGN: Lev
+  BEF: BelgianFranc
+  BGL: BulgarianLev
+  BGN: BulgarianLev
   BHD: BahrainiDinar
   BIF: BurundiFranc
-  BMD: BermudaDollar
+  BMD: BermudianDollar
   BND: BruneiDollar
   BOB: Boliviano
   BRL: BrazilianReal
   BSD: BahamianDollar
   BTN: Ngultrun
   BWP: Pula
-  BYR: BelarussianRuble
+  BYR: OldBelarussianRuble
+  BYN: BelarussianRuble
   BZD: BelizeDollar
   CAD: CanadianDollar
   CDF: FrancCongolais
@@ -39,10 +40,10 @@
   CSD: SerbianDinar
   CUC: CubanConvertiblePeso
   CUP: CubanPeso
-  CVE: CapeVerdeEscudo
+  CVE: CaboVerdeEscudo
   CYP: CyprusPound
   CZK: CzechKoruna
-  DEM: GermanyMark
+  DEM: Mark
   DJF: DjiboutiFranc
   DKK: DanishKrone
   DOP: DominicanPeso
@@ -50,93 +51,94 @@
   EEK: Kroon
   EGP: EgyptianPound
   ERN: Nakfa
-  ESP: SpainPeseta
+  ESP: Peseta
   ETB: EthiopianBirr
   EUR: Euro
-  FIM: FinlandMarkka
+  FIM: Markka
   FJD: FijiDollar
   FKP: FalklandIslandsPound
-  FRF: FranceFranc
+  FRF: Franc
   GBP: PoundSterling
   GEL: Lari
-  GHC: Cedi
-  GHS: Cedi
+  GHC: GhanaCedi
+  GHS: GhanaCedi
   GIP: GibraltarPound
   GMD: Dalasi
-  GNF: GuineaFranc
-  GRD: GreeceDrachma
+  GNF: GuineanFranc
+  GRD: Drachma
   GTQ: Quetzal
   GWP: GuineabissauPeso
   GYD: GuyanaDollar
   HKD: HongKongDollar
   HNL: Lempira
-  HRK: CroatianKuna
+  HRK: Kuna
   HTG: Gourde
   HUF: Forint
   IDR: Rupiah
-  IEP: IrelandPunt
-  ILS: IsraeliSheqel
+  IEP: Punt
+  ILS: NewIsraeliSheqel
   INR: IndianRupee
   IQD: IraqiDinar
   IRR: IranianRial
   ISK: IcelandKrona
-  ITL: ItalyLira
+  ITL: Lira
   JMD: JamaicanDollar
   JOD: JordanianDinar
   JPY: Yen
   KES: KenyanShilling
   KGS: Som
   KHR: Riel
-  KMF: ComoroFranc
+  KMF: ComorianFranc
   KPW: NorthKoreanWon
   KRW: Won
   KWD: KuwaitiDinar
   KYD: CaymanIslandsDollar
   KZT: Tenge
-  LAK: Kip
+  LAK: LaoKip
   LBP: LebanesePound
   LKR: SriLankaRupee
   LRD: LiberianDollar
   LSL: Loti
-  LTL: LithuanianLitus
+  LTL: Litus
   LUF: LuxembourgFranc
   LVL: LatvianLats
   LYD: LibyanDinar
   MAD: MoroccanDirham
   MDL: MoldovanLeu
-  MGA: Ariary
+  MGA: MalagasyAriary
   MGF: MalagasyFranc
   MKD: Denar
   MMK: Kyat
   MNT: Tugrik
   MOP: Pataca
-  MRO: Ouguiya
+  MRO: OldOuguiya
+  MRU: Ouguiya
   MTL: MalteseLira
   MUR: MauritiusRupee
   MVR: Rufiyaa
-  MWK: Kwacha
+  MWK: MalawiKwacha
   MXN: MexicanPeso
   MYR: MalaysianRinggit
-  MZN: Metical
+  MZN: MozambiqueMetical
   NAD: NamibiaDollar
   NGN: Naira
   NIO: CordobaOro
-  NLG: NetherlandsGuilder
+  NLG: Guilder
   NOK: NorwegianKrone
   NPR: NepaleseRupee
   NZD: NewZealandDollar
   OMR: RialOmani
   PAB: Balboa
-  PEN: NuevoSol
+  PEN: Sol
   PGK: Kina
   PHP: PhilippinePeso
   PKR: PakistanRupee
   PLN: Zloty
-  PTE: PortugalEscudo
+  PTE: Escudo
   PYG: Guarani
   QAR: QatariRial
-  ROL: OldLeu
-  RON: NewLeu
+  ROL: RomanianOldLeu
+  RON: RomanianLeu
   RSD: SerbianDinar
   RUB: RussianRuble
   RUR: RussianRuble
@@ -153,21 +155,22 @@
   SKK: SlovakKoruna
   SLL: Leone
   SOS: SomaliShilling
-  SRD: SurinameGuilder
+  SRD: SurinamDollar
   SRG: SurinameGuilder
-  STD: Dobra
+  STD: OldDobra
+  STN: Dobra
   SVC: ElSalvadorColon
   SYP: SyrianPound
   SZL: Lilangeni
   THB: Baht
   TJS: Somoni
-  TMM: Manat
-  TMT: Manat
+  TMM: TurkmenistanManat
+  TMT: TurkmenistanNewManat
   TND: TunisianDinar
   TOP: Paanga
   TPE: TimorEscudo
   TRL: TurkishLiraOld
-  TRY: TurkishLiraNew
+  TRY: TurkishLira
   TTD: TrinidadAndTobagoDollar
   TWD: NewTaiwanDollar
   TZS: TanzanianShilling
@@ -177,7 +180,8 @@
   UYU: PesoUruguayo
   UZS: UzbekistanSum
   VEB: Bolivar
-  VEF: BolivarFuerte
+  VEF: Bolivar
+  VES: BolivarSoberano
   VND: Dong
   VUV: Vatu
   WST: Tala
@@ -189,5 +193,6 @@
   YUM: YugoslavianDinar
   ZAR: Rand
   ZMK: Kwacha
+  ZMW: ZambianKwacha
   ZWD: ZimbabweDollar
   ZWL: ZimbabweDollar

@@ -2,13 +2,13 @@
 :codelist:
   '01': RrpExcludingTax
   '02': RrpIncludingTax
-  '03': FixedRetailPriceExcludingTax
-  '04': FixedRetailPriceIncludingTax
+  '03': FrpExcludingTax
+  '04': FrpIncludingTax
   '05': SuppliersNetPriceExcludingTax
   '06': SuppliersNetPriceExcludingTaxRentalGoods
   '07': SuppliersNetPriceIncludingTax
-  08: SuppliersAlternativeNetPriceExcludingTax
-  09: SuppliersAlternativeNetPriceIncludingTax
+  '08': SuppliersAlternativeNetPriceExcludingTax
+  '09': SuppliersAlternativeNetPriceIncludingTax
   '11': SpecialSaleRrpExcludingTax
   '12': SpecialSaleRrpIncludingTax
   '13': SpecialSaleFixedRetailPriceExcludingTax
@@ -23,5 +23,7 @@
   '27': SuppliersPrepublicationNetPriceIncludingTax
   '31': FreightpassthroughRrpExcludingTax
   '32': FreightpassthroughBillingPriceExcludingTax
+  '33': ImportersFixedRetailPriceExcludingTax
+  '34': ImportersFixedRetailPriceIncludingTax
   '41': PublishersRetailPriceExcludingTax
   '42': PublishersRetailPriceIncludingTax

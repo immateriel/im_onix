@@ -27,7 +27,7 @@
   BK: NoveltyBook
   BL: SlideBound
   BM: BigBook
-  BN: PartworkFascículo
+  BN: PartworkFasciculo
   BO: FoldoutBookOrChart
   BP: FoamBook
   BZ: OtherBookFormat
@@ -80,7 +80,7 @@
   PN: PicturesOrPhotographs
   PO: Wallchart
   PP: Stickers
-  PQ: PlateLámina
+  PQ: PlateLamina
   PR: NotebookBlankBook
   PS: Organizer
   PT: Bookmark
@@ -116,6 +116,7 @@
   XJ: Spinner
   XK: LargeBookDisplay
   XL: ShrinkwrappedPack
+  XM: BoxedPack
   XZ: OtherPointOfSale
   ZA: GeneralMerchandise
   ZB: Doll
@@ -125,4 +126,7 @@
   ZF: Tshirt
   ZG: EbookReader
   ZH: TabletComputer
+  ZI: AudiobookPlayer
+  ZJ: Jigsaw
+  ZY: OtherApparel
   ZZ: OtherMerchandise

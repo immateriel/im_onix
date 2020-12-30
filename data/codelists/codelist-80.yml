@@ -6,7 +6,7 @@
   '03': KeepCase
   '05': JewelCase
   '06': Digipak
-  09: InBox
+  '09': InBox
   '10': Slipcased
   '11': SlipcasedSet
   '12': Tube
@@ -21,3 +21,4 @@
   '21': Shrinkwrapped
   '22': BlisterPack
   '23': CarryCase
+  '24': InTin

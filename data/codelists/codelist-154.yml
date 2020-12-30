@@ -8,4 +8,6 @@
   '05': Teachers
   '06': Students
   '07': Press
-  08: ShoppingComparisonService
+  '08': ShoppingComparisonService
+  '09': SearchEngineIndex
+  '10': Bloggers

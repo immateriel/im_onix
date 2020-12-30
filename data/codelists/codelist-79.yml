@@ -7,13 +7,22 @@
   '05': DvdRegion
   '06': OperatingSystemRequirements
   '07': OtherSystemRequirements
-  08: PointAndListenDeviceCompatibility
-  09: EpublicationAccessibilityDetail
+  '08': PointAndListenDeviceCompatibility
+  '09': EpublicationAccessibilityDetail
   '10': EpublicationFormatVersion
-  '11': CpsiaChokingHazardWarning
-  '12': CpsiaChokingHazardWarning
+  '12': CpsiaOrOtherUsHazardWarning
   '13': EuToySafetyHazardWarning
   '14': IataDangerousGoodsWarning
+  '15': EpublicationFormatVersionCode
+  '16': EpublicationFormatValidatorVersion
+  '17': PointAndWatchDeviceappCompatibility
+  '18': EpublicationAuthenticationAndAccessControl
+  '19': BatteryType
+  '20': BatteryCapacity
+  '21': DangerousGoods
+  '22': GamePieces
+  '23': GamePlayers
+  '24': GamePlayTime
   '30': NotFscOrPefcCertified
   '31': FscCertifiedPure
   '32': FscCertifiedMixedSources

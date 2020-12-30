@@ -8,8 +8,8 @@
   '05': Upc125
   '06': Upc12Itemspecific
   '07': Upc125Itemspecific
-  08: Upc12Pricepoint
-  09: Upc125Pricepoint
+  '08': Upc12Pricepoint
+  '09': Upc125Pricepoint
   '10': Ean13OnCover4
   '11': Ean135OnCover4UsDollarPriceEncoded
   '12': Upc12ItemspecificOnCover4
@@ -52,8 +52,8 @@
   '49': Upc125ItemspecificOnBack
   '50': Upc12PricepointOnBack
   '51': Upc125PricepointOnBack
-  '52': Ean135OnOuterSleevebackUsDollarPriceEncoded
-  '53': Ean135OnOuterSleeveback
+  '52': Ean13OnOuterSleeveback
+  '53': Ean135OnOuterSleevebackUsDollarPriceEncoded
   '54': Upc12ItemspecificOnOuterSleeveback
   '55': Upc125ItemspecificOnOuterSleeveback
   '56': Upc12PricepointOnOuterSleeveback
@@ -75,4 +75,4 @@
   '72': Ean135OnTagCanDollarPriceEncoded
   '73': Ean135OnBottomCanDollarPriceEncoded
   '74': Ean135OnBackCanDollarPriceEncoded
-  '75': Ean13OnOuterSleevebackCanDollarPriceEncoded
+  '75': Ean135OnOuterSleevebackCanDollarPriceEncoded

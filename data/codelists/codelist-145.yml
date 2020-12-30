@@ -7,3 +7,6 @@
   '05': TextToSpeech
   '06': Lend
   '07': TimelimitedLicense
+  '08': LoanRenewal
+  '09': MultiuserLicense
+  '10': PreviewOnPremises

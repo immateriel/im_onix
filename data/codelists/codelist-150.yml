@@ -13,6 +13,9 @@
   AJ: DownloadableAudioFile
   AK: PrerecordedDigitalAudioPlayer
   AL: PrerecordedSdCard
+  AM: Lp
+  AN: DownloadableAndOnlineAudioFile
+  AO: OnlineAudioFile
   AZ: OtherAudioFormat
   BA: Book
   BB: Hardback
@@ -27,7 +30,7 @@
   BK: NoveltyBook
   BL: SlideBound
   BM: BigBook
-  BN: PartworkFascículo
+  BN: PartworkFasciculo
   BO: FoldoutBookOrChart
   BP: FoamBook
   BZ: OtherBookFormat
@@ -48,6 +51,7 @@
   DL: MemoryStickMemoryCard
   DM: UsbFlashDrive
   DN: DoublesidedCddvd
+  DO: Brrom
   DZ: OtherDigitalCarrier
   EA: DigitalDeliveredElectronically
   EB: DigitalDownloadAndOnline
@@ -71,7 +75,7 @@
   PC: Calendar
   PD: Cards
   PE: Copymasters
-  PF: Diary
+  PF: DiaryOrJournal
   PG: Frieze
   PH: Kit
   PI: SheetMusic
@@ -82,17 +86,19 @@
   PN: PicturesOrPhotographs
   PO: Wallchart
   PP: Stickers
-  PQ: PlateLámina
+  PQ: PlateLamina
   PR: NotebookBlankBook
   PS: Organizer
   PT: Bookmark
+  PU: Leaflet
+  PV: BookPlates
   PZ: OtherPrintedItem
-  SA: MultipleitemRetailProduct
-  SB: MultipleitemRetailProductBoxed
-  SC: MultipleitemRetailProductSlipcased
-  SD: MultipleitemRetailProductShrinkwrapped
-  SE: MultipleitemRetailProductLoose
-  SF: MultipleitemRetailProductPartsEnclosed
+  SA: MultiplecomponentRetailProduct
+  SB: MultiplecomponentRetailProductBoxed
+  SC: MultiplecomponentRetailProductSlipcased
+  SD: MultiplecomponentRetailProductShrinkwrapped
+  SE: MultiplecomponentRetailProductLoose
+  SF: MultiplecomponentRetailProductPartsEnclosed
   VA: Video
   VF: Videodisc
   VI: DvdVideo
@@ -103,6 +109,7 @@
   VN: HdDvd
   VO: Bluray
   VP: UmdVideo
+  VQ: Cbhd
   VZ: OtherVideoFormat
   XA: TradeonlyMaterial
   XB: DumpbinEmpty
@@ -113,16 +120,29 @@
   XG: ShelfStrip
   XH: WindowPiece
   XI: Streamer
-  XJ: Spinner
+  XJ: SpinnerEmpty
   XK: LargeBookDisplay
   XL: ShrinkwrappedPack
+  XM: BoxedPack
+  XN: PackOuterPackagingUnspecified
+  XO: SpinnerFilled
+  XY: OtherPointOfSaleIncludingRetailProduct
   XZ: OtherPointOfSale
   ZA: GeneralMerchandise
-  ZB: Doll
+  ZB: DollOrFigure
   ZC: SoftToy
   ZD: Toy
   ZE: Game
   ZF: Tshirt
   ZG: EbookReader
   ZH: TabletComputer
+  ZI: AudiobookPlayer
+  ZJ: Jigsaw
+  ZK: Mug
+  ZL: ToteBag
+  ZM: Tableware
+  ZN: Umbrella
+  ZO: PaintsCrayonsPencils
+  ZX: OtherToygameAccessories
+  ZY: OtherApparel
   ZZ: OtherMerchandise

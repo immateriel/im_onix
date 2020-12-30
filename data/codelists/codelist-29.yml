@@ -7,8 +7,8 @@
   '05': FskRating
   '06': BtlfAudienceCode
   '07': ElectreAudienceCode
-  08: AneleTipo
-  09: Avi
+  '08': AneleTipo
+  '09': Avi
   '10': UskRating
   '11': Aws
   '12': Schulform
@@ -22,5 +22,10 @@
   '20': FryReadabilityScore
   '21': JapaneseChildrensAudienceCode
   '22': OnixAdultAudienceRating
-  '23': CommonEuropeanFrameworkForLanguageLearning
+  '23': CommonEuropeanFrameworkOfReferenceForLanguageLearningCefr
   '24': KoreanPublicationEthicsCommissionRating
+  '25': IoeBookBand
+  '26': FskLehrinfoprogramm
+  '27': IntendedAudienceLanguage
+  '28': PegiRating
+  '29': Gymnasieprogram

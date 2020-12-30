@@ -7,7 +7,7 @@
   '05': RichTextFormatRtf
   '06': OpenEbookPublicationStructureOebpsFormatStandard
   '07': Xml
-  08: Sgml
-  09: Exe
+  '08': Sgml
+  '09': Exe
   '10': Ascii
   '11': MobipocketFormat

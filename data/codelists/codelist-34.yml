@@ -1,18 +1,7 @@
 ---
 :codelist:
-  '00': AsciiText
-  '01': Sgml
   '02': Html
   '03': Xml
-  '04': Pdf
   '05': Xhtml
   '06': DefaultTextFormat
   '07': BasicAsciiText
-  08: Pdf
-  09: MicrosoftRichTextFormatRtf
-  '10': MicrosoftWordBinaryFormatDoc
-  '11': Ecma376Wordprocessingml
-  '12': Iso26300Odf
-  '13': CorelWordperfectBinaryFormatDoc
-  '14': Epub
-  '15': Xps

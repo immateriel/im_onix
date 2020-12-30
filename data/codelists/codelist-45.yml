@@ -7,9 +7,14 @@
   '05': HostdistributorOfElectronicContent
   '06': PublishedForonBehalfOf
   '07': PublishedInAssociationWith
-  '08': PublishedOnBehalfOf
   '09': NewOrAcquiringPublisher
   '10': PublishingGroup
   '11': PublisherOfFacsimileOriginal
   '12': RepackagerOfPreboundEdition
   '13': FormerPublisher
+  '14': PublicationFunder
+  '15': ResearchFunder
+  '16': FundingBody
+  '17': Printer
+  '18': Binder
+  '19': Manufacturer

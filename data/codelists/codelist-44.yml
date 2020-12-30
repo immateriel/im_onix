@@ -3,16 +3,17 @@
   '01': Proprietary
   '02': Proprietary
   '03': DnbPublisherIdentifier
-  '04': BörsenvereinVerkehrsnummer
+  '04': BorsenvereinVerkehrsnummer
   '05': GermanIsbnAgencyPublisherIdentifier
   '06': Gln
   '07': San
+  '08': MarcOrganizationCode
   '10': CentraalBoekhuisRelatieId
   '13': FondscodeBoekenbank
   '15': Ytunnus
   '16': Isni
   '17': Pnd
-  '18': Lccn
+  '18': Naco
   '19': JapanesePublisherIdentifier
   '20': Gkd
   '21': Orcid
@@ -20,3 +21,15 @@
   '23': VatIdentityNumber
   '24': JpDistributionIdentifier
   '25': Gnd
+  '26': Duns
+  '27': RinggoldId
+  '28': IdentifiantEditeurElectre
+  '29': EidrPartyDoi
+  '30': IdentifiantMarqueElectre
+  '31': ViafId
+  '32': FundrefDoi
+  '33': BneCn
+  '34': BnfControlNumber
+  '35': Ark
+  '36': NasjonaltAutoritetsregister
+  '37': Grid
