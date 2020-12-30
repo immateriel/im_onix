@@ -49,7 +49,7 @@ module ONIX
   end
 
   class ElementParser
-    attr_accessor :type, :name, :short
+    attr_accessor :type, :name, :short, :cardinality
 
     def self.inflectors
       [['ox', 'oxes'],
@@ -96,6 +96,7 @@ module ONIX
       @parse_lambda = options[:parse_lambda]
       @serialize_lambda = options[:serialize_lambda]
       @shortcut = options[:shortcut]
+      @cardinality = options[:cardinality]
 
       if options[:klass]
         @klass_name = options[:klass]
@@ -300,6 +301,11 @@ module ONIX
 
     def self.get_class(name)
       ONIX.const_get(name) if ONIX.const_defined? name
+    end
+
+    # infinity constant for cardinality
+    def self.n
+      Float::INFINITY
     end
 
     def parse(n)

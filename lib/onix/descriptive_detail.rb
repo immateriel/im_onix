@@ -12,26 +12,26 @@ require 'onix/subject'
 
 module ONIX
   class DescriptiveDetail < SubsetDSL
-    element "ProductComposition", :subset, :shortcut => :composition
-    element "ProductForm", :subset, :shortcut => :form
-    elements "ProductFormDetail", :subset, :shortcut => :form_details
-    elements "ProductFormFeature", :subset, :shortcut => :form_features
-    element "ProductFormDescription", :text, :shortcut => :file_description
+    element "ProductComposition", :subset, :shortcut => :composition, :cardinality => 1
+    element "ProductForm", :subset, :shortcut => :form, :cardinality => 1
+    elements "ProductFormDetail", :subset, :shortcut => :form_details, :cardinality => 0..n
+    elements "ProductFormFeature", :subset, :shortcut => :form_features, :cardinality => 0..n
+    element "ProductFormDescription", :text, :shortcut => :file_description, :cardinality => 0..n
     element "PrimaryContentType", :subset, {:klass => "ProductContentType"}
-    elements "ProductContentType", :subset, :shortcut => :content_types
-    elements "EpubTechnicalProtection", :subset
-    elements "EpubUsageConstraint", :subset
-    elements "ProductPart", :subset, :shortcut => :parts
+    elements "ProductContentType", :subset, :shortcut => :content_types, :cardinality => 0..n
+    elements "EpubTechnicalProtection", :subset, :cardinality => 0..n
+    elements "EpubUsageConstraint", :subset, :cardinality => 0..n
+    elements "ProductPart", :subset, :shortcut => :parts, :cardinality => 0..n
     elements "Collection", :subset
     element "NoCollection", :ignore
-    elements "TitleDetail", :subset
-    elements "Contributor", :subset
+    elements "TitleDetail", :subset, :cardinality => 0..n
+    elements "Contributor", :subset, :cardinality => 0..n
     element "EditionType", :subset
     element "EditionNumber", :integer
     element "NoEdition", :ignore
-    elements "Language", :subset
+    elements "Language", :subset, :cardinality => 0..1
     elements "Extent", :subset
-    elements "Subject", :subset
+    elements "Subject", :subset, :cardinality => 0..n
     elements "AudienceCode", :subset
 
     # @!group Shortcuts
@@ -164,7 +164,7 @@ module ONIX
     # protections string array
     # @return [Array<String>]
     def protections
-      return nil if @epub_technical_protections.length == 0
+      return [] if @epub_technical_protections.length == 0
       @epub_technical_protections.map(&:human)
     end
 

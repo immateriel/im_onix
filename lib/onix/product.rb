@@ -20,15 +20,15 @@ module ONIX
     include ProprietaryIdMethods
     include ProductSuppliesExtractor
 
-    element "RecordReference", :text
-    element "NotificationType", :subset
-    element "RecordSourceName", :text
-    elements "ProductIdentifier", :subset, :shortcut => :identifiers
-    element "DescriptiveDetail", :subset
-    element "CollateralDetail", :subset
-    element "PublishingDetail", :subset
-    element "RelatedMaterial", :subset
-    elements "ProductSupply", :subset
+    element "RecordReference", :text, :cardinality => 1
+    element "NotificationType", :subset, :cardinality => 1
+    element "RecordSourceName", :text, :cardinality => 0..1
+    elements "ProductIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
+    element "DescriptiveDetail", :subset, :cardinality => 0..1
+    element "CollateralDetail", :subset, :cardinality => 0..1
+    element "PublishingDetail", :subset, :cardinality => 0..1
+    element "RelatedMaterial", :subset, :cardinality => 0..1
+    elements "ProductSupply", :subset, :cardinality => 0..n
 
     # default LanguageCode from ONIXMessage
     attr_accessor :default_language_of_text
