@@ -1,0 +1,9 @@
+---
+:codelist:
+  '01': Proprietary
+  '03': Gtin13
+  '06': Doi
+  '12': Imdb
+  '18': Isrc
+  '19': Isan
+  '31': EidrDoi

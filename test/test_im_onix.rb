@@ -551,7 +551,7 @@ class TestImOnix < Minitest::Test
     end
 
     should "have all the protections" do
-      assert_equal ["AdobeDrm", "Readium LCP DRM"], @product.protections
+      assert_equal ["AdobeDrm", "ReadiumLcpDrm"], @product.protections
     end
   end
 end

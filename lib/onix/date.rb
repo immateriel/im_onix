@@ -126,7 +126,7 @@ module ONIX
     element "PublishingDateRole", :subset, :shortcut => :role
 
     scope :publication, lambda { human_code_match(:publishing_date_role, ["PublicationDate", "PublicationDateOfPrintCounterpart"]) }
-    scope :embargo, lambda { human_code_match(:publishing_date_role, "EmbargoDate") }
+    scope :embargo, lambda { human_code_match(:publishing_date_role, "SalesEmbargoDate") }
     scope :preorder_embargo, lambda { human_code_match(:publishing_date_role, "PreorderEmbargoDate") }
     scope :public_announcement, lambda { human_code_match(:publishing_date_role, "PublicAnnouncementDate") }
   end

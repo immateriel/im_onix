@@ -1,0 +1,6 @@
+---
+:codelist:
+  '00': MessageReceived
+  '01': MessageRejected
+  '02': MessagePartprocessed
+  '03': MessageProcessed

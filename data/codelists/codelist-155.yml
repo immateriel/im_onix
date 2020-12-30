@@ -5,7 +5,7 @@
   '14': FromDate
   '15': UntilDate
   '17': LastUpdated
-  '24': From...UntilDate
+  '24': FromUntilDate
   '27': AvailableFrom
   '28': AvailableUntil
   '31': AssociatedStartDate

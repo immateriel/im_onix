@@ -1,0 +1,24 @@
+---
+:codelist:
+  '00': BatteriesNotRequired
+  '01': BatteriesBuiltIn
+  '02': BatteriesPreinstalled
+  '03': BatteriesSupplied
+  '04': BatteriesRequired
+  '05': BatteriesSuppliedSpare
+  '06': SafetyDataSheetAvailable
+  '07': TechnicalDataSheetAvailable
+  '08': Rechargeable
+  '09': Nonrechargeable
+  '10': BatteryWarningText
+  '20': BatteryChemistry
+  '21': Lithiumion
+  '22': Lithiumpolymer
+  '23': Lithiummetal
+  '24': NickelmetalHydride
+  '25': Nickelcadmium
+  '26': ZincmanganeseDioxide
+  '27': Zinccarbon
+  '28': Zincair
+  '29': SilverOxide
+  '99': BatteryDescription

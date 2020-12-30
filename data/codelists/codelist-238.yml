@@ -1,0 +1,23 @@
+---
+:codelist:
+  K: EducacaoInfantil
+  '1': FundamentalI1oAno
+  '2': FundamentalI2oAno
+  '3': FundamentalI3oAno
+  '4': FundamentalI4oAno
+  '5': FundamentalI5oAno
+  '6': FundamentalIi6oAno
+  '7': FundamentalIi7oAno
+  '8': FundamentalIi8oAno
+  '9': FundamentalIi9oAno
+  '10': EnsinoMedio1oAno
+  '11': EnsinoMedio2oAno
+  '12': EnsinoMedio3oAno
+  '13': EnsinoTecnicoIntegrado
+  '14': EnsinoTecnicoConcomitante
+  '15': EnsinoTecnicoSubsequente
+  P: EnsinoPrevestibular
+  A: EnsinoSuperiorGraduacaoLicenciaturaBacharelado
+  B: EnsinoSuperiorGraduacaoTecnologia
+  D: EnsinoSuperiorPosgraduacaoStrictoSensu
+  F: EnsinoSuperiorPosgraduacaoLatoSensu
