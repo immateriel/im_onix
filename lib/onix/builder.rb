@@ -103,6 +103,7 @@ module ONIX
             end
           end
         else
+          pp @parent.class.ancestors_registered_elements
           raise BuilderInvalidChildElement, [@parent.class.to_s.sub("ONIX::", ""), nm.to_s]
         end
       end
