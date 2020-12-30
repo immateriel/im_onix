@@ -27,11 +27,10 @@ class HTMLCodelist
 
   # from rails
   def self.rename(term)
-    term.gsub(/\(|\)|\,|\-|’|\/|“|”|‘|\.|\:|–|\||\+/, "").gsub(/\;/, " Or ").gsub(/\s+/, " ").split(" ").map { |t| t.capitalize }.join("").to_ascii
+    term.gsub(/\(|\)|\,|\-|’|\/|“|”|‘|\.|\:|–|\||\+/, "").gsub(/\;/, " Or ").gsub(/\s+/, " ").split(" ").map { |t| t.capitalize }.join("").to_ascii.gsub(/\(|\)|\,|\-|’|\/|“|”|‘|\.|\:|–|\||\+/, "")
   end
 end
 
-require 'pp'
 files = `ls #{ARGV[0]}/*.htm`.split(/\n/)
 
 files.sort.each do |file|

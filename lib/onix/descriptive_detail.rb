@@ -125,7 +125,7 @@ module ONIX
     # is digital offer a bundle ?
     # @return [Boolean]
     def bundle?
-      @product_composition.human == "MultipleitemRetailProduct"
+      @product_composition.human == "MultiplecomponentRetailProduct"
     end
 
     # digital file format string (Epub,Pdf,AmazonKindle)
