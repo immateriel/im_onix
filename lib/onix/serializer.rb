@@ -2,23 +2,27 @@ module ONIX
   module Serializer
     class Traverser
 
-      def self.serialize_subset(mod, xml, subset, parent_tag = nil, level = 0)
-        if subset.class.included_modules.include?(DateHelper)
-          mod.const_get("Date").serialize(xml, subset, parent_tag, level)
+      def self.serialize(mod, xml, subset, tag = nil)
+        ONIX::Serializer::Traverser.serialize_subset(mod, xml, subset, tag)
+      end
+
+      def self.serialize_subset(mod, data, subset, parent_tag = nil, level = 0)
+        if subset.is_a?(ONIX::ONIXMessage)
+          mod.const_get("Root").serialize(data, "ONIXMessage", subset, level)
         else
-          if subset.class.included_modules.include?(CodeHelper)
-            mod.const_get("Code").serialize(xml, subset, parent_tag, level)
+          if subset.class.included_modules.include?(DateHelper)
+            mod.const_get("Date").serialize(data, subset, parent_tag, level)
           else
-            if subset.class.included_modules.include?(EntityHelper)
-              mod.const_get("Entity").serialize(xml, subset, parent_tag, level)
+            if subset.class.included_modules.include?(CodeHelper)
+              mod.const_get("Code").serialize(data, subset, parent_tag, level)
             else
-              mod.const_get("Subset").serialize(xml, parent_tag, subset, level)
+              mod.const_get("Subset").serialize(data, parent_tag, subset, level)
             end
           end
         end
       end
 
-      def self.recursive_serialize(mod, xml, subset, parent_tag = nil, level = 0)
+      def self.recursive_serialize(mod, data, subset, parent_tag = nil, level = 0)
         if subset.class.respond_to?(:ancestors_registered_elements)
           subset.class.ancestors_registered_elements.each do |n, e|
             unless e.short
@@ -28,9 +32,9 @@ module ONIX
                   v.each do |vv|
                     case e.type
                     when :subset
-                      self.serialize_subset(mod, xml, vv, n, level)
-                    when :text, :integer, :float, :bool
-                      mod.const_get("Primitive").serialize(xml, n, vv, level)
+                      self.serialize_subset(mod, data, vv, n, level)
+                    when :text, :integer, :float, :bool, :datetime
+                      mod.const_get("Primitive").serialize(data, n, vv, level)
                     when :ignore
                     else
                     end
@@ -38,9 +42,9 @@ module ONIX
                 else
                   case e.type
                   when :subset
-                    self.serialize_subset(mod, xml, v, n, level)
-                  when :text, :integer, :float, :bool
-                    mod.const_get("Primitive").serialize(xml, n, e.serialize_lambda(v), level)
+                    self.serialize_subset(mod, data, v, n, level)
+                  when :text, :integer, :float, :bool, :datetime
+                    mod.const_get("Primitive").serialize(data, n, e.serialize_lambda(v), level)
                   when :ignore
                   else
                   end
@@ -53,6 +57,19 @@ module ONIX
     end
 
     module Default
+      def self.serialize(xml, subset, tag = nil)
+        ONIX::Serializer::Traverser.serialize(Default, xml, subset, tag)
+      end
+
+      class Root
+        def self.serialize(xml, tag, subset, level = 0)
+          root_options = subset.version && subset.version >= 300 ? { :xmlns => "http://www.editeur.org/onix/3.0/reference", :release => subset.release } : {}
+          xml.send(tag, root_options) {
+            ONIX::Serializer::Traverser.recursive_serialize(Default, xml, subset, tag, level + 1)
+          }
+        end
+      end
+
       class Subset
         def self.serialize(xml, tag, subset, level = 0)
           xml.send(tag, nil) {
@@ -62,9 +79,9 @@ module ONIX
       end
 
       class Primitive
-        def self.serialize(xml, tag, data, level = 0)
-          unless data.respond_to?(:empty?) ? !!data.empty? : !data # rails blank?
-            xml.send(tag, data)
+        def self.serialize(xml, tag, val, level = 0)
+          unless val.respond_to?(:empty?) ? !!val.empty? : !val # rails blank?
+            xml.send(tag, val)
           end
         end
       end
@@ -87,26 +104,21 @@ module ONIX
           }
         end
       end
-
-      class Entity
-        def self.serialize(xml, entity, parent_tag = nil, level = 0)
-          xml.send(parent_tag, nil) {
-            if entity.role
-              Code.serialize(xml, entity.role, entity.class.role_tag, level + 1)
-            end
-            entity.identifiers.each do |identifier|
-              Subset.serialize(xml, entity.class.identifier_tag, identifier, level + 1)
-            end
-            if entity.name
-              xml.send(entity.class.name_tag, entity.name)
-            end
-            ONIX::Serializer::Traverser.recursive_serialize(Default, xml, entity, parent_tag, level + 1)
-          }
-        end
-      end
     end
 
     module Dump
+      def self.serialize(io, subset, tag = nil)
+        ONIX::Serializer::Traverser.serialize(Dump, io, subset, tag)
+      end
+
+      class Root
+        def self.serialize(io, tag, subset, level = 0)
+          io.write " " * level
+          io.write "#{tag}(ROOT):\n"
+          ONIX::Serializer::Traverser.recursive_serialize(Dump, io, subset, tag, level + 1)
+        end
+      end
+
       class Subset
         def self.serialize(io, tag, subset, level = 0)
           io.write " " * level
@@ -116,10 +128,10 @@ module ONIX
       end
 
       class Primitive
-        def self.serialize(io, tag, data, level = 0)
-          unless data.respond_to?(:empty?) ? !!data.empty? : !data # rails blank?
+        def self.serialize(io, tag, val, level = 0)
+          unless val.respond_to?(:empty?) ? !!val.empty? : !val # rails blank?
             io.write " " * level
-            io.write "#{tag} : #{data}\n"
+            io.write "#{tag} : #{val}\n"
           end
         end
       end
@@ -135,17 +147,6 @@ module ONIX
         def self.serialize(io, code, parent_tag = nil, level = 0)
           io.write " " * level
           io.write "#{parent_tag}: #{code.human}(#{code.code})\n"
-        end
-      end
-
-      class Entity
-        def self.serialize(io, entity, parent_tag = nil, level = 0)
-          io.write " " * level
-          io.write "#{parent_tag}: #{entity.name}\n"
-          if entity.role
-            io.write " " * (level + 1)
-            io.write "Role: #{entity.role.human}(#{entity.role.code})\n"
-          end
         end
       end
     end

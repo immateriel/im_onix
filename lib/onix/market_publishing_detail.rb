@@ -1,6 +1,6 @@
 module ONIX
   class MarketPublishingDetail < SubsetDSL
-    elements "PublisherRepresentative", :subset, {:klass => "Agent"}
+    elements "PublisherRepresentative", :subset, :klass => "Agent"
     element "MarketPublishingStatus", :subset
     elements "MarketDate", :subset
 

@@ -1,5 +1,3 @@
-require 'pp'
-
 module ONIX
   class BuilderInvalidArgument < StandardError
   end
@@ -14,6 +12,9 @@ module ONIX
   end
 
   class BuilderInvalidChildElement < StandardError
+  end
+
+  class BuilderUndefinedElement < StandardError
   end
 
   # ONIX builder DSL with human code resolve, code validity and child element validity
@@ -31,7 +32,7 @@ module ONIX
     end
 
     def to_xml(xml)
-      ONIX::Serializer::Default::Subset.serialize(xml, @name, @element)
+      ONIX::Serializer::Default.serialize(xml, @element, @name)
     end
 
     def check_cardinality!
@@ -63,8 +64,8 @@ module ONIX
 
     private
 
-    def make_element(nm, args, &block)
-      @name = nm
+    def get_class(nm, args)
+      el = nil
       if ONIX.const_defined?(nm)
         klass = ONIX.const_get(nm)
         if klass.respond_to?(:from_code)
@@ -85,12 +86,26 @@ module ONIX
           end
         else
           el = klass.new
+          if el.is_a?(ONIX::ONIXMessage)
+            el.release = args.first
+          end
         end
+      else
+        raise BuilderUndefinedElement, nm
       end
+      el
+    end
+
+    def make_element(nm, args, &block)
+      @name = nm
 
       if @parent
         parser_el = @parent.class.ancestors_registered_elements[nm.to_s]
         if parser_el
+          if ONIX.const_defined?(parser_el.klass_name)
+            el = get_class(parser_el.klass_name, args)
+          end
+
           if parser_el.is_array?
             arr = @parent.send(parser_el.underscore_name)
             arr << el
@@ -103,9 +118,10 @@ module ONIX
             end
           end
         else
-          pp @parent.class.ancestors_registered_elements
           raise BuilderInvalidChildElement, [@parent.class.to_s.sub("ONIX::", ""), nm.to_s]
         end
+      else
+        el = get_class(nm, args)
       end
 
       if block_given?

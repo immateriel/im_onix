@@ -17,7 +17,7 @@ module ONIX
     elements "ProductFormDetail", :subset, :shortcut => :form_details, :cardinality => 0..n
     elements "ProductFormFeature", :subset, :shortcut => :form_features, :cardinality => 0..n
     element "ProductFormDescription", :text, :shortcut => :file_description, :cardinality => 0..n
-    element "PrimaryContentType", :subset, {:klass => "ProductContentType"}
+    element "PrimaryContentType", :subset, :klass => "ProductContentType"
     elements "ProductContentType", :subset, :shortcut => :content_types, :cardinality => 0..n
     elements "EpubTechnicalProtection", :subset, :cardinality => 0..n
     elements "EpubUsageConstraint", :subset, :cardinality => 0..n

@@ -8,8 +8,8 @@ module ONIX
     element "CountryOfPublication", :text, :shortcut => :country
     element "PublishingStatus", :subset, :shortcut => :status
     elements "PublishingDate", :subset
-    elements "SalesRights", :subset, {:pluralize => false}
-    element "ROWSalesRightsType", :subset, {:klass => "SalesRightsType"}
+    elements "SalesRights", :subset, :pluralize => false
+    element "ROWSalesRightsType", :subset, :klass => "SalesRightsType"
     element "SalesRestriction", :subset
 
     # @!group High level

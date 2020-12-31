@@ -49,7 +49,7 @@ module ONIX
   end
 
   class ElementParser
-    attr_accessor :type, :name, :short, :cardinality
+    attr_accessor :type, :name, :short, :cardinality, :klass_name
 
     def self.inflectors
       [['ox', 'oxes'],
@@ -332,6 +332,10 @@ module ONIX
             val = t.text.to_f
           when :bool
             val = true
+          when :datetime
+            tm = t.text
+            val = Time.strptime(tm, "%Y%m%dT%H%M%S") rescue Time.strptime(tm, "%Y%m%dT%H%M") rescue Time.strptime(tm, "%Y%m%d") rescue nil
+            val ||= tm
           when :ignore
             val = nil
           else
@@ -352,7 +356,7 @@ module ONIX
 
     def unsupported(tag)
       #      raise SubsetUnsupported,tag.name
-      #      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{self.class.short_to_ref(tag.name)})"
+      # puts "SubsetUnsupported: #{self.class}##{tag.name} (#{self.class.short_to_ref(tag.name)})"
     end
   end
 end

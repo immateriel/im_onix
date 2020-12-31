@@ -13,7 +13,7 @@ class TestSerialize < Minitest::Test
 
     should "be the same serialized" do
       builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
-        ONIX::Serializer::Default::Subset.serialize(xml, "ONIXMessage", @message)
+        ONIX::Serializer::Default.serialize(xml, @message)
       end
       assert_equal builder.to_xml, File.read(@filename)
     end
@@ -21,12 +21,12 @@ class TestSerialize < Minitest::Test
     should "be the same with builder" do
       msg = ONIX::Builder.new
 
-      msg.ONIXMessage do
+      msg.ONIXMessage("3.0") do
         Header do
           Sender do
             SenderName("immatériel·fr")
           end
-          #SentDateTime("20130802") # TODO
+          SentDateTime("20130802") # TODO
           DefaultLanguageOfText("fre") # TODO
         end
         Product do
@@ -95,7 +95,6 @@ class TestSerialize < Minitest::Test
           ProductSupply do
             SupplyDetail do
               Supplier do
-                if false # TODO
                 SupplierRole("03")
                 SupplierIdentifier do
                   SupplierIDType("02")
@@ -106,7 +105,6 @@ class TestSerialize < Minitest::Test
                   IDValue("3012410001000")
                 end
                 SupplierName("immatériel·fr")
-                end
               end
               ProductAvailability("45")
               UnpricedItemType("03")
