@@ -4,20 +4,22 @@ require 'onix/date'
 
 module ONIX
   class Price < SubsetDSL
-    element "PriceType", :subset, :shortcut => :type
-    element "PriceQualifier", :subset, :shortcut => :qualifier
-    element "DiscountCoded", :subset, :shortcut => :discount
+    element "PriceType", :subset, :shortcut => :type, :cardinality => 0..1
+    element "PriceQualifier", :subset, :shortcut => :qualifier, :cardinality => 0..1
+    element "PriceTypeDescription", :text, :cardinality => 0..n
+    element "DiscountCoded", :subset, :shortcut => :discount, :cardinality => 0..n
     element "PriceStatus", :subset
     elements "PriceDate", :subset, :shortcut => :dates
     element "PriceAmount", :float,
             {
                 :shortcut => :amount,
                 :parse_lambda => lambda { |v| (v * 100).round },
-                :serialize_lambda => lambda { |v| v / 100.0 }
+                :serialize_lambda => lambda { |v| v / 100.0 },
+                :cardinality => 0..1
             }
-    element "Tax", :subset
-    element "CurrencyCode", :text, :shortcut => :currency
-    element "Territory", :subset
+    element "Tax", :subset, :cardinality => 0..n
+    element "CurrencyCode", :text, :shortcut => :currency, :cardinality => 0..1
+    element "Territory", :subset, :cardinality => 0..1
 
     # @!group High level
 

@@ -18,6 +18,33 @@ class TestSerialize < Minitest::Test
       assert_equal builder.to_xml, File.read(@filename)
     end
 
+    should "invalid child raise exception" do
+      assert_raises(ONIX::BuilderInvalidChildElement) do
+        msg = ONIX::Builder.new
+        msg.Header do
+          SenderName("immatériel.fr")
+        end
+      end
+    end
+
+    should "invalid code raise exception" do
+      assert_raises(ONIX::BuilderInvalidCode) do
+        msg = ONIX::Builder.new
+        msg.Product do
+          NotificationType("NOTACODE")
+        end
+      end
+    end
+
+    should "invalid alias code raise exception" do
+      assert_raises(ONIX::InvalidCodeAlias) do
+        msg = ONIX::Builder.new
+        msg.Product do
+          NotificationType(:InvalidAlias)
+        end
+      end
+    end
+
     should "be the same with builder" do
       msg = ONIX::Builder.new
 
@@ -26,8 +53,8 @@ class TestSerialize < Minitest::Test
           Sender do
             SenderName("immatériel·fr")
           end
-          SentDateTime("20130802") # TODO
-          DefaultLanguageOfText("fre") # TODO
+          SentDateTime("20130802")
+          DefaultLanguageOfText("fre")
         end
         Product do
           RecordReference("immateriel.fr-RP64127")

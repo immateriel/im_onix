@@ -2,6 +2,9 @@
 require 'yaml'
 
 module ONIX
+  class InvalidCodeAlias < StandardError
+  end
+
   module CodeHelper
     def parse(n)
       @code = n.text
@@ -46,6 +49,9 @@ module ONIX
       obj = self.new
       obj.human = human
       obj.code = self.hash.key(human)
+      unless obj.code
+        raise InvalidCodeAlias, [self.to_s, human]
+      end
       obj
     end
 

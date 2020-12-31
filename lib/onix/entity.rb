@@ -44,9 +44,9 @@ module ONIX
         return role
       end
 
-      self.element self.role_tag, :subset, :klass => self.role_class.to_s, :shortcut => :role
-      self.elements self.identifier_tag, :subset, :klass => self.identifier_class.to_s, :shortcut => :identifiers
-      self.element self.name_tag, :text, :shortcut => :name
+      self.element self.role_tag, :subset, :klass => self.role_class.to_s, :shortcut => :role, :cardinality => 1
+      self.elements self.identifier_tag, :subset, :klass => self.identifier_class.to_s, :shortcut => :identifiers, :cardinality => 0..n
+      self.element self.name_tag, :text, :shortcut => :name, :cardinality => 0..1
     end
   end
 

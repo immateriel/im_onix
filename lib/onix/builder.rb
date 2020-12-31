@@ -8,9 +8,6 @@ module ONIX
   class BuilderInvalidCode < StandardError
   end
 
-  class BuilderInvalidCodeAlias < StandardError
-  end
-
   class BuilderInvalidChildElement < StandardError
   end
 
@@ -77,9 +74,6 @@ module ONIX
           else
             if args.first.is_a?(Symbol)
               el = klass.from_human(args.first.to_s)
-              unless el.code
-                raise BuilderInvalidCodeAlias, [nm.to_s, args.first.to_s]
-              end
             else
               raise BuilderInvalidArgument, [nm.to_s, args.first]
             end

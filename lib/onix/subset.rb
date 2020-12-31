@@ -97,6 +97,7 @@ module ONIX
       @serialize_lambda = options[:serialize_lambda]
       @shortcut = options[:shortcut]
       @cardinality = options[:cardinality]
+      @cardinality = nil if @cardinality == 0..n # no need to check if 0..n
 
       if options[:klass]
         @klass_name = options[:klass]
