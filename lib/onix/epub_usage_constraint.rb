@@ -1,7 +1,7 @@
 module ONIX
   class EpubUsageConstraint < SubsetDSL
-    element "EpubUsageType", :subset, :shortcut => :type
-    element "EpubUsageStatus", :subset, :shortcut => :status
-    elements "EpubUsageLimit", :subset, :shortcut => :limits
+    element "EpubUsageType", :subset, :shortcut => :type, :cardinality => 1
+    element "EpubUsageStatus", :subset, :shortcut => :status, :cardinality => 1
+    elements "EpubUsageLimit", :subset, :shortcut => :limits, :cardinality => 0..n
   end
 end

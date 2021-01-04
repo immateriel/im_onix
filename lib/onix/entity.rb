@@ -60,7 +60,10 @@ module ONIX
 
   class Supplier < Entity
     entity_setup "Supplier", SupplierIdentifier, SupplierRole
-    elements "Website", :subset
+    elements "TelephoneNumber", :text, :cardinality => 0..n
+    elements "FaxNumber", :text, :cardinality => 0..n
+    elements "EmailAddress", :text, :cardinality => 0..n
+    elements "Website", :subset, :cardinality => 0..n
   end
 
   class Publisher < Entity
@@ -70,6 +73,6 @@ module ONIX
     end
 
     entity_setup "Publisher", PublisherIdentifier, PublishingRole
-    elements "Website", :subset
+    elements "Website", :subset, :cardinality => 0..n
   end
 end

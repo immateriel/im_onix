@@ -324,7 +324,8 @@ module ONIX
         if e
           case e.type
           when :subset
-            val = self.get_class(e.class_name).parse(t)
+            klass = self.get_class(e.class_name)
+            val = klass.parse(t) if klass
           when :text
             val = t.text
           when :integer

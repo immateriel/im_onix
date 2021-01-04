@@ -1,9 +1,12 @@
 module ONIX
   class Collection < SubsetDSL
     element "CollectionType", :subset, :shortcut => :type, :cardinality => 1
+    element "SourceName", :text, :cardinality => 0..1
     elements "CollectionIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
     elements "CollectionSequence", :subset, :shortcut => :sequences, :cardinality => 0..n
     elements "TitleDetail", :subset, :cardinality => 0..n
+    elements "Contributor", :subset, :cardinality => 0..n
+    elements "ContributorStatement", :text, :cardinality => 0..n
 
     scope :publisher, lambda { human_code_match(:collection_type, "PublisherCollection") }
 

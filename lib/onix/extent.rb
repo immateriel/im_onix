@@ -1,8 +1,9 @@
 module ONIX
   class Extent < SubsetDSL
-    element "ExtentType", :subset, :shortcut => :type
-    element "ExtentValue", :text, :shortcut => :value
-    element "ExtentUnit", :subset, :shortcut => :unit
+    element "ExtentType", :subset, :shortcut => :type, :cardinality => 1
+    element "ExtentValue", :text, :shortcut => :value, :cardinality => 0..1
+    element "ExtentValueRoman", :text, :cardinality => 0..1
+    element "ExtentUnit", :subset, :shortcut => :unit, :cardinality => 1
 
     scope :filesize, lambda { human_code_match(:extent_type, /Filesize/) }
     scope :page, lambda { human_code_match(:extent_type, /Page/) }

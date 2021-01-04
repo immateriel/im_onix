@@ -22,6 +22,7 @@ module ONIX
 
     element "RecordReference", :text, :cardinality => 1
     element "NotificationType", :subset, :cardinality => 1
+    elements "DeletionText", :text, :cardinality => 0..n
     element "RecordSourceName", :text, :cardinality => 0..1
     elements "ProductIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
     element "DescriptiveDetail", :subset, :cardinality => 0..1

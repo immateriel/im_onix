@@ -3,10 +3,13 @@ require 'onix/addressee'
 
 module ONIX
   class Header < SubsetDSL
-    element "Sender", :subset
-    element "Addresse", :subset
-    element "SentDateTime", :datetime
+    element "Sender", :subset, :cardinality => 1
+    element "Addressee", :subset, :cardinality => 0..n
+    element "MessageNumber", :integer, :cardinality => 0..1
+    element "MessageRepeat", :integer, :cardinality => 0..1
+    element "SentDateTime", :datetime, :cardinality => 1
+    element "MessageNote", :text, :cardinality => 0..n
     element "DefaultLanguageOfText", :subset, :klass => "LanguageCode"
-    element "DefaultCurrencyCode", :text
+    element "DefaultCurrencyCode", :text, :cardinality => 0..1
   end
 end

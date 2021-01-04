@@ -12,9 +12,9 @@ module ONIX
     element "KeyNames", :text, :cardinality => 0..1
     element "CorporateName", :text, :cardinality => 0..1
     element "CorporateNameInverted", :text, :cardinality => 0..1
-    element "ContributorPlace", :subset, :shortcut => :place
+    elements "ContributorPlace", :subset, :shortcut => :places, :cardinality => 0..n
     elements "ContributorDate", :subset, :shortcut => :dates, :cardinality => 0..n
-    element "BiographicalNote", :text, :cardinality => 0..n
+    elements "BiographicalNote", :text, :shortcut => :biographies, :cardinality => 0..n
     elements "Website", :subset, :cardinality => 0..n
 
     # @!group High level
@@ -43,7 +43,11 @@ module ONIX
     # biography string with HTML
     # @return [String]
     def biography
-      @biographical_note
+      self.biographies.first
+    end
+
+    def place
+      self.places.first
     end
 
     # raw biography string without HTML

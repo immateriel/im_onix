@@ -1,10 +1,10 @@
 require 'onix/code'
 module ONIX
   class Territory < SubsetDSL
-    element "CountriesIncluded", :text
-    element "RegionsIncluded", :text
-    element "CountriesExcluded", :text
-    element "RegionsExcluded", :text
+    element "CountriesIncluded", :text, :cardinality => 0..1
+    element "RegionsIncluded", :text, :cardinality => 0..1
+    element "CountriesExcluded", :text, :cardinality => 0..1
+    element "RegionsExcluded", :text, :cardinality => 0..1
 
     # @!group High level
 
