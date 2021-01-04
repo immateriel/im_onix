@@ -5,6 +5,8 @@ module ONIX
   class Contributor < SubsetDSL
     element "SequenceNumber", :integer, :cardinality => 0..1
     element "ContributorRole", :subset, :shortcut => :role, :cardinality => 1..n
+    elements "FromLanguage", :subset, :klass => "LanguageCode", :cardinality => 0..n
+    elements "ToLanguage", :subset, :klass => "LanguageCode", :cardinality => 0..n
     elements "NameIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
     element "PersonName", :text, :cardinality => 0..1
     element "PersonNameInverted", :text, :cardinality => 0..1

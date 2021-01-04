@@ -219,6 +219,9 @@ module ONIX
   class AddresseeIDType < IDType
   end
 
+  class RecordSourceIDType < IDType
+  end
+
   class PublisherIDType < IDType
   end
 
@@ -226,6 +229,12 @@ module ONIX
   end
 
   class NameIDType < IDType
+  end
+
+  class NameIDType < IDType
+  end
+
+  class ProductContactIDType < IDType
   end
 
   class PublishingRole < CodeFromYaml
@@ -242,6 +251,10 @@ module ONIX
 
   class RegionCode < CodeFromYaml
     code_identifier 49
+  end
+
+  class MeasureUnitCode < CodeFromYaml
+    code_identifier 50
   end
 
   class ProductRelationCode < CodeFromYaml
@@ -318,6 +331,10 @@ module ONIX
 
   class ProductFormFeatureType < CodeFromYaml
     code_identifier 79
+  end
+
+  class ProductPackaging < CodeFromYaml
+    code_identifier 80
   end
 
   class ProductContentType < CodeFromYaml

@@ -2,8 +2,8 @@ require 'onix/related_product'
 require 'onix/related_work'
 module ONIX
   class RelatedMaterial < SubsetDSL
-    elements "RelatedWork", :subset
-    elements "RelatedProduct", :subset
+    elements "RelatedWork", :subset, :cardinality => 0..n
+    elements "RelatedProduct", :subset, :cardinality => 0..n
 
     # @!group High level
 

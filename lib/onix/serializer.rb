@@ -33,18 +33,23 @@ module ONIX
                     case e.type
                     when :subset
                       self.serialize_subset(mod, data, vv, n, level)
-                    when :text, :integer, :float, :bool, :datetime
+                    when :text, :integer, :float, :datetime
                       mod.const_get("Primitive").serialize(data, n, vv, level)
+                    when :bool
+                      mod.const_get("Primitive").serialize(data, n, nil, level) if vv
                     when :ignore
                     else
                     end
                   end
                 else
+                  vv = e.serialize_lambda(v)
                   case e.type
                   when :subset
                     self.serialize_subset(mod, data, v, n, level)
-                  when :text, :integer, :float, :bool, :datetime
-                    mod.const_get("Primitive").serialize(data, n, e.serialize_lambda(v), level)
+                  when :text, :integer, :float, :datetime
+                    mod.const_get("Primitive").serialize(data, n, vv, level)
+                  when :bool
+                    mod.const_get("Primitive").serialize(data, n, nil, level) if vv
                   when :ignore
                   else
                   end
@@ -80,9 +85,9 @@ module ONIX
 
       class Primitive
         def self.serialize(xml, tag, val, level = 0)
-          unless val.respond_to?(:empty?) ? !!val.empty? : !val # rails blank?
+          # unless val.respond_to?(:empty?) ? !!val.empty? : !val # rails blank?
             xml.send(tag, val)
-          end
+          # end
         end
       end
 
@@ -90,9 +95,9 @@ module ONIX
         def self.serialize(xml, date, parent_tag = nil, level = 0)
           xml.send(parent_tag, nil) {
             ONIX::Serializer::Traverser.recursive_serialize(Default, xml, date, parent_tag, level + 1)
-            xml.DateFormat(date.date_format.code)
+            #xml.DateFormat(date.date_format.code)
             code_format = date.format_from_code(date.date_format.code)
-            xml.Date(date.date.strftime(code_format))
+            xml.Date(date.date.strftime(code_format), :dateformat=>date.date_format.code)
           }
         end
       end

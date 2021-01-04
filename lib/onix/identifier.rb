@@ -1,7 +1,7 @@
 module ONIX
   class Identifier < SubsetDSL
-    element "IDValue", :text, :shortcut => :value, :cardinality => 1
     element "IDTypeName", :text, :shortcut => :name, :cardinality => 0..1
+    element "IDValue", :text, :shortcut => :value, :cardinality => 1
 
     def type
       nil
@@ -18,6 +18,10 @@ module ONIX
 
   class AddresseeIdentifier < Identifier
     element "AddresseeIDType", :subset, :shortcut => :type, :cardinality => 1
+  end
+
+  class RecordSourceIdentifier < Identifier
+    element "RecordSourceIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   class AgentIdentifier < Identifier
@@ -46,6 +50,10 @@ module ONIX
 
   class ProductIdentifier < Identifier
     element "ProductIDType", :subset, :shortcut => :type, :cardinality => 1
+  end
+
+  class ProductContactIdentifier < Identifier
+    element "ProductContactIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   class SalesOutletIdentifier < Identifier

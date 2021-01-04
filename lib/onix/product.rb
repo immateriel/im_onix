@@ -2,6 +2,7 @@ require 'forwardable'
 require 'onix/helper'
 require 'onix/code'
 require 'onix/entity'
+require 'onix/identifier'
 require 'onix/descriptive_detail'
 require 'onix/publishing_detail'
 require 'onix/collateral_detail'
@@ -23,10 +24,15 @@ module ONIX
     element "RecordReference", :text, :cardinality => 1
     element "NotificationType", :subset, :cardinality => 1
     elements "DeletionText", :text, :cardinality => 0..n
+    element "RecordSourceType", :subset, :cardinality => 0..1
+    elements "RecordSourceIdentifier", :subset, :cardinality => 0..n
     element "RecordSourceName", :text, :cardinality => 0..1
     elements "ProductIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
+    # elements "Barcode", :subset, :cardinality => 0..n
     element "DescriptiveDetail", :subset, :cardinality => 0..1
     element "CollateralDetail", :subset, :cardinality => 0..1
+    # element "PromotionDetail", :subset, :cardinality => 0..1
+    # element "ContentDetail", :subset, :cardinality => 0..1
     element "PublishingDetail", :subset, :cardinality => 0..1
     element "RelatedMaterial", :subset, :cardinality => 0..1
     elements "ProductSupply", :subset, :cardinality => 0..n

@@ -1,9 +1,14 @@
 require 'onix/text_content'
+require 'onix/supporting_resource'
+require 'onix/cited_content'
+require 'onix/prize'
 
 module ONIX
   class CollateralDetail < SubsetDSL
-    elements "TextContent", :subset
-    elements "SupportingResource", :subset
+    elements "TextContent", :subset, :cardinality => 0..n
+    elements "CitedContent", :subset, :cardinality => 0..n
+    elements "SupportingResource", :subset, :cardinality => 0..n
+    elements "Prize", :subset, :cardinality => 0..n
 
     # @!group High level
 

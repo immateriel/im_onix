@@ -8,7 +8,7 @@ module ONIX
     elements "Supplier", :subset, :cardinality => 1
     elements "SupplyContact", :subset, :cardinality => 0..n
     elements "SupplierOwnCoding", :subset, :cardinality => 0..n
-    elements "ReturnsConditions", :subset, :cardinality => 0..n
+    elements "ReturnsConditions", :subset, :pluralize => false, :cardinality => 0..n
     element "ProductAvailability", :subset, :shortcut => :availability, :cardinality => 1
     elements "SupplyDate", :subset, :cardinality => 0..n
     element "OrderTime", :integer, :cardinality => 0..1

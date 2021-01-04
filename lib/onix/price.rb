@@ -1,15 +1,25 @@
 require 'onix/tax'
 require 'onix/discount_coded'
+require 'onix/discount'
+require 'onix/epub_license'
 require 'onix/date'
 
 module ONIX
   class Price < SubsetDSL
+    # elements "PriceIdentifier", :subset, :cardinality => 0..n
     element "PriceType", :subset, :shortcut => :type, :cardinality => 0..1
     element "PriceQualifier", :subset, :shortcut => :qualifier, :cardinality => 0..1
+    elements "EpubTechnicalProtection", :subset, :cardinality => 0..n
+    # elements "PriceConstraint", :subset, :cardinality => 0..n
+    element "EpubLicense", :subset, :cardinality => 0..1
     element "PriceTypeDescription", :text, :cardinality => 0..n
-    element "DiscountCoded", :subset, :shortcut => :discount, :cardinality => 0..n
+    # element "PricePer", :subset, :cardinality => 0..1
+    # elements "PriceCondition", :subset, :cardinality => 0..n
+    # element "MinimumOrderQuantity", :integer, :cardinality => 0..1
+    # elements "BatchBonus", :subset, :cardinality => 0..n
+    elements "DiscountCoded", :subset, :cardinality => 0..n
+    elements "Discount", :subset, :cardinality => 0..n
     element "PriceStatus", :subset
-    elements "PriceDate", :subset, :shortcut => :dates
     element "PriceAmount", :float,
             {
                 :shortcut => :amount,
@@ -18,8 +28,19 @@ module ONIX
                 :cardinality => 0..1
             }
     element "Tax", :subset, :cardinality => 0..n
+    element "TaxExempt", :bool, :cardinality => 0..1
+    element "UnpricedItemType", :subset, :cardinality => 0..1
     element "CurrencyCode", :text, :shortcut => :currency, :cardinality => 0..1
     element "Territory", :subset, :cardinality => 0..1
+    # elements "ComparisonProductPrice", :subset, :cardinality => 0..n
+    elements "PriceDate", :subset, :shortcut => :dates, :cardinality => 0..n
+    element "PrintedOnProduct", :subset, :cardinality => 0..1
+    element "PositionOnProduct", :subset, :cardinality => 0..1
+
+    # FIXME discount_coded != discount
+    def discount
+      self.discount_codeds.first
+    end
 
     # @!group High level
 

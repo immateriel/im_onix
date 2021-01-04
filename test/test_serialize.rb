@@ -4,7 +4,7 @@ require 'onix/builder'
 
 class TestSerialize < Minitest::Test
 
-  context "ONIX file" do
+  context "simple ONIX file" do
     setup do
       @filename = "test/fixtures/reflowable.xml"
       @message = ONIX::ONIXMessage.new
@@ -148,4 +148,20 @@ class TestSerialize < Minitest::Test
     end
   end
 
+  context "full ONIX file" do
+    setup do
+      @filename = "test/fixtures/full_sample.xml"
+      @message = ONIX::ONIXMessage.new
+      @message.parse(@filename)
+      @product = @message.products.first
+    end
+    if false # TODO
+      should "be the same serialized" do
+        builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
+          ONIX::Serializer::Default.serialize(xml, @message)
+        end
+        assert_equal builder.to_xml, File.read(@filename)
+      end
+    end
+  end
 end

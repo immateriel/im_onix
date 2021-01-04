@@ -325,7 +325,10 @@ module ONIX
           case e.type
           when :subset
             klass = self.get_class(e.class_name)
-            val = klass.parse(t) if klass
+            unless klass
+              raise UnknownElement, e.class_name
+            end
+            val = klass.parse(t)
           when :text
             val = t.text
           when :integer
@@ -334,6 +337,9 @@ module ONIX
             val = t.text.to_f
           when :bool
             val = true
+          when :date
+            fmt = t["dateformat"] || "00"
+            val = ONIX::Helper.to_date(fmt, t.text)
           when :datetime
             tm = t.text
             val = Time.strptime(tm, "%Y%m%dT%H%M%S") rescue Time.strptime(tm, "%Y%m%dT%H%M") rescue Time.strptime(tm, "%Y%m%d") rescue nil

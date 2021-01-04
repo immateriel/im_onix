@@ -1,3 +1,5 @@
+require 'onix/epub_usage_limit'
+
 module ONIX
   class EpubUsageConstraint < SubsetDSL
     element "EpubUsageType", :subset, :shortcut => :type, :cardinality => 1
