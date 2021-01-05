@@ -2,8 +2,11 @@ module ONIX
   module DateHelper
     attr_accessor :date_format, :date
 
-    def parse_date(n)
+    def initialize
       @date_format = DateFormat.from_code("00")
+    end
+
+    def parse_date(n)
       date_txt = nil
       @date = nil
       n.elements.each do |t|
@@ -88,6 +91,8 @@ module ONIX
 
   class BaseDate < SubsetDSL
     include DateHelper
+    element "Date", :ignore
+    element "DateFormat", :ignore
 
     def parse(n)
       super
@@ -96,16 +101,12 @@ module ONIX
   end
 
   class MarketDate < BaseDate
-    element "Date", :ignore
-    element "DateFormat", :ignore
     element "MarketDateRole", :subset, :shortcut => :role
 
     scope :availability, lambda { human_code_match(:market_date_role, ["PublicationDate", "EmbargoDate"]) }
   end
 
   class PriceDate < BaseDate
-    element "Date", :ignore
-    element "DateFormat", :ignore
     element "PriceDateRole", :subset, :shortcut => :role
 
     scope :from_date, lambda { human_code_match(:price_date_role, "FromDate") }
@@ -113,16 +114,12 @@ module ONIX
   end
 
   class SupplyDate < BaseDate
-    element "Date", :ignore
-    element "DateFormat", :ignore
     element "SupplyDateRole", :subset, :shortcut => :role
 
     scope :availability, lambda { human_code_match(:supply_date_role, ["ExpectedAvailabilityDate", "EmbargoDate"]) }
   end
 
   class PublishingDate < BaseDate
-    element "Date", :ignore
-    element "DateFormat", :ignore
     element "PublishingDateRole", :subset, :shortcut => :role
 
     scope :publication, lambda { human_code_match(:publishing_date_role, ["PublicationDate", "PublicationDateOfPrintCounterpart"]) }
@@ -132,16 +129,12 @@ module ONIX
   end
 
   class ContentDate < BaseDate
-    element "Date", :ignore
-    element "DateFormat", :ignore
     element "ContentDateRole", :subset, :shortcut => :role
 
     scope :last_updated, lambda { human_code_match(:content_date_role, "LastUpdated") }
   end
 
   class ContributorDate < BaseDate
-    element "Date", :ignore
-    element "DateFormat", :ignore
     element "ContributorDateRole", :subset, :shortcut => :role
   end
 end

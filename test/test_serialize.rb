@@ -74,6 +74,36 @@ class TestSerialize < Minitest::Test
       end
     end
 
+    should "collateral date" do
+      msg = ONIX::Builder.new
+      msg.Product {
+        RecordReference("AAA")
+        NotificationType("03")
+        CollateralDetail {
+          SupportingResource {
+            ResourceContentType("01")
+            ContentAudience("00")
+            ResourceMode("03")
+            ResourceVersion {
+              ResourceForm("02")
+              ResourceLink("http://images.immateriel.fr/link")
+
+                  ContentDate {
+                    ContentDateRole("17")
+                    #DateFormat("00")
+                    Date(Date.today)
+                  }
+            }
+          }
+        }
+      }
+
+      builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
+        msg.to_xml(xml)
+      end
+
+    end
+
     should "be the same with builder" do
       msg = ONIX::Builder.new
 
@@ -189,7 +219,7 @@ class TestSerialize < Minitest::Test
         builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
           ONIX::Serializer::Default.serialize(xml, @message)
         end
-        assert_equal builder.to_xml.gsub(/\>\s+\</,"><"), File.read(@filename).gsub(/\>\s+\</,"><")
+        assert_equal builder.to_xml.gsub(/\>\s+\</, "><"), File.read(@filename).gsub(/\>\s+\</, "><")
       end
     end
   end

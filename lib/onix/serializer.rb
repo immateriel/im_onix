@@ -82,11 +82,11 @@ module ONIX
         def self.serialize(xml, tag, val, level = 0)
           if val.is_a?(ONIX::TextWithAttributes)
             attrs = {}
-            val.attributes.each do |k,v|
+            val.attributes.each do |k, v|
               attrs[k] = v.code
             end
 
-            if val.attributes["textformat"] && ["Html","Xml","Xhtml"].include?(val.attributes["textformat"].human)
+            if val.attributes["textformat"] && ["Html", "Xml", "Xhtml"].include?(val.attributes["textformat"].human)
               xml.send(tag, attrs) do
                 xml.__send__ :insert, Nokogiri::XML::DocumentFragment.parse(val)
               end
@@ -142,10 +142,8 @@ module ONIX
 
       class Primitive
         def self.serialize(io, tag, val, level = 0)
-          unless val.respond_to?(:empty?) ? !!val.empty? : !val # rails blank?
-            io.write " " * level
-            io.write "#{tag} : #{val}\n"
-          end
+          io.write " " * level
+          io.write "#{tag}: #{val}\n"
         end
       end
 

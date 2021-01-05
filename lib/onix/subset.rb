@@ -345,6 +345,8 @@ module ONIX
                   attrs[k.to_s] = TextFormat.from_code(v.to_s)
                 when "language"
                   attrs[k.to_s] = LanguageCode.from_code(v.to_s)
+                when "dateformat"
+                  attrs[k.to_s] = DateFormat.from_code(v.to_s)
                 end
               end
               if attrs["textformat"] && ["Html","Xml","Xhtml"].include?(attrs["textformat"].human)

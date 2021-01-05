@@ -8,8 +8,8 @@ module ONIX
     element "ContentAudience", :subset, :shortcut => :target_audience, :cardinality => 1..n
     element "Territory", :subset, :cardinality => 0..1
     element "ResourceMode", :subset, :shortcut => :mode, :cardinality => 1
-    elements "ResourceVersion", :subset, :shortcut => :versions, :cardinality => 0..n
-    elements "ResourceFeature", :subset, :shortcut => :features, :cardinality => 1..n
+    elements "ResourceVersion", :subset, :shortcut => :versions, :cardinality => 1..n
+    elements "ResourceFeature", :subset, :shortcut => :features, :cardinality => 0..n
 
     scope :front_cover, lambda { human_code_match(:resource_content_type, "FrontCover") }
     scope :sample_content, lambda { human_code_match(:resource_content_type, "SampleContent") }

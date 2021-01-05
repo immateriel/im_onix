@@ -37,6 +37,10 @@ module ONIX
       ONIX::Serializer::Default.serialize(xml, @element, @name)
     end
 
+    def dump(io = STDOUT)
+      ONIX::Serializer::Dump.serialize(io, @element, @name)
+    end
+
     def check_cardinality!
       if @parent
         children_h = {}
@@ -127,7 +131,12 @@ module ONIX
 
           if parser_el.is_array?
             arr = @parent.send(parser_el.underscore_name)
-            arr << el
+            case parser_el.type
+            when :subset
+              arr << el
+            else
+              arr << args.first
+            end
           else
             case parser_el.type
             when :subset
