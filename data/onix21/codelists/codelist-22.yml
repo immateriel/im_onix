@@ -4,8 +4,8 @@
   '02': OriginalLanguageOfATranslatedText
   '03': LanguageOfAbstracts
   '04': RightsLanguage
-  '05': RightsexcludedLanguage
+  '05': RightsExcludedLanguage
   '06': OriginalLanguageInAMultilingualEdition
   '07': TranslatedLanguageInAMultilingualEdition
-  08: LanguageOfAudioTrack
-  09: LanguageOfSubtitles
+  '08': LanguageOfAudioTrack
+  '09': LanguageOfSubtitles

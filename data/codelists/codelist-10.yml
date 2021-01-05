@@ -3,7 +3,7 @@
   '000': EpublicationContentPackage
   '001': Html
   '002': Pdf
-  '003': Pdfmerchant
+  '003': PdfMerchant
   '004': AdobeEbookReader
   '005': MicrosoftReaderLevel1level3
   '006': MicrosoftReaderLevel5

@@ -2,5 +2,5 @@
 :codelist:
   '00': UnspecifiedDefault
   '10': PublisherCollection
-  '11': Collectionéditoriale
+  '11': CollectionEditoriale
   '20': AscribedCollection

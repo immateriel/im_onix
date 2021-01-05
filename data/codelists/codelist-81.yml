@@ -1,10 +1,10 @@
 ---
 :codelist:
-  '10': TextEyereadable
+  '10': TextEyeReadable
   '15': ExtensiveLinksBetweenInternalContent
   '14': ExtensiveLinksToExternalContent
-  '16': AdditionalEyereadableTextNotPartOfMainWork
-  '41': AdditionalEyereadableLinksToExternalContent
+  '16': AdditionalEyeReadableTextNotPartOfMainWork
+  '41': AdditionalEyeReadableLinksToExternalContent
   '17': PromotionalTextForOtherBookProduct
   '11': MusicalNotation
   '07': StillImagesGraphics

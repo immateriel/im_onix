@@ -15,14 +15,14 @@
   '14': SpecialSaleFixedRetailPriceIncludingTax
   '15': SuppliersNetPriceForSpecialSaleExcludingTax
   '17': SuppliersNetPriceForSpecialSaleIncludingTax
-  '21': PrepublicationRrpExcludingTax
-  '22': PrepublicationRrpIncludingTax
-  '23': PrepublicationFixedRetailPriceExcludingTax
-  '24': PrepublicationFixedRetailPriceIncludingTax
-  '25': SuppliersPrepublicationNetPriceExcludingTax
-  '27': SuppliersPrepublicationNetPriceIncludingTax
-  '31': FreightpassthroughRrpExcludingTax
-  '32': FreightpassthroughBillingPriceExcludingTax
+  '21': PrePublicationRrpExcludingTax
+  '22': PrePublicationRrpIncludingTax
+  '23': PrePublicationFixedRetailPriceExcludingTax
+  '24': PrePublicationFixedRetailPriceIncludingTax
+  '25': SuppliersPrePublicationNetPriceExcludingTax
+  '27': SuppliersPrePublicationNetPriceIncludingTax
+  '31': FreightPassThroughRrpExcludingTax
+  '32': FreightPassThroughBillingPriceExcludingTax
   '33': ImportersFixedRetailPriceExcludingTax
   '34': ImportersFixedRetailPriceIncludingTax
   '41': PublishersRetailPriceExcludingTax

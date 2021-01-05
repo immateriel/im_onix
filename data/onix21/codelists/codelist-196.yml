@@ -7,12 +7,12 @@
   '13': ReadingOrder
   '14': ShortAlternativeDescriptions
   '15': FullAlternativeDescriptions
-  '16': VisualisedDataAlsoAvailableAsNongraphicalData
+  '16': VisualisedDataAlsoAvailableAsNonGraphicalData
   '17': AccessibleMathContent
   '18': AccessibleChemContent
-  '19': PrintequivalentPageNumbering
-  '20': SynchronisedPrerecordedAudio
-  '21': TexttospeechHintingProvided
+  '19': PrintEquivalentPageNumbering
+  '20': SynchronisedPreRecordedAudio
+  '21': TextToSpeechHintingProvided
   '22': LanguageTaggingProvided
   '94': ComplianceWebPageForDetailedAccessibilityInformation
   '95': TrustedIntermediarysWebPageForDetailedAccessibilityInformation

@@ -3,16 +3,16 @@
   '00': Undefined
   AA: Audio
   AB: AudioCassette
-  AC: Cdaudio
+  AC: CdAudio
   AD: Dat
   AE: AudioDisc
   AF: AudioTape
   AG: Minidisc
-  AH: Cdextra
+  AH: CdExtra
   AI: DvdAudio
   AJ: DownloadableAudioFile
-  AK: PrerecordedDigitalAudioPlayer
-  AL: PrerecordedSdCard
+  AK: PreRecordedDigitalAudioPlayer
+  AL: PreRecordedSdCard
   AM: Lp
   AN: DownloadableAndOnlineAudioFile
   AO: OnlineAudioFile
@@ -20,7 +20,7 @@
   BA: Book
   BB: Hardback
   BC: PaperbackSoftback
-  BD: Looseleaf
+  BD: LooseLeaf
   BE: SpiralBound
   BF: Pamphlet
   BG: LeatherFineBinding
@@ -30,8 +30,8 @@
   BK: NoveltyBook
   BL: SlideBound
   BM: BigBook
-  BN: PartworkFasciculo
-  BO: FoldoutBookOrChart
+  BN: PartWorkFasciculo
+  BO: FoldOutBookOrChart
   BP: FoamBook
   BZ: OtherBookFormat
   CA: SheetMap
@@ -41,17 +41,17 @@
   CE: Globe
   CZ: OtherCartographic
   DA: DigitalOnPhysicalCarrier
-  DB: Cdrom
-  DC: Cdi
+  DB: CdRom
+  DC: CdI
   DE: GameCartridge
   DF: Diskette
-  DI: Dvdrom
+  DI: DvdRom
   DJ: SecureDigitalSdMemoryCard
   DK: CompactFlashMemoryCard
   DL: MemoryStickMemoryCard
   DM: UsbFlashDrive
-  DN: DoublesidedCddvd
-  DO: Brrom
+  DN: DoubleSidedCddvd
+  DO: BrRom
   DZ: OtherDigitalCarrier
   EA: DigitalDeliveredElectronically
   EB: DigitalDownloadAndOnline
@@ -93,12 +93,12 @@
   PU: Leaflet
   PV: BookPlates
   PZ: OtherPrintedItem
-  SA: MultiplecomponentRetailProduct
-  SB: MultiplecomponentRetailProductBoxed
-  SC: MultiplecomponentRetailProductSlipcased
-  SD: MultiplecomponentRetailProductShrinkwrapped
-  SE: MultiplecomponentRetailProductLoose
-  SF: MultiplecomponentRetailProductPartsEnclosed
+  SA: MultipleComponentRetailProduct
+  SB: MultipleComponentRetailProductBoxed
+  SC: MultipleComponentRetailProductSlipCased
+  SD: MultipleComponentRetailProductShrinkWrapped
+  SE: MultipleComponentRetailProductLoose
+  SF: MultipleComponentRetailProductPartsEnclosed
   VA: Video
   VF: Videodisc
   VI: DvdVideo
@@ -107,11 +107,11 @@
   VL: Vcd
   VM: Svcd
   VN: HdDvd
-  VO: Bluray
+  VO: BluRay
   VP: UmdVideo
   VQ: Cbhd
   VZ: OtherVideoFormat
-  XA: TradeonlyMaterial
+  XA: TradeOnlyMaterial
   XB: DumpbinEmpty
   XC: DumpbinFilled
   XD: CounterpackEmpty
@@ -122,7 +122,7 @@
   XI: Streamer
   XJ: SpinnerEmpty
   XK: LargeBookDisplay
-  XL: ShrinkwrappedPack
+  XL: ShrinkWrappedPack
   XM: BoxedPack
   XN: PackOuterPackagingUnspecified
   XO: SpinnerFilled
@@ -133,8 +133,8 @@
   ZC: SoftToy
   ZD: Toy
   ZE: Game
-  ZF: Tshirt
-  ZG: EbookReader
+  ZF: TShirt
+  ZG: EBookReader
   ZH: TabletComputer
   ZI: AudiobookPlayer
   ZJ: Jigsaw

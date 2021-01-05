@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'helper'
 
-class TestImOnix < Minitest::Test
+class TestMisc < Minitest::Test
   context "certaines n'avaient jamais vu la mer" do
     setup do
       @message = ONIX::ONIXMessage.new
@@ -72,7 +72,7 @@ class TestImOnix < Minitest::Test
     should "have one distributor named immatériel·fr" do
       assert_equal 1, @product.distributors.length
       assert_equal "immatériel·fr", @product.distributor_name
-      assert_equal "PublishersNonexclusiveDistributorToRetailers", @product.distributors.first.role.human
+      assert_equal "PublishersNonExclusiveDistributorToRetailers", @product.distributors.first.role.human
     end
 
     should "have one distributor GLN" do
@@ -187,101 +187,6 @@ class TestImOnix < Minitest::Test
     end
   end
 
-  context 'streaming version of "Certaines n’avaient jamais vu la mer"' do
-    setup do
-      @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/9782752906700.xml")
-      @product = @message.products.first
-    end
-
-    should "be streaming" do
-      assert @product.streaming?
-    end
-  end
-
-  context "reflowable epub" do
-    setup do
-      @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/reflowable.xml")
-      @product = @message.products.last
-    end
-
-    should "be reflowable" do
-      assert_equal true, @product.reflowable?
-    end
-
-    should "have format details" do
-      assert_equal 2, @product.form_details.length
-    end
-  end
-
-  context "epub fixed layout" do
-    setup do
-      @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/fixed_layout.xml")
-      @product = @message.products.last
-    end
-
-    should "not be reflowable" do
-      assert_equal false, @product.reflowable?
-    end
-  end
-
-  context 'epub part of "Certaines n’avaient jamais vu la mer"' do
-    setup do
-      @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/9782752906700.xml")
-      @product = @message.products[1]
-    end
-
-    should "have epub file format" do
-      assert_equal "Epub", @product.file_format
-    end
-
-    should "be a part of its main product" do
-      parent = @product.part_of_product
-      assert_equal "9782752908643", parent.ean
-      assert_equal "O192530", parent.proprietary_ids.first.value
-    end
-
-    should "have format details" do
-      assert_equal 1, @product.form_details.length
-    end
-  end
-
-  context "author with place informations" do
-    setup do
-      @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/illustrations.xml")
-      @product = @message.products.last
-    end
-
-    should "have author place" do
-      assert_equal "US", @product.contributors.first.place.country_code
-      assert_equal "BornIn", @product.contributors.first.place.relator.human
-    end
-  end
-
-  context "author with date informations" do
-    setup do
-      @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/9782752906700.xml")
-      @product = @message.products.last
-    end
-
-    should "have two dates" do
-      assert_equal 2, @product.contributors.first.dates.length
-    end
-
-    should "have author birth date" do
-      assert_equal Time.new(1989, 11, 9), @product.contributors.first.birth_date
-    end
-
-    should "have author death date" do
-      assert_equal Time.new(2019, 9, 2), @product.contributors.first.death_date
-    end
-  end
-
   context "file full-sender.xml" do
     setup do
       @message = ONIX::ONIXMessage.new
@@ -292,108 +197,6 @@ class TestImOnix < Minitest::Test
     should "have a named sender with a GLN" do
       assert_equal "Hxxxxxxx Lxxxx", @message.sender.name
       assert_equal "42424242424242", @message.sender.gln
-    end
-  end
-
-  context "audio product specified as 'downloadable audio file'" do
-    setup do
-      @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/audio1.xml")
-      @product = @message.products.last
-    end
-
-    should "be an audio product" do
-      assert @product.audio?
-    end
-
-    should "be an Mp3Format product" do
-      assert_equal "Mp3Format", @product.audio_format
-    end
-
-  end
-
-  context "audio product specified as 'digital content delivered by download only'" do
-    setup do
-      @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/audio2.xml")
-      @product = @message.products.last
-    end
-
-    should "be an audio product" do
-      assert @product.audio?
-    end
-
-    should "be an Mp3Format product" do
-      assert_equal "Mp3Format", @product.audio_format
-    end
-
-  end
-
-  context "streaming epub" do
-    setup do
-      @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/streaming.xml")
-      @product = @message.products.last
-    end
-
-    should "be a streaming product" do
-      assert @product.streaming?
-    end
-  end
-
-  context "epub with one epub sample" do
-    setup do
-      @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/9782752906700.xml")
-      @product = @message.products.last
-    end
-
-    should "have an URL to a downloadable excerpt" do
-      assert_equal 'http://telechargement.immateriel.fr/fr/web_service/preview/12279/epub-preview.epub', @product.excerpts.first[:url]
-      assert_equal 'Epub', @product.excerpts.first[:format_code]
-      assert_equal 'DownloadableFile', @product.excerpts.first[:form]
-      assert_equal 'e32ef9a1c1e63c96567b542f6e691530', @product.excerpts.first[:md5]
-      assert_equal '20121015T220000+0000', @product.excerpts.first[:updated_at]
-    end
-
-    should "have 1 sample URL" do
-      assert_equal 1, @product.excerpts.size
-    end
-  end
-
-  context "book with several samples, including 2 URLs and 1 image" do
-    setup do
-      @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/streaming.xml")
-      @product = @message.products.last
-    end
-
-    should "have 2 sample URL" do
-      assert_equal 2, @product.excerpts.size
-    end
-
-    should "have an URL to a downloadable excerpt" do
-      assert_equal '9780000000000_preview.epub', @product.excerpts.first[:url]
-      assert_equal 'DownloadableFile', @product.excerpts.first[:form]
-      assert_equal nil, @product.excerpts.first[:md5]
-    end
-
-    should "have an URL to an embeddable application excerpt" do
-      assert_equal 'http://www.xxxxxxx.com/preview-9780000000000-XXXXX', @product.excerpts.last[:url]
-      assert_equal 'EmbeddableApplication', @product.excerpts.last[:form]
-      assert_equal nil, @product.excerpts.last[:md5]
-    end
-  end
-
-  context "book without any sample" do
-    setup do
-      @message = ONIX::ONIXMessage.new
-      @message.parse("test/fixtures/9782707154298.xml")
-      @product = @message.products.last
-    end
-
-    should "have 0 sample URL" do
-      assert_equal 0, @product.excerpts.size
     end
   end
 
@@ -415,7 +218,7 @@ class TestImOnix < Minitest::Test
 
     should "have a co-publisher named Le ballon" do
       assert_equal "Le ballon", @product.publishers.last.name
-      assert_equal "Copublisher", @product.publishers.last.role.human
+      assert_equal "CoPublisher", @product.publishers.last.role.human
     end
   end
 
@@ -439,61 +242,9 @@ class TestImOnix < Minitest::Test
     should "have two authors" do
       assert_equal 2, @product.contributors.select { |c| c.role.human == "ByAuthor" }.length
     end
-
   end
 
-  context "other publication date format" do
-    setup do
-      message = ONIX::ONIXMessage.new
-      message.parse('test/fixtures/other-publication-date-format.xml')
-
-      @product = message.products.last
-    end
-
-    should "be published" do
-      assert_equal Date.new(2011, 8, 31), @product.publication_date
-    end
-
-    should "be no embargo date" do
-      assert_equal nil, @product.embargo_date
-    end
-  end
-
-  context "with embargo date" do
-    setup do
-      message = ONIX::ONIXMessage.new
-      message.parse('test/fixtures/embargo-date.xml')
-
-      @product = message.products.last
-    end
-
-    should "be published" do
-      assert_equal Date.new(2011, 8, 31), @product.publication_date
-    end
-
-    should "be no embargo date" do
-      assert_equal Date.new(2012, 9, 21), @product.embargo_date
-    end
-  end
-
-  context "with preorder embargo date" do
-    setup do
-      message = ONIX::ONIXMessage.new
-      message.parse('test/fixtures/preorder-embargo-date.xml')
-
-      @product = message.products.last
-    end
-
-    should "be published" do
-      assert_equal Date.new(2011, 8, 31), @product.publication_date
-    end
-
-    should "have a preorder embargo date" do
-      assert_equal Date.new(2011, 8, 21), @product.preorder_embargo_date
-    end
-  end
-
-  context "epub with illustrations" do
+  context "with illustrations" do
     setup do
       @message = ONIX::ONIXMessage.new
       @message.parse("test/fixtures/illustrations.xml")
@@ -529,29 +280,4 @@ class TestImOnix < Minitest::Test
     end
   end
 
-  context "with YYYY date format" do
-    setup do
-      message = ONIX::ONIXMessage.new
-      message.parse('test/fixtures/test_YYYY_date_format.xml')
-
-      @product = message.products.last
-    end
-
-    should "have a correct date format" do
-      assert_equal Date.new(1989, 01, 01), @product.publication_date
-    end
-  end
-
-  context "with several protections in the same product" do
-    setup do
-      message = ONIX::ONIXMessage.new
-      message.parse('test/fixtures/test_several_protections.xml')
-
-      @product = message.products.last
-    end
-
-    should "have all the protections" do
-      assert_equal ["AdobeDrm", "ReadiumLcpDrm"], @product.protections
-    end
-  end
 end

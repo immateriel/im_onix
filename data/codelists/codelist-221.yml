@@ -2,5 +2,5 @@
 :codelist:
   '00': MessageReceived
   '01': MessageRejected
-  '02': MessagePartprocessed
+  '02': MessagePartProcessed
   '03': MessageProcessed

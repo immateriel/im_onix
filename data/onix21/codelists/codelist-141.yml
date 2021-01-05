@@ -6,7 +6,7 @@
   '03': Gtin135UsDollarPriceEncoded
   '04': Gtin135CanDollarPriceEncoded
   '05': Gtin135NoPriceEncoded
-  '06': Upc12Itemspecific
-  '07': Upc125Itemspecific
-  08: Upc12Pricepoint
-  09: Upc125Pricepoint
+  '06': Upc12ItemSpecific
+  '07': Upc125ItemSpecific
+  '08': Upc12PricePoint
+  '09': Upc125PricePoint

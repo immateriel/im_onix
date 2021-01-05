@@ -2,7 +2,7 @@
 :codelist:
   '00': NoConstraints
   '06': Lend
-  '07': TimelimitedLicense
+  '07': TimeLimitedLicense
   '08': LoanRenewal
-  '09': MultiuserLicense
+  '09': MultiUserLicense
   '10': PreviewOnPremises

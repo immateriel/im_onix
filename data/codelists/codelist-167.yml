@@ -7,7 +7,7 @@
   '04': LinkedSubsequentPurchasePrice
   '05': LinkedPriorPurchasePrice
   '06': LinkedPrice
-  '07': Autorenewing
+  '07': AutoRenewing
   '10': RentalDuration
   '11': RentalToPurchase
   '12': RentalExtension

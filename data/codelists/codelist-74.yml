@@ -6,7 +6,7 @@
   ach: Acoli
   ada: Adangme
   ady: Adygei
-  afa: AfroasiaticLanguages
+  afa: AfroAsiaticLanguages
   afh: Afrihili
   afr: Afrikaans
   ain: Ainu
@@ -95,9 +95,9 @@
   cop: Coptic
   cor: Cornish
   cos: Corsican
-  cpe: CreolesAndPidginsEnglishbased
-  cpf: CreolesAndPidginsFrenchbased
-  cpp: CreolesAndPidginsPortuguesebased
+  cpe: CreolesAndPidginsEnglishBased
+  cpf: CreolesAndPidginsFrenchBased
+  cpp: CreolesAndPidginsPortugueseBased
   cre: Cree
   crh: CrimeanTurkishOrCrimeanTatar
   crp: CreolesAndPidgins
@@ -139,7 +139,7 @@
   fil: FilipinoOrPilipino
   fin: Finnish
   fit: MeankieliTornedalenFinnish
-  fiu: FinnougrianLanguages
+  fiu: FinnoUgrianLanguages
   fkv: Kvensk
   fon: Fon
   fre: French
@@ -202,7 +202,7 @@
   ina: InterlinguaInternationalAuxiliaryLanguageAssociation
   inc: IndicLanguages
   ind: Indonesian
-  ine: IndoeuropeanLanguages
+  ine: IndoEuropeanLanguages
   inh: Ingush
   ipk: Inupiaq
   ira: IranianLanguages
@@ -211,9 +211,9 @@
   jav: Javanese
   jbo: Lojban
   jpn: Japanese
-  jpr: Judeopersian
-  jrb: Judeoarabic
-  kaa: Karakalpak
+  jpr: JudeoPersian
+  jrb: JudeoArabic
+  kaa: KaraKalpak
   kab: Kabyle
   kac: KachinOrJingpho
   kal: KalatdlisutOrGreenlandic
@@ -240,7 +240,7 @@
   kor: Korean
   kos: KusaieanCarolineIslands
   kpe: Kpelle
-  krc: Karachaybalkar
+  krc: KarachayBalkar
   krl: Karelian
   kro: KruLanguages
   kru: Kurukh
@@ -260,11 +260,11 @@
   lin: Lingala
   lit: Lithuanian
   lmo: Lombard
-  lol: Mongonkundu
+  lol: MongoNkundu
   loz: Lozi
   ltz: LuxembourgishOrLetzeburgesch
-  lua: Lubalulua
-  lub: Lubakatanga
+  lua: LubaLulua
+  lub: LubaKatanga
   lug: Ganda
   lui: Luiseno
   lun: Lunda
@@ -290,7 +290,7 @@
   mic: MikmaqOrMicmac
   min: Minangkabau
   mis: UncodedLanguages
-  mkh: MonkhmerLanguages
+  mkh: MonKhmerLanguages
   mlg: Malagasy
   mlt: Maltese
   mnc: Manchu
@@ -303,7 +303,7 @@
   mul: MultipleLanguages
   mun: MundaLanguages
   mus: Creek
-  mwf: Murrinhpatha
+  mwf: MurrinhPatha
   mwl: Mirandese
   mwr: Marwari
   myn: MayanLanguages
@@ -320,7 +320,7 @@
   nep: Nepali
   new: NewariOrNepalBhasa
   nia: Nias
-  nic: NigerkordofanianLanguages
+  nic: NigerKordofanianLanguages
   niu: Niuean
   nno: NorwegianNynorsk
   nob: NorwegianBokmal
@@ -340,7 +340,7 @@
   oci: OccitanPost1500
   odt: OldDutchOldLowFranconianCa4001050
   oji: Ojibwa
-  omq: OtomangueanLanguages
+  omq: OtoMangueanLanguages
   ori: Oriya
   orm: Oromo
   osa: Osage
@@ -383,7 +383,7 @@
   rom: Romany
   rum: Romanian
   run: Rundi
-  rup: AromanianOrArumanianOrMacedoromanian
+  rup: AromanianOrArumanianOrMacedoRomanian
   rus: Russian
   sad: Sandawe
   sag: Sango
@@ -408,7 +408,7 @@
   sid: Sidamo
   sin: SinhalaOrSinhalese
   sio: SiouanLanguages
-  sit: SinotibetanLanguages
+  sit: SinoTibetanLanguages
   sla: SlavicLanguages
   slo: Slovak
   slv: Slovenian
@@ -432,7 +432,7 @@
   sro: Campidanese
   srp: Serbian
   srr: Serer
-  ssa: NilosaharanLanguages
+  ssa: NiloSaharanLanguages
   ssw: SwaziOrSwati
   suk: Sukuma
   sun: Sundanese
@@ -458,7 +458,7 @@
   tir: Tigrinya
   tiv: Tiv
   tkl: Tokelauan
-  tlh: KlingonOrTlhinganhol
+  tlh: KlingonOrTlhinganHol
   tli: Tlingit
   tmh: Tamashek
   tog: TongaNyasa

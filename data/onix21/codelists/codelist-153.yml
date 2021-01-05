@@ -1,14 +1,14 @@
 ---
 :codelist:
-  '01': SenderdefinedText
+  '01': SenderDefinedText
   '02': ShortDescriptionannotation
   '03': Description
   '04': TableOfContents
   '05': FlapCoverCopy
   '06': ReviewQuote
   '07': ReviewQuotePreviousEdition
-  08: ReviewQuotePreviousWork
-  09: Endorsement
+  '08': ReviewQuotePreviousWork
+  '09': Endorsement
   '10': PromotionalHeadline
   '11': Feature
   '12': BiographicalNote

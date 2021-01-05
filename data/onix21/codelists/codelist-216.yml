@@ -7,5 +7,5 @@
   '05': MaximumWeeklySale
   '06': MinimumWeeklySale
   '07': MeanMonthlySale
-  08: MaximumMonthlySale
-  09: MinimumMonthlySale
+  '08': MaximumMonthlySale
+  '09': MinimumMonthlySale

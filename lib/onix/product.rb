@@ -281,7 +281,7 @@ module ONIX
     def excerpts
       return [] unless @collateral_detail && @collateral_detail.supporting_resources
 
-      @collateral_detail.supporting_resources.sample_content.human_code_match(:resource_mode, ["Text", "Multimode"]).map do |resource|
+      @collateral_detail.supporting_resources.sample_content.human_code_match(:resource_mode, ["Text", "MultiMode"]).map do |resource|
         {
             :url => resource.versions.last.links.first.strip,
             :form => resource.versions.last.form.human,
@@ -335,7 +335,7 @@ module ONIX
                 (!sales_restriction.end_date or sales_restriction.end_date >= Date.today)
           }.map { |sale_right|
             sale_right.sales_outlets.select { |sale_outlet|
-              sale_outlet.identifier and sale_outlet.identifier.type.human == "OnixSalesOutletIdCode" }.map { |sale_outlet|
+              sale_outlet.identifier and sale_outlet.identifier.type.human == "OnixRetailSalesOutletIdCode" }.map { |sale_outlet|
               sale_outlet.identifier.value
             }
           }

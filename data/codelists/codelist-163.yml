@@ -6,7 +6,7 @@
   '10': TradeAnnouncementDate
   '11': DateOfFirstPublication
   '12': LastReprintDate
-  '13': OutofprintDeletionDate
+  '13': OutOfPrintDeletionDate
   '16': LastReissueDate
   '19': PublicationDateOfPrintCounterpart
   '20': DateOfFirstPublicationInOriginalLanguage

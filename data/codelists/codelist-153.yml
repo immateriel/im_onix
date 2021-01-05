@@ -1,6 +1,6 @@
 ---
 :codelist:
-  '01': SenderdefinedText
+  '01': SenderDefinedText
   '02': ShortDescriptionannotation
   '03': Description
   '04': TableOfContents

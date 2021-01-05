@@ -9,14 +9,14 @@
   '06': ContributorsOwnWebsite
   '07': PublishersWebsiteRelatingToSpecifiedContributor
   '08': OtherPublishersWebsiteRelatingToSpecifiedContributor
-  '09': ThirdpartyWebsiteRelatingToSpecifiedContributor
+  '09': ThirdPartyWebsiteRelatingToSpecifiedContributor
   '10': ContributorsOwnWebsiteForSpecifiedWork
   '11': OtherPublishersWebsiteRelatingToSpecifiedWork
-  '12': ThirdpartyWebsiteRelatingToSpecifiedWork
+  '12': ThirdPartyWebsiteRelatingToSpecifiedWork
   '13': ContributorsOwnWebsiteForGroupOrSeriesOfWorks
   '14': PublishersWebsiteRelatingToGroupOrSeriesOfWorks
   '15': OtherPublishersWebsiteRelatingToGroupOrSeriesOfWorks
-  '16': ThirdpartyWebsiteRelatingToGroupOrSeriesOfWorksEgAFanSite
+  '16': ThirdPartyWebsiteRelatingToGroupOrSeriesOfWorksEgAFanSite
   '17': PublishersB2bWebsite
   '18': PublishersB2cWebsite
   '23': AuthorBlog
@@ -27,7 +27,7 @@
   '28': WebPageForSampleContent
   '29': WebPageForFullContent
   '30': WebPageForOtherCommentaryDiscussion
-  '31': Transferurl
+  '31': TransferUrl
   '32': DoiWebsiteLink
   '33': SuppliersCorporateWebsite
   '34': SuppliersB2bWebsite

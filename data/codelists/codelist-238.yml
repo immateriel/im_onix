@@ -16,8 +16,8 @@
   '13': EnsinoTecnicoIntegrado
   '14': EnsinoTecnicoConcomitante
   '15': EnsinoTecnicoSubsequente
-  P: EnsinoPrevestibular
+  P: EnsinoPreVestibular
   A: EnsinoSuperiorGraduacaoLicenciaturaBacharelado
   B: EnsinoSuperiorGraduacaoTecnologia
-  D: EnsinoSuperiorPosgraduacaoStrictoSensu
-  F: EnsinoSuperiorPosgraduacaoLatoSensu
+  D: EnsinoSuperiorPosGraduacaoStrictoSensu
+  F: EnsinoSuperiorPosGraduacaoLatoSensu

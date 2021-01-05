@@ -10,7 +10,7 @@
   '08': MarcOrganizationCode
   '10': CentraalBoekhuisRelatieId
   '13': FondscodeBoekenbank
-  '15': Ytunnus
+  '15': YTunnus
   '16': Isni
   '17': Pnd
   '18': Naco

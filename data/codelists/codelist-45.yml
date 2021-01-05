@@ -1,9 +1,9 @@
 ---
 :codelist:
   '01': Publisher
-  '02': Copublisher
+  '02': CoPublisher
   '03': Sponsor
-  '04': PublisherOfOriginallanguageVersion
+  '04': PublisherOfOriginalLanguageVersion
   '05': HostdistributorOfElectronicContent
   '06': PublishedForonBehalfOf
   '07': PublishedInAssociationWith

@@ -10,7 +10,7 @@
   '08': IsAncillaryTo
   '09': IsRemainderedAs
   '10': IsRemainderOf
-  '11': IsOtherlanguageVersionOf
+  '11': IsOtherLanguageVersionOf
   '12': PublishersSuggestedAlternative
   '13': EpublicationBasedOnPrintProduct
   '16': PodReplacementFor

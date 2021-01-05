@@ -59,7 +59,7 @@
   B08: TranslatedWithCommentaryBy
   B09: SeriesEditedBy
   B10: EditedAndTranslatedBy
-  B11: Editorinchief
+  B11: EditorInChief
   B12: GuestEditor
   B13: VolumeEditor
   B14: EditorialBoardMember
@@ -83,7 +83,7 @@
   B99: OtherAdaptationBy
   C01: CompiledBy
   C02: SelectedBy
-  C03: NontextMaterialSelectedBy
+  C03: NonTextMaterialSelectedBy
   C04: CuratedBy
   C99: OtherCompilationBy
   D01: Producer

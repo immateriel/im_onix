@@ -17,7 +17,7 @@
   '15': BicTimePeriodQualifier
   '16': BicEducationalPurposeQualifier
   '17': BicReadingLevelAndSpecialInterestQualifier
-  '18': DdcsachgruppenDerDeutschenNationalbibliografie
+  '18': DdcSachgruppenDerDeutschenNationalbibliografie
   '19': LcFictionGenreHeading
   '20': Keywords
   '21': BicChildrensBookMarketingCategory
@@ -25,11 +25,11 @@
   '23': PublishersOwnCategoryCode
   '24': ProprietarySubjectScheme
   '25': TablaDeMateriasIsbn
-  '26': WarengruppensystematikDesDeutschenBuchhandels
+  '26': WarengruppenSystematikDesDeutschenBuchhandels
   '27': Swd
   '28': ThemesElectre
   '29': Clil
-  '30': Dnbsachgruppen
+  '30': DnbSachgruppen
   '31': Nugi
   '32': Nur
   '33': EcpaChristianBookCategory
@@ -72,12 +72,12 @@
   '70': Bella
   '71': Yso
   '72': PaikkatietoOntologia
-  '73': SuomalainenKirjaalanLuokitus
+  '73': SuomalainenKirjaAlanLuokitus
   '74': Sears
   '75': BicE4l
   '76': Csr
   '77': SuomalainenOppiaineluokitus
-  '78': JapaneseBookTradeCcode
+  '78': JapaneseBookTradeCCode
   '79': JapaneseBookTradeGenreCode
   '80': FiktiivisenAineistonLisaluokitus
   '81': ArabicSubjectHeadingScheme
