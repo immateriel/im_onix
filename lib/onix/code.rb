@@ -54,7 +54,7 @@ module ONIX
     def self.from_human(human)
       obj = self.new
       obj.human = human
-      obj.code = self.rev_hash[human]
+      obj.code = self.hash.key(human)
       unless obj.code
         raise InvalidCodeAlias, [self.to_s, human]
       end
@@ -75,10 +75,6 @@ module ONIX
 
     def self.hash
       @hash ||= YAML.load(File.open(codelist_filename))[:codelist]
-    end
-
-    def self.rev_hash
-      @rev_hash ||= Hash[self.hash.to_a.reverse]
     end
 
     def self.list
