@@ -55,8 +55,10 @@ module ONIX
     elements "Website", :subset, :cardinality => 0..n
   end
 
-  class Imprint < Entity
-    entity_setup "Imprint", ImprintIdentifier
+  class Imprint < SubsetDSL
+    include GlnMethods
+    elements "ImprintIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
+    element "ImprintName", :text, :shortcut => :name, :cardinality => 0..1
   end
 
   class Supplier < Entity

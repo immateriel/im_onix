@@ -63,7 +63,7 @@ module ONIX
 
       class Root
         def self.serialize(xml, tag, subset, level = 0)
-          root_options = subset.version && subset.version >= 300 ? { :xmlns => "http://www.editeur.org/onix/3.0/reference", :release => subset.release } : {}
+          root_options = subset.version && subset.version >= 300 ? { :xmlns => "http://ns.editeur.org/onix/3.0/reference", :release => subset.release } : {}
           xml.send(tag, root_options) {
             ONIX::Serializer::Traverser.recursive_serialize(Default, xml, subset, tag, level + 1)
           }

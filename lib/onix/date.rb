@@ -91,7 +91,7 @@ module ONIX
 
   class BaseDate < SubsetDSL
     include DateHelper
-    element "Date", :ignore
+    element "Date", :ignodare
     element "DateFormat", :ignore
 
     def parse(n)

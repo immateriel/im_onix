@@ -88,11 +88,11 @@ class TestSerialize < Minitest::Test
               ResourceForm("02")
               ResourceLink("http://images.immateriel.fr/link")
 
-                  ContentDate {
-                    ContentDateRole("17")
-                    #DateFormat("00")
-                    Date(Date.today)
-                  }
+              ContentDate {
+                ContentDateRole("17")
+                #DateFormat("00")
+                Date(Date.today)
+              }
             }
           }
         }
@@ -101,6 +101,8 @@ class TestSerialize < Minitest::Test
       builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         msg.to_xml(xml)
       end
+
+      builder.to_xml
 
     end
 
@@ -214,13 +216,11 @@ class TestSerialize < Minitest::Test
       @message.parse(@filename)
       @product = @message.products.first
     end
-    if true # TODO
-      should "be the same serialized" do
-        builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
-          ONIX::Serializer::Default.serialize(xml, @message)
-        end
-        assert_equal builder.to_xml.gsub(/\>\s+\</, "><"), File.read(@filename).gsub(/\>\s+\</, "><")
+    should "be the same serialized" do
+      builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
+        ONIX::Serializer::Default.serialize(xml, @message)
       end
+      assert_equal builder.to_xml.gsub(/\>\s+\</, "><"), File.read(@filename).gsub(/\>\s+\</, "><")
     end
   end
 
