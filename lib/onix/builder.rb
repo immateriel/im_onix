@@ -17,7 +17,7 @@ module ONIX
   # ONIX builder DSL with human code resolve, code validity and child element validity
   # WIP elements cardinality check
   class Builder
-    attr_accessor :parent, :name, :element, :children
+    attr_accessor :parent, :name, :element, :children, :context
 
     def initialize(parent = nil)
       @children = []
@@ -25,7 +25,11 @@ module ONIX
     end
 
     def method_missing(m, *args, &block)
-      @children << make_element(m, args, &block)
+      if @context && @context.respond_to?(m)
+        @context.send(m, *args, &block)
+      else
+        @children << make_element(m, args, &block)
+      end
     end
 
     def to_xml(xml)
@@ -119,10 +123,19 @@ module ONIX
       end
 
       if block_given?
+        @context ||= eval("self", block.binding)
         builder = Builder.new(el)
+        builder.context = @context
+
         if block.arity == 1
           block.call builder
         else
+          if @context
+            @context.instance_variables.each do |k|
+              v = @context.instance_variable_get(k)
+              builder.instance_variable_set(k, v)
+            end
+          end
           builder.instance_eval(&block)
         end
         builder.check_cardinality!

@@ -11,6 +11,35 @@ class TestSerialize < Minitest::Test
       @message.parse(@filename)
     end
 
+    should "find instance" do
+      msg = ONIX::Builder.new
+      @test_lang = "fre"
+
+      msg.ONIXMessage("3.0") do
+        Header do
+          Sender do
+            SenderName("immatériel·fr")
+          end
+          SentDateTime("20130802T000000+0200")
+          DefaultLanguageOfText(@test_lang)
+        end
+      end
+    end
+
+    should "find method" do
+      msg = ONIX::Builder.new
+
+      msg.ONIXMessage("3.0") do
+        Header do
+          Sender do
+            SenderName("immatériel·fr")
+          end
+          SentDateTime("20130802T000000+0200")
+          DefaultLanguageOfText(test_lang)
+        end
+      end
+    end
+
     should "be the same serialized" do
       builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         ONIX::Serializer::Default.serialize(xml, @message)
@@ -163,5 +192,9 @@ class TestSerialize < Minitest::Test
         assert_equal builder.to_xml.gsub(/\>\s+\</,"><"), File.read(@filename).gsub(/\>\s+\</,"><")
       end
     end
+  end
+
+  def test_lang
+    "fre"
   end
 end
