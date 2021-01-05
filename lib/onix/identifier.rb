@@ -68,6 +68,10 @@ module ONIX
     element "SupplyContactIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
+  class TextItemIdentifier < Identifier
+    element "TextItemIDType", :subset, :shortcut => :type, :cardinality => 1
+  end
+
   module EanMethods
     # EAN string identifier from identifiers
     def ean

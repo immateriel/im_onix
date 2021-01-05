@@ -1,8 +1,9 @@
+require 'onix/date'
 require 'onix/tax'
 require 'onix/discount_coded'
 require 'onix/discount'
 require 'onix/epub_license'
-require 'onix/date'
+require 'onix/comparison_product_price'
 
 module ONIX
   class Price < SubsetDSL
@@ -32,7 +33,7 @@ module ONIX
     element "UnpricedItemType", :subset, :cardinality => 0..1
     element "CurrencyCode", :text, :shortcut => :currency, :cardinality => 0..1
     element "Territory", :subset, :cardinality => 0..1
-    # elements "ComparisonProductPrice", :subset, :cardinality => 0..n
+    elements "ComparisonProductPrice", :subset, :cardinality => 0..n
     elements "PriceDate", :subset, :shortcut => :dates, :cardinality => 0..n
     element "PrintedOnProduct", :subset, :cardinality => 0..1
     element "PositionOnProduct", :subset, :cardinality => 0..1

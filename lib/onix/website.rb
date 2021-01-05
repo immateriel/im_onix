@@ -1,4 +1,5 @@
 require 'onix/code'
+
 module ONIX
   class Website < SubsetDSL
     element "WebsiteRole", :subset, :shortcut => :role, :cardinality => 0..1

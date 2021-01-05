@@ -45,9 +45,9 @@ module ONIX
     def self.tag_match(v)
       TagNameMatcher.new(v)
     end
-
   end
 
+  # for class DSL
   class ElementParser
     attr_accessor :type, :name, :short, :cardinality, :klass_name
 
@@ -207,6 +207,11 @@ module ONIX
     end
   end
 
+  class TextWithAttributes < String
+    attr_accessor :attributes
+  end
+
+  # DSL
   class SubsetDSL < Subset
     def self.scope(name, lambda)
       @scopes ||= {}
@@ -330,7 +335,27 @@ module ONIX
             end
             val = klass.parse(t)
           when :text
-            val = t.text
+            if t.attributes.length > 0
+              attrs = {}
+              t.attributes.each do |k,v|
+                case k.to_s
+                when "textcase"
+                  attrs[k.to_s] = TextCase.from_code(v.to_s)
+                when "textformat"
+                  attrs[k.to_s] = TextFormat.from_code(v.to_s)
+                when "language"
+                  attrs[k.to_s] = LanguageCode.from_code(v.to_s)
+                end
+              end
+              if attrs["textformat"] && ["Html","Xml","Xhtml"].include?(attrs["textformat"].human)
+                val = TextWithAttributes.new(t.inner_html)
+              else
+                val = TextWithAttributes.new(t.text)
+              end
+              val.attributes = attrs
+            else
+              val = t.text
+            end
           when :integer
             val = t.text.to_i
           when :float
@@ -342,7 +367,7 @@ module ONIX
             val = ONIX::Helper.to_date(fmt, t.text)
           when :datetime
             tm = t.text
-            val = Time.strptime(tm, "%Y%m%dT%H%M%S") rescue Time.strptime(tm, "%Y%m%dT%H%M") rescue Time.strptime(tm, "%Y%m%d") rescue nil
+            val = ((((Time.strptime(tm, "%Y%m%dT%H%M%S%z") rescue Time.strptime(tm, "%Y%m%dT%H%M%S")) rescue Time.strptime(tm, "%Y%m%dT%H%M%z")) rescue Time.strptime(tm, "%Y%m%dT%H%M")) rescue Time.strptime(tm, "%Y%m%d")) rescue nil
             val ||= tm
           when :ignore
             val = nil
@@ -363,7 +388,7 @@ module ONIX
     end
 
     def unsupported(tag)
-      #      raise SubsetUnsupported,tag.name
+      # raise SubsetUnsupported, [self.class, tag.name]
       # puts "SubsetUnsupported: #{self.class}##{tag.name} (#{self.class.short_to_ref(tag.name)})"
     end
   end

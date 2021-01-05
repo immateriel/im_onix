@@ -143,6 +143,10 @@ module ONIX
     code_identifier 13
   end
 
+  class TextCase < CodeFromYaml
+    code_identifier 14
+  end
+
   class TitleType < CodeFromYaml
     code_identifier 15
   end
@@ -209,6 +213,10 @@ module ONIX
 
   class ComplexitySchemeIdentifier < CodeFromYaml
     code_identifier 32
+  end
+
+  class TextFormat < CodeFromYaml
+    code_identifier 34
   end
 
   class PrizeCode < CodeFromYaml

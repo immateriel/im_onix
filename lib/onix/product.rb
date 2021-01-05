@@ -9,6 +9,7 @@ require 'onix/collateral_detail'
 require 'onix/related_material'
 require 'onix/supporting_resource'
 require 'onix/product_supply'
+require 'onix/content_detail'
 require 'onix/territory'
 require 'onix/error'
 require 'onix/product_supplies_extractor'
@@ -32,7 +33,7 @@ module ONIX
     element "DescriptiveDetail", :subset, :cardinality => 0..1
     element "CollateralDetail", :subset, :cardinality => 0..1
     # element "PromotionDetail", :subset, :cardinality => 0..1
-    # element "ContentDetail", :subset, :cardinality => 0..1
+    element "ContentDetail", :subset, :cardinality => 0..1
     element "PublishingDetail", :subset, :cardinality => 0..1
     element "RelatedMaterial", :subset, :cardinality => 0..1
     elements "ProductSupply", :subset, :cardinality => 0..n

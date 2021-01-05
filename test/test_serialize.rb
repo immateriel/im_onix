@@ -53,7 +53,7 @@ class TestSerialize < Minitest::Test
           Sender do
             SenderName("immatériel·fr")
           end
-          SentDateTime("20130802")
+          SentDateTime("20130802T000000+0200")
           DefaultLanguageOfText("fre")
         end
         Product do
@@ -155,12 +155,12 @@ class TestSerialize < Minitest::Test
       @message.parse(@filename)
       @product = @message.products.first
     end
-    if false # TODO
+    if true # TODO
       should "be the same serialized" do
         builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
           ONIX::Serializer::Default.serialize(xml, @message)
         end
-        assert_equal builder.to_xml, File.read(@filename)
+        assert_equal builder.to_xml.gsub(/\>\s+\</,"><"), File.read(@filename).gsub(/\>\s+\</,"><")
       end
     end
   end

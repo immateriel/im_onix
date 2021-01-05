@@ -52,6 +52,7 @@ module ONIX
 
   class Agent < Entity
     entity_setup "Agent", AgentIdentifier, AgentRole
+    elements "Website", :subset, :cardinality => 0..n
   end
 
   class Imprint < Entity

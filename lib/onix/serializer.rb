@@ -22,6 +22,19 @@ module ONIX
         end
       end
 
+      def self.subset_serialize(type, mod, data, vv, n, level)
+        case type
+        when :subset
+          self.serialize_subset(mod, data, vv, n, level)
+        when :text, :integer, :float, :datetime
+          mod.const_get("Primitive").serialize(data, n, vv, level)
+        when :bool
+          mod.const_get("Primitive").serialize(data, n, nil, level) if vv
+        when :ignore
+        else
+        end
+      end
+
       def self.recursive_serialize(mod, data, subset, parent_tag = nil, level = 0)
         if subset.class.respond_to?(:ancestors_registered_elements)
           subset.class.ancestors_registered_elements.each do |n, e|
@@ -30,29 +43,11 @@ module ONIX
               if v
                 if e.is_array?
                   v.each do |vv|
-                    case e.type
-                    when :subset
-                      self.serialize_subset(mod, data, vv, n, level)
-                    when :text, :integer, :float, :datetime
-                      mod.const_get("Primitive").serialize(data, n, vv, level)
-                    when :bool
-                      mod.const_get("Primitive").serialize(data, n, nil, level) if vv
-                    when :ignore
-                    else
-                    end
+                    self.subset_serialize(e.type, mod, data, vv, n, level)
                   end
                 else
                   vv = e.serialize_lambda(v)
-                  case e.type
-                  when :subset
-                    self.serialize_subset(mod, data, v, n, level)
-                  when :text, :integer, :float, :datetime
-                    mod.const_get("Primitive").serialize(data, n, vv, level)
-                  when :bool
-                    mod.const_get("Primitive").serialize(data, n, nil, level) if vv
-                  when :ignore
-                  else
-                  end
+                  self.subset_serialize(e.type, mod, data, vv, n, level)
                 end
               end
             end
@@ -85,9 +80,22 @@ module ONIX
 
       class Primitive
         def self.serialize(xml, tag, val, level = 0)
-          # unless val.respond_to?(:empty?) ? !!val.empty? : !val # rails blank?
+          if val.is_a?(ONIX::TextWithAttributes)
+            attrs = {}
+            val.attributes.each do |k,v|
+              attrs[k] = v.code
+            end
+
+            if val.attributes["textformat"] && ["Html","Xml","Xhtml"].include?(val.attributes["textformat"].human)
+              xml.send(tag, attrs) do
+                xml.__send__ :insert, Nokogiri::XML::DocumentFragment.parse(val)
+              end
+            else
+              xml.send(tag, val, attrs)
+            end
+          else
             xml.send(tag, val)
-          # end
+          end
         end
       end
 
@@ -97,7 +105,7 @@ module ONIX
             ONIX::Serializer::Traverser.recursive_serialize(Default, xml, date, parent_tag, level + 1)
             #xml.DateFormat(date.date_format.code)
             code_format = date.format_from_code(date.date_format.code)
-            xml.Date(date.date.strftime(code_format), :dateformat=>date.date_format.code)
+            xml.Date(date.date.strftime(code_format), :dateformat => date.date_format.code)
           }
         end
       end
