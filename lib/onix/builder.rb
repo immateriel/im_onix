@@ -1,3 +1,5 @@
+require 'onix/serializer'
+
 module ONIX
   class BuilderInvalidArgument < StandardError
   end
@@ -14,8 +16,7 @@ module ONIX
   class BuilderUndefinedElement < StandardError
   end
 
-  # ONIX builder DSL with human code resolve, code validity and child element validity
-  # WIP elements cardinality check
+  # ONIX builder DSL with human code resolve, code validity and child element validity, elements cardinality check
   class Builder
     attr_accessor :parent, :name, :element, :children, :context
 
@@ -94,11 +95,31 @@ module ONIX
       el
     end
 
+    def insert_element(el, &block)
+      builder = Builder.new(el)
+      builder.context = @context
+
+      if @context
+        @context.instance_variables.each do |k|
+          v = @context.instance_variable_get(k)
+          builder.instance_variable_set(k, v)
+        end
+      end
+
+      if block.arity == 1
+        block.call builder
+      else
+        builder.instance_eval(&block)
+      end
+      builder.check_cardinality!
+      builder
+    end
+
     def make_element(nm, args, &block)
-      @name = nm
+      @name = nm.to_s
 
       if @parent
-        parser_el = @parent.class.ancestors_registered_elements[nm.to_s]
+        parser_el = @parent.class.ancestors_registered_elements[@name]
         if parser_el
           if ONIX.const_defined?(parser_el.klass_name)
             el = get_class(parser_el.klass_name, args)
@@ -123,26 +144,13 @@ module ONIX
       end
 
       if block_given?
+        @context = nil unless eval("self", block.binding).is_a?(ONIX::Builder)
         @context ||= eval("self", block.binding)
-        builder = Builder.new(el)
-        builder.context = @context
-
-        if block.arity == 1
-          block.call builder
-        else
-          if @context
-            @context.instance_variables.each do |k|
-              v = @context.instance_variable_get(k)
-              builder.instance_variable_set(k, v)
-            end
-          end
-          builder.instance_eval(&block)
-        end
-        builder.check_cardinality!
+        insert_element(el, &block)
       end
 
       @element = el
-      @name.to_s
+      @name
     end
   end
 end
