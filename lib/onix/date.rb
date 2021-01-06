@@ -23,13 +23,16 @@ module ONIX
         end
       end
 
+      strpdate!(date_txt)
+    end
+
+    def strpdate!(date_txt)
       code_format = format_from_code(@date_format.code)
       text_format = format_from_string(date_txt)
 
       format = code_format
 
       if code_format != text_format
-        #        puts "EEE date #{n.text} (#{text_format}) do not match code #{@format.code} (#{code_format})"
         format = text_format
       end
 
@@ -48,7 +51,7 @@ module ONIX
             @date = nil
           end
         end
-      rescue
+      rescue => e
         # invalid date
       end
     end

@@ -7,16 +7,20 @@ module ONIX
       end
 
       def self.serialize_subset(mod, data, subset, parent_tag = nil, level = 0)
-        if subset.is_a?(ONIX::ONIXMessage)
-          mod.const_get("Root").serialize(data, subset, "ONIXMessage", level)
+        if subset.is_a?(ONIX::Fragment)
+          ONIX::Serializer::Traverser.recursive_serialize(mod, data, subset, parent_tag, level)
         else
-          if subset.class.included_modules.include?(DateHelper)
-            mod.const_get("Date").serialize(data, subset, parent_tag, level)
+          if subset.is_a?(ONIX::ONIXMessage)
+            mod.const_get("Root").serialize(data, subset, "ONIXMessage", level)
           else
-            if subset.class.included_modules.include?(CodeHelper)
-              mod.const_get("Code").serialize(data, subset, parent_tag, level)
+            if subset.class.included_modules.include?(DateHelper)
+              mod.const_get("Date").serialize(data, subset, parent_tag, level)
             else
-              mod.const_get("Subset").serialize(data, subset, parent_tag, level)
+              if subset.class.included_modules.include?(CodeHelper)
+                mod.const_get("Code").serialize(data, subset, parent_tag, level)
+              else
+                mod.const_get("Subset").serialize(data, subset, parent_tag, level)
+              end
             end
           end
         end
@@ -103,6 +107,9 @@ module ONIX
               date.date_format = DateFormat.from_code(date.date_format)
               date.deprecated_date_format = true
             end
+
+            date.strpdate!(date.date) if date.date.is_a?(String)
+
             if date.deprecated_date_format
               xml.DateFormat(date.date_format.code)
               code_format = date.format_from_code(date.date_format.code)

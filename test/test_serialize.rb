@@ -98,12 +98,57 @@ class TestSerialize < Minitest::Test
         }
       }
 
-      builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
-        msg.to_xml(xml)
-      end
+      assert msg.xml.to_xml
+    end
 
-      builder.to_xml
+    should "make fragment" do
+      onix = ONIX::Builder.new
+      onix.fragment { |msg|
+        msg.Product {
+          RecordReference("AAA")
+          NotificationType("03")
+          CollateralDetail {
+            SupportingResource {
+              ResourceContentType("01")
+              ContentAudience("00")
+              ResourceMode("03")
+              ResourceVersion {
+                ResourceForm("02")
+                ResourceLink("http://images.immateriel.fr/link")
 
+                ContentDate {
+                  ContentDateRole("17")
+                  DateFormat("00")
+                  Date(Date.today)
+                }
+              }
+            }
+          }
+        }
+        msg.Product {
+          RecordReference("AAA")
+          NotificationType("03")
+          CollateralDetail {
+            SupportingResource {
+              ResourceContentType("01")
+              ContentAudience("00")
+              ResourceMode("03")
+              ResourceVersion {
+                ResourceForm("02")
+                ResourceLink("http://images.immateriel.fr/link")
+
+                ContentDate {
+                  ContentDateRole("17")
+                  DateFormat("00")
+                  Date(Date.today)
+                }
+              }
+            }
+          }
+        }
+      }
+
+      assert onix.xml.to_xml
     end
 
     should "be the same with builder" do
@@ -201,11 +246,7 @@ class TestSerialize < Minitest::Test
         end
       end
 
-      builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
-        msg.to_xml(xml)
-      end
-
-      assert_equal builder.to_xml, File.read(@filename)
+      assert_equal msg.xml.to_xml, File.read(@filename)
     end
   end
 

@@ -16,6 +16,10 @@ module ONIX
   class BuilderUndefinedElement < StandardError
   end
 
+  class Fragment < SubsetDSL
+    elements "Product", :subset
+  end
+
   # ONIX builder DSL with human code resolve, code validity and child element validity, elements cardinality check
   class Builder
     attr_accessor :parent, :name, :element, :children, :context
@@ -33,8 +37,24 @@ module ONIX
       end
     end
 
-    def to_xml(xml)
-      ONIX::Serializer::Default.serialize(xml, @element, @name)
+    def fragment &block
+      make_element(nil, nil, &block)
+    end
+
+    # Nokogiri::XML::Builder or DocumentFragment
+    def xml
+      if @element.is_a?(Fragment)
+        frag = Nokogiri::XML::DocumentFragment.parse("")
+        Nokogiri::XML::Builder.with( frag ) do |xml|
+          ONIX::Serializer::Default.serialize(xml, @element, @name)
+        end
+        frag
+      else
+        builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
+          ONIX::Serializer::Default.serialize(xml, @element, @name)
+        end
+        builder
+      end
     end
 
     def dump(io = STDOUT)
@@ -165,7 +185,11 @@ module ONIX
           raise BuilderInvalidChildElement, [@parent.class.to_s.sub("ONIX::", ""), nm.to_s]
         end
       else
-        el = get_class(nm, args)
+        if nm
+          el = get_class(nm, args)
+        else
+          el = Fragment.new
+        end
       end
 
       if block_given?
