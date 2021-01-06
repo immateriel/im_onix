@@ -75,22 +75,22 @@ module ONIX
       if ONIX.const_defined?(nm)
         klass = ONIX.const_get(nm)
         if klass.respond_to?(:from_code)
-          if args.first.is_a?(String)
-            el = klass.from_code(args.first)
+          if args[0].is_a?(String)
+            el = klass.from_code(args[0])
             unless el.human
-              raise BuilderInvalidCode, [nm.to_s, args.first]
+              raise BuilderInvalidCode, [nm.to_s, args[0]]
             end
           else
-            if args.first.is_a?(Symbol)
-              el = klass.from_human(args.first.to_s)
+            if args[0].is_a?(Symbol)
+              el = klass.from_human(args[0].to_s)
             else
-              raise BuilderInvalidArgument, [nm.to_s, args.first]
+              raise BuilderInvalidArgument, [nm.to_s, args[0]]
             end
           end
         else
           el = klass.new
           if el.is_a?(ONIX::ONIXMessage)
-            el.release = args.first
+            el.release = args[0]
           end
         end
       else
@@ -140,11 +140,11 @@ module ONIX
               arr << el
             else
               if args.length > 1
-                txt = TextWithAttributes.new(args.first)
-                txt.parse(args.last)
+                txt = TextWithAttributes.new(args[0])
+                txt.parse(args[1])
                 arr << txt
               else
-                arr << args.first
+                arr << args[0]
               end
             end
           else
@@ -153,11 +153,11 @@ module ONIX
               @parent.send(parser_el.underscore_name + "=", el)
             else
               if args.length > 1
-                txt = TextWithAttributes.new(args.first)
-                txt.parse(args.last)
+                txt = TextWithAttributes.new(args[0])
+                txt.parse(args[1])
                 @parent.send(parser_el.underscore_name + "=", txt)
               else
-                @parent.send(parser_el.underscore_name + "=", args.first)
+                @parent.send(parser_el.underscore_name + "=", args[0])
               end
             end
           end

@@ -13,6 +13,7 @@ module ONIX
         case t
         when tag_match("DateFormat")
           @date_format = DateFormat.parse(t)
+          @deprecated_date_format = true
         when tag_match("Date")
           date_txt = t.text
         end
@@ -91,8 +92,14 @@ module ONIX
 
   class BaseDate < SubsetDSL
     include DateHelper
-    element "Date", :ignodare
+    element "Date", :ignore
     element "DateFormat", :ignore
+    attr_accessor :deprecated_date_format
+
+    def initialize
+      super
+      @deprecated_date_format = false
+    end
 
     def parse(n)
       super

@@ -8,7 +8,7 @@ module ONIX
 
       def self.serialize_subset(mod, data, subset, parent_tag = nil, level = 0)
         if subset.is_a?(ONIX::ONIXMessage)
-          mod.const_get("Root").serialize(data, "ONIXMessage", subset, level)
+          mod.const_get("Root").serialize(data, subset, "ONIXMessage", level)
         else
           if subset.class.included_modules.include?(DateHelper)
             mod.const_get("Date").serialize(data, subset, parent_tag, level)
@@ -16,20 +16,20 @@ module ONIX
             if subset.class.included_modules.include?(CodeHelper)
               mod.const_get("Code").serialize(data, subset, parent_tag, level)
             else
-              mod.const_get("Subset").serialize(data, parent_tag, subset, level)
+              mod.const_get("Subset").serialize(data, subset, parent_tag, level)
             end
           end
         end
       end
 
-      def self.subset_serialize(type, mod, data, vv, n, level)
+      def self.any_serialize(type, mod, data, val, tag, level)
         case type
         when :subset
-          self.serialize_subset(mod, data, vv, n, level)
+          self.serialize_subset(mod, data, val, tag, level)
         when :text, :integer, :float, :datetime
-          mod.const_get("Primitive").serialize(data, n, vv, level)
+          mod.const_get("Primitive").serialize(data, val, tag, level)
         when :bool
-          mod.const_get("Primitive").serialize(data, n, nil, level) if vv
+          mod.const_get("Primitive").serialize(data, nil, tag, level) if val
         when :ignore
         else
         end
@@ -37,17 +37,16 @@ module ONIX
 
       def self.recursive_serialize(mod, data, subset, parent_tag = nil, level = 0)
         if subset.class.respond_to?(:ancestors_registered_elements)
-          subset.class.ancestors_registered_elements.each do |n, e|
-            unless e.short
-              v = subset.instance_variable_get(e.to_instance)
-              if v
-                if e.is_array?
-                  v.each do |vv|
-                    self.subset_serialize(e.type, mod, data, vv, n, level)
+          subset.class.ancestors_registered_elements.each do |tag, element|
+            unless element.short
+              val = subset.instance_variable_get(element.to_instance)
+              if val
+                if element.is_array?
+                  val.each do |subval|
+                    self.any_serialize(element.type, mod, data, subval, tag, level)
                   end
                 else
-                  vv = e.serialize_lambda(v)
-                  self.subset_serialize(e.type, mod, data, vv, n, level)
+                  self.any_serialize(element.type, mod, data, element.serialize_lambda(val), tag, level)
                 end
               end
             end
@@ -62,7 +61,7 @@ module ONIX
       end
 
       class Root
-        def self.serialize(xml, tag, subset, level = 0)
+        def self.serialize(xml, subset, tag, level = 0)
           root_options = subset.version && subset.version >= 300 ? { :xmlns => "http://ns.editeur.org/onix/3.0/reference", :release => subset.release } : {}
           xml.send(tag, root_options) {
             ONIX::Serializer::Traverser.recursive_serialize(Default, xml, subset, tag, level + 1)
@@ -71,7 +70,7 @@ module ONIX
       end
 
       class Subset
-        def self.serialize(xml, tag, subset, level = 0)
+        def self.serialize(xml, subset, tag, level = 0)
           xml.send(tag, nil) {
             ONIX::Serializer::Traverser.recursive_serialize(Default, xml, subset, tag, level + 1)
           }
@@ -79,7 +78,7 @@ module ONIX
       end
 
       class Primitive
-        def self.serialize(xml, tag, val, level = 0)
+        def self.serialize(xml, val, tag, level = 0)
           if val.is_a?(ONIX::TextWithAttributes)
             attrs = {}
             val.attributes.each do |k, v|
@@ -99,9 +98,19 @@ module ONIX
         def self.serialize(xml, date, parent_tag = nil, level = 0)
           xml.send(parent_tag, nil) {
             ONIX::Serializer::Traverser.recursive_serialize(Default, xml, date, parent_tag, level + 1)
-            #xml.DateFormat(date.date_format.code)
-            code_format = date.format_from_code(date.date_format.code)
-            xml.Date(date.date.strftime(code_format), :dateformat => date.date_format.code)
+            # FIXME: dirty
+            if date.date_format.is_a?(String)
+              date.date_format = DateFormat.from_code(date.date_format)
+              date.deprecated_date_format = true
+            end
+            if date.deprecated_date_format
+              xml.DateFormat(date.date_format.code)
+              code_format = date.format_from_code(date.date_format.code)
+              xml.Date(date.date.strftime(code_format))
+            else
+              code_format = date.format_from_code(date.date_format.code)
+              xml.Date(date.date.strftime(code_format), :dateformat => date.date_format.code)
+            end
           }
         end
       end
@@ -121,7 +130,7 @@ module ONIX
       end
 
       class Root
-        def self.serialize(io, tag, subset, level = 0)
+        def self.serialize(io, subset, tag, level = 0)
           io.write " " * level
           io.write "#{tag}(ROOT):\n"
           ONIX::Serializer::Traverser.recursive_serialize(Dump, io, subset, tag, level + 1)
@@ -129,7 +138,7 @@ module ONIX
       end
 
       class Subset
-        def self.serialize(io, tag, subset, level = 0)
+        def self.serialize(io, subset, tag, level = 0)
           io.write " " * level
           io.write "#{tag}:\n"
           ONIX::Serializer::Traverser.recursive_serialize(Dump, io, subset, tag, level + 1)
@@ -137,7 +146,7 @@ module ONIX
       end
 
       class Primitive
-        def self.serialize(io, tag, val, level = 0)
+        def self.serialize(io, val, tag, level = 0)
           io.write " " * level
           io.write "#{tag}: #{val}\n"
         end

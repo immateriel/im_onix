@@ -90,7 +90,7 @@ class TestSerialize < Minitest::Test
 
               ContentDate {
                 ContentDateRole("17")
-                #DateFormat("00")
+                DateFormat("00")
                 Date(Date.today)
               }
             }
