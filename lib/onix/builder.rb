@@ -45,7 +45,7 @@ module ONIX
     def xml
       if @element.is_a?(Fragment)
         frag = Nokogiri::XML::DocumentFragment.parse("")
-        Nokogiri::XML::Builder.with( frag ) do |xml|
+        Nokogiri::XML::Builder.new({:encoding => "UTF-8"}, frag) do |xml|
           ONIX::Serializer::Default.serialize(xml, @element, @name)
         end
         frag
