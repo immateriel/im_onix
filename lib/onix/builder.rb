@@ -99,6 +99,10 @@ module ONIX
       el
     end
 
+    def set_data(el, args)
+
+    end
+
     def insert_element(el, &block)
       builder = Builder.new(el)
       builder.context = @context
@@ -135,14 +139,26 @@ module ONIX
             when :subset
               arr << el
             else
-              arr << args.first
+              if args.length > 1
+                txt = TextWithAttributes.new(args.first)
+                txt.parse(args.last)
+                arr << txt
+              else
+                arr << args.first
+              end
             end
           else
             case parser_el.type
             when :subset
               @parent.send(parser_el.underscore_name + "=", el)
             else
-              @parent.send(parser_el.underscore_name + "=", args.first)
+              if args.length > 1
+                txt = TextWithAttributes.new(args.first)
+                txt.parse(args.last)
+                @parent.send(parser_el.underscore_name + "=", txt)
+              else
+                @parent.send(parser_el.underscore_name + "=", args.first)
+              end
             end
           end
         else

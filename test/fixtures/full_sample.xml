@@ -399,7 +399,7 @@
             <TaxRateCode>Z</TaxRateCode>
             <TaxRatePercent>0.0</TaxRatePercent>
             <TaxableAmount>7.99</TaxableAmount>
-            <TaxAmount>0.0</TaxAmount>
+            <TaxAmount>0.00</TaxAmount>
           </Tax>
           <CurrencyCode>GBP</CurrencyCode>
           <Territory>

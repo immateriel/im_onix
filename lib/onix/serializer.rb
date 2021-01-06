@@ -86,12 +86,8 @@ module ONIX
               attrs[k] = v.code
             end
 
-            if val.attributes["textformat"] && ["Html", "Xml", "Xhtml"].include?(val.attributes["textformat"].human)
-              xml.send(tag, attrs) do
-                xml.__send__ :insert, Nokogiri::XML::DocumentFragment.parse(val)
-              end
-            else
-              xml.send(tag, val, attrs)
+            xml.send(tag, attrs) do
+              xml.__send__ :insert, Nokogiri::XML::DocumentFragment.parse(val)
             end
           else
             xml.send(tag, val)

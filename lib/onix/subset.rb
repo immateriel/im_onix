@@ -209,6 +209,25 @@ module ONIX
 
   class TextWithAttributes < String
     attr_accessor :attributes
+
+    def parse(attrs)
+      @attributes ||= {}
+      attrs.each do |k, v|
+        @attributes[k.to_s] = case k.to_s
+                              when "textcase"
+                                TextCase.from_code(v.to_s)
+                              when "textformat"
+                                TextFormat.from_code(v.to_s)
+                              when "language"
+                                LanguageCode.from_code(v.to_s)
+                              when "dateformat"
+                                DateFormat.from_code(v.to_s)
+                              else
+                                nil
+                              end
+        self
+      end
+    end
   end
 
   # DSL
@@ -336,25 +355,8 @@ module ONIX
             val = klass.parse(t)
           when :text
             if t.attributes.length > 0
-              attrs = {}
-              t.attributes.each do |k,v|
-                case k.to_s
-                when "textcase"
-                  attrs[k.to_s] = TextCase.from_code(v.to_s)
-                when "textformat"
-                  attrs[k.to_s] = TextFormat.from_code(v.to_s)
-                when "language"
-                  attrs[k.to_s] = LanguageCode.from_code(v.to_s)
-                when "dateformat"
-                  attrs[k.to_s] = DateFormat.from_code(v.to_s)
-                end
-              end
-              if attrs["textformat"] && ["Html","Xml","Xhtml"].include?(attrs["textformat"].human)
-                val = TextWithAttributes.new(t.inner_html)
-              else
-                val = TextWithAttributes.new(t.text)
-              end
-              val.attributes = attrs
+              val = TextWithAttributes.new(t.inner_html)
+              val.parse(t.attributes)
             else
               val = t.text
             end

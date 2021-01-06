@@ -220,6 +220,7 @@ class TestSerialize < Minitest::Test
       builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         ONIX::Serializer::Default.serialize(xml, @message)
       end
+      #assert_equal builder.to_xml, File.read(@filename)
       assert_equal builder.to_xml.gsub(/\>\s+\</, "><"), File.read(@filename).gsub(/\>\s+\</, "><")
     end
   end

@@ -25,7 +25,7 @@ module ONIX
             {
                 :shortcut => :amount,
                 :parse_lambda => lambda { |v| (v * 100).round },
-                :serialize_lambda => lambda { |v| v / 100.0 },
+                :serialize_lambda => lambda { |v| format("%.2f", v / 100.0) },
                 :cardinality => 0..1
             }
     element "Tax", :subset, :cardinality => 0..n
