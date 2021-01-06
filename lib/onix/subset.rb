@@ -355,7 +355,7 @@ module ONIX
             val = klass.parse(t)
           when :text
             if t.attributes.length > 0
-              val = TextWithAttributes.new(t.inner_html)
+              val = TextWithAttributes.new(t.attributes["textformat"] ? t.children.map { |x| x.to_s }.join.strip : t.text)
               val.parse(t.attributes)
             else
               val = t.text

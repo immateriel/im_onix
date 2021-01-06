@@ -90,7 +90,7 @@ module ONIX
             end
 
             xml.send(tag, attrs) do
-              xml.__send__ :insert, Nokogiri::XML::DocumentFragment.parse(val)
+              xml.__send__ :insert, val#Nokogiri::XML::DocumentFragment.parse(val)
             end
           else
             xml.send(tag, val)
