@@ -22,12 +22,6 @@ module ONIX
     end
   end
 
-  class HumanCodeString < String
-    def ==other
-      self.downcase.eql? other.downcase
-    end
-  end
-
   class Code < Subset
     # @!attribute code
     #   @return [String] code as defined in ONIX documentation codelist
