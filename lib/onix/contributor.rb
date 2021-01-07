@@ -3,19 +3,21 @@ require 'onix/website'
 
 module ONIX
   class Contributor < SubsetDSL
-    element "SequenceNumber", :integer
-    element "ContributorRole", :subset, :shortcut => :role
-    elements "NameIdentifier", :subset, :shortcut => :identifiers
-    element "PersonName", :text
-    element "PersonNameInverted", :text
-    element "NamesBeforeKey", :text, :shortcut => :name_before_key
-    element "KeyNames", :text
-    element "CorporateName", :text
-    element "CorporateNameInverted", :text
-    element "BiographicalNote", :text
-    elements "Website", :subset
-    element "ContributorPlace", :subset, :shortcut => :place
-    elements "ContributorDate", :subset, :shortcut => :dates
+    element "SequenceNumber", :integer, :cardinality => 0..1
+    element "ContributorRole", :subset, :shortcut => :role, :cardinality => 1..n
+    elements "FromLanguage", :subset, :klass => "LanguageCode", :cardinality => 0..n
+    elements "ToLanguage", :subset, :klass => "LanguageCode", :cardinality => 0..n
+    elements "NameIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
+    element "PersonName", :text, :cardinality => 0..1
+    element "PersonNameInverted", :text, :cardinality => 0..1
+    element "NamesBeforeKey", :text, :shortcut => :name_before_key, :cardinality => 0..1
+    element "KeyNames", :text, :cardinality => 0..1
+    element "CorporateName", :text, :cardinality => 0..1
+    element "CorporateNameInverted", :text, :cardinality => 0..1
+    elements "ContributorPlace", :subset, :shortcut => :places, :cardinality => 0..n
+    elements "ContributorDate", :subset, :shortcut => :dates, :cardinality => 0..n
+    elements "BiographicalNote", :text, :shortcut => :biographies, :cardinality => 0..n
+    elements "Website", :subset, :cardinality => 0..n
 
     # @!group High level
     # flatten person name (firstname lastname)
@@ -43,7 +45,11 @@ module ONIX
     # biography string with HTML
     # @return [String]
     def biography
-      @biographical_note
+      self.biographies.first
+    end
+
+    def place
+      self.places.first
     end
 
     # raw biography string without HTML

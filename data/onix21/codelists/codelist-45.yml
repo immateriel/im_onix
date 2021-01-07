@@ -1,14 +1,14 @@
 ---
 :codelist:
   '01': Publisher
-  '02': Copublisher
+  '02': CoPublisher
   '03': Sponsor
-  '04': PublisherOfOriginallanguageVersion
+  '04': PublisherOfOriginalLanguageVersion
   '05': HostdistributorOfElectronicContent
   '06': PublishedForonBehalfOf
   '07': PublishedInAssociationWith
-  08: PublishedOnBehalfOf
-  09: NewOrAcquiringPublisher
+  '08': PublishedOnBehalfOf
+  '09': NewOrAcquiringPublisher
   '10': PublishingGroup
   '11': PublisherOfFacsimileOriginal
   '12': RepackagerOfPreboundEdition

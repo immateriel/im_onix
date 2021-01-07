@@ -4,9 +4,11 @@
 require 'im_onix'
 require 'nokogiri'
 require 'yaml'
+require 'unidecoder'
 
-# html_codelist_to_yml.rb html_codelist_dir
+# html_codelist_to_yml.rb html_codelist_dir dest_dir
 
+# generate YML data/codelists from editeur.org HTML codelists
 class HTMLCodelist
 
   private
@@ -26,19 +28,21 @@ class HTMLCodelist
 
   # from rails
   def self.rename(term)
-    term.gsub(/\(|\)|\,|\-|’|\/|“|”|‘|\.|\:|–|\||\+/, "").gsub(/\;/, " Or ").gsub(/\s+/, " ").split(" ").map { |t| t.capitalize }.join("")
+    result = term.to_ascii.gsub(/\(|\)|\,|'|’|\/|“|”|‘|\.|\:|–|\||\+/, "").gsub(/\-/," ").gsub(/\;/, " Or ").gsub(/\s+/, " ").split(" ").map { |t| t.capitalize }.join("")
+    if result.length > 63
+      puts "WARN: #{result} (#{term}) to long"
+    end
+    result
   end
 end
 
-files = `ls #{ARGV[1]}/*.htm`.split(/\n/)
-
-h = {}
+files = `ls #{ARGV[0]}/*.htm`.split(/\n/)
 
 files.sort.each do |file|
   codelist = file.gsub(/.*onix\-codelist\-(.*)\.htm/, '\1').to_i
   h = HTMLCodelist.parse_codelist(file)
 
-  File.open("data/codelists/codelist-#{codelist}.yml", 'w') do |fw|
+  File.open("#{ARGV[1]}/codelist-#{codelist}.yml", 'w') do |fw|
     fw.write({:codelist => h}.to_yaml)
   end
 end

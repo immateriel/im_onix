@@ -3,21 +3,21 @@
   '00': Undefined
   AA: Audio
   AB: AudioCassette
-  AC: Cdaudio
+  AC: CdAudio
   AD: Dat
   AE: AudioDisc
   AF: AudioTape
   AG: Minidisc
-  AH: Cdextra
+  AH: CdExtra
   AI: DvdAudio
   AJ: DownloadableAudioFile
-  AK: PrerecordedDigitalAudioPlayer
-  AL: PrerecordedSdCard
+  AK: PreRecordedDigitalAudioPlayer
+  AL: PreRecordedSdCard
   AZ: OtherAudioFormat
   BA: Book
   BB: Hardback
   BC: PaperbackSoftback
-  BD: Looseleaf
+  BD: LooseLeaf
   BE: SpiralBound
   BF: Pamphlet
   BG: LeatherFineBinding
@@ -27,8 +27,8 @@
   BK: NoveltyBook
   BL: SlideBound
   BM: BigBook
-  BN: PartworkFascículo
-  BO: FoldoutBookOrChart
+  BN: PartWorkFasciculo
+  BO: FoldOutBookOrChart
   BP: FoamBook
   BZ: OtherBookFormat
   CA: SheetMap
@@ -38,19 +38,19 @@
   CE: Globe
   CZ: OtherCartographic
   DA: Digital
-  DB: Cdrom
-  DC: Cdi
+  DB: CdRom
+  DC: CdI
   DD: Dvd
   DE: GameCartridge
   DF: Diskette
   DG: ElectronicBookText
   DH: OnlineResource
-  DI: Dvdrom
+  DI: DvdRom
   DJ: SecureDigitalSdMemoryCard
   DK: CompactFlashMemoryCard
   DL: MemoryStickMemoryCard
   DM: UsbFlashDrive
-  DN: DoublesidedCddvd
+  DN: DoubleSidedCddvd
   DO: DigitalProductLicenseKey
   DZ: OtherDigital
   FA: FilmOrTransparency
@@ -80,7 +80,7 @@
   PN: PicturesOrPhotographs
   PO: Wallchart
   PP: Stickers
-  PQ: PlateLámina
+  PQ: PlateLamina
   PR: NotebookBlankBook
   PS: Organizer
   PT: Bookmark
@@ -99,12 +99,12 @@
   VL: Vcd
   VM: Svcd
   VN: HdDvd
-  VO: Bluray
+  VO: BluRay
   VP: UmdVideo
   VZ: OtherVideoFormat
   WW: MixedMediaProduct
   WX: MultipleCopyPack
-  XA: TradeonlyMaterial
+  XA: TradeOnlyMaterial
   XB: DumpbinEmpty
   XC: DumpbinFilled
   XD: CounterpackEmpty
@@ -115,7 +115,7 @@
   XI: Streamer
   XJ: Spinner
   XK: LargeBookDisplay
-  XL: ShrinkwrappedPack
+  XL: ShrinkWrappedPack
   XM: BoxedPack
   XZ: OtherPointOfSale
   ZA: GeneralMerchandise
@@ -123,8 +123,8 @@
   ZC: SoftToy
   ZD: Toy
   ZE: Game
-  ZF: Tshirt
-  ZG: EbookReader
+  ZF: TShirt
+  ZG: EBookReader
   ZH: TabletComputer
   ZI: AudiobookPlayer
   ZJ: Jigsaw

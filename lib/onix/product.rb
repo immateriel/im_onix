@@ -2,12 +2,14 @@ require 'forwardable'
 require 'onix/helper'
 require 'onix/code'
 require 'onix/entity'
+require 'onix/identifier'
 require 'onix/descriptive_detail'
 require 'onix/publishing_detail'
 require 'onix/collateral_detail'
 require 'onix/related_material'
 require 'onix/supporting_resource'
 require 'onix/product_supply'
+require 'onix/content_detail'
 require 'onix/territory'
 require 'onix/error'
 require 'onix/product_supplies_extractor'
@@ -20,15 +22,21 @@ module ONIX
     include ProprietaryIdMethods
     include ProductSuppliesExtractor
 
-    element "RecordReference", :text
-    element "NotificationType", :subset
-    element "RecordSourceName", :text
-    elements "ProductIdentifier", :subset, :shortcut => :identifiers
-    element "DescriptiveDetail", :subset
-    element "CollateralDetail", :subset
-    element "PublishingDetail", :subset
-    element "RelatedMaterial", :subset
-    elements "ProductSupply", :subset
+    element "RecordReference", :text, :cardinality => 1
+    element "NotificationType", :subset, :cardinality => 1
+    elements "DeletionText", :text, :cardinality => 0..n
+    element "RecordSourceType", :subset, :cardinality => 0..1
+    elements "RecordSourceIdentifier", :subset, :cardinality => 0..n
+    element "RecordSourceName", :text, :cardinality => 0..1
+    elements "ProductIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
+    # elements "Barcode", :subset, :cardinality => 0..n
+    element "DescriptiveDetail", :subset, :cardinality => 0..1
+    element "CollateralDetail", :subset, :cardinality => 0..1
+    # element "PromotionDetail", :subset, :cardinality => 0..1
+    element "ContentDetail", :subset, :cardinality => 0..1
+    element "PublishingDetail", :subset, :cardinality => 0..1
+    element "RelatedMaterial", :subset, :cardinality => 0..1
+    elements "ProductSupply", :subset, :cardinality => 0..n
 
     # default LanguageCode from ONIXMessage
     attr_accessor :default_language_of_text
@@ -90,6 +98,18 @@ module ONIX
     def_delegator :publishing_detail, :sales_restriction
     def_delegator :publishing_detail, :imprint
     def_delegator :publishing_detail, :publisher
+
+    def collateral_detail
+      @collateral_detail || CollateralDetail.new
+    end
+
+    def descriptive_detail
+      @descriptive_detail || DescriptiveDetail.new
+    end
+
+    def publishing_detail
+      @publishing_detail || PublishingDetail.new
+    end
 
     # product LanguageCode of text
     def language_of_text
@@ -274,7 +294,7 @@ module ONIX
     def excerpts
       return [] unless @collateral_detail && @collateral_detail.supporting_resources
 
-      @collateral_detail.supporting_resources.sample_content.human_code_match(:resource_mode, ["Text", "Multimode"]).map do |resource|
+      @collateral_detail.supporting_resources.sample_content.human_code_match(:resource_mode, ["Text", "MultiMode"]).map do |resource|
         {
             :url => resource.versions.last.links.first.strip,
             :form => resource.versions.last.form.human,
@@ -328,7 +348,7 @@ module ONIX
                 (!sales_restriction.end_date or sales_restriction.end_date >= Date.today)
           }.map { |sale_right|
             sale_right.sales_outlets.select { |sale_outlet|
-              sale_outlet.identifier and sale_outlet.identifier.type.human == "OnixSalesOutletIdCode" }.map { |sale_outlet|
+              sale_outlet.identifier and sale_outlet.identifier.type.human == "OnixRetailSalesOutletIdCode" }.map { |sale_outlet|
               sale_outlet.identifier.value
             }
           }

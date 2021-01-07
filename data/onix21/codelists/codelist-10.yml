@@ -1,15 +1,15 @@
 ---
 :codelist:
-  '000': EpublicationContentPackage
+  '000': Epublication"contentPackage"
   '001': Html
   '002': Pdf
-  '003': Pdfmerchant
+  '003': PdfMerchant
   '004': AdobeEbookReader
   '005': MicrosoftReaderLevel1level3
   '006': MicrosoftReaderLevel5
   '007': Netlibrary
-  008: Metatext
-  009: Mightywords
+  '008': Metatext
+  '009': Mightywords
   '010': EreaderAkaPalmReader
   '011': Softbook
   '012': Rocketbook
@@ -18,8 +18,8 @@
   '015': FranklinEbookman
   '016': Books24x7
   '017': Digitalowl
-  018: Handheldmed
-  019: Wizeup
+  '018': Handheldmed
+  '019': Wizeup
   '020': Tk3
   '021': Litraweb
   '022': Mobipocket
@@ -28,8 +28,8 @@
   '025': Txt
   '026': Exebook
   '027': SonyBbeb
-  028: VitalsourceBookshelf
-  029: Epub
+  '028': VitalsourceBookshelf
+  '029': Epub
   '030': Myilibrary
   '031': Kindle
   '032': GoogleEdition
@@ -38,8 +38,8 @@
   '035': Ebl
   '036': Ebrary
   '037': Isilo
-  038: Plucker
-  039: Vitalbook
+  '038': Plucker
+  '039': Vitalbook
   '040': BookAppForIos
   '041': AndroidApp
   '042': OtherApp
@@ -48,5 +48,5 @@
   '045': Epib
   '046': Scorm
   '047': Ebp
-  098: MultipleFormats
-  099: Unspecified
+  '098': MultipleFormats
+  '099': Unspecified

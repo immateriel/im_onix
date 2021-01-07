@@ -5,9 +5,9 @@ require 'onix/supply_detail'
 
 module ONIX
   class ProductSupply < SubsetDSL
-    elements "Market", :subset
-    element "MarketPublishingDetail", :subset
-    elements "SupplyDetail", :subset
+    elements "Market", :subset, :cardinality => 0..n
+    element "MarketPublishingDetail", :subset, :cardinality => 0..1
+    elements "SupplyDetail", :subset, :cardinality => 1..n
 
     # availability date from market
     # @return [Date]

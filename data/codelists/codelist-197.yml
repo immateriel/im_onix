@@ -5,3 +5,5 @@
   '03': PublicationOrder
   '04': TemporalnarrativeOrder
   '05': OriginalPublicationOrder
+  '06': SuggestedReadingOrder
+  '07': SuggestedDisplayOrder

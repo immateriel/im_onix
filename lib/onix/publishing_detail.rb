@@ -1,16 +1,23 @@
+require 'onix/product_contact'
 require 'onix/sales_rights'
+require 'onix/copyright_statement'
 require 'onix/date'
+
 module ONIX
   class PublishingDetail < SubsetDSL
-    elements "Imprint", :subset
-    elements "Publisher", :subset
-    element "CityOfPublication", :text, :shortcut => :city
-    element "CountryOfPublication", :text, :shortcut => :country
-    element "PublishingStatus", :subset, :shortcut => :status
-    elements "PublishingDate", :subset
-    elements "SalesRights", :subset, {:pluralize => false}
-    element "ROWSalesRightsType", :subset, {:klass => "SalesRightsType"}
-    element "SalesRestriction", :subset
+    elements "Imprint", :subset, :cardinality => 0..n
+    elements "Publisher", :subset, :cardinality => 0..n
+    element "CityOfPublication", :text, :shortcut => :city, :cardinality => 0..n
+    element "CountryOfPublication", :text, :shortcut => :country, :cardinality => 0..1
+    elements "ProductContact", :subset, :cardinality => 0..n
+    element "PublishingStatus", :subset, :shortcut => :status, :cardinality => 0..1
+    elements "PublishingStatusNote", :text, :cardinality => 0..n
+    elements "PublishingDate", :subset, :cardinality => 0..n
+    element "LatestReprintNumber", :integer, :cardinality => 0..1
+    elements "CopyrightStatement", :subset, :cardinality => 0..n
+    elements "SalesRights", :subset, :pluralize => false, :cardinality => 0..n
+    element "ROWSalesRightsType", :subset, :klass => "SalesRightsType", :cardinality => 0..1
+    element "SalesRestriction", :subset, :cardinality => 0..n
 
     # @!group High level
 

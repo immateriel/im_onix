@@ -45,11 +45,11 @@ module ONIX
     def self.tag_match(v)
       TagNameMatcher.new(v)
     end
-
   end
 
+  # for class DSL
   class ElementParser
-    attr_accessor :type, :name, :short
+    attr_accessor :type, :name, :short, :cardinality, :klass_name
 
     def self.inflectors
       [['ox', 'oxes'],
@@ -96,6 +96,8 @@ module ONIX
       @parse_lambda = options[:parse_lambda]
       @serialize_lambda = options[:serialize_lambda]
       @shortcut = options[:shortcut]
+      @cardinality = options[:cardinality]
+      @cardinality = nil if @cardinality == 0..n # no need to check if 0..n
 
       if options[:klass]
         @klass_name = options[:klass]
@@ -205,6 +207,30 @@ module ONIX
     end
   end
 
+  class TextWithAttributes < String
+    attr_accessor :attributes
+
+    def parse(attrs)
+      @attributes ||= {}
+      attrs.each do |k, v|
+        @attributes[k.to_s] = case k.to_s
+                              when "textcase"
+                                TextCase.from_code(v.to_s)
+                              when "textformat"
+                                TextFormat.from_code(v.to_s)
+                              when "language"
+                                LanguageCode.from_code(v.to_s)
+                              when "dateformat"
+                                DateFormat.from_code(v.to_s)
+                              else
+                                nil
+                              end
+        self
+      end
+    end
+  end
+
+  # DSL
   class SubsetDSL < Subset
     def self.scope(name, lambda)
       @scopes ||= {}
@@ -302,22 +328,51 @@ module ONIX
       ONIX.const_get(name) if ONIX.const_defined? name
     end
 
+    # infinity constant for cardinality
+    def self.n
+      Float::INFINITY
+    end
+
+    def get_registered_element(name)
+      self.class.ancestors_registered_elements[name]
+    end
+
+    def get_class(name)
+      self.class.get_class(name)
+    end
+
     def parse(n)
       n.elements.each do |t|
         name = t.name
-        e = self.class.ancestors_registered_elements[name]
+        e = self.get_registered_element(name)
         if e
           case e.type
           when :subset
-            val = self.class.get_class(e.class_name).parse(t)
+            klass = self.get_class(e.class_name)
+            unless klass
+              raise UnknownElement, e.class_name
+            end
+            val = klass.parse(t)
           when :text
-            val = t.text
+            if t.attributes.length > 0
+              val = TextWithAttributes.new(t.attributes["textformat"] ? t.children.map { |x| x.to_s }.join.strip : t.text)
+              val.parse(t.attributes)
+            else
+              val = t.text
+            end
           when :integer
             val = t.text.to_i
           when :float
             val = t.text.to_f
           when :bool
             val = true
+          when :date
+            fmt = t["dateformat"] || "00"
+            val = ONIX::Helper.to_date(fmt, t.text)
+          when :datetime
+            tm = t.text
+            val = ((((Time.strptime(tm, "%Y%m%dT%H%M%S%z") rescue Time.strptime(tm, "%Y%m%dT%H%M%S")) rescue Time.strptime(tm, "%Y%m%dT%H%M%z")) rescue Time.strptime(tm, "%Y%m%dT%H%M")) rescue Time.strptime(tm, "%Y%m%d")) rescue nil
+            val ||= tm
           when :ignore
             val = nil
           else
@@ -337,8 +392,8 @@ module ONIX
     end
 
     def unsupported(tag)
-      #      raise SubsetUnsupported,tag.name
-      #      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{self.class.short_to_ref(tag.name)})"
+      # raise SubsetUnsupported, [self.class, tag.name]
+      #puts "SubsetUnsupported: #{self.class}##{tag.name} (#{self.class.short_to_ref(tag.name)})"
     end
   end
 end

@@ -5,8 +5,8 @@
   '03': NotificationConfirmedOnPublication
   '04': UpdatePartial
   '05': Delete
-  08: NoticeOfSale
-  09: NoticeOfAcquisition
+  '08': NoticeOfSale
+  '09': NoticeOfAcquisition
   '12': UpdateSupplydetailOnly
   '13': UpdateMarketrepresentationOnly
   '14': UpdateSupplydetailAndMarketrepresentation

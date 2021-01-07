@@ -1,38 +1,69 @@
 require 'onix/collection'
-require 'onix/collection_sequence'
 require 'onix/epub_usage_constraint'
-require 'onix/epub_usage_limit'
+require 'onix/epub_license'
 require 'onix/extent'
 require 'onix/language'
+require 'onix/ancillary_content'
 require 'onix/product_form_feature'
+require 'onix/product_classification'
 require 'onix/product_part'
 require 'onix/title_detail'
 require 'onix/contributor'
+require 'onix/measure'
 require 'onix/subject'
+require 'onix/audience'
+require 'onix/audience_range'
+require 'onix/complexity'
 
 module ONIX
   class DescriptiveDetail < SubsetDSL
-    element "ProductComposition", :subset, :shortcut => :composition
-    element "ProductForm", :subset, :shortcut => :form
-    elements "ProductFormDetail", :subset, :shortcut => :form_details
-    elements "ProductFormFeature", :subset, :shortcut => :form_features
-    element "ProductFormDescription", :text, :shortcut => :file_description
-    element "PrimaryContentType", :subset, {:klass => "ProductContentType"}
-    elements "ProductContentType", :subset, :shortcut => :content_types
-    elements "EpubTechnicalProtection", :subset
-    elements "EpubUsageConstraint", :subset
-    elements "ProductPart", :subset, :shortcut => :parts
-    elements "Collection", :subset
-    element "NoCollection", :ignore
-    elements "TitleDetail", :subset
-    elements "Contributor", :subset
-    element "EditionType", :subset
-    element "EditionNumber", :integer
-    element "NoEdition", :ignore
-    elements "Language", :subset
-    elements "Extent", :subset
-    elements "Subject", :subset
-    elements "AudienceCode", :subset
+    element "ProductComposition", :subset, :shortcut => :composition, :cardinality => 1
+    element "ProductForm", :subset, :shortcut => :form, :cardinality => 1
+    elements "ProductFormDetail", :subset, :shortcut => :form_details, :cardinality => 0..n
+    elements "ProductFormFeature", :subset, :shortcut => :form_features, :cardinality => 0..n
+    element "ProductPackaging", :subset, :cardinality => 0..1
+    element "ProductFormDescription", :text, :shortcut => :file_description, :cardinality => 0..n
+    element "TradeCategory", :subset, :cardinality => 0..1
+    element "PrimaryContentType", :subset, :klass => "ProductContentType"
+    elements "ProductContentType", :subset, :shortcut => :content_types, :cardinality => 0..n
+    elements "Measure", :subset, :cardinality => 0..n
+    element "CountryOfManufacture", :subset, :klass=>"CountryCode", :cardinality => 0..1
+    elements "EpubTechnicalProtection", :subset, :cardinality => 0..n
+    elements "EpubUsageConstraint", :subset, :cardinality => 0..n
+    element "EpubLicense", :subset, :cardinality => 0..1
+    elements "MapScale", :integer, :cardinality => 0..n
+    elements "ProductClassification", :subset, :cardinality => 0..n
+    elements "ProductPart", :subset, :shortcut => :parts, :cardinality => 0..n
+    elements "Collection", :subset, :cardinality => 0..n
+    element "NoCollection", :bool, :cardinality => 0..1
+    elements "TitleDetail", :subset, :cardinality => 0..n
+    element "ThesisType", :subset, :cardinality => 0..1
+    element "ThesisPresentedTo", :text, :cardinality => 0..1
+    element "ThesisYear", :text, :cardinality => 0..1
+    elements "Contributor", :subset, :cardinality => 0..n
+    elements "ContributorStatement", :text, :cardinality => 0..n
+    element "NoContributor", :bool, :cardinality => 0..1
+    # elements "Conference", :subset, :cardinality => 0..n
+    # elements "Event", :subset, :cardinality => 0..n
+    element "EditionType", :subset, :cardinality => 0..n
+    element "EditionNumber", :integer, :cardinality => 0..1
+    element "EditionVersionNumber", :text, :cardinality => 0..1
+    elements "EditionStatement", :text, :cardinality => 0..n
+    element "NoEdition", :bool, :cardinality => 0..1
+    # element "ReligiousText", :subset, :cardinality => 0..1
+    elements "Language", :subset, :cardinality => 0..1
+    elements "Extent", :subset, :cardinality => 0..n
+    element "Illustrated", :subset, :cardinality => 0..1
+    element "NumberOfIllustrations", :integer, :cardinality => 0..1
+    elements "IllustrationsNote", :text, :cardinality => 0..n
+    elements "AncillaryContent", :subset, :cardinality => 0..n
+    elements "Subject", :subset, :cardinality => 0..n
+    # elements "NameAsSubject", :subset, :cardinality => 0..n
+    elements "AudienceCode", :subset, :cardinality => 0..n
+    elements "Audience", :subset, :cardinality => 0..n
+    elements "AudienceRange", :subset, :cardinality => 0..n
+    elements "AudienceDescription", :text, :cardinality => 0..n
+    elements "Complexity", :subset, :cardinality => 0..n
 
     # @!group Shortcuts
 
@@ -125,7 +156,7 @@ module ONIX
     # is digital offer a bundle ?
     # @return [Boolean]
     def bundle?
-      @product_composition.human == "MultipleitemRetailProduct"
+      @product_composition.human == "MultipleComponentRetailProduct"
     end
 
     # digital file format string (Epub,Pdf,AmazonKindle)
@@ -164,7 +195,7 @@ module ONIX
     # protections string array
     # @return [Array<String>]
     def protections
-      return nil if @epub_technical_protections.length == 0
+      return [] if @epub_technical_protections.length == 0
       @epub_technical_protections.map(&:human)
     end
 

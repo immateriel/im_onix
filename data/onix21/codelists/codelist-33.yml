@@ -7,8 +7,8 @@
   '05': ReviewQuoteRestrictedLength
   '06': QuoteFromReviewOfPreviousEdition
   '07': ReviewText
-  08: ReviewQuote
-  09: PromotionalHeadline
+  '08': ReviewQuote
+  '09': Promotional"headline"
   '10': PreviousReviewQuote
   '11': AuthorComments
   '12': DescriptionForReader

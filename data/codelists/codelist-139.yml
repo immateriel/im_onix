@@ -1,102 +1,176 @@
 ---
 :codelist:
+  SYM: 24symbols
   ACM: ACMoore
   AAP: Aandp
+  ADL: Adlibris
+  ACB: Akademibokhandeln
+  AKK: AkateeminenKirjakauppa
   ALB: Albertsons
+  ALT: Almatalent
   AMZ: Amazon
   ANR: AngusAndRobertson
   ANB: Anobii
+  APA: Apabi
   APC: Apple
   ASD: Asda
+  ASB: AsiaBooks
   AUD: Audible
+  AUC: Audiobookscom
+  ATK: Audioteka
   BDL: BDalton
   BNO: BarnesAndNoble
+  BDZ: Bdbuzz
   BBB: BedBathAndBeyond
   BST: BestBuy
+  MMM: Bibliotheca
   BIL: Bilbary
+  BLG: Billigbook
   BJW: BjsWholesaleClub
+  BLA: BlackstoneAudio
   BLK: Blackwells
+  GOS: Blinkbox
+  BKU: Bokus
+  BLD: Bolinda
   BCA: BookClubAssociates
+  BOO: Bookbeat
   BSH: Bookish
   BKP: Bookpeople
-  BKM: Booksamillion
+  BRB: BooksEtc
+  BKM: BooksAMillion
+  BKS: Bookshout
+  BTP: Booktopia
+  BKY: Bookyfi
   BRD: Borders
-  BRB: BordersbooksEtc
   BRT: BritishBookshops
   CDL: CasaDelLibro
+  CDN: Cdoncom
+  CEB: Ceebo
   CHD: Christianbookcom
+  CYM: Citymarket
+  CMX: Comixology
+  COP: Copia
   CST: Costco
   CRB: CrateAndBarrel
   CVS: CvsDrugStores
+  CVM: CvsMediatheques
+  CYB: Cyberlibris
+  DEM: DeMarque
   DSG: DicksSportingGoods
+  DIL: Dilicom
   DYM: Dymocks
+  EPA: EPagine
+  ERD: EReads
   ELC: EarlyLearningCentre
   ESN: Eason
   EBC: EbooksCorp
   ECH: Echristian
-  ECI: ElCorteInglés
+  ECI: ElCorteIngles
   ELE: Electre
   ELB: Elibse
+  ELS: Elisa
+  ELL: Ellibscom
   EMP: Empik
   ENH: EnglishHeritage
+  EPC: Epic!
   FDB: Feedbooks
+  FIN: Findaway
+  FSP: Fishpond
+  FLP: Flipkart
   FNC: Fnac
+  FOL: Follett
   FRY: FrysElectronics
   GMS: Gamestop
+  GLO: Glose
   GOO: GoogleBooks
-  GOS: BlinkboxFormerlyGospokenmobcast
   HST: HastingsEntertainment
   HMV: Hmv
   HMD: HomeDepot
-  IND: Indigochapters
-  IMM: Immateriel.fr
+  IMM: Immaterielfr
+  IND: IndigoChapters
+  IBS: InternetBookshopItalia
+  IZN: Izneo
+  JBH: JbHifi
   JSM: JohnSmithAndSon
-  KMT: Kmart
+  KMT: KMart
+  KID: Kirja&idea
+  KPV: Kirjastopalvelu
   KNB: Knfbblio
   KNO: KnoInc
   KBO: Kobo
   KOO: Koorong
+  KOR: Kortext
   KRG: Kroger
+  LTP: Lehtipiste
   LWE: Lowes
+  MAC: Mackin
+  MAG: Magzter
   MKS: MarksAndSpencer
   MAT: Matras
   MMS: MediaMarktsaturn
+  ADP: MessageriesAdp
   MCR: Microcenter
+  MSF: Microsoft
+  MOF: Mofibo
   MRR: Morrisons
   MTC: Mothercare
   MYB: Myboox
+  MYI: Myilibrary
   NTR: NationalTrust
+  NXT: Nextory
   NUM: Numilog
   OFD: OfficeDepot
   OFM: OfficeMax
   OLF: Olf
+  OVD: Overdrive
+  OYS: Oyster
   PST: PastTimes
   PTS: PetSmart
   PTC: Petco
   PLY: Playcom
+  POK: Pokkaritukku
   PTB: PotteryBarn
   RDB: Readbooks
   RCL: Readcloud
   RST: RestorationHardware
   RET: Rethink
   RTZ: RitzCamera
+  RMB: RmBooks
+  RBD: Rosebud
+  SGR: SGroup
+  SAF: Safari
   SFW: Safeway
   SNS: Sainsburys
+  SCR: Scribd
   SLF: Selfridges
+  SEQ: Sequencity
+  SBT: ShanghaiBookTraders
+  SKB: Skoobe
+  SMW: Smashwords
   SNY: Sony
   STP: Staples
-  TEA: TheEbookAlternative
+  STT: Storytel
+  SKK: SuomalainenKirjakauppa
+  SPL: SuomalainenPlus
+  SUP: Supla
+  SSK: SuuriSuomalainenKirjakerho
   TRG: Target
   TES: Tesco
+  TEA: TheEbookAlternative
+  TOL: Tolino
   TSR: ToysRUs
   TSO: TsoTheStationeryOffice
+  TXR: Txtr
+  UBH: UgglanBokhandel
   VRG: VirginMegastores
   WHS: WHSmith
   WTR: Waitrose
-  WLM: Walmart
+  WLM: WalMart
   WST: Waterstones
   WHT: Whitcouls
   WLS: WilliamsSonoma
   WLW: Woolworths
+  YOU: Youboox
   ZVV: Zavvi
+  PUB: PublishersOwnDirectSales
   ZZZ: Other

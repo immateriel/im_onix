@@ -1,9 +1,16 @@
+require 'onix/collection_sequence'
+
 module ONIX
   class Collection < SubsetDSL
-    element "CollectionType", :subset, :shortcut => :type
-    elements "CollectionIdentifier", :subset, :shortcut => :identifiers
-    elements "TitleDetail", :subset
-    elements "CollectionSequence", :subset, :shortcut => :sequences
+    element "CollectionType", :subset, :shortcut => :type, :cardinality => 1
+    element "SourceName", :text, :cardinality => 0..1
+    elements "CollectionIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
+    elements "CollectionSequence", :subset, :shortcut => :sequences, :cardinality => 0..n
+    elements "TitleDetail", :subset, :cardinality => 0..n
+    elements "Contributor", :subset, :cardinality => 0..n
+    elements "ContributorStatement", :text, :cardinality => 0..n
+    elements "ContributorStatement", :text, :cardinality => 0..n
+    element "NoContributor", :bool, :cardinality => 0..1
 
     scope :publisher, lambda { human_code_match(:collection_type, "PublisherCollection") }
 

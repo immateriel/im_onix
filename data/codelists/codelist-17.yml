@@ -39,10 +39,15 @@
   A38: OriginalAuthor
   A39: MapsBy
   A40: InkedOrColoredBy
-  A41: PopupsBy
+  A41: PaperEngineeringBy
   A42: ContinuedBy
   A43: Interviewer
   A44: Interviewee
+  A45: ComicScriptBy
+  A46: Inker
+  A47: Colorist
+  A48: Letterer
+  A51: ResearchBy
   A99: OtherPrimaryCreator
   B01: EditedBy
   B02: RevisedBy
@@ -54,7 +59,7 @@
   B08: TranslatedWithCommentaryBy
   B09: SeriesEditedBy
   B10: EditedAndTranslatedBy
-  B11: Editorinchief
+  B11: EditorInChief
   B12: GuestEditor
   B13: VolumeEditor
   B14: EditorialBoardMember
@@ -70,13 +75,21 @@
   B24: LiteraryEditor
   B25: ArrangedByMusic
   B26: TechnicalEditor
+  B27: ThesisAdvisorOrSupervisor
+  B28: ThesisExaminer
+  B29: ScientificEditor
+  B30: HistoricalAdvisor
+  B31: OriginalEditor
   B99: OtherAdaptationBy
   C01: CompiledBy
   C02: SelectedBy
+  C03: NonTextMaterialSelectedBy
+  C04: CuratedBy
   C99: OtherCompilationBy
   D01: Producer
   D02: Director
   D03: Conductor
+  D04: Choreographer
   D99: OtherDirectionBy
   E01: Actor
   E02: Dancer
@@ -87,9 +100,14 @@
   E07: ReadBy
   E08: PerformedByOrchestraBandEnsemble
   E09: Speaker
+  E10: Presenter
   E99: PerformedBy
   F01: FilmedphotographedBy
+  F02: EditorFilmOrVideo
   F99: OtherRecordingBy
   Z01: AssistedBy
+  Z02: HonoreddedicatedTo
+  Z03: EnactingJurisdiction
+  Z04: PeerReviewed
   Z98: VariousRoles
   Z99: Other

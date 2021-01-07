@@ -4,12 +4,18 @@ module ONIX
     include EanMethods
     include ProprietaryIdMethods
 
-    elements "ProductIdentifier", :subset, :shortcut => :identifiers
-    element "ProductForm", :subset, :shortcut => :form
-    element "ProductFormDescription", :text, :shortcut => :file_description
-    elements "ProductFormDetail", :subset, :shortcut => :form_details
-    elements "ProductContentType", :subset, :shortcut => :content_types
-    element "NumberOfCopies", :integer
+    element "PrimaryPart", :bool, :cardinality => 0..1
+    elements "ProductIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
+    element "ProductForm", :subset, :shortcut => :form, :cardinality => 1
+    elements "ProductFormDetail", :subset, :shortcut => :form_details, :cardinality => 0..n
+    elements "ProductFormFeature", :subset, :cardinality => 0..n
+    # element "ProductPackaging", :subset, :cardinality => 0..1
+    elements "ProductFormDescription", :text, :shortcut => :file_description, :cardinality => 0..n
+    elements "ProductContentType", :subset, :shortcut => :content_types, :cardinality => 0..n
+    elements "Measure", :subset, :cardinality => 0..n
+    element "NumberOfItemsOfThisForm", :integer, :cardinality => 0..1
+    element "NumberOfCopies", :integer, :cardinality => 0..1
+    element "CountryOfManufacture", :subset, :cardinality => 0..1
 
     def file_formats
       @product_form_details.select { |fd| fd.code =~ /^E1.*/ }

@@ -41,7 +41,7 @@
   IT-AT: Asti
   IT-AV: Avellino
   IT-BA: Bari
-  IT-BT: Barlettaandriatrani
+  IT-BT: BarlettaAndriaTrani
   IT-BL: Belluno
   IT-BN: Benevento
   IT-BG: Bergamo
@@ -53,7 +53,7 @@
   IT-CA: Cagliari
   IT-CL: Caltanissetta
   IT-CB: Campobasso
-  IT-CI: Carboniaiglesias
+  IT-CI: CarboniaIglesias
   IT-CE: Caserta
   IT-CT: Catania
   IT-CZ: Catanzaro
@@ -68,7 +68,7 @@
   IT-FE: Ferrara
   IT-FI: Firenze
   IT-FG: Foggia
-  IT-FC: Forlìcesena
+  IT-FC: ForliCesena
   IT-FR: Frosinone
   IT-GE: Genova
   IT-GO: Gorizia
@@ -85,7 +85,7 @@
   IT-LU: Lucca
   IT-MC: Macerata
   IT-MN: Mantova
-  IT-MS: Massacarrara
+  IT-MS: MassaCarrara
   IT-MT: Matera
   IT-VS: MedioCampidano
   IT-ME: Messina
@@ -96,7 +96,7 @@
   IT-NO: Novara
   IT-NU: Nuoro
   IT-OG: Ogliastra
-  IT-OT: Olbiatempio
+  IT-OT: OlbiaTempio
   IT-OR: Oristano
   IT-PD: Padova
   IT-PA: Palermo
@@ -136,7 +136,7 @@
   IT-UD: Udine
   IT-VA: Varese
   IT-VE: Venezia
-  IT-VB: Verbanocusioossola
+  IT-VB: VerbanoCusioOssola
   IT-VC: Vercelli
   IT-VR: Verona
   IT-VV: ViboValentia
@@ -150,16 +150,16 @@
   RU-CU: ChuvashskayaRepublic
   RU-DA: RepublicOfDagestan
   RU-IN: RepublicOfIngushetiya
-  RU-KB: KabardinobalkarskayaRepublic
+  RU-KB: KabardinoBalkarskayaRepublic
   RU-KL: RepublicOfKalmykiya
-  RU-KC: KarachayevocherkesskayaRepublic
+  RU-KC: KarachayevoCherkesskayaRepublic
   RU-KR: RepublicOfKareliya
   RU-KK: RepublicOfKhakasiya
   RU-KO: RepublicOfKomi
   RU-ME: RepublicOfMariyEl
   RU-MO: RepublicOfMordoviya
   RU-SA: RepublicOfSakhaYakutiya
-  RU-SE: RepublicOfSevernayaOsetiyaalaniya
+  RU-SE: RepublicOfSevernayaOsetiyaAlaniya
   RU-TA: RepublicOfTatarstan
   RU-TY: RepublicOfTyvaTuva
   RU-UD: UdmurtskayaRepublic
@@ -219,12 +219,12 @@
   RU-VOR: VoronezhskayaAdministrativeRegion
   RU-YAR: YaroslavskayaAdministrativeRegion
   RU-MOW: MoskvaCity
-  RU-SPE: SanktpeterburgCity
+  RU-SPE: SanktPeterburgCity
   RU-YEV: YevreyskayaAutonomousAdministrativeRegion
   RU-CHU: ChukotskiyAutonomousDistrict
-  RU-KHM: KhantymansiyskiyAutonomousDistrict
+  RU-KHM: KhantyMansiyskiyAutonomousDistrict
   RU-NEN: NenetskiyAutonomousDistrict
-  RU-YAN: YamalonenetskiyAutonomousDistrict
+  RU-YAN: YamaloNenetskiyAutonomousDistrict
   US-AK: Alaska
   US-AL: Alabama
   US-AR: Arkansas

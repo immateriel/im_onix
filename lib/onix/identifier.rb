@@ -1,7 +1,7 @@
 module ONIX
   class Identifier < SubsetDSL
-    element "IDValue", :text, :shortcut => :value
-    element "IDTypeName", :text, :shortcut => :name
+    element "IDTypeName", :text, :shortcut => :name, :cardinality => 0..1
+    element "IDValue", :text, :shortcut => :value, :cardinality => 1
 
     def type
       nil
@@ -13,47 +13,63 @@ module ONIX
   end
 
   class SenderIdentifier < Identifier
-    element "SenderIDType", :subset, :shortcut => :type
+    element "SenderIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   class AddresseeIdentifier < Identifier
-    element "AddresseeIDType", :subset, :shortcut => :type
+    element "AddresseeIDType", :subset, :shortcut => :type, :cardinality => 1
+  end
+
+  class RecordSourceIdentifier < Identifier
+    element "RecordSourceIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   class AgentIdentifier < Identifier
-    element "AgentIDType", :subset, :shortcut => :type
+    element "AgentIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   class ImprintIdentifier < Identifier
-    element "ImprintIDType", :subset, :shortcut => :type
+    element "ImprintIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   class PublisherIdentifier < Identifier
-    element "PublisherIDType", :subset, :shortcut => :type
+    element "PublisherIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   class SupplierIdentifier < Identifier
-    element "SupplierIDType", :subset, :shortcut => :type
+    element "SupplierIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   class NameIdentifier < Identifier
-    element "NameIDType", :subset, :shortcut => :type
+    element "NameIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   class CollectionIdentifier < Identifier
-    element "CollectionIDType", :subset, :shortcut => :type
+    element "CollectionIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   class ProductIdentifier < Identifier
-    element "ProductIDType", :subset, :shortcut => :type
+    element "ProductIDType", :subset, :shortcut => :type, :cardinality => 1
+  end
+
+  class ProductContactIdentifier < Identifier
+    element "ProductContactIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   class SalesOutletIdentifier < Identifier
-    element "SalesOutletIDType", :subset, :shortcut => :type
+    element "SalesOutletIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   class WorkIdentifier < Identifier
-    element "WorkIDType", :subset, :shortcut => :type
+    element "WorkIDType", :subset, :shortcut => :type, :cardinality => 1
+  end
+
+  class SupplyContactIdentifier < Identifier
+    element "SupplyContactIDType", :subset, :shortcut => :type, :cardinality => 1
+  end
+
+  class TextItemIdentifier < Identifier
+    element "TextItemIDType", :subset, :shortcut => :type, :cardinality => 1
   end
 
   module EanMethods

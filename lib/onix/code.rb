@@ -2,6 +2,9 @@
 require 'yaml'
 
 module ONIX
+  class InvalidCodeAlias < StandardError
+  end
+
   module CodeHelper
     def parse(n)
       @code = n.text
@@ -46,6 +49,9 @@ module ONIX
       obj = self.new
       obj.human = human
       obj.code = self.hash.key(human)
+      unless obj.code
+        raise InvalidCodeAlias, [self.to_s, human]
+      end
       obj
     end
 
@@ -57,8 +63,12 @@ module ONIX
   end
 
   class CodeFromYaml < Code
+    def self.codelist_filename
+      File.dirname(__FILE__) + "/../../data/codelists/codelist-#{self.code_ident}.yml"
+    end
+
     def self.hash
-      @hash ||= YAML.load(File.open(File.dirname(__FILE__) + "/../../data/codelists/codelist-#{self.code_ident}.yml"))[:codelist]
+      @hash ||= YAML.load(File.open(codelist_filename))[:codelist]
     end
 
     def self.list
@@ -95,7 +105,6 @@ module ONIX
       end
     end
   end
-
   class NotificationType < CodeFromYaml
     code_identifier 1
   end
@@ -104,12 +113,28 @@ module ONIX
     code_identifier 2
   end
 
+  class RecordSourceType < CodeFromYaml
+    code_identifier 3
+  end
+
   class ProductIDType < CodeFromYaml
     code_identifier 5
   end
 
+  class ProductClassificationType < CodeFromYaml
+    code_identifier 9
+  end
+
+  class TradeCategory < CodeFromYaml
+    code_identifier 12
+  end
+
   class CollectionIDType < CodeFromYaml
     code_identifier 13
+  end
+
+  class TextCase < CodeFromYaml
+    code_identifier 14
   end
 
   class TitleType < CodeFromYaml
@@ -122,6 +147,18 @@ module ONIX
 
   class ContributorRole < CodeFromYaml
     code_identifier 17
+  end
+
+  class NameType < CodeFromYaml
+    code_identifier 18
+  end
+
+  class UnnamedPersons < CodeFromYaml
+    code_identifier 19
+  end
+
+  class ConferenceRole < CodeFromYaml
+    code_identifier 20
   end
 
   class EditionType < CodeFromYaml
@@ -140,12 +177,48 @@ module ONIX
     code_identifier 24
   end
 
+  class AncillaryContentType < CodeFromYaml
+    code_identifier 25
+  end
+
   class SubjectSchemeIdentifier < CodeFromYaml
     code_identifier 27
   end
 
   class AudienceCode < CodeFromYaml
     code_identifier 28
+  end
+
+  class AudienceCodeType < CodeFromYaml
+    code_identifier 29
+  end
+
+  class AudienceRangeQualifier < CodeFromYaml
+    code_identifier 30
+  end
+
+  class AudienceRangePrecision < CodeFromYaml
+    code_identifier 31
+  end
+
+  class ComplexitySchemeIdentifier < CodeFromYaml
+    code_identifier 32
+  end
+
+  class TextFormat < CodeFromYaml
+    code_identifier 34
+  end
+
+  class PrizeCode < CodeFromYaml
+    code_identifier 41
+  end
+
+  class TextItemType < CodeFromYaml
+    code_identifier 42
+  end
+
+  class TextItemIDType < CodeFromYaml
+    code_identifier 43
   end
 
   class IDType < CodeFromYaml
@@ -158,6 +231,9 @@ module ONIX
   class AddresseeIDType < IDType
   end
 
+  class RecordSourceIDType < IDType
+  end
+
   class PublisherIDType < IDType
   end
 
@@ -165,6 +241,12 @@ module ONIX
   end
 
   class NameIDType < IDType
+  end
+
+  class NameIDType < IDType
+  end
+
+  class ProductContactIDType < IDType
   end
 
   class PublishingRole < CodeFromYaml
@@ -175,12 +257,24 @@ module ONIX
     code_identifier 46
   end
 
+  class MeasureType < CodeFromYaml
+    code_identifier 48
+  end
+
   class RegionCode < CodeFromYaml
     code_identifier 49
   end
 
+  class MeasureUnitCode < CodeFromYaml
+    code_identifier 50
+  end
+
   class ProductRelationCode < CodeFromYaml
     code_identifier 51
+  end
+
+  class ReturnsCodeType < CodeFromYaml
+    code_identifier 53
   end
 
   class DateFormat < CodeFromYaml
@@ -197,6 +291,10 @@ module ONIX
 
   class PriceQualifier < CodeFromYaml
     code_identifier 59
+  end
+
+  class PricePer < CodeFromYaml
+    code_identifier 60
   end
 
   class PriceStatus < CodeFromYaml
@@ -223,8 +321,16 @@ module ONIX
     code_identifier 69
   end
 
+  class StockQuantityCodeType < CodeFromYaml
+    code_identifier 70
+  end
+
   class SalesRestrictionType < CodeFromYaml
     code_identifier 71
+  end
+
+  class ThesisType < CodeFromYaml
+    code_identifier 72
   end
 
   class WebsiteRole < CodeFromYaml
@@ -239,8 +345,48 @@ module ONIX
     code_identifier 79
   end
 
+  class ProductPackaging < CodeFromYaml
+    code_identifier 80
+  end
+
   class ProductContentType < CodeFromYaml
     code_identifier 81
+  end
+
+  class BibleContents < CodeFromYaml
+    code_identifier 82
+  end
+
+  class BibleVersion < CodeFromYaml
+    code_identifier 83
+  end
+
+  class StudyBibleType < CodeFromYaml
+    code_identifier 84
+  end
+
+  class BiblePurpose < CodeFromYaml
+    code_identifier 85
+  end
+
+  class BibleTextOrganization < CodeFromYaml
+    code_identifier 86
+  end
+
+  class BibleReferenceLocation < CodeFromYaml
+    code_identifier 87
+  end
+
+  class ReligiousTextIdentifier < CodeFromYaml
+    code_identifier 88
+  end
+
+  class ReligiousTextFeatureType < CodeFromYaml
+    code_identifier 89
+  end
+
+  class ReligiousTextFeatureCode < CodeFromYaml
+    code_identifier 90
   end
 
   class CountryCode < CodeFromYaml
@@ -259,8 +405,28 @@ module ONIX
     code_identifier 93
   end
 
+  class BibleTextFeature < CodeFromYaml
+    code_identifier 97
+  end
+
+  class DiscountCodeType < CodeFromYaml
+    code_identifier 100
+  end
+
   class SalesOutletIDType < CodeFromYaml
     code_identifier 102
+  end
+
+  class ScriptCode < CodeFromYaml
+    code_identifier 121
+  end
+
+  class BarcodeType < CodeFromYaml
+    code_identifier 141
+  end
+
+  class PositionOnProduct < CodeFromYaml
+    code_identifier 142
   end
 
   class EpubTechnicalProtection < CodeFromYaml
@@ -283,10 +449,6 @@ module ONIX
     code_identifier 148
   end
 
-  class CollectionSequenceType < CodeFromYaml
-    code_identifier 197
-  end
-
   class TitleElementLevel < CodeFromYaml
     code_identifier 149
   end
@@ -299,6 +461,10 @@ module ONIX
     code_identifier 151
   end
 
+  class Illustrated < CodeFromYaml
+    code_identifier 152
+  end
+
   class TextType < CodeFromYaml
     code_identifier 153
   end
@@ -309,6 +475,14 @@ module ONIX
 
   class ContentDateRole < CodeFromYaml
     code_identifier 155
+  end
+
+  class CitedContentType < CodeFromYaml
+    code_identifier 156
+  end
+
+  class SourceType < CodeFromYaml
+    code_identifier 157
   end
 
   class ResourceContentType < CodeFromYaml
@@ -343,16 +517,44 @@ module ONIX
     code_identifier 164
   end
 
+  class SupplierCodeType < CodeFromYaml
+    code_identifier 165
+  end
+
   class SupplyDateRole < CodeFromYaml
     code_identifier 166
+  end
+
+  class PriceConditionType < CodeFromYaml
+    code_identifier 167
+  end
+
+  class PriceConditionQuantityType < CodeFromYaml
+    code_identifier 168
+  end
+
+  class QuantityUnit < CodeFromYaml
+    code_identifier 169
+  end
+
+  class DiscountType < CodeFromYaml
+    code_identifier 170
   end
 
   class TaxType < CodeFromYaml
     code_identifier 171
   end
 
+  class CurrencyZone < CodeFromYaml
+    code_identifier 172
+  end
+
   class PriceDateRole < CodeFromYaml
     code_identifier 173
+  end
+
+  class PrintedOnProduct < CodeFromYaml
+    code_identifier 174
   end
 
   class ProductFormDetail < CodeFromYamlWithMime
@@ -365,5 +567,81 @@ module ONIX
 
   class SupportingResourceFileFormat < CodeFromYamlWithMime
     code_identifier 178
+  end
+
+  class PriceCodeType < CodeFromYaml
+    code_identifier 179
+  end
+
+  class CollectionSequenceType < CodeFromYaml
+    code_identifier 197
+  end
+
+  class ProductContactRole < CodeFromYaml
+    code_identifier 198
+  end
+
+  class ReturnsCode < CodeFromYaml
+    code_identifier 204
+  end
+
+  class Proximity < CodeFromYaml
+    code_identifier 215
+  end
+
+  class VelocityMetric < CodeFromYaml
+    code_identifier 216
+  end
+
+  class PriceIDType < CodeFromYaml
+    code_identifier 217
+  end
+
+  class EpubLicenseExpressionType < CodeFromYaml
+    code_identifier 218
+  end
+
+  class CopyrightType < CodeFromYaml
+    code_identifier 219
+  end
+
+  class FundingIDType < CodeFromYaml
+    code_identifier 228
+  end
+
+  class Gender < CodeFromYaml
+    code_identifier 229
+  end
+
+  class PriceConstraintType < CodeFromYaml
+    code_identifier 230
+  end
+
+  class SupplyContactRole < CodeFromYaml
+    code_identifier 239
+  end
+
+  class AVItemType < CodeFromYaml
+    code_identifier 240
+  end
+
+  class AVItemIDType < CodeFromYaml
+    code_identifier 241
+  end
+
+  class EventIDType < CodeFromYaml
+    code_identifier 244
+  end
+
+  class EventType < CodeFromYaml
+    code_identifier 245
+  end
+
+  class EventStatus < CodeFromYaml
+    code_identifier 246
+  end
+
+  class OccurrenceDateRole < CodeFromYaml
+    code_identifier 247
   end
 end

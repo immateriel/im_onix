@@ -2,9 +2,9 @@ require 'onix/title_element'
 
 module ONIX
   class TitleDetail < SubsetDSL
-    element "TitleType", :subset, :shortcut => :type
-    elements "TitleElement", :subset
-    element "TitleStatement", :text
+    element "TitleType", :subset, :shortcut => :type, :cardinality => 1
+    elements "TitleElement", :subset, :cardinality => 1..n
+    element "TitleStatement", :text, :cardinality => 0..1
 
     scope :distinctive_title, lambda { human_code_match(:title_type, /DistinctiveTitle/) }
 

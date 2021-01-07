@@ -1,9 +1,9 @@
 ---
 :codelist:
-  '10': TextEyereadable
+  '10': TextEyeReadable
   '15': ExtensiveLinksBetweenInternalContent
   '14': ExtensiveLinksToExternalContent
-  '16': AdditionalEyereadableTextNotPartOfMainWork
+  '16': AdditionalEyeReadableTextNotPartOfMainWork
   '17': PromotionalTextForOtherBookProduct
   '11': MusicalNotation
   '07': StillImagesGraphics
@@ -30,8 +30,8 @@
   '31': PromotionalVideoForOtherBookProduct
   '05': GamePuzzle
   '32': Contest
-  08: Software
-  09: Data
+  '08': Software
+  '09': Data
   '33': DataSetPlusSoftware
   '34': BlankPages
   '35': AdvertisingContent

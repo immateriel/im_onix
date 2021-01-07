@@ -6,5 +6,5 @@
   '04': Share
   '05': TextToSpeech
   '06': Lend
-  '07': TimelimitedLicense
-  08: MaxPrintDpi
+  '07': TimeLimitedLicense
+  '08': MaxPrintDpi

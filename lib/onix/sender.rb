@@ -4,9 +4,9 @@ module ONIX
   class Sender < SubsetDSL
     include GlnMethods
 
-    elements "SenderIdentifier", :subset, :shortcut => :identifiers
-    element "SenderName", :text, :shortcut => :name
-    element "ContactName", :text
-    element "EmailAddress", :text
+    elements "SenderIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
+    element "SenderName", :text, :shortcut => :name, :cardinality => 0..1
+    element "ContactName", :text, :cardinality => 0..1
+    element "EmailAddress", :text, :cardinality => 0..1
   end
 end

@@ -1,12 +1,14 @@
 module ONIX
   class TitleElement < SubsetDSL
-    element "TitleElementLevel", :subset, :shortcut => :level
-    element "TitleText", :text
-    element "TitlePrefix", :text
-    element "TitleWithoutPrefix", :text
-    element "Subtitle", :text
-    element "PartNumber", :integer
-    element "SequenceNumber", :integer
+    element "SequenceNumber", :integer, :cardinality => 0..1
+    element "TitleElementLevel", :subset, :shortcut => :level, :cardinality => 1
+    element "PartNumber", :text, :cardinality => 0..1
+    element "YearOfAnnual", :text, :cardinality => 0..1
+    element "TitleText", :text, :cardinality => 0..1
+    element "TitlePrefix", :text, :cardinality => 0..1
+    element "NoPrefix", :bool, :cardinality => 0..1
+    element "TitleWithoutPrefix", :text, :cardinality => 0..1
+    element "Subtitle", :text, :cardinality => 0..1
 
     scope :product_level, lambda { human_code_match(:title_element_level, /Product/) }
     scope :collection_level, lambda { human_code_match(:title_element_level, /collection/i) }

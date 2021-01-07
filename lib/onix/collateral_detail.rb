@@ -1,18 +1,14 @@
+require 'onix/text_content'
+require 'onix/supporting_resource'
+require 'onix/cited_content'
+require 'onix/prize'
+
 module ONIX
-  class TextContent < SubsetDSL
-    element "TextType", :subset, :shortcut => :type
-    element "ContentAudience", :subset
-    element "Text", :text
-    element "TextAuthor", :text
-    element "SourceTitle", :text
-
-    scope :description, lambda { human_code_match(:text_type, "Description") }
-    scope :short_description, lambda { human_code_match(:text_type, "ShortDescriptionannotation") }
-  end
-
   class CollateralDetail < SubsetDSL
-    elements "TextContent", :subset
-    elements "SupportingResource", :subset
+    elements "TextContent", :subset, :cardinality => 0..n
+    elements "CitedContent", :subset, :cardinality => 0..n
+    elements "SupportingResource", :subset, :cardinality => 0..n
+    elements "Prize", :subset, :cardinality => 0..n
 
     # @!group High level
 

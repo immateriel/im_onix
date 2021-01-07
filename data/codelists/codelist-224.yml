@@ -1,0 +1,8 @@
+---
+:codelist:
+  U: Unclassifiable
+  I: Info
+  Q: Query
+  W: Warning
+  E: Error
+  F: FatalError

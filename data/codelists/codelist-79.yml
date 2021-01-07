@@ -7,19 +7,28 @@
   '05': DvdRegion
   '06': OperatingSystemRequirements
   '07': OtherSystemRequirements
-  08: PointAndListenDeviceCompatibility
-  09: EpublicationAccessibilityDetail
-  '10': EpublicationFormatVersion
-  '11': CpsiaChokingHazardWarning
-  '12': CpsiaChokingHazardWarning
+  '08': PointAndListenDeviceCompatibility
+  '09': EPublicationAccessibilityDetail
+  '10': EPublicationFormatVersion
+  '12': CpsiaOrOtherUsHazardWarning
   '13': EuToySafetyHazardWarning
   '14': IataDangerousGoodsWarning
+  '15': EPublicationFormatVersionCode
+  '16': EPublicationFormatValidatorVersion
+  '17': PointAndWatchDeviceappCompatibility
+  '18': EPublicationAuthenticationAndAccessControl
+  '19': BatteryType
+  '20': BatteryCapacity
+  '21': DangerousGoods
+  '22': GamePieces
+  '23': GamePlayers
+  '24': GamePlayTime
   '30': NotFscOrPefcCertified
   '31': FscCertifiedPure
   '32': FscCertifiedMixedSources
   '33': FscCertifiedRecycled
   '34': PefcCertified
   '35': PefcRecycled
-  '36': FscOrPefcCertifiedPreAndPostconsumerWastePcwPercentage
-  '37': ClaimedPreAndPostconsumerWastePcwPercentage
+  '36': FscOrPefcCertifiedPreAndPostConsumerWastePcwPercentage
+  '37': ClaimedPreAndPostConsumerWastePcwPercentage
   '40': PaperProducedByGreenTechnology
