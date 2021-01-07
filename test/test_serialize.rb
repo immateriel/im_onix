@@ -12,30 +12,31 @@ class TestSerialize < Minitest::Test
     end
 
     should "find instance" do
-      msg = ONIX::Builder.new
       @test_lang = "fre"
+      builder = ONIX::Builder.new do |onix|
 
-      msg.ONIXMessage("3.0") do
-        Header do
-          Sender do
-            SenderName("immatériel·fr")
+        onix.ONIXMessage("3.0") do
+          onix.Header do
+            onix.Sender do
+              onix.SenderName("immatériel·fr")
+            end
+            onix.SentDateTime("20130802T000000+0200")
+            onix.DefaultLanguageOfText(@test_lang)
           end
-          SentDateTime("20130802T000000+0200")
-          DefaultLanguageOfText(@test_lang)
         end
       end
     end
 
     should "find method" do
-      msg = ONIX::Builder.new
-
-      msg.ONIXMessage("3.0") do
-        Header do
-          Sender do
-            SenderName("immatériel·fr")
+      builder = ONIX::Builder.new do |onix|
+        onix.ONIXMessage("3.0") do
+          onix.Header do
+            onix.Sender do
+              onix.SenderName("immatériel·fr")
+            end
+            onix.SentDateTime("20130802T000000+0200")
+            onix.DefaultLanguageOfText(test_lang)
           end
-          SentDateTime("20130802T000000+0200")
-          DefaultLanguageOfText(test_lang)
         end
       end
     end
@@ -49,204 +50,158 @@ class TestSerialize < Minitest::Test
 
     should "invalid child raise exception" do
       assert_raises(ONIX::BuilderInvalidChildElement) do
-        msg = ONIX::Builder.new
-        msg.Header do
-          SenderName("immatériel.fr")
+        builder = ONIX::Builder.new do |onix|
+          onix.Header do
+            onix.SenderName("immatériel.fr")
+          end
         end
       end
     end
 
     should "invalid code raise exception" do
       assert_raises(ONIX::BuilderInvalidCode) do
-        msg = ONIX::Builder.new
-        msg.Product do
-          NotificationType("NOTACODE")
+        builder = ONIX::Builder.new do |onix|
+          onix.Product do
+            onix.NotificationType("NOTACODE")
+          end
         end
       end
     end
 
     should "invalid alias code raise exception" do
       assert_raises(ONIX::InvalidCodeAlias) do
-        msg = ONIX::Builder.new
-        msg.Product do
-          NotificationType(:InvalidAlias)
+        builder = ONIX::Builder.new do |onix|
+          onix.Product do
+            onix.NotificationType(:InvalidAlias)
+          end
         end
       end
     end
 
     should "collateral date" do
-      msg = ONIX::Builder.new
-      msg.Product {
-        RecordReference("AAA")
-        NotificationType("03")
-        CollateralDetail {
-          SupportingResource {
-            ResourceContentType("01")
-            ContentAudience("00")
-            ResourceMode("03")
-            ResourceVersion {
-              ResourceForm("02")
-              ResourceLink("http://images.immateriel.fr/link")
+      builder = ONIX::Builder.new do |onix|
+        onix.Product {
+          onix.RecordReference("AAA")
+          onix.NotificationType("03")
+          onix.CollateralDetail {
+            onix.SupportingResource {
+              onix.ResourceContentType("01")
+              onix.ContentAudience("00")
+              onix.ResourceMode("03")
+              onix.ResourceVersion {
+                onix.ResourceForm("02")
+                onix.ResourceLink("http://images.immateriel.fr/link")
 
-              ContentDate {
-                ContentDateRole("17")
-                DateFormat("00")
-                Date(Date.today)
-              }
-            }
-          }
-        }
-      }
-
-      assert msg.xml.to_xml
-    end
-
-    should "make fragment" do
-      onix = ONIX::Builder.new
-      onix.fragment { |msg|
-        msg.Product {
-          RecordReference("AAA")
-          NotificationType("03")
-          CollateralDetail {
-            SupportingResource {
-              ResourceContentType("01")
-              ContentAudience("00")
-              ResourceMode("03")
-              ResourceVersion {
-                ResourceForm("02")
-                ResourceLink("http://images.immateriel.fr/link")
-
-                ContentDate {
-                  ContentDateRole("17")
-                  DateFormat("00")
-                  Date(Date.today)
+                onix.ContentDate {
+                  onix.ContentDateRole("17")
+                  onix.DateFormat("00")
+                  onix.Date(Date.today)
                 }
               }
             }
           }
         }
-        msg.Product {
-          RecordReference("AAA")
-          NotificationType("03")
-          CollateralDetail {
-            SupportingResource {
-              ResourceContentType("01")
-              ContentAudience("00")
-              ResourceMode("03")
-              ResourceVersion {
-                ResourceForm("02")
-                ResourceLink("http://images.immateriel.fr/link")
+      end
 
-                ContentDate {
-                  ContentDateRole("17")
-                  DateFormat("00")
-                  Date(Date.today)
-                }
-              }
-            }
-          }
-        }
-      }
-
-      assert onix.xml.to_xml
+      assert builder.to_xml
     end
 
     should "be the same with builder" do
-      msg = ONIX::Builder.new
-
-      msg.ONIXMessage("3.0") do
-        Header do
-          Sender do
-            SenderName("immatériel·fr")
-          end
-          SentDateTime("20130802T000000+0200")
-          DefaultLanguageOfText("fre")
-        end
-        Product do
-          RecordReference("immateriel.fr-RP64127")
-          NotificationType("03")
-          ProductIdentifier do
-            ProductIDType("01")
-            IDValue("RP64127")
-          end
-          ProductIdentifier do
-            ProductIDType("03")
-            IDValue("3019002489901")
-          end
-          DescriptiveDetail do
-            ProductComposition("00")
-            ProductForm("ED")
-            ProductFormDetail("E101")
-            ProductFormDetail("E200")
-            ProductFormDescription("ePub avec Tatouage")
-            ProductContentType("10")
-            EpubTechnicalProtection("02")
-            EpubUsageConstraint do
-              EpubUsageType("02")
-              EpubUsageStatus("01")
+      builder = ONIX::Builder.new do |onix|
+        onix.ONIXMessage("3.0") do
+          onix.Header do
+            onix.Sender do
+              onix.SenderName("immatériel·fr")
             end
-            EpubUsageConstraint do
-              EpubUsageType("03")
-              EpubUsageStatus("01")
+            onix.SentDateTime("20130802T000000+0200")
+            onix.DefaultLanguageOfText("fre")
+          end
+          onix.Product do
+            onix.RecordReference("immateriel.fr-RP64127")
+            onix.NotificationType("03")
+            onix.ProductIdentifier do
+              onix.ProductIDType("01")
+              onix.IDValue("RP64127")
             end
-            EpubUsageConstraint do
-              EpubUsageType("04")
-              EpubUsageStatus("01")
+            onix.ProductIdentifier do
+              onix.ProductIDType("03")
+              onix.IDValue("3019002489901")
             end
-            TitleDetail do
-              TitleType("01")
-              TitleElement do
-                TitleElementLevel("01")
-                TitleText("Certaines n'avaient jamais vu la mer")
+            onix.DescriptiveDetail do
+              onix.ProductComposition("00")
+              onix.ProductForm("ED")
+              onix.ProductFormDetail("E101")
+              onix.ProductFormDetail("E200")
+              onix.ProductFormDescription("ePub avec Tatouage")
+              onix.ProductContentType("10")
+              onix.EpubTechnicalProtection("02")
+              onix.EpubUsageConstraint do
+                onix.EpubUsageType("02")
+                onix.EpubUsageStatus("01")
               end
-            end
-            Extent do
-              ExtentType("22")
-              ExtentValue("480211")
-              ExtentUnit("17")
-            end
-          end
-
-          RelatedMaterial do
-            RelatedProduct do
-              ProductRelationCode("02")
-              ProductIdentifier do
-                ProductIDType("01")
-                IDValue("O192530")
+              onix.EpubUsageConstraint do
+                onix.EpubUsageType("03")
+                onix.EpubUsageStatus("01")
               end
-              ProductIdentifier do
-                ProductIDType("03")
-                IDValue("9782752908643")
+              onix.EpubUsageConstraint do
+                onix.EpubUsageType("04")
+                onix.EpubUsageStatus("01")
               end
-              ProductIdentifier do
-                ProductIDType("15")
-                IDValue("9782752908643")
-              end
-            end
-          end
-
-          ProductSupply do
-            SupplyDetail do
-              Supplier do
-                SupplierRole("03")
-                SupplierIdentifier do
-                  SupplierIDType("02")
-                  IDValue("D1")
+              onix.TitleDetail do
+                onix.TitleType("01")
+                onix.TitleElement do
+                  onix.TitleElementLevel("01")
+                  onix.TitleText("Certaines n'avaient jamais vu la mer")
                 end
-                SupplierIdentifier do
-                  SupplierIDType("06")
-                  IDValue("3012410001000")
-                end
-                SupplierName("immatériel·fr")
               end
-              ProductAvailability("45")
-              UnpricedItemType("03")
+              onix.Extent do
+                onix.ExtentType("22")
+                onix.ExtentValue("480211")
+                onix.ExtentUnit("17")
+              end
+            end
+
+            onix.RelatedMaterial do
+              onix.RelatedProduct do
+                onix.ProductRelationCode("02")
+                onix.ProductIdentifier do
+                  onix.ProductIDType("01")
+                  onix.IDValue("O192530")
+                end
+                onix.ProductIdentifier do
+                  onix.ProductIDType("03")
+                  onix.IDValue("9782752908643")
+                end
+                onix.ProductIdentifier do
+                  onix.ProductIDType("15")
+                  onix.IDValue("9782752908643")
+                end
+              end
+            end
+
+            onix.ProductSupply do
+              onix.SupplyDetail do
+                onix.Supplier do
+                  onix.SupplierRole("03")
+                  onix.SupplierIdentifier do
+                    onix.SupplierIDType("02")
+                    onix.IDValue("D1")
+                  end
+                  onix.SupplierIdentifier do
+                    onix.SupplierIDType("06")
+                    onix.IDValue("3012410001000")
+                  end
+                  onix.SupplierName("immatériel·fr")
+                end
+                onix.ProductAvailability("45")
+                onix.UnpricedItemType("03")
+              end
             end
           end
         end
       end
 
-      assert_equal msg.xml.to_xml, File.read(@filename)
+      assert_equal builder.to_xml, File.read(@filename)
     end
   end
 

@@ -7,7 +7,7 @@ module ONIX
       end
 
       def self.serialize_subset(mod, data, subset, parent_tag = nil, level = 0)
-        if subset.is_a?(ONIX::Fragment)
+        if subset.is_a?(ONIX::Root)
           ONIX::Serializer::Traverser.recursive_serialize(mod, data, subset, parent_tag, level)
         else
           if subset.is_a?(ONIX::ONIXMessage)
@@ -75,9 +75,11 @@ module ONIX
 
       class Subset
         def self.serialize(xml, subset, tag, level = 0)
-          xml.send(tag, nil) {
-            ONIX::Serializer::Traverser.recursive_serialize(Default, xml, subset, tag, level + 1)
-          }
+          if tag
+            xml.send(tag, nil) {
+              ONIX::Serializer::Traverser.recursive_serialize(Default, xml, subset, tag, level + 1)
+            }
+          end
         end
       end
 

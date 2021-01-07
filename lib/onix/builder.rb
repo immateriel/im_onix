@@ -20,71 +20,98 @@ module ONIX
     elements "Product", :subset
   end
 
-  # ONIX builder DSL with human code resolve, code validity and child element validity, elements cardinality check
+  class Root < SubsetDSL
+    element "ONIXMessage", :subset
+    elements "Product", :subset
+  end
+
   class Builder
-    attr_accessor :parent, :name, :element, :children, :context
-
-    def initialize(parent = nil)
-      @children = []
-      @parent = parent
-    end
-
-    def method_missing(m, *args, &block)
-      if @context && @context.respond_to?(m)
-        @context.send(m, *args, &block)
+    def initialize(options = {}, root = nil, &block)
+      if root
+        @doc = root
+        @parent = root
       else
-        @children << make_element(m, args, &block)
+        @parent = @doc = Root.new
       end
-    end
 
-    def fragment &block
-      make_element(nil, nil, &block)
-    end
+      @context = nil
+      @arity = nil
 
-    # Nokogiri::XML::Builder or DocumentFragment
-    def xml
-      if @element.is_a?(Fragment)
-        frag = Nokogiri::XML::DocumentFragment.parse("")
-        Nokogiri::XML::Builder.new({:encoding => "UTF-8"}, frag) do |xml|
-          ONIX::Serializer::Default.serialize(xml, @element, @name)
-        end
-        frag
+      return unless block_given?
+
+      @arity = block.arity
+      if @arity <= 0
+        @context = eval("self", block.binding)
+        instance_eval(&block)
       else
-        builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
-          ONIX::Serializer::Default.serialize(xml, @element, @name)
-        end
-        builder
+        yield self
       end
+
+      @parent = @doc
+    end
+
+    def serialize(xml)
+      ONIX::Serializer::Default.serialize(xml, @doc, "Root")
     end
 
     def dump(io = STDOUT)
-      ONIX::Serializer::Dump.serialize(io, @element, @name)
+      ONIX::Serializer::Dump.serialize(io, @doc, "Root")
     end
 
-    def check_cardinality!
-      if @parent
-        children_h = {}
-        @children.compact.each do |tag|
-          children_h[tag] ||= 0
-          children_h[tag] += 1
-        end
-        @parent.class.ancestors_registered_elements.each do |k, v|
-          children_h[k] ||= 0 if k.downcase != k
-          if children_h[k]
-            cardinality = v.cardinality
-            if cardinality
-              if cardinality.is_a?(Range)
-                unless cardinality.cover?(children_h[k])
-                  raise BuilderInvalidCardinality, [@name.to_s, k, children_h[k], cardinality]
-                end
+    def to_xml
+      Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
+        serialize(xml)
+      end.to_xml
+    end
+
+    def method_missing(method, *args, &block)
+      # :nodoc:
+      if @context && @context.respond_to?(method)
+        @context.send(method, *args, &block)
+      else
+        if @parent
+          parser_el = @parent.class.ancestors_registered_elements[method.to_s]
+          if parser_el
+            if ONIX.const_defined?(parser_el.klass_name)
+              node = get_class(parser_el.klass_name, args)
+            end
+
+            if parser_el.is_array?
+              arr = @parent.send(parser_el.underscore_name)
+              case parser_el.type
+              when :subset
+                arr << node
               else
-                unless children_h[k] == cardinality
-                  raise BuilderInvalidCardinality, [@name.to_s, k, children_h[k], cardinality]
+                if args.length > 1
+                  txt = TextWithAttributes.new(args[0])
+                  txt.parse(args[1])
+                  arr << txt
+                else
+                  arr << args[0]
+                end
+              end
+            else
+              case parser_el.type
+              when :subset
+                @parent.send(parser_el.underscore_name + "=", node)
+              else
+                if args.length > 1
+                  txt = TextWithAttributes.new(args[0])
+                  txt.parse(args[1])
+                  @parent.send(parser_el.underscore_name + "=", txt)
+                else
+                  @parent.send(parser_el.underscore_name + "=", args[0])
                 end
               end
             end
+          else
+            raise BuilderInvalidChildElement, [@parent.class.to_s.sub("ONIX::", ""), method.to_s]
           end
+        else
+          node = get_class(method, args)
         end
+
+        insert(node, &block)
       end
     end
 
@@ -119,87 +146,18 @@ module ONIX
       el
     end
 
-    def set_data(el, args)
-
-    end
-
-    def insert_element(el, &block)
-      builder = Builder.new(el)
-      builder.context = @context
-
-      if @context
-        @context.instance_variables.each do |k|
-          v = @context.instance_variable_get(k)
-          builder.instance_variable_set(k, v)
-        end
-      end
-
-      if block.arity == 1
-        block.call builder
-      else
-        builder.instance_eval(&block)
-      end
-      builder.check_cardinality!
-      builder
-    end
-
-    def make_element(nm, args, &block)
-      @name = nm.to_s
-
-      if @parent
-        parser_el = @parent.class.ancestors_registered_elements[@name]
-        if parser_el
-          if ONIX.const_defined?(parser_el.klass_name)
-            el = get_class(parser_el.klass_name, args)
-          end
-
-          if parser_el.is_array?
-            arr = @parent.send(parser_el.underscore_name)
-            case parser_el.type
-            when :subset
-              arr << el
-            else
-              if args.length > 1
-                txt = TextWithAttributes.new(args[0])
-                txt.parse(args[1])
-                arr << txt
-              else
-                arr << args[0]
-              end
-            end
-          else
-            case parser_el.type
-            when :subset
-              @parent.send(parser_el.underscore_name + "=", el)
-            else
-              if args.length > 1
-                txt = TextWithAttributes.new(args[0])
-                txt.parse(args[1])
-                @parent.send(parser_el.underscore_name + "=", txt)
-              else
-                @parent.send(parser_el.underscore_name + "=", args[0])
-              end
-            end
-          end
-        else
-          raise BuilderInvalidChildElement, [@parent.class.to_s.sub("ONIX::", ""), nm.to_s]
-        end
-      else
-        if nm
-          el = get_class(nm, args)
-        else
-          el = Fragment.new
-        end
-      end
-
+    def insert(node, &block)
       if block_given?
-        @context = nil unless eval("self", block.binding).is_a?(ONIX::Builder)
-        @context ||= eval("self", block.binding)
-        insert_element(el, &block)
+        old_parent = @parent
+        @parent = node
+        @arity ||= block.arity
+        if @arity <= 0
+          instance_eval(&block)
+        else
+          block.call(self)
+        end
+        @parent = old_parent
       end
-
-      @element = el
-      @name
     end
   end
 end
