@@ -16,15 +16,6 @@ module ONIX
   class BuilderUndefinedElement < StandardError
   end
 
-  class Fragment < SubsetDSL
-    elements "Product", :subset
-  end
-
-  class Root < SubsetDSL
-    element "ONIXMessage", :subset
-    elements "Product", :subset
-  end
-
   class Builder
     def initialize(options = {}, root = nil, &block)
       if root

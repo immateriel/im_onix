@@ -14,7 +14,6 @@ class TestSerialize < Minitest::Test
     should "find instance" do
       @test_lang = "fre"
       builder = ONIX::Builder.new do |onix|
-
         onix.ONIXMessage("3.0") do
           onix.Header do
             onix.Sender do

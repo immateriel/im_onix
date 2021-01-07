@@ -1,4 +1,9 @@
 module ONIX
+  class Root < SubsetDSL
+    element "ONIXMessage", :subset
+    elements "Product", :subset
+  end
+
   module Serializer
     class Traverser
 

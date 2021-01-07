@@ -99,6 +99,18 @@ module ONIX
     def_delegator :publishing_detail, :imprint
     def_delegator :publishing_detail, :publisher
 
+    def collateral_detail
+      @collateral_detail || CollateralDetail.new
+    end
+
+    def descriptive_detail
+      @descriptive_detail || DescriptiveDetail.new
+    end
+
+    def publishing_detail
+      @publishing_detail || PublishingDetail.new
+    end
+
     # product LanguageCode of text
     def language_of_text
       @descriptive_detail.language_of_text || @default_language_of_text
