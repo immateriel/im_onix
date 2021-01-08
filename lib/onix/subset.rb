@@ -155,19 +155,11 @@ module ONIX
     end
 
     def parse_lambda(v)
-      if @parse_lambda
-        @parse_lambda.call(v)
-      else
-        v
-      end
+      @parse_lambda ? @parse_lambda.call(v) : v
     end
 
     def serialize_lambda(v)
-      if @serialize_lambda
-        @serialize_lambda.call(v)
-      else
-        v
-      end
+      @serialize_lambda ? @serialize_lambda.call(v) : v
     end
 
     def is_array?
@@ -292,12 +284,25 @@ module ONIX
         @elements[short_name] = @elements[name].dup
         @elements[short_name].short = true
       end
+
       attr_accessor @elements[name].to_sym
+
+      alias_method "#{@elements[name].underscore_name}_with_attributes".to_sym, @elements[name].to_sym
+
+      current_element = @elements[name]
+      define_method current_element.to_sym do |args = nil|
+        val = instance_variable_get(current_element.to_instance)
+        if val.respond_to?(:__getobj__)
+          val.__getobj__
+        else
+          val
+        end
+      end
+
       if @elements[name].shortcut
         current_element = @elements[name]
-        define_method current_element.shortcut do |args = nil|
-          instance_variable_get(current_element.to_instance)
-        end
+        alias_method "#{current_element.shortcut.to_s}_with_attributes".to_sym, "#{@elements[name].underscore_name}_with_attributes".to_sym
+        alias_method current_element.shortcut, @elements[name].to_sym
       end
     end
 
@@ -376,6 +381,7 @@ module ONIX
         name = t.name
         e = self.get_registered_element(name)
         if e
+          primitive = true
           case e.type
           when :subset
             klass = self.get_class(e.class_name)
@@ -383,13 +389,9 @@ module ONIX
               raise UnknownElement, e.class_name
             end
             val = klass.parse(t)
+            primitive = false
           when :text
-            if t.attributes.length > 0
-              val = TextWithAttributes.new(t.attributes["textformat"] ? t.children.map { |x| x.to_s }.join.strip : t.text)
-              val.parse(t.attributes)
-            else
-              val = t.text
-            end
+            val = t.text
           when :integer
             val = t.text.to_i
           when :float
@@ -413,13 +415,20 @@ module ONIX
           else
             val = t.text
           end
+
           if val
+            if primitive && t.attributes.length > 0
+              val = TextWithAttributes.new(t.attributes["textformat"] ? t.children.map { |x| x.to_s }.join.strip : val)
+              val.parse(t.attributes)
+            end
+
             if e.is_array?
               instance_variable_get(e.to_instance).send(:push, val)
             else
               instance_variable_set(e.to_instance, e.parse_lambda(val))
             end
           end
+
         else
           unsupported(t)
         end

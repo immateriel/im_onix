@@ -53,8 +53,8 @@ module ONIX
     # raw part file description string without HTML
     # @return [String]
     def raw_file_description
-      if @product_form_description
-        Helper.strip_html(@product_form_description).gsub(/\s+/, " ").strip
+      if product_form_description
+        Helper.strip_html(product_form_description).gsub(/\s+/, " ").strip
       end
     end
 

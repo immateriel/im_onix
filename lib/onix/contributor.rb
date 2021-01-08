@@ -1,5 +1,6 @@
 require 'onix/subset'
 require 'onix/website'
+require 'onix/contributor_place'
 
 module ONIX
   class Contributor < SubsetDSL
@@ -36,23 +37,23 @@ module ONIX
     # flatten person name (firstname lastname)
     # @return [String]
     def name
-      return @person_name if @person_name
+      return person_name if person_name
 
-      if @key_names
-        if @names_before_key
-          return "#{@names_before_key} #{@key_names}"
+      if key_names
+        if names_before_key
+          return "#{names_before_key} #{key_names}"
         else
-          return @key_names
+          return key_names
         end
       end
 
-      @corporate_name
+      corporate_name
     end
 
     # inverted flatten person name
     # @return [String]
     def inverted_name
-      @person_name_inverted || @corporate_name_inverted
+      person_name_inverted || corporate_name_inverted
     end
 
     # biography string with HTML
@@ -90,18 +91,5 @@ module ONIX
     end
 
     # @!endgroup
-  end
-
-  class ContributorPlace < SubsetDSL
-    element "ContributorPlaceRelator", :subset
-    element "CountryCode", :subset
-
-    def relator
-      @contributor_place_relator
-    end
-
-    def country_code
-      @country_code.code
-    end
   end
 end
