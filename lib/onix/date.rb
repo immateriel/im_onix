@@ -121,6 +121,16 @@ module ONIX
       @datetime = tm unless @format
     end
 
+    def self.from_code(code)
+      ds = self.new
+      ds.parse(code)
+      ds
+    end
+
+    def human
+      @datetime
+    end
+
     def code
       @format ? @datetime.strftime(@format) : @datetime
     end

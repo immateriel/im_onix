@@ -35,26 +35,28 @@ module ONIX
       end
     end
 
+    def self.attribute_class(attr)
+      case attr
+      when "textcase"
+        TextCase
+      when "textformat"
+        TextFormat
+      when "language"
+        LanguageCode
+      when "dateformat"
+        DateFormat
+      when "datestamp"
+        DateStamp
+      else
+        nil
+      end
+    end
+
     def parse_attributes(attrs)
       @attributes ||= {}
       attrs.each do |k, v|
-        @attributes[k.to_s] = case k.to_s
-                              when "textcase"
-                                TextCase.from_code(v.to_s)
-                              when "textformat"
-                                TextFormat.from_code(v.to_s)
-                              when "language"
-                                LanguageCode.from_code(v.to_s)
-                              when "dateformat"
-                                DateFormat.from_code(v.to_s)
-                              when "datestamp"
-                                ds = DateStamp.new
-                                ds.parse(v.to_s)
-                                ds
-                              else
-                                nil
-                              end
-        self
+        attr_klass = Attributes.attribute_class(k.to_s)
+        @attributes[k.to_s] = attr_klass ? attr_klass.from_code(v.to_s) : nil
       end
     end
   end

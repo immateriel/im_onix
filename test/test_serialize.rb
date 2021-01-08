@@ -102,6 +102,7 @@ class TestSerialize < Minitest::Test
         }
       end
 
+      #puts builder.to_xml
       assert builder.to_xml
     end
 
