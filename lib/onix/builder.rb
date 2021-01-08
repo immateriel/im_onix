@@ -85,6 +85,8 @@ module ONIX
               case parser_el.type
               when :subset
                 @parent.send(parser_el.underscore_name + "=", node)
+              when :datestamp
+                @parent.send(parser_el.underscore_name + "=", DateStamp.new(args[0], args[1] || "%Y%m%d"))
               else
                 if args.length > 1
                   txt = TextWithAttributes.new(args[0])

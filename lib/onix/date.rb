@@ -93,6 +93,39 @@ module ONIX
     end
   end
 
+  # support for datestamp attribute and SentDateTime
+  class DateStamp
+    attr_accessor :format, :datetime
+
+    def initialize(dt = nil, fmt = "%Y%m%d")
+      @datetime = dt
+      @format = fmt unless @datetime.is_a?(String)
+    end
+
+    def supported_formats
+      ["%Y%m%dT%H%M%S%z", "%Y%m%dT%H%M%S", "%Y%m%dT%H%M%z", "%Y%m%dT%H%M", "%Y%m%d"]
+    end
+
+    def parse(tm)
+      @format = nil
+      found_format = nil
+      supported_formats.each do |supported_format|
+        begin
+          @datetime = Time.strptime(tm, supported_format)
+          found_format = supported_format
+          break
+        rescue
+        end
+      end
+      @format = found_format
+      @datetime = tm unless @format
+    end
+
+    def code
+      @format ? @datetime.strftime(@format) : @datetime
+    end
+  end
+
   class BaseDate < SubsetDSL
     include DateHelper
     element "Date", :ignore

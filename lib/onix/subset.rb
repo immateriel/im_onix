@@ -22,7 +22,46 @@ module ONIX
     end
   end
 
+  module Attributes
+    attr_accessor :attributes
+
+    def serialized_attributes
+      if @attributes and @attributes.length > 0
+        attrs = {}
+        @attributes.each do |k, v|
+          attrs[k] = v.code
+        end
+        attrs
+      end
+    end
+
+    def parse_attributes(attrs)
+      @attributes ||= {}
+      attrs.each do |k, v|
+        @attributes[k.to_s] = case k.to_s
+                              when "textcase"
+                                TextCase.from_code(v.to_s)
+                              when "textformat"
+                                TextFormat.from_code(v.to_s)
+                              when "language"
+                                LanguageCode.from_code(v.to_s)
+                              when "dateformat"
+                                DateFormat.from_code(v.to_s)
+                              when "datestamp"
+                                ds = DateStamp.new
+                                ds.parse(v.to_s)
+                                ds
+                              else
+                                nil
+                              end
+        self
+      end
+    end
+  end
+
   class Subset
+    include Attributes
+
     # instanciate Subset form Nokogiri::XML::Element
     def self.parse(n)
       o = self.new
@@ -208,25 +247,10 @@ module ONIX
   end
 
   class TextWithAttributes < String
-    attr_accessor :attributes
+    include Attributes
 
     def parse(attrs)
-      @attributes ||= {}
-      attrs.each do |k, v|
-        @attributes[k.to_s] = case k.to_s
-                              when "textcase"
-                                TextCase.from_code(v.to_s)
-                              when "textformat"
-                                TextFormat.from_code(v.to_s)
-                              when "language"
-                                LanguageCode.from_code(v.to_s)
-                              when "dateformat"
-                                DateFormat.from_code(v.to_s)
-                              else
-                                nil
-                              end
-        self
-      end
+      parse_attributes(attrs)
     end
   end
 
@@ -342,6 +366,7 @@ module ONIX
     end
 
     def parse(n)
+      parse_attributes(n.attributes)
       n.elements.each do |t|
         name = t.name
         e = self.get_registered_element(name)
@@ -369,10 +394,11 @@ module ONIX
           when :date
             fmt = t["dateformat"] || "00"
             val = ONIX::Helper.to_date(fmt, t.text)
-          when :datetime
+          when :datestamp
             tm = t.text
-            val = ((((Time.strptime(tm, "%Y%m%dT%H%M%S%z") rescue Time.strptime(tm, "%Y%m%dT%H%M%S")) rescue Time.strptime(tm, "%Y%m%dT%H%M%z")) rescue Time.strptime(tm, "%Y%m%dT%H%M")) rescue Time.strptime(tm, "%Y%m%d")) rescue nil
-            val ||= tm
+            datestamp = DateStamp.new
+            datestamp.parse(tm)
+            val = datestamp
           when :ignore
             val = nil
           else

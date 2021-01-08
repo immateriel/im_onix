@@ -35,7 +35,9 @@ module ONIX
         case type
         when :subset
           self.serialize_subset(mod, data, val, tag, level)
-        when :text, :integer, :float, :datetime
+        when :datestamp
+          mod.const_get("Primitive").serialize(data, val.code, tag, level)
+        when :text, :integer, :float
           mod.const_get("Primitive").serialize(data, val, tag, level)
         when :bool
           mod.const_get("Primitive").serialize(data, nil, tag, level) if val
@@ -81,7 +83,7 @@ module ONIX
       class Subset
         def self.serialize(xml, subset, tag, level = 0)
           if tag
-            xml.send(tag, nil) {
+            xml.send(tag, subset.serialized_attributes) {
               ONIX::Serializer::Traverser.recursive_serialize(Default, xml, subset, tag, level + 1)
             }
           end
@@ -91,13 +93,8 @@ module ONIX
       class Primitive
         def self.serialize(xml, val, tag, level = 0)
           if val.is_a?(ONIX::TextWithAttributes)
-            attrs = {}
-            val.attributes.each do |k, v|
-              attrs[k] = v.code
-            end
-
-            xml.send(tag, attrs) do
-              xml.__send__ :insert, val#Nokogiri::XML::DocumentFragment.parse(val)
+            xml.send(tag, val.serialized_attributes) do
+              xml.__send__ :insert, val
             end
           else
             xml.send(tag, val)
@@ -131,7 +128,7 @@ module ONIX
 
       class Code
         def self.serialize(xml, code, parent_tag = nil, level = 0)
-          xml.send(parent_tag, nil) {
+          xml.send(parent_tag, code.serialized_attributes) {
             xml.text(code.code)
           }
         end
