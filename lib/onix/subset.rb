@@ -251,16 +251,6 @@ module ONIX
     end
   end
 
-  if false
-  class TextWithAttributes < String
-    include Attributes
-
-    def parse(attrs)
-      parse_attributes(attrs)
-    end
-  end
-  end
-
   class TextWithAttributes < SimpleDelegator
     include Attributes
 
@@ -397,7 +387,6 @@ module ONIX
             if t.attributes.length > 0
               val = TextWithAttributes.new(t.attributes["textformat"] ? t.children.map { |x| x.to_s }.join.strip : t.text)
               val.parse(t.attributes)
-              #puts "TEXT WITH ATTRIBUTES #{t} #{val.serialized_attributes} #{val}"
             else
               val = t.text
             end
