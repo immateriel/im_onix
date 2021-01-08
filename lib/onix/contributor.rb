@@ -7,17 +7,30 @@ module ONIX
     element "ContributorRole", :subset, :shortcut => :role, :cardinality => 1..n
     elements "FromLanguage", :subset, :klass => "LanguageCode", :cardinality => 0..n
     elements "ToLanguage", :subset, :klass => "LanguageCode", :cardinality => 0..n
+    # element "NameType", :subset, :cardinality => 0..1
     elements "NameIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
     element "PersonName", :text, :cardinality => 0..1
     element "PersonNameInverted", :text, :cardinality => 0..1
+    element "TitlesBeforeNames", :text, :cardinality => 0..1
     element "NamesBeforeKey", :text, :shortcut => :name_before_key, :cardinality => 0..1
+    element "PrefixToKey", :text, :cardinality => 0..1
     element "KeyNames", :text, :cardinality => 0..1
+    element "NamesAfterKey", :text, :cardinality => 0..1
+    element "SuffixToKey", :text, :cardinality => 0..1
+    element "LettersAfterNames", :text, :cardinality => 0..1
+    element "TitlesAfterNames", :text, :cardinality => 0..1
+    # element "Gender", :subset, :cardinality => 0..1
     element "CorporateName", :text, :cardinality => 0..1
     element "CorporateNameInverted", :text, :cardinality => 0..1
-    elements "ContributorPlace", :subset, :shortcut => :places, :cardinality => 0..n
+    # element "UnnamedPersons", :subset, :cardinality => 0..1
+    # elements "AlternativeName", :subset, :cardinality => 0..n
     elements "ContributorDate", :subset, :shortcut => :dates, :cardinality => 0..n
+    # elements "ProfessionalAffiliation", :subset, :cardinality => 0..n
+    elements "Prize", :subset, :cardinality => 0..n
     elements "BiographicalNote", :text, :shortcut => :biographies, :cardinality => 0..n
     elements "Website", :subset, :cardinality => 0..n
+    elements "ContributorDescription", :text, :cardinality => 0..n
+    elements "ContributorPlace", :subset, :shortcut => :places, :cardinality => 0..n
 
     # @!group High level
     # flatten person name (firstname lastname)

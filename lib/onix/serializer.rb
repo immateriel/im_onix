@@ -49,16 +49,15 @@ module ONIX
       def self.recursive_serialize(mod, data, subset, parent_tag = nil, level = 0)
         if subset.class.respond_to?(:ancestors_registered_elements)
           subset.class.ancestors_registered_elements.each do |tag, element|
-            unless element.short
-              val = subset.instance_variable_get(element.to_instance)
-              if val
-                if element.is_array?
-                  val.each do |subval|
-                    self.any_serialize(element.type, mod, data, subval, tag, level)
-                  end
-                else
-                  self.any_serialize(element.type, mod, data, element.serialize_lambda(val), tag, level)
+            next if element.short
+            val = subset.instance_variable_get(element.to_instance)
+            if val
+              if element.is_array?
+                val.each do |subval|
+                  self.any_serialize(element.type, mod, data, subval, tag, level)
                 end
+              else
+                self.any_serialize(element.type, mod, data, element.serialize_lambda(val), tag, level)
               end
             end
           end
@@ -94,7 +93,7 @@ module ONIX
         def self.serialize(xml, val, tag, level = 0)
           if val.is_a?(ONIX::TextWithAttributes)
             xml.send(tag, val.serialized_attributes) do
-              xml.__send__ :insert, val
+              xml.__send__ :insert, val.to_s
             end
           else
             xml.send(tag, val)
@@ -104,23 +103,31 @@ module ONIX
 
       class Date
         def self.serialize(xml, date, parent_tag = nil, level = 0)
+          deprecated_date_format = date.deprecated_date_format
+          date_format = date.date_format || DateFormat.from_code("00")
+          code_format = date.format_from_code(date_format.code)
+
           xml.send(parent_tag, nil) {
-            ONIX::Serializer::Traverser.recursive_serialize(Default, xml, date, parent_tag, level + 1)
-            # FIXME: dirty
-            if date.date_format.is_a?(String)
-              date.date_format = DateFormat.from_code(date.date_format)
-              date.deprecated_date_format = true
-            end
-
-            date.strpdate!(date.date) if date.date.is_a?(String)
-
-            if date.deprecated_date_format
-              xml.DateFormat(date.date_format.code)
-              code_format = date.format_from_code(date.date_format.code)
-              xml.Date(date.date.strftime(code_format))
-            else
-              code_format = date.format_from_code(date.date_format.code)
-              xml.Date(date.date.strftime(code_format), :dateformat => date.date_format.code)
+            date.class.ancestors_registered_elements.each do |tag, element|
+              next if element.short
+              val = date.instance_variable_get(element.to_instance)
+              if val
+                case tag
+                when "DateFormat"
+                  if deprecated_date_format
+                    xml.DateFormat(date_format.code)
+                  end
+                when "Date"
+                  if deprecated_date_format
+                    xml.Date(date.date.strftime(code_format))
+                  else
+                    attrs = date.date_format ? {:dateformat => date_format.code} : {}
+                    xml.Date(date.date.strftime(code_format), attrs)
+                  end
+                else
+                  ONIX::Serializer::Traverser.any_serialize(element.type, Default, xml, element.serialize_lambda(val), tag, level)
+                end
+              end
             end
           }
         end

@@ -70,33 +70,27 @@ module ONIX
             if parser_el.is_array?
               arr = @parent.send(parser_el.underscore_name)
               case parser_el.type
+              when :ignore
               when :subset
                 node.attributes = get_attributes(args[1]) if args.length > 1
                 arr << node
               else
-                if args.length > 1
-                  txt = TextWithAttributes.new(args[0])
-                  txt.attributes = get_attributes(args[1])
-                  arr << txt
-                else
-                  arr << args[0]
-                end
+                arr << get_primitive(args)
               end
             else
               case parser_el.type
+              when :ignore
               when :subset
+                # FIXME: dirty
+                if @parent.class.included_modules.include?(DateHelper) && node.is_a?(DateFormat)
+                  @parent.deprecated_date_format = true
+                end
                 node.attributes = get_attributes(args[1]) if args.length > 1
                 @parent.send(parser_el.underscore_name + "=", node)
               when :datestamp
                 @parent.send(parser_el.underscore_name + "=", DateStamp.new(args[0], args[1] || "%Y%m%d"))
               else
-                if args.length > 1
-                  txt = TextWithAttributes.new(args[0])
-                  txt.attributes = get_attributes(args[1])
-                  @parent.send(parser_el.underscore_name + "=", txt)
-                else
-                  @parent.send(parser_el.underscore_name + "=", args[0])
-                end
+                @parent.send(parser_el.underscore_name + "=", get_primitive(args))
               end
             end
           else
@@ -112,9 +106,19 @@ module ONIX
 
     private
 
+    def get_primitive(args)
+      if args.length > 1
+        txt = TextWithAttributes.new(args[0])
+        txt.attributes = get_attributes(args[1])
+        txt
+      else
+        args[0]
+      end
+    end
+
     def get_attributes(arg)
       attrs = {}
-      arg.each do |k,v|
+      arg.each do |k, v|
         attr_klass = ONIX::Attributes.attribute_class(k.to_s)
         attrs[k] = get_element_code(attr_klass, v) if attr_klass
       end

@@ -1,33 +1,23 @@
 module ONIX
   module DateHelper
-    attr_accessor :date_format, :date
+    attr_accessor :date_format, :date, :datetime
 
-    def initialize
-      @date_format = DateFormat.from_code("00")
-    end
-
-    def parse_date(n)
-      date_txt = nil
-      @date = nil
-      n.elements.each do |t|
-        case t
-        when tag_match("DateFormat")
-          @date_format = DateFormat.parse(t)
-          @deprecated_date_format = true
-        when tag_match("Date")
-          date_txt = t.text
-        end
-
-        if t["dateformat"]
-          @date_format = DateFormat.from_code(t["dateformat"])
+    def parse_date
+      if @date_format
+        @deprecated_date_format = true
+      else
+        if @date.is_a?(TextWithAttributes)
+          @date_format = @date.attributes["dateformat"]
         end
       end
 
-      strpdate!(date_txt)
+      @datetime = strpdate!(@date, @date_format)
+      @date = @datetime ? @datetime.to_date : nil
     end
 
-    def strpdate!(date_txt)
-      code_format = format_from_code(@date_format.code)
+    def strpdate!(date_txt, date_format)
+      date_format ||= DateFormat.from_code("00")
+      code_format = format_from_code(date_format.code)
       text_format = format_from_string(date_txt)
 
       format = code_format
@@ -38,22 +28,24 @@ module ONIX
 
       begin
         if format
-          case @date_format.code
+          case date_format.code
           when "00"
-            @date = Date.strptime(date_txt, format)
+            datetime = Time.strptime(date_txt, format)
           when "01"
-            @date = Date.strptime(date_txt, format)
+            datetime = Time.strptime(date_txt, format)
           when "05"
-            @date = Date.strptime(date_txt, format)
+            datetime = Time.strptime(date_txt, format)
           when "14"
-            @date = Time.strptime(date_txt, format)
+            datetime = Time.strptime(date_txt, format)
           else
-            @date = nil
+            datetime = nil
           end
         end
       rescue => e
         # invalid date
       end
+
+      datetime
     end
 
     def format_from_code(code)
@@ -89,7 +81,7 @@ module ONIX
     end
 
     def time
-      @date.to_time
+      @datetime
     end
   end
 
@@ -138,8 +130,8 @@ module ONIX
 
   class BaseDate < SubsetDSL
     include DateHelper
-    element "Date", :ignore
-    element "DateFormat", :ignore
+    element "DateFormat", :subset
+    element "Date", :text
     attr_accessor :deprecated_date_format
 
     def initialize
@@ -149,7 +141,7 @@ module ONIX
 
     def parse(n)
       super
-      parse_date(n)
+      parse_date
     end
   end
 

@@ -1,3 +1,5 @@
+require 'forwardable'
+
 module ONIX
   class ShortToRef
     def self.names
@@ -29,7 +31,7 @@ module ONIX
       if @attributes and @attributes.length > 0
         attrs = {}
         @attributes.each do |k, v|
-          attrs[k] = v.code
+          attrs[k] = v.code if v
         end
         attrs
       end
@@ -57,6 +59,7 @@ module ONIX
       attrs.each do |k, v|
         attr_klass = Attributes.attribute_class(k.to_s)
         @attributes[k.to_s] = attr_klass ? attr_klass.from_code(v.to_s) : nil
+        #puts "PARSE ATTR #{k}(#{attr_klass}) = #{v}(#{@attributes[k.to_s]})"
       end
     end
   end
@@ -248,7 +251,17 @@ module ONIX
     end
   end
 
+  if false
   class TextWithAttributes < String
+    include Attributes
+
+    def parse(attrs)
+      parse_attributes(attrs)
+    end
+  end
+  end
+
+  class TextWithAttributes < SimpleDelegator
     include Attributes
 
     def parse(attrs)
@@ -384,6 +397,7 @@ module ONIX
             if t.attributes.length > 0
               val = TextWithAttributes.new(t.attributes["textformat"] ? t.children.map { |x| x.to_s }.join.strip : t.text)
               val.parse(t.attributes)
+              #puts "TEXT WITH ATTRIBUTES #{t} #{val.serialized_attributes} #{val}"
             else
               val = t.text
             end
@@ -395,7 +409,11 @@ module ONIX
             val = true
           when :date
             fmt = t["dateformat"] || "00"
-            val = ONIX::Helper.to_date(fmt, t.text)
+            begin
+              val = ONIX::Helper.to_date(fmt, t.text)
+            rescue
+              val = t.text
+            end
           when :datestamp
             tm = t.text
             datestamp = DateStamp.new
