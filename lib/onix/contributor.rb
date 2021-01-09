@@ -1,5 +1,6 @@
 require 'onix/subset'
 require 'onix/website'
+require 'onix/professional_affiliation'
 require 'onix/contributor_place'
 
 module ONIX
@@ -26,7 +27,7 @@ module ONIX
     # element "UnnamedPersons", :subset, :cardinality => 0..1
     # elements "AlternativeName", :subset, :cardinality => 0..n
     elements "ContributorDate", :subset, :shortcut => :dates, :cardinality => 0..n
-    # elements "ProfessionalAffiliation", :subset, :cardinality => 0..n
+    elements "ProfessionalAffiliation", :subset, :cardinality => 0..n
     elements "Prize", :subset, :cardinality => 0..n
     elements "BiographicalNote", :text, :shortcut => :biographies, :cardinality => 0..n
     elements "Website", :subset, :cardinality => 0..n

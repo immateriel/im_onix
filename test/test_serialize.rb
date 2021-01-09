@@ -231,8 +231,24 @@ class TestSerialize < Minitest::Test
       builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         ONIX::Serializer::Default.serialize(xml, @message)
       end
+      assert_equal Nokogiri::XML.parse(builder.to_xml,&:noblanks).to_xml, Nokogiri::XML.parse(File.read(@filename),&:noblanks).to_xml
+    end
+  end
+
+  context "full ONIX file 2" do
+    setup do
+      @filename = "../immateriel/test/fixtures/onix/hachette.xml"
+      @message = ONIX::ONIXMessage.new
+      @message.parse(@filename)
+      @product = @message.products.first
+    end
+    should "be the same serialized" do
+      assert_equal 1, @message.products.length
+      builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
+        ONIX::Serializer::Default.serialize(xml, @product, "Product")
+      end
       #assert_equal builder.to_xml, File.read(@filename)
-      assert_equal builder.to_xml.gsub(/\>\s+\</, "><"), File.read(@filename).gsub(/\>\s+\</, "><")
+      #assert_equal builder.to_xml.gsub(/\>\s+\</, "><"), File.read(@filename).gsub(/\>\s+\</, "><")
     end
   end
 

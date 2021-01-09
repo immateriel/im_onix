@@ -59,7 +59,6 @@ module ONIX
       attrs.each do |k, v|
         attr_klass = Attributes.attribute_class(k.to_s)
         @attributes[k.to_s] = attr_klass ? attr_klass.from_code(v.to_s) : nil
-        #puts "PARSE ATTR #{k}(#{attr_klass}) = #{v}(#{@attributes[k.to_s]})"
       end
     end
   end
@@ -78,8 +77,8 @@ module ONIX
     def parse(n) end
 
     def unsupported(tag)
-      #      raise SubsetUnsupported,tag.name
-      #      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{ShortToRef.names[tag.name]})"
+      # raise SubsetUnsupported, [self.class, tag.name]
+      # puts "WARN subset tag unsupported #{self.class}##{tag.name} (#{self.class.short_to_ref(tag.name)})"
     end
 
     def tag_match(v)
@@ -418,7 +417,10 @@ module ONIX
 
           if val
             if primitive && t.attributes.length > 0
-              val = TextWithAttributes.new(t.attributes["textformat"] ? t.children.map { |x| x.to_s }.join.strip : val)
+              if t.attributes["textformat"] && t.attributes["textformat"].to_s == "05" # content is XHTML
+                val = t.children.map { |x| x.to_s }.join.strip
+              end
+              val = TextWithAttributes.new(val)
               val.parse(t.attributes)
             end
 
@@ -433,11 +435,6 @@ module ONIX
           unsupported(t)
         end
       end
-    end
-
-    def unsupported(tag)
-      # raise SubsetUnsupported, [self.class, tag.name]
-      #puts "SubsetUnsupported: #{self.class}##{tag.name} (#{self.class.short_to_ref(tag.name)})"
     end
   end
 end

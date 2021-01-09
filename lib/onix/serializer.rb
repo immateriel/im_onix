@@ -92,8 +92,12 @@ module ONIX
       class Primitive
         def self.serialize(xml, val, tag, level = 0)
           if val.is_a?(ONIX::TextWithAttributes)
-            xml.send(tag, val.serialized_attributes) do
-              xml.__send__ :insert, val.to_s
+            if val.serialized_attributes["textformat"] == "05" # content is XHTML
+              xml.send(tag, val.serialized_attributes) do
+                xml.__send__ :insert, val.to_s
+              end
+            else
+              xml.send(tag, val.serialized_attributes, val)
             end
           else
             xml.send(tag, val)
@@ -121,7 +125,7 @@ module ONIX
                   if deprecated_date_format
                     xml.Date(date.date.strftime(code_format))
                   else
-                    attrs = date.date_format ? {:dateformat => date_format.code} : {}
+                    attrs = date.date_format ? { :dateformat => date_format.code } : {}
                     xml.Date(date.date.strftime(code_format), attrs)
                   end
                 else
@@ -158,7 +162,11 @@ module ONIX
       class Subset
         def self.serialize(io, subset, tag, level = 0)
           io.write " " * level
-          io.write "#{tag}:\n"
+          if subset.attributes.length > 0
+            io.write "#{tag}[#{subset.attributes.to_a.map { |k, v| "#{k}: #{v.code}(#{v.human})" }.join(", ")}]\n"
+          else
+            io.write "#{tag}:\n"
+          end
           ONIX::Serializer::Traverser.recursive_serialize(Dump, io, subset, tag, level + 1)
         end
       end
@@ -166,7 +174,11 @@ module ONIX
       class Primitive
         def self.serialize(io, val, tag, level = 0)
           io.write " " * level
-          io.write "#{tag}: #{val}\n"
+          if val.is_a?(ONIX::TextWithAttributes)
+            io.write "#{tag}[#{val.attributes.to_a.map { |k, v| "#{k}: #{v.code}(#{v.human})" }.join(", ")}]: #{val.to_s}\n"
+          else
+            io.write "#{tag}: #{val}\n"
+          end
         end
       end
 

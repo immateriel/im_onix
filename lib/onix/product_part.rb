@@ -21,6 +21,10 @@ module ONIX
       @product_form_details.select { |fd| fd.code =~ /^E1.*/ }
     end
 
+    def product_form_description
+      product_form_descriptions.first
+    end
+
     # full Product if referenced in ONIXMessage
     attr_accessor :product
 

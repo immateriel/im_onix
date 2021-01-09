@@ -23,6 +23,7 @@ module ONIX
       format = code_format
 
       if code_format != text_format
+        puts "WARN incorrect date format #{text_format} != #{code_format}"
         format = text_format
       end
 
@@ -54,8 +55,12 @@ module ONIX
         "%Y%m%d"
       when "01"
         "%Y%m"
+      when "02"
+        "%Y%%W"
       when "05"
         "%Y"
+      when "13"
+        "%Y%m%dT%H%M%S"
       when "14"
         "%Y%m%dT%H%M%S%z"
       else

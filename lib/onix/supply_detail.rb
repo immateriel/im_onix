@@ -12,12 +12,16 @@ module ONIX
     element "ProductAvailability", :subset, :shortcut => :availability, :cardinality => 1
     elements "SupplyDate", :subset, :cardinality => 0..n
     element "OrderTime", :integer, :cardinality => 0..1
+    # element "NewSupplier", :subset, :cardinality => 0..1
+    # elements "Stock", :subset, :cardinality => 0..n
     element "PackQuantity", :integer, :cardinality => 0..1
     element "PalletQuantity", :integer, :cardinality => 0..1
     element "OrderQuantityMinimum", :integer, :cardinality => 0..1
+    # element "OrderQuantityMinimum", :integer, :cardinality => 0..1
     element "OrderQuantityMultiple", :integer, :cardinality => 0..1
     element "UnpricedItemType", :subset, :cardinality => 0..1
     elements "Price", :subset, :cardinality => 0..n
+    # element "Reissue", :subset, :cardinality => 0..1
 
     # @!group Shortcuts
     def distributors
