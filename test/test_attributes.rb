@@ -1,6 +1,6 @@
 require 'helper'
 
-class TestUnicode < Minitest::Test
+class TestAttributes < Minitest::Test
   context "full ONIX file" do
     setup do
       @filename = "test/fixtures/full_sample.xml"
@@ -9,7 +9,7 @@ class TestUnicode < Minitest::Test
       @product = @message.products.first
     end
 
-    should "have xhtml text" do
+    should "contributor have xhtml text" do
       assert_equal 4, @product.contributors.count
       assert @product.contributors.first
       assert @product.contributors.first.biographical_notes
