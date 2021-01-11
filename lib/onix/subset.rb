@@ -294,7 +294,11 @@ module ONIX
         if val.respond_to?(:__getobj__)
           val.__getobj__
         else
-          val
+          if val.is_a?(SubsetArray) and val.first and val.first.is_a?(TextWithAttributes)
+            val.map{|v| v.respond_to?(:__getobj__) ? v.__getobj__ : v}
+          else
+            val
+          end
         end
       end
 
