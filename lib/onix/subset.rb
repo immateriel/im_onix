@@ -1,3 +1,5 @@
+require 'forwardable'
+
 module ONIX
   class ShortToRef
     def self.names
@@ -22,7 +24,48 @@ module ONIX
     end
   end
 
+  module Attributes
+    attr_accessor :attributes
+
+    def serialized_attributes
+      if @attributes and @attributes.length > 0
+        attrs = {}
+        @attributes.each do |k, v|
+          attrs[k] = v.code if v
+        end
+        attrs
+      end
+    end
+
+    def self.attribute_class(attr)
+      case attr
+      when "textcase"
+        TextCase
+      when "textformat"
+        TextFormat
+      when "language"
+        LanguageCode
+      when "dateformat"
+        DateFormat
+      when "datestamp"
+        DateStamp
+      else
+        nil
+      end
+    end
+
+    def parse_attributes(attrs)
+      @attributes ||= {}
+      attrs.each do |k, v|
+        attr_klass = Attributes.attribute_class(k.to_s)
+        @attributes[k.to_s] = attr_klass ? attr_klass.from_code(v.to_s) : nil
+      end
+    end
+  end
+
   class Subset
+    include Attributes
+
     # instanciate Subset form Nokogiri::XML::Element
     def self.parse(n)
       o = self.new
@@ -34,8 +77,8 @@ module ONIX
     def parse(n) end
 
     def unsupported(tag)
-      #      raise SubsetUnsupported,tag.name
-      #      puts "SubsetUnsupported: #{self.class}##{tag.name} (#{ShortToRef.names[tag.name]})"
+      # raise SubsetUnsupported, [self.class, tag.name]
+      # puts "WARN subset tag unsupported #{self.class}##{tag.name} (#{self.class.short_to_ref(tag.name)})"
     end
 
     def tag_match(v)
@@ -111,19 +154,11 @@ module ONIX
     end
 
     def parse_lambda(v)
-      if @parse_lambda
-        @parse_lambda.call(v)
-      else
-        v
-      end
+      @parse_lambda ? @parse_lambda.call(v) : v
     end
 
     def serialize_lambda(v)
-      if @serialize_lambda
-        @serialize_lambda.call(v)
-      else
-        v
-      end
+      @serialize_lambda ? @serialize_lambda.call(v) : v
     end
 
     def is_array?
@@ -207,26 +242,11 @@ module ONIX
     end
   end
 
-  class TextWithAttributes < String
-    attr_accessor :attributes
+  class TextWithAttributes < SimpleDelegator
+    include Attributes
 
     def parse(attrs)
-      @attributes ||= {}
-      attrs.each do |k, v|
-        @attributes[k.to_s] = case k.to_s
-                              when "textcase"
-                                TextCase.from_code(v.to_s)
-                              when "textformat"
-                                TextFormat.from_code(v.to_s)
-                              when "language"
-                                LanguageCode.from_code(v.to_s)
-                              when "dateformat"
-                                DateFormat.from_code(v.to_s)
-                              else
-                                nil
-                              end
-        self
-      end
+      parse_attributes(attrs)
     end
   end
 
@@ -263,12 +283,29 @@ module ONIX
         @elements[short_name] = @elements[name].dup
         @elements[short_name].short = true
       end
+
       attr_accessor @elements[name].to_sym
+
+      alias_method "#{@elements[name].underscore_name}_with_attributes".to_sym, @elements[name].to_sym
+
+      current_element = @elements[name]
+      define_method current_element.to_sym do |args = nil|
+        val = instance_variable_get(current_element.to_instance)
+        if val.respond_to?(:__getobj__)
+          val.__getobj__
+        else
+          if val.is_a?(SubsetArray) and val.first and val.first.is_a?(TextWithAttributes)
+            val.map{|v| v.respond_to?(:__getobj__) ? v.__getobj__ : v}
+          else
+            val
+          end
+        end
+      end
+
       if @elements[name].shortcut
         current_element = @elements[name]
-        define_method current_element.shortcut do |args = nil|
-          instance_variable_get(current_element.to_instance)
-        end
+        alias_method "#{current_element.shortcut.to_s}_with_attributes".to_sym, "#{@elements[name].underscore_name}_with_attributes".to_sym
+        alias_method current_element.shortcut, @elements[name].to_sym
       end
     end
 
@@ -342,10 +379,12 @@ module ONIX
     end
 
     def parse(n)
+      parse_attributes(n.attributes)
       n.elements.each do |t|
         name = t.name
         e = self.get_registered_element(name)
         if e
+          primitive = true
           case e.type
           when :subset
             klass = self.get_class(e.class_name)
@@ -353,13 +392,9 @@ module ONIX
               raise UnknownElement, e.class_name
             end
             val = klass.parse(t)
+            primitive = false
           when :text
-            if t.attributes.length > 0
-              val = TextWithAttributes.new(t.attributes["textformat"] ? t.children.map { |x| x.to_s }.join.strip : t.text)
-              val.parse(t.attributes)
-            else
-              val = t.text
-            end
+            val = t.text
           when :integer
             val = t.text.to_i
           when :float
@@ -368,32 +403,42 @@ module ONIX
             val = true
           when :date
             fmt = t["dateformat"] || "00"
-            val = ONIX::Helper.to_date(fmt, t.text)
-          when :datetime
+            begin
+              val = ONIX::Helper.to_date(fmt, t.text)
+            rescue
+              val = t.text
+            end
+          when :datestamp
             tm = t.text
-            val = ((((Time.strptime(tm, "%Y%m%dT%H%M%S%z") rescue Time.strptime(tm, "%Y%m%dT%H%M%S")) rescue Time.strptime(tm, "%Y%m%dT%H%M%z")) rescue Time.strptime(tm, "%Y%m%dT%H%M")) rescue Time.strptime(tm, "%Y%m%d")) rescue nil
-            val ||= tm
+            datestamp = DateStamp.new
+            datestamp.parse(tm)
+            val = datestamp
           when :ignore
             val = nil
           else
             val = t.text
           end
+
           if val
+            if primitive && t.attributes.length > 0
+              if t.attributes["textformat"] && t.attributes["textformat"].to_s == "05" # content is XHTML
+                val = t.children.map { |x| x.to_s }.join.strip
+              end
+              val = TextWithAttributes.new(val)
+              val.parse(t.attributes)
+            end
+
             if e.is_array?
               instance_variable_get(e.to_instance).send(:push, val)
             else
               instance_variable_set(e.to_instance, e.parse_lambda(val))
             end
           end
+
         else
           unsupported(t)
         end
       end
-    end
-
-    def unsupported(tag)
-      # raise SubsetUnsupported, [self.class, tag.name]
-      #puts "SubsetUnsupported: #{self.class}##{tag.name} (#{self.class.short_to_ref(tag.name)})"
     end
   end
 end

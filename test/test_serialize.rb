@@ -93,7 +93,7 @@ class TestSerialize < Minitest::Test
 
                 onix.ContentDate {
                   onix.ContentDateRole("17")
-                  onix.DateFormat("00")
+                  onix.DateFormat("05")
                   onix.Date(Date.today)
                 }
               }
@@ -102,6 +102,7 @@ class TestSerialize < Minitest::Test
         }
       end
 
+      #puts builder.to_xml
       assert builder.to_xml
     end
 
@@ -204,6 +205,21 @@ class TestSerialize < Minitest::Test
     end
   end
 
+  context "ONIX file" do
+    setup do
+      @filename = "test/fixtures/test_YYYY_date_format.xml"
+      @message = ONIX::ONIXMessage.new
+      @message.parse(@filename)
+      @product = @message.products.first
+    end
+    should "be the same serialized" do
+      builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
+        ONIX::Serializer::Default.serialize(xml, @product, "Product")
+      end
+      assert_equal builder.to_xml.sub("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n", ""), File.read(@filename)
+    end
+  end
+
   context "full ONIX file" do
     setup do
       @filename = "test/fixtures/full_sample.xml"
@@ -215,8 +231,7 @@ class TestSerialize < Minitest::Test
       builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         ONIX::Serializer::Default.serialize(xml, @message)
       end
-      #assert_equal builder.to_xml, File.read(@filename)
-      assert_equal builder.to_xml.gsub(/\>\s+\</, "><"), File.read(@filename).gsub(/\>\s+\</, "><")
+      assert_equal Nokogiri::XML.parse(builder.to_xml,&:noblanks).to_xml, Nokogiri::XML.parse(File.read(@filename),&:noblanks).to_xml
     end
   end
 

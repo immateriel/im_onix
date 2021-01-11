@@ -35,7 +35,9 @@ module ONIX
         case type
         when :subset
           self.serialize_subset(mod, data, val, tag, level)
-        when :text, :integer, :float, :datetime
+        when :datestamp
+          mod.const_get("Primitive").serialize(data, val.code, tag, level)
+        when :text, :integer, :float
           mod.const_get("Primitive").serialize(data, val, tag, level)
         when :bool
           mod.const_get("Primitive").serialize(data, nil, tag, level) if val
@@ -47,16 +49,15 @@ module ONIX
       def self.recursive_serialize(mod, data, subset, parent_tag = nil, level = 0)
         if subset.class.respond_to?(:ancestors_registered_elements)
           subset.class.ancestors_registered_elements.each do |tag, element|
-            unless element.short
-              val = subset.instance_variable_get(element.to_instance)
-              if val
-                if element.is_array?
-                  val.each do |subval|
-                    self.any_serialize(element.type, mod, data, subval, tag, level)
-                  end
-                else
-                  self.any_serialize(element.type, mod, data, element.serialize_lambda(val), tag, level)
+            next if element.short
+            val = subset.instance_variable_get(element.to_instance)
+            if val
+              if element.is_array?
+                val.each do |subval|
+                  self.any_serialize(element.type, mod, data, subval, tag, level)
                 end
+              else
+                self.any_serialize(element.type, mod, data, element.serialize_lambda(val), tag, level)
               end
             end
           end
@@ -81,7 +82,7 @@ module ONIX
       class Subset
         def self.serialize(xml, subset, tag, level = 0)
           if tag
-            xml.send(tag, nil) {
+            xml.send(tag, subset.serialized_attributes) {
               ONIX::Serializer::Traverser.recursive_serialize(Default, xml, subset, tag, level + 1)
             }
           end
@@ -91,13 +92,12 @@ module ONIX
       class Primitive
         def self.serialize(xml, val, tag, level = 0)
           if val.is_a?(ONIX::TextWithAttributes)
-            attrs = {}
-            val.attributes.each do |k, v|
-              attrs[k] = v.code
-            end
-
-            xml.send(tag, attrs) do
-              xml.__send__ :insert, val#Nokogiri::XML::DocumentFragment.parse(val)
+            if val.serialized_attributes["textformat"] == "05" # content is XHTML
+              xml.send(tag, val.serialized_attributes) do
+                xml.__send__ :insert, val.to_s
+              end
+            else
+              xml.send(tag, val.serialized_attributes, val)
             end
           else
             xml.send(tag, val)
@@ -107,23 +107,31 @@ module ONIX
 
       class Date
         def self.serialize(xml, date, parent_tag = nil, level = 0)
+          deprecated_date_format = date.deprecated_date_format
+          date_format = date.date_format || DateFormat.from_code("00")
+          code_format = date.format_from_code(date_format.code)
+
           xml.send(parent_tag, nil) {
-            ONIX::Serializer::Traverser.recursive_serialize(Default, xml, date, parent_tag, level + 1)
-            # FIXME: dirty
-            if date.date_format.is_a?(String)
-              date.date_format = DateFormat.from_code(date.date_format)
-              date.deprecated_date_format = true
-            end
-
-            date.strpdate!(date.date) if date.date.is_a?(String)
-
-            if date.deprecated_date_format
-              xml.DateFormat(date.date_format.code)
-              code_format = date.format_from_code(date.date_format.code)
-              xml.Date(date.date.strftime(code_format))
-            else
-              code_format = date.format_from_code(date.date_format.code)
-              xml.Date(date.date.strftime(code_format), :dateformat => date.date_format.code)
+            date.class.ancestors_registered_elements.each do |tag, element|
+              next if element.short
+              val = date.instance_variable_get(element.to_instance)
+              if val
+                case tag
+                when "DateFormat"
+                  if deprecated_date_format
+                    xml.DateFormat(date_format.code)
+                  end
+                when "Date"
+                  if deprecated_date_format
+                    xml.Date(date.date.strftime(code_format))
+                  else
+                    attrs = date.date_format ? { :dateformat => date_format.code } : {}
+                    xml.Date(date.date.strftime(code_format), attrs)
+                  end
+                else
+                  ONIX::Serializer::Traverser.any_serialize(element.type, Default, xml, element.serialize_lambda(val), tag, level)
+                end
+              end
             end
           }
         end
@@ -131,7 +139,7 @@ module ONIX
 
       class Code
         def self.serialize(xml, code, parent_tag = nil, level = 0)
-          xml.send(parent_tag, nil) {
+          xml.send(parent_tag, code.serialized_attributes) {
             xml.text(code.code)
           }
         end
@@ -154,7 +162,11 @@ module ONIX
       class Subset
         def self.serialize(io, subset, tag, level = 0)
           io.write " " * level
-          io.write "#{tag}:\n"
+          if subset.attributes.length > 0
+            io.write "#{tag}[#{subset.attributes.to_a.map { |k, v| "#{k}: #{v.code}(#{v.human})" }.join(", ")}]\n"
+          else
+            io.write "#{tag}:\n"
+          end
           ONIX::Serializer::Traverser.recursive_serialize(Dump, io, subset, tag, level + 1)
         end
       end
@@ -162,7 +174,11 @@ module ONIX
       class Primitive
         def self.serialize(io, val, tag, level = 0)
           io.write " " * level
-          io.write "#{tag}: #{val}\n"
+          if val.is_a?(ONIX::TextWithAttributes)
+            io.write "#{tag}[#{val.attributes.to_a.map { |k, v| "#{k}: #{v.code}(#{v.human})" }.join(", ")}]: #{val.to_s}\n"
+          else
+            io.write "#{tag}: #{val}\n"
+          end
         end
       end
 

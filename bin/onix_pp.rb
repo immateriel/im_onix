@@ -18,7 +18,7 @@ if filename
     end
   end
   if msg.sent_date_time
-    puts "Sent date: #{msg.sent_date_time}"
+    puts "Sent date: #{msg.sent_date_time.human}"
   end
 
   msg.products.each do |product|

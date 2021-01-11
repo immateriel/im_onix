@@ -16,14 +16,14 @@ module ONIX
     # @!group High level
     # flatten title string
     def title
-      if @title_text
-        @title_text
+      if title_text
+        title_text
       else
-        if @title_without_prefix
-          if @title_prefix
-            "#{@title_prefix} #{@title_without_prefix}"
+        if title_without_prefix
+          if title_prefix
+            "#{title_prefix} #{title_without_prefix}"
           else
-            @title_without_prefix
+            title_without_prefix
           end
         end
       end

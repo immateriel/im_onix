@@ -25,6 +25,10 @@ module ONIX
     def_delegator :header, :default_currency_code
     def_delegator :header, :sent_date_time
 
+    def header
+      @header || Header.new
+    end
+
     def initialize
       @products = []
       @vault = {}

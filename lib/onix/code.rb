@@ -7,6 +7,7 @@ module ONIX
 
   module CodeHelper
     def parse(n)
+      parse_attributes(n.attributes)
       @code = n.text
       @human = self.class.hash[n.text]
     end

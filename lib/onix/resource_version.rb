@@ -9,7 +9,7 @@ module ONIX
 
     def filename
       if @resource_form.human == "DownloadableFile"
-        @resource_links.first
+        resource_links.first
       end
     end
 

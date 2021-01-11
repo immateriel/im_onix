@@ -21,6 +21,10 @@ module ONIX
       @product_form_details.select { |fd| fd.code =~ /^E1.*/ }
     end
 
+    def product_form_description
+      product_form_descriptions.first
+    end
+
     # full Product if referenced in ONIXMessage
     attr_accessor :product
 
@@ -53,8 +57,8 @@ module ONIX
     # raw part file description string without HTML
     # @return [String]
     def raw_file_description
-      if @product_form_description
-        Helper.strip_html(@product_form_description).gsub(/\s+/, " ").strip
+      if product_form_description
+        Helper.strip_html(product_form_description).gsub(/\s+/, " ").strip
       end
     end
 

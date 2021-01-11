@@ -70,29 +70,27 @@ module ONIX
             if parser_el.is_array?
               arr = @parent.send(parser_el.underscore_name)
               case parser_el.type
+              when :ignore
               when :subset
+                node.attributes = get_attributes(args[1]) if args.length > 1
                 arr << node
               else
-                if args.length > 1
-                  txt = TextWithAttributes.new(args[0])
-                  txt.parse(args[1])
-                  arr << txt
-                else
-                  arr << args[0]
-                end
+                arr << get_primitive(args)
               end
             else
               case parser_el.type
+              when :ignore
               when :subset
-                @parent.send(parser_el.underscore_name + "=", node)
-              else
-                if args.length > 1
-                  txt = TextWithAttributes.new(args[0])
-                  txt.parse(args[1])
-                  @parent.send(parser_el.underscore_name + "=", txt)
-                else
-                  @parent.send(parser_el.underscore_name + "=", args[0])
+                # FIXME: dirty
+                if @parent.class.included_modules.include?(DateHelper) && node.is_a?(DateFormat)
+                  @parent.deprecated_date_format = true
                 end
+                node.attributes = get_attributes(args[1]) if args.length > 1
+                @parent.send(parser_el.underscore_name + "=", node)
+              when :datestamp
+                @parent.send(parser_el.underscore_name + "=", DateStamp.new(args[0], args[1] || "%Y%m%d"))
+              else
+                @parent.send(parser_el.underscore_name + "=", get_primitive(args))
               end
             end
           else
@@ -108,29 +106,58 @@ module ONIX
 
     private
 
+    def get_primitive(args)
+      if args.length > 1
+        txt = TextWithAttributes.new(args[0])
+        txt.attributes = get_attributes(args[1])
+        txt
+      else
+        args[0]
+      end
+    end
+
+    def get_attributes(arg)
+      attrs = {}
+      arg.each do |k, v|
+        attr_klass = ONIX::Attributes.attribute_class(k.to_s)
+        attrs[k] = get_element_code(attr_klass, v) if attr_klass
+      end
+      attrs
+    end
+
+    def get_element_code(klass, arg)
+      if arg.is_a?(String)
+        el = klass.from_code(arg)
+        unless el.human
+          raise BuilderInvalidCode, [klass.to_s, arg]
+        end
+        el
+      else
+        if arg.is_a?(Symbol)
+          klass.from_human(arg.to_s)
+        else
+          raise BuilderInvalidArgument, [klass.to_s, arg]
+        end
+      end
+    end
+
+    def get_element(klass, args)
+      if klass.respond_to?(:from_code)
+        get_element_code(klass, args[0])
+      else
+        el = klass.new
+        if el.is_a?(ONIX::ONIXMessage)
+          el.release = args[0]
+        end
+        el
+      end
+    end
+
     def get_class(nm, args)
       el = nil
       if ONIX.const_defined?(nm)
         klass = ONIX.const_get(nm)
-        if klass.respond_to?(:from_code)
-          if args[0].is_a?(String)
-            el = klass.from_code(args[0])
-            unless el.human
-              raise BuilderInvalidCode, [nm.to_s, args[0]]
-            end
-          else
-            if args[0].is_a?(Symbol)
-              el = klass.from_human(args[0].to_s)
-            else
-              raise BuilderInvalidArgument, [nm.to_s, args[0]]
-            end
-          end
-        else
-          el = klass.new
-          if el.is_a?(ONIX::ONIXMessage)
-            el.release = args[0]
-          end
-        end
+        el = get_element(klass, args)
       else
         raise BuilderUndefinedElement, nm
       end

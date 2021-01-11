@@ -304,7 +304,7 @@
       </Publisher>
       <CityOfPublication>London</CityOfPublication>
       <CountryOfPublication>GB</CountryOfPublication>
-      <PublishingStatus>04</PublishingStatus>
+      <PublishingStatus datestamp="20201214">04</PublishingStatus>
       <PublishingDate>
         <PublishingDateRole>01</PublishingDateRole>
         <Date dateformat="00">20060807</Date>
