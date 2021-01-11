@@ -28,20 +28,7 @@ module ONIX
       end
 
       begin
-        if format
-          case date_format.code
-          when "00"
-            datetime = Time.strptime(date_txt, format)
-          when "01"
-            datetime = Time.strptime(date_txt, format)
-          when "05"
-            datetime = Time.strptime(date_txt, format)
-          when "14"
-            datetime = Time.strptime(date_txt, format)
-          else
-            datetime = nil
-          end
-        end
+        datetime = Time.strptime(date_txt, format) if format && %w[00 01 02 05 13 14].include?(date_format.code)
       rescue => e
         # invalid date
       end
