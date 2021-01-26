@@ -1,4 +1,5 @@
 require 'forwardable'
+require 'cgi'
 
 module ONIX
   class ShortToRef
@@ -422,7 +423,7 @@ module ONIX
           if val
             if primitive && t.attributes.length > 0
               if t.attributes["textformat"] && t.attributes["textformat"].to_s == "05" # content is XHTML
-                val = t.children.map { |x| x.to_s }.join.strip
+                val = CGI.unescapeHTML(t.children.map { |x| x.to_s }.join.strip)
               end
               val = TextWithAttributes.new(val)
               val.parse(t.attributes)
