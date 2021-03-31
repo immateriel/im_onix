@@ -26,8 +26,10 @@ module ONIX
   end
 
   module Attributes
+    # @return [Hash<String,Code>]
     attr_accessor :attributes
 
+    # @return [Hash<String,String>]
     def serialized_attributes
       if @attributes and @attributes.length > 0
         attrs = {}
@@ -38,6 +40,8 @@ module ONIX
       end
     end
 
+    # @param [String] attr
+    # @return [Class]
     def self.attribute_class(attr)
       case attr
       when "textcase"
@@ -68,6 +72,7 @@ module ONIX
     include Attributes
 
     # instanciate Subset form Nokogiri::XML::Element
+    # @param [Nokogiri::XML::Element] n
     def self.parse(n)
       o = self.new
       o.parse(n)
@@ -75,6 +80,7 @@ module ONIX
     end
 
     # parse Nokogiri::XML::Element
+    # @param [Nokogiri::XML::Element] n
     def parse(n) end
 
     def unsupported(tag)

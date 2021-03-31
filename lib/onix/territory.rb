@@ -33,6 +33,7 @@ module ONIX
       self.class.worldwide?(self.countries)
     end
 
+    # @param [Array<String>] v
     def countries= v
       if (v.uniq & CountryCode.list).length == CountryCode.list.length
         @regions_included = "WORLD"
@@ -43,6 +44,8 @@ module ONIX
 
     # !@endgroup
 
+    # @param [String] region
+    # @return [Array<String>]
     def self.region_to_countries(region)
       case region
       when "WORLD"
@@ -55,6 +58,7 @@ module ONIX
       end
     end
 
+    # @return [Boolean]
     def self.worldwide?(countries)
       (countries & CountryCode.list).length == CountryCode.list.length
     end

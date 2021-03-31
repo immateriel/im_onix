@@ -8,25 +8,33 @@ require 'onix/comparison_product_price'
 module ONIX
   class Price < SubsetDSL
     # elements "PriceIdentifier", :subset, :cardinality => 0..n
+
+
     element "PriceType", :subset, :shortcut => :type, :cardinality => 0..1
     element "PriceQualifier", :subset, :shortcut => :qualifier, :cardinality => 0..1
     elements "EpubTechnicalProtection", :subset, :cardinality => 0..n
+
     # elements "PriceConstraint", :subset, :cardinality => 0..n
+
+
     element "EpubLicense", :subset, :cardinality => 0..1
     element "PriceTypeDescription", :text, :cardinality => 0..n
+
     # element "PricePer", :subset, :cardinality => 0..1
     # elements "PriceCondition", :subset, :cardinality => 0..n
     # element "MinimumOrderQuantity", :integer, :cardinality => 0..1
     # elements "BatchBonus", :subset, :cardinality => 0..n
+
+
     elements "DiscountCoded", :subset, :cardinality => 0..n
     elements "Discount", :subset, :cardinality => 0..n
     element "PriceStatus", :subset
     element "PriceAmount", :float,
             {
-                :shortcut => :amount,
-                :parse_lambda => lambda { |v| (v * 100).round },
-                :serialize_lambda => lambda { |v| format("%.2f", v / 100.0) },
-                :cardinality => 0..1
+              :shortcut => :amount,
+              :parse_lambda => lambda { |v| (v * 100).round },
+              :serialize_lambda => lambda { |v| format("%.2f", v / 100.0) },
+              :cardinality => 0..1
             }
     element "Tax", :subset, :cardinality => 0..n
     element "TaxExempt", :bool, :cardinality => 0..1
@@ -39,6 +47,7 @@ module ONIX
     element "PositionOnProduct", :subset, :cardinality => 0..1
 
     # FIXME discount_coded != discount
+    # @return [DiscountCoded]
     def discount
       self.discount_codeds.first
     end

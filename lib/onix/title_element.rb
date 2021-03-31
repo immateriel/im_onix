@@ -15,6 +15,7 @@ module ONIX
 
     # @!group High level
     # flatten title string
+    # @return [String]
     def title
       if title_text
         title_text

@@ -89,6 +89,7 @@ module ONIX
     end
 
     # open with arg detection
+    # @param [String, File] arg
     def open(arg, force_encoding = nil)
       data = ONIX::Helper.arg_to_data(arg)
 
@@ -104,6 +105,7 @@ module ONIX
     end
 
     # release as an integer eg: 210, 300, 301
+    # @return [Number]
     def version
       if @release
         @release.gsub(/\./, "").to_i * 10 ** (3 - @release.scan(".").length - 1)
@@ -111,6 +113,7 @@ module ONIX
     end
 
     # detect ONIX version from XML tags
+    # @return [String]
     def detect_release(element)
       if element
         return "3.0" if element.search("//DescriptiveDetail").length > 0
@@ -144,6 +147,7 @@ module ONIX
     end
 
     # parse filename or file
+    # @param [String, File] arg
     def parse(arg, force_encoding = nil, force_release = nil)
       @products = []
       xml = open(arg, force_encoding)

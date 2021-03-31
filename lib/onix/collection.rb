@@ -17,6 +17,7 @@ module ONIX
     # @!group High level
 
     # collection title string
+    # @return [String]
     def title
       if collection_title_element
         collection_title_element.title
@@ -24,12 +25,14 @@ module ONIX
     end
 
     # collection subtitle string
+    # @return [String]
     def subtitle
       if collection_title_element
         collection_title_element.subtitle
       end
     end
 
+    # @return [TitleElement]
     def collection_title_element
       distinctive_title = @title_details.distinctive_title.first
       #select { |td| td.type.human=~/DistinctiveTitle/}.first

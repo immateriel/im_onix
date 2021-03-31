@@ -10,6 +10,7 @@ module ONIX
 
     # :category: High level
     # flatten title string
+    # @return [String]
     def title
       return title_statement if title_statement
 

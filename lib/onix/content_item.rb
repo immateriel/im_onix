@@ -13,7 +13,10 @@ module ONIX
   class ContentItem < SubsetDSL
     element "LevelSequenceNumber", :integer, :cardinality => 0..1
     element "TextItem", :subset, :cardinality => 0..1
+
     # element "AVItem", :subset, :cardinality => 0..1
+
+
     element "ComponentTypeName", :text, :cardinality => 0..1
     element "ComponentNumber", :text, :cardinality => 0..1
     elements "TitleDetail", :subset, :cardinality => 0..n
@@ -22,7 +25,10 @@ module ONIX
     element "NoContributor", :bool, :cardinality => 0..1
     elements "Language", :subset, :cardinality => 0..n
     elements "Subject", :subset, :cardinality => 0..n
+
     # elements "NameAsSubject", :subset, :cardinality => 0..n
+
+
     elements "TextContent", :subset, :cardinality => 0..n
     elements "CitedContent", :subset, :cardinality => 0..n
     elements "SupportingResource", :subset, :cardinality => 0..n

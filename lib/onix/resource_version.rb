@@ -7,16 +7,19 @@ module ONIX
     elements "ResourceLink", :text, :shortcut => :links, :cardinality => 1..n
     elements "ContentDate", :subset, :cardinality => 0..n
 
+    # @return [String]
     def filename
       if @resource_form.human == "DownloadableFile"
         resource_links.first
       end
     end
 
+    # @return [ResourceVersionFeature]
     def file_format_feature
       @resource_version_features.select { |f| f.type.human == "FileFormat" }.first
     end
 
+    # @return [String]
     def file_format
       if ["DownloadableFile", "LinkableResource"].include?(@resource_form.human)
         if file_format_feature

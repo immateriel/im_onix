@@ -17,10 +17,12 @@ module ONIX
     scope :image, lambda { human_code_match(:resource_mode, "Image") }
     scope :text, lambda { human_code_match(:resource_mode, "Text") }
 
+    # @return [ResourceFeature]
     def caption_feature
       self.features.caption.first
     end
 
+    # @return [String]
     def caption
       if self.caption_feature
         self.caption_feature.value

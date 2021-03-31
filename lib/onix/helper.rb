@@ -1,6 +1,7 @@
 module ONIX
   class Helper
     # convert arbitrary arg to File/String
+    # @param [String, File] arg
     def self.arg_to_data(arg)
       data = ""
       case arg
@@ -33,18 +34,8 @@ module ONIX
       end
     end
 
-    def self.text_at(n, xpath)
-      if n.at_xpath(xpath)
-        n.at_xpath(xpath).text.strip
-      else
-        nil
-      end
-    end
-
-    def self.mandatory_text_at(n, xpath)
-      self.text_at(n, xpath)
-    end
-
+    # @param [String] html
+    # @return [String]
     def self.strip_html(html)
       html.gsub(/&nbsp;/, " ").gsub(/<[^>]*(>+|\s*\z)/m, '')
     end

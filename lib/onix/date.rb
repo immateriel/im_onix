@@ -1,6 +1,11 @@
 module ONIX
   module DateHelper
-    attr_accessor :date_format, :date, :datetime
+    # @return [DateFormat]
+    attr_accessor :date_format
+    # @return [Date]
+    attr_accessor :date
+    # @return [Time]
+    attr_accessor :datetime
 
     def parse_date
       if @date_format
@@ -15,6 +20,9 @@ module ONIX
       @date = @datetime ? @datetime.to_date : nil
     end
 
+    # @param [String] date_txt
+    # @param [DateFormat] date_format
+    # @return [Time]
     def strpdate!(date_txt, date_format)
       date_format ||= DateFormat.from_code("00")
       code_format = format_from_code(date_format.code)
@@ -36,6 +44,8 @@ module ONIX
       datetime
     end
 
+    # @param [String] code
+    # @return [String]
     def format_from_code(code)
       case code
       when "00"
@@ -55,6 +65,7 @@ module ONIX
       end
     end
 
+    # @param [String] str
     def format_from_string(str)
       case str
       when /^\d{4}\d{2}\d{2}T\d{2}\d{2}\d{2}/
@@ -72,6 +83,7 @@ module ONIX
       end
     end
 
+    # @return [Time]
     def time
       @datetime
     end
@@ -124,6 +136,9 @@ module ONIX
     include DateHelper
     element "DateFormat", :subset
     element "Date", :text
+
+    # use former date representation
+    # @return [Boolean]
     attr_accessor :deprecated_date_format
 
     def initialize
