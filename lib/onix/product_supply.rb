@@ -41,6 +41,7 @@ module ONIX
       @supply_details.delete_if { |supply_detail| supply_detail.available? }
     end
 
+    # @return [Boolean]
     def available?
       self.available_supply_details.length > 0
     end

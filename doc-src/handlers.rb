@@ -1,3 +1,4 @@
+require 'yaml'
 class DSLHelpers
   def self.inflectors
     [['ox', 'oxes'],
@@ -47,6 +48,10 @@ class ElementDSLAttributeHandler < YARD::Handlers::Ruby::Base
   handles method_call(:element)
   namespace_only
 
+  def n
+    Float::INFINITY
+  end
+
   process do
     name = statement.parameters[0].jump(:tstring_content, :ident).source
     type = statement.parameters[1].jump(:tstring_content, :ident).source
@@ -93,6 +98,10 @@ class ElementsDSLAttributeHandler < YARD::Handlers::Ruby::Base
   handles method_call(:elements)
   namespace_only
 
+  def n
+    Float::INFINITY
+  end
+
   process do
     name = statement.parameters[0].jump(:tstring_content, :ident).source
     type = statement.parameters[1].jump(:tstring_content, :ident).source
@@ -133,9 +142,7 @@ class ElementsDSLAttributeHandler < YARD::Handlers::Ruby::Base
       register(object)
     end
   end
-
 end
-
 
 class DefDelegatorAttributeHandler < YARD::Handlers::Ruby::Base
   handles method_call(:def_delegator)
@@ -150,5 +157,28 @@ class DefDelegatorAttributeHandler < YARD::Handlers::Ruby::Base
     ].join("\n")
     object[:group] = 'High level'
     register(object)
+  end
+end
+
+class CodeAttributeHandler < YARD::Handlers::Ruby::Base
+  handles method_call(:code_identifier)
+  namespace_only
+
+  process do
+    name = statement.parameters[0].jump(:tstring_content, :ident).source
+    codelist_filename = File.dirname(__FILE__) + "/../data/codelists/codelist-#{name}.yml"
+    if File.exist?(codelist_filename)
+      codelist = YAML.load(File.read(codelist_filename))[:codelist]
+      humanized = []
+      codelist.each do |k,v|
+        humanized << "#{v} (#{k})"
+      end
+      returns = YARD::DocstringParser.new.parse("@return [String] humanized name (from code): "+humanized.join(", ")).to_docstring.tags.first
+      object = YARD::CodeObjects::MethodObject.new(namespace, "human", :instance)
+      object.dynamic = true
+      object.add_tag(returns) if returns
+      object[:group] = 'Low level'
+      register(object)
+    end
   end
 end

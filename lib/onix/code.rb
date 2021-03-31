@@ -13,11 +13,13 @@ module ONIX
     end
 
     # Humanized string code
+    # @return [String]
     def human
       @human
     end
 
     # ONIX code
+    # @return [String]
     def onix
       @code
     end
@@ -89,6 +91,7 @@ module ONIX
 
   class CodeFromYamlWithMime < CodeFromYaml
     # main formats
+    # @return [String]
     def mimetype
       case self.human
       when "Epub"

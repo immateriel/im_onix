@@ -21,6 +21,7 @@ module ONIX
 
     # @!group High level
 
+    # @return [Publisher]
     def publisher
       main_publishers = @publishers.select { |p| p.role.human == "Publisher" }
       return nil if main_publishers.empty?
@@ -31,6 +32,7 @@ module ONIX
       end
     end
 
+    # @return [Imprint]
     def imprint
       if @imprints.length > 0
         if @imprints.length == 1
@@ -42,6 +44,7 @@ module ONIX
     end
 
     # date of publication
+    # @return [Date]
     def publication_date
       pub = @publishing_dates.publication.first
       if pub
@@ -50,6 +53,7 @@ module ONIX
     end
 
     # date of embargo
+    # @return [Date]
     def embargo_date
       pub = @publishing_dates.embargo.first
       if pub
@@ -57,6 +61,7 @@ module ONIX
       end
     end
 
+    # @return [Date]
     def preorder_embargo_date
       pub = @publishing_dates.preorder_embargo.first
       if pub
@@ -64,6 +69,7 @@ module ONIX
       end
     end
 
+    # @return [Date]
     def public_announcement_date
       pub = @publishing_dates.public_announcement.first
       if pub

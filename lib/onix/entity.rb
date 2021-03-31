@@ -10,18 +10,22 @@ module ONIX
     include GlnMethods
     include EntityHelper
 
+    # @return [String]
     def self.role_tag
       "#{self.prefix}Role"
     end
 
+    # @return [String]
     def self.name_tag
       "#{self.prefix}Name"
     end
 
+    # @return [String]
     def self.identifier_tag
       "#{self.prefix}Identifier"
     end
 
+    # @return [String]
     def self.prefix
     end
 

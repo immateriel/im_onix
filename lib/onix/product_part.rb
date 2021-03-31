@@ -9,7 +9,10 @@ module ONIX
     element "ProductForm", :subset, :shortcut => :form, :cardinality => 1
     elements "ProductFormDetail", :subset, :shortcut => :form_details, :cardinality => 0..n
     elements "ProductFormFeature", :subset, :cardinality => 0..n
+
     # element "ProductPackaging", :subset, :cardinality => 0..1
+
+
     elements "ProductFormDescription", :text, :shortcut => :file_description, :cardinality => 0..n
     elements "ProductContentType", :subset, :shortcut => :content_types, :cardinality => 0..n
     elements "Measure", :subset, :cardinality => 0..n
@@ -21,11 +24,13 @@ module ONIX
       @product_form_details.select { |fd| fd.code =~ /^E1.*/ }
     end
 
+    # @return [ProductFormDescription]
     def product_form_description
       product_form_descriptions.first
     end
 
     # full Product if referenced in ONIXMessage
+    # @return [Product]
     attr_accessor :product
 
     # this ProductPart is part of Product

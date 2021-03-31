@@ -43,14 +43,20 @@ module ONIX
     elements "Contributor", :subset, :cardinality => 0..n
     elements "ContributorStatement", :text, :cardinality => 0..n
     element "NoContributor", :bool, :cardinality => 0..1
+
     # elements "Conference", :subset, :cardinality => 0..n
     # elements "Event", :subset, :cardinality => 0..n
+
+
     element "EditionType", :subset, :cardinality => 0..n
     element "EditionNumber", :integer, :cardinality => 0..1
     element "EditionVersionNumber", :text, :cardinality => 0..1
     elements "EditionStatement", :text, :cardinality => 0..n
     element "NoEdition", :bool, :cardinality => 0..1
+
     # element "ReligiousText", :subset, :cardinality => 0..1
+
+
     elements "Language", :subset, :cardinality => 0..1
     elements "Extent", :subset, :cardinality => 0..n
     element "Illustrated", :subset, :cardinality => 0..1
@@ -58,7 +64,10 @@ module ONIX
     elements "IllustrationsNote", :text, :cardinality => 0..n
     elements "AncillaryContent", :subset, :cardinality => 0..n
     elements "Subject", :subset, :cardinality => 0..n
+
     # elements "NameAsSubject", :subset, :cardinality => 0..n
+
+
     elements "AudienceCode", :subset, :cardinality => 0..n
     elements "Audience", :subset, :cardinality => 0..n
     elements "AudienceRange", :subset, :cardinality => 0..n
@@ -67,16 +76,46 @@ module ONIX
 
     # @!group Shortcuts
 
+    # @return [Extent]
     def pages_extent
       @extents.page.first
     end
 
+    # @return [TitleElement]
     def product_title_element
       @title_details.distinctive_title.first.title_elements.product_level.first if @title_details.distinctive_title.first
     end
 
+    # @return [Array<ProductFormDetail>]
     def file_formats
       @product_form_details.select { |fd| fd.code =~ /^E1.*/ }
+    end
+
+    # @return [Collection]
+    def publisher_collection
+      @collections.publisher.first
+    end
+
+    # @return [Extent]
+    def filesize_extent
+      @extents.filesize.first
+    end
+
+    # @return [Array<ProductFormDetail>]
+    def audio_formats
+      @product_form_details.select { |fd| fd.code =~ /^A.*/ }
+    end
+
+    # BISAC categories
+    # @return [Array<Subject>]
+    def bisac_categories
+      @subjects.bisac
+    end
+
+    # CLIL categories
+    # @return [Array<Subject>]
+    def clil_categories
+      @subjects.clil
     end
 
     # @!endgroup
@@ -101,10 +140,6 @@ module ONIX
       if pages_extent
         pages_extent.pages
       end
-    end
-
-    def filesize_extent
-      @extents.filesize.first
     end
 
     # file size in bytes
@@ -145,12 +180,9 @@ module ONIX
       not audio_formats.empty?
     end
 
+    # @return [String]
     def audio_format
       self.audio_formats.first.human if self.audio_formats.first
-    end
-
-    def audio_formats
-      @product_form_details.select { |fd| fd.code =~ /^A.*/ }
     end
 
     # is digital offer a bundle ?
@@ -200,15 +232,12 @@ module ONIX
     end
 
     # language of text
+    # @return [String]
     def language_of_text
       l = @languages.of_text.first
       if l
         l.code
       end
-    end
-
-    def publisher_collection
-      @collections.publisher.first
     end
 
     # publisher collection title
@@ -219,22 +248,10 @@ module ONIX
       end
     end
 
-    # BISAC categories
-    # @return [Array<Subject>]
-    def bisac_categories
-      @subjects.bisac
-    end
-
     # BISAC categories identifiers string array (eg: FIC000000)
     # @return [Array<String>]
     def bisac_categories_codes
       self.bisac_categories.map { |c| c.code }.uniq
-    end
-
-    # BISAC categories
-    # @return [Array<Subject>]
-    def clil_categories
-      @subjects.clil
     end
 
     # CLIL categories identifier string array
@@ -244,6 +261,7 @@ module ONIX
     end
 
     # keywords string array
+    # @return [Array<String>]
     def keywords
       kws = @subjects.keyword.map { |kw| kw.heading_text }.compact
       kws = kws.flat_map { |kw| kw.split(/;|,|\n/) }.map { |kw| kw.strip }

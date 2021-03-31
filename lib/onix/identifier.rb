@@ -74,6 +74,7 @@ module ONIX
 
   module EanMethods
     # EAN string identifier from identifiers
+    # @return [String]
     def ean
       if ean_identifier
         ean_identifier.value
@@ -90,6 +91,7 @@ module ONIX
 
   module IsbnMethods
     # ISBN-13 string identifier from identifiers
+    # @return [String]
     def isbn13
       if isbn13_identifier
         isbn13_identifier.value
@@ -106,6 +108,7 @@ module ONIX
 
   module GlnMethods
     # GLN string identifier from identifiers
+    # @return [String]
     def gln
       if gln_identifier
         if gln_identifier.value =~ /\d{13}/

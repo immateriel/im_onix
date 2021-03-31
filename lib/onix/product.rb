@@ -29,10 +29,16 @@ module ONIX
     elements "RecordSourceIdentifier", :subset, :cardinality => 0..n
     element "RecordSourceName", :text, :cardinality => 0..1
     elements "ProductIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
+
     # elements "Barcode", :subset, :cardinality => 0..n
+
+
     element "DescriptiveDetail", :subset, :cardinality => 0..1
     element "CollateralDetail", :subset, :cardinality => 0..1
+
     # element "PromotionDetail", :subset, :cardinality => 0..1
+
+
     element "ContentDetail", :subset, :cardinality => 0..1
     element "PublishingDetail", :subset, :cardinality => 0..1
     element "RelatedMaterial", :subset, :cardinality => 0..1
@@ -99,19 +105,23 @@ module ONIX
     def_delegator :publishing_detail, :imprint
     def_delegator :publishing_detail, :publisher
 
+    # @return [CollateralDetail]
     def collateral_detail
       @collateral_detail || CollateralDetail.new
     end
 
+    # @return [DescriptiveDetail]
     def descriptive_detail
       @descriptive_detail || DescriptiveDetail.new
     end
 
+    # @return [PublishingDetail]
     def publishing_detail
       @publishing_detail || PublishingDetail.new
     end
 
     # product LanguageCode of text
+    # @return [String]
     def language_of_text
       @descriptive_detail.language_of_text || @default_language_of_text
     end

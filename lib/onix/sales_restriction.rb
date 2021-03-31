@@ -7,6 +7,7 @@ module ONIX
     element "StartDate", :date, :cardinality => 0..1
     element "EndDate", :date, :cardinality => 0..1
 
+    # @return [SalesRestrictionNote]
     def note
       self.notes.first
     end

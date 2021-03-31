@@ -7,6 +7,7 @@ module ONIX
     element "SubjectCode", :text, :shortcut => :code, :cardinality => 0..1
     elements "SubjectHeadingText", :text, :shortcut => :heading_texts, :cardinality => 0..n
 
+    # @return [String]
     def heading_text
       self.heading_texts.first
     end
