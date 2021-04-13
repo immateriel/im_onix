@@ -331,10 +331,12 @@ module ONIX
       els
     end
 
+    # registered elements including inherited
     def self.ancestors_registered_elements
       @ancestors_registered_elements ||= _ancestors_registered_elements
     end
 
+    # registered elements for this subset only
     def self.registered_elements
       @elements || {}
     end

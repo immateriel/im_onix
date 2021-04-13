@@ -38,6 +38,8 @@ module ONIX
         yield self
       end
 
+      @lax = false
+
       @parent = @doc
     end
 
@@ -53,6 +55,20 @@ module ONIX
       Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         serialize(xml)
       end.to_xml
+    end
+
+    # code in block will not check for validity
+    def lax &block
+      if block_given?
+        @lax = true
+        @arity ||= block.arity
+        if @arity <= 0
+          instance_eval(&block)
+        else
+          block.call(self)
+        end
+        @lax = false
+      end
     end
 
     def method_missing(method, *args, &block)
@@ -129,7 +145,9 @@ module ONIX
       if arg.is_a?(String)
         el = klass.from_code(arg)
         unless el.human
-          raise BuilderInvalidCode, [klass.to_s, arg]
+          unless @lax
+            raise BuilderInvalidCode, [klass.to_s, arg]
+          end
         end
         el
       else

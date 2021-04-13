@@ -57,10 +57,36 @@ class TestSerialize < Minitest::Test
       end
     end
 
+    should "undefined element raise exception" do
+      assert_raises(ONIX::BuilderInvalidChildElement) do
+        builder = ONIX::Builder.new do |onix|
+          onix.Product do
+            onix.UndefinedElement(:InvalidAlias)
+          end
+        end
+      end
+    end
+
     should "invalid code raise exception" do
       assert_raises(ONIX::BuilderInvalidCode) do
         builder = ONIX::Builder.new do |onix|
           onix.Product do
+            onix.NotificationType("NOTACODE")
+          end
+        end
+      end
+    end
+
+    should "invalid code lax" do
+      builder = ONIX::Builder.new do |onix|
+        onix.Product do
+          assert_raises(ONIX::BuilderInvalidCode) do
+            onix.NotificationType("NOTACODE")
+          end
+          onix.lax do
+            onix.NotificationType("NOTACODE")
+          end
+          assert_raises(ONIX::BuilderInvalidCode) do
             onix.NotificationType("NOTACODE")
           end
         end
@@ -231,7 +257,7 @@ class TestSerialize < Minitest::Test
       builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         ONIX::Serializer::Default.serialize(xml, @message)
       end
-      assert_equal Nokogiri::XML.parse(builder.to_xml,&:noblanks).to_xml, Nokogiri::XML.parse(File.read(@filename),&:noblanks).to_xml
+      assert_equal Nokogiri::XML.parse(builder.to_xml, &:noblanks).to_xml, Nokogiri::XML.parse(File.read(@filename), &:noblanks).to_xml
     end
   end
 
