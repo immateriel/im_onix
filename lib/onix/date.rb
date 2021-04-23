@@ -31,7 +31,7 @@ module ONIX
       format = code_format
 
       if code_format != text_format
-        puts "WARN incorrect date format #{text_format} != #{code_format}"
+        # puts "WARN incorrect date format #{text_format} != #{code_format}"
         format = text_format
       end
 

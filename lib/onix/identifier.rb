@@ -114,7 +114,7 @@ module ONIX
         if gln_identifier.value =~ /\d{13}/
           gln_identifier.value
         else
-          puts "Invalid GLN #{gln_identifier.value}"
+          # puts "WARN Invalid GLN #{gln_identifier.value}"
           nil
         end
       else
