@@ -3,6 +3,7 @@ require 'onix/helper'
 require 'onix/code'
 require 'onix/entity'
 require 'onix/identifier'
+require 'onix/barcode'
 require 'onix/descriptive_detail'
 require 'onix/publishing_detail'
 require 'onix/collateral_detail'
@@ -29,10 +30,7 @@ module ONIX
     elements "RecordSourceIdentifier", :subset, :cardinality => 0..n
     element "RecordSourceName", :text, :cardinality => 0..1
     elements "ProductIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
-
-    # elements "Barcode", :subset, :cardinality => 0..n
-
-
+    elements "Barcode", :subset, :cardinality => 0..n
     element "DescriptiveDetail", :subset, :cardinality => 0..1
     element "CollateralDetail", :subset, :cardinality => 0..1
 
