@@ -17,6 +17,8 @@ module ONIX
     elements "Website", :subset
     element "ContributorPlace", :subset
 
+    element "CorporateName", :text
+
     def role
       @contributor_role
     end
@@ -36,17 +38,17 @@ module ONIX
     # :category: High level
     # flatten person name (firstname lastname)
     def name
-      if @person_name
-        @person_name
-      else
-        if @key_names
-          if @names_before_key
-            "#{@names_before_key} #{@key_names}"
-          else
-            @key_names
-          end
+      return @person_name if @person_name
+
+      if @key_names
+        if @names_before_key
+          return "#{@names_before_key} #{@key_names}"
+        else
+          return @key_names
         end
       end
+
+      @corporate_name
     end
 
     # :category: High level
