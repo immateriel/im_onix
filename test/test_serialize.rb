@@ -125,10 +125,15 @@ class TestSerialize < Minitest::Test
               }
             }
           }
+          onix.PublishingDetail {
+            onix.Imprint {
+              onix.ImprintName("Imprint", sourcename: "SOURCENAME", sourcetype: "00")
+            }
+          }
         }
       end
 
-      #puts builder.to_xml
+      # puts builder.to_xml
       assert builder.to_xml
     end
 
@@ -186,7 +191,6 @@ class TestSerialize < Minitest::Test
                 onix.ExtentUnit("17")
               end
             end
-
             onix.RelatedMaterial do
               onix.RelatedProduct do
                 onix.ProductRelationCode("02")
