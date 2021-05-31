@@ -25,6 +25,18 @@ module ONIX
     end
   end
 
+  # String only code-like class
+  class TextAttr
+    attr_accessor :code, :human
+
+    def self.from_code(code)
+      obj = self.new
+      obj.code = code
+      obj.human = code
+      obj
+    end
+  end
+
   module Attributes
     # @return [Hash<String,Code>]
     attr_accessor :attributes
@@ -44,16 +56,24 @@ module ONIX
     # @return [Class]
     def self.attribute_class(attr)
       case attr
-      when "textcase"
-        TextCase
-      when "textformat"
-        TextFormat
-      when "language"
-        LanguageCode
+      when "sourcename"
+        TextAttr
+      when "sourcetype"
+        RecordSourceType
+      when "collationkey"
+        TextAttr
       when "dateformat"
         DateFormat
       when "datestamp"
         DateStamp
+      when "language"
+        LanguageCode
+      when "textcase"
+        TextCase
+      when "textformat"
+        TextFormat
+      when "textscript"
+        ScriptCode
       else
         nil
       end
