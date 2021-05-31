@@ -1,3 +1,4 @@
+require 'onix/publisher_representative'
 require 'onix/product_contact'
 
 module ONIX
