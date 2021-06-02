@@ -1017,4 +1017,17 @@ class TestImOnix < Minitest::Test
       assert_equal ['Jose A'], @product.narrators
     end
   end
+
+  context "with corporate name" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/with_corporate_name.xml')
+  
+      @product = message.products.last
+    end
+  
+    should "have author named" do
+      assert_equal ["Julie Otsuka", "Robert Smith"], @product.authors
+    end
+  end
 end

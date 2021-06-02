@@ -326,7 +326,10 @@ module ONIX
 
     def authors
       authors = contributors.select { |c| c.contributor_role.human == "ByAuthor" }
-      authors.map(&:person_name)
+
+      authors.map do |author|
+        author.person_name.nil? ? author.corporate_name : author.person_name
+      end
     end
 
     def narrators
