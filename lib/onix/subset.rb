@@ -451,7 +451,15 @@ module ONIX
           if val
             if primitive && t.attributes.length > 0
               if t.attributes["textformat"] && t.attributes["textformat"].to_s == "05" # content is XHTML
-                val = CGI.unescapeHTML(t.children.map { |x| x.to_s }.join.strip)
+                xhtml = CGI.unescapeHTML(t.children.map { |x| x.to_s }.join.strip)
+                if Nokogiri::XML.parse(xhtml).root # check if val is really XHTML
+                  val = xhtml
+                else
+                  xhtml = CGI.unescapeHTML(val)
+                  if Nokogiri::XML.parse(xhtml).root
+                    val = xhtml
+                  end
+                end
               end
               val = TextWithAttributes.new(val)
               val.parse(t.attributes)
