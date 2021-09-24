@@ -27,6 +27,42 @@ class TestTextformat < Minitest::Test
     end
   end
 
+  context "05 invalid text textformat" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/invalid_textformat_text.xml")
+      @product = @message.products.last
+    end
+
+    should "have html description" do
+      assert_equal "Japon, 1919. Un bateau quitte l’Empire du Levant avec à son bord plusieurs dizaines de jeunes femmes promises à des Japonais travaillant aux États-Unis, toutes mariées par procuration. À la façon d’un chœur antique, leurs voix s'élèvent et racontent leurs misérables vies d’exilées... leur nuit de noces, souvent brutale, leurs rudes journées de travail dans les champs, leurs combats pour apprivoiser une langue inconnue, l’humiliation des Blancs, le rejet par leur progéniture de leur patrimoine et de leur histoire... Une véritable clameur jusqu’au silence de la guerre. Et l'oubli.", @product.description
+    end
+  end
+
+  context "05 invalid cdata textformat" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/invalid_textformat_cdata.xml")
+      @product = @message.products.last
+    end
+
+    should "have html description" do
+      assert_equal "Japon, 1919. Un bateau quitte l’Empire du Levant avec à son bord plusieurs dizaines de jeunes femmes promises à des Japonais travaillant aux États-Unis, toutes mariées par procuration. À la façon d’un chœur antique, leurs voix s'élèvent et racontent leurs misérables vies d’exilées... leur nuit de noces, souvent brutale, leurs rudes journées de travail dans les champs, leurs combats pour apprivoiser une langue inconnue, l’humiliation des Blancs, le rejet par leur progéniture de leur patrimoine et de leur histoire... Une véritable clameur jusqu’au silence de la guerre. Et l'oubli.", @product.description
+    end
+  end
+
+  context "05 invalid cdata xhtml textformat" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/invalid_textformat_cdata_xhtml.xml")
+      @product = @message.products.last
+    end
+
+    should "have html description" do
+      assert_equal "<p>Japon, 1919. Un bateau quitte l’Empire du Levant avec à son bord plusieurs dizaines de jeunes femmes promises à des Japonais travaillant aux États-Unis, toutes mariées par procuration. À la façon d’un chœur antique, leurs voix s'élèvent et racontent leurs misérables vies d’exilées... leur nuit de noces, souvent brutale, leurs rudes journées de travail dans les champs, leurs combats pour apprivoiser une langue inconnue, l’humiliation des Blancs, le rejet par leur progéniture de leur patrimoine et de leur histoire... Une véritable clameur jusqu’au silence de la guerre. Et l'oubli.</p>\n<p>\n  <strong>Prix Femina étranger 2012</strong>\n</p>", @product.description
+    end
+  end
+
   context "05 valid textformat" do
     setup do
       @message = ONIX::ONIXMessage.new
