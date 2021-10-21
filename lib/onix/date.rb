@@ -1,5 +1,5 @@
 module ONIX
-  module DateHelper
+  module DateMethods
     # @return [DateFormat]
     attr_accessor :date_format
     # @return [Date]
@@ -133,9 +133,15 @@ module ONIX
   end
 
   class BaseDate < SubsetDSL
-    include DateHelper
-    element "DateFormat", :subset
-    element "Date", :text
+    include DateMethods
+
+    class << self
+      def date_elements(role)
+        element role, :subset, :shortcut => :role
+        element "DateFormat", :subset
+        element "Date", :text
+      end
+    end
 
     # use former date representation
     # @return [Boolean]
@@ -153,26 +159,26 @@ module ONIX
   end
 
   class MarketDate < BaseDate
-    element "MarketDateRole", :subset, :shortcut => :role
+    date_elements "MarketDateRole"
 
     scope :availability, lambda { human_code_match(:market_date_role, ["PublicationDate", "EmbargoDate"]) }
   end
 
   class PriceDate < BaseDate
-    element "PriceDateRole", :subset, :shortcut => :role
+    date_elements "PriceDateRole"
 
     scope :from_date, lambda { human_code_match(:price_date_role, "FromDate") }
     scope :until_date, lambda { human_code_match(:price_date_role, "UntilDate") }
   end
 
   class SupplyDate < BaseDate
-    element "SupplyDateRole", :subset, :shortcut => :role
+    date_elements "SupplyDateRole"
 
     scope :availability, lambda { human_code_match(:supply_date_role, ["ExpectedAvailabilityDate", "EmbargoDate"]) }
   end
 
   class PublishingDate < BaseDate
-    element "PublishingDateRole", :subset, :shortcut => :role
+    date_elements "PublishingDateRole"
 
     scope :publication, lambda { human_code_match(:publishing_date_role, ["PublicationDate", "PublicationDateOfPrintCounterpart"]) }
     scope :embargo, lambda { human_code_match(:publishing_date_role, "SalesEmbargoDate") }
@@ -181,12 +187,12 @@ module ONIX
   end
 
   class ContentDate < BaseDate
-    element "ContentDateRole", :subset, :shortcut => :role
+    date_elements "ContentDateRole"
 
     scope :last_updated, lambda { human_code_match(:content_date_role, "LastUpdated") }
   end
 
   class ContributorDate < BaseDate
-    element "ContributorDateRole", :subset, :shortcut => :role
+    date_elements "ContributorDateRole"
   end
 end

@@ -1,11 +1,10 @@
-# -*- encoding : utf-8 -*-
 require 'yaml'
 
 module ONIX
   class InvalidCodeAlias < StandardError
   end
 
-  module CodeHelper
+  module CodeMethods
     def parse(n)
       parse_attributes(n.attributes)
       @code = n.text
@@ -33,58 +32,56 @@ module ONIX
     #   @return [String] humanized string (eg: "Digital watermarking" become DigitalWatermarking, "PDF" become Pdf, "BISAC Subject Heading" become BisacSubjectHeading, etc)
     attr_accessor :human
 
-    include CodeHelper
+    include CodeMethods
 
-    # create Code from ONIX code
-    # @param [String] code ONIX code
-    # @return [Code]
-    def self.from_code(code)
-      obj = self.new
-      obj.code = code
-      obj.human = self.hash[code]
-      obj
-    end
-
-    # create Code from human readable code
-    # @param [String] human human readable code
-    # @return [Code]
-    def self.from_human(human)
-      obj = self.new
-      obj.human = human
-      obj.code = self.hash.key(human)
-      unless obj.code
-        raise InvalidCodeAlias, [self.to_s, human]
+    class << self
+      # create Code from ONIX code
+      # @param [String] code ONIX code
+      # @return [Code]
+      def from_code(code)
+        obj = self.new
+        obj.code = code
+        obj.human = self.hash[code]
+        obj
       end
-      obj
-    end
 
-    private
+      # create Code from human readable code
+      # @param [String] human human readable code
+      # @return [Code]
+      def from_human(human)
+        obj = self.new
+        obj.human = human
+        obj.code = self.hash.key(human)
+        unless obj.code
+          raise InvalidCodeAlias, [self.to_s, human]
+        end
+        obj
+      end
 
-    def self.hash
-      {}
+      def hash
+        {}
+      end
     end
   end
 
   class CodeFromYaml < Code
-    def self.codelist_filename
-      File.dirname(__FILE__) + "/../../data/codelists/codelist-#{self.code_ident}.yml"
-    end
+    class << self
+      def hash
+        @hash ||= YAML.load(File.open(File.dirname(__FILE__) + "/../../data/codelists/codelist-#{self.code_ident}.yml"))[:codelist].freeze
+      end
 
-    def self.hash
-      @hash ||= YAML.load(File.open(codelist_filename))[:codelist]
-    end
+      def list
+        self.hash.keys
+      end
 
-    def self.list
-      self.hash.to_a.map { |h| h.first }
-    end
+      def code_ident
+        nil
+      end
 
-    def self.code_ident
-      nil
-    end
-
-    def self.code_identifier code
-      define_singleton_method :code_ident do
-        return code
+      def code_identifier code
+        define_singleton_method :code_ident do
+          return code
+        end
       end
     end
   end
@@ -109,6 +106,7 @@ module ONIX
       end
     end
   end
+
   class NotificationType < CodeFromYaml
     code_identifier 1
   end

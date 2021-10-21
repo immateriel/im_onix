@@ -18,10 +18,10 @@ module ONIX
           if subset.is_a?(ONIX::ONIXMessage)
             mod.const_get("Root").serialize(data, subset, "ONIXMessage", level)
           else
-            if subset.class.included_modules.include?(DateHelper)
+            if subset.class.included_modules.include?(DateMethods)
               mod.const_get("Date").serialize(data, subset, parent_tag, level)
             else
-              if subset.class.included_modules.include?(CodeHelper)
+              if subset.class.included_modules.include?(CodeMethods)
                 mod.const_get("Code").serialize(data, subset, parent_tag, level)
               else
                 mod.const_get("Subset").serialize(data, subset, parent_tag, level)
@@ -47,8 +47,8 @@ module ONIX
       end
 
       def self.recursive_serialize(mod, data, subset, parent_tag = nil, level = 0)
-        if subset.class.respond_to?(:ancestors_registered_elements)
-          subset.class.ancestors_registered_elements.each do |tag, element|
+        if subset.respond_to?(:registered_elements)
+          subset.registered_elements.each do |tag, element|
             next if element.short
             val = subset.instance_variable_get(element.to_instance)
             if val
@@ -112,7 +112,7 @@ module ONIX
           code_format = date.format_from_code(date_format.code)
 
           xml.send(parent_tag, nil) {
-            date.class.ancestors_registered_elements.each do |tag, element|
+            date.registered_elements.each do |tag, element|
               next if element.short
               val = date.instance_variable_get(element.to_instance)
               if val

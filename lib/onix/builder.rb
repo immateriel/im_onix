@@ -77,7 +77,7 @@ module ONIX
         @context.send(method, *args, &block)
       else
         if @parent
-          parser_el = @parent.class.ancestors_registered_elements[method.to_s]
+          parser_el = @parent.registered_elements[method.to_s]
           if parser_el
             if ONIX.const_defined?(parser_el.klass_name)
               node = get_class(parser_el.klass_name, args)
@@ -98,7 +98,7 @@ module ONIX
               when :ignore
               when :subset
                 # FIXME: dirty
-                if @parent.class.included_modules.include?(DateHelper) && node.is_a?(DateFormat)
+                if @parent.class.included_modules.include?(DateMethods) && node.is_a?(DateFormat)
                   @parent.deprecated_date_format = true
                 end
                 node.attributes = get_attributes(args[1]) if args.length > 1
@@ -172,14 +172,12 @@ module ONIX
     end
 
     def get_class(nm, args)
-      el = nil
       if ONIX.const_defined?(nm)
         klass = ONIX.const_get(nm)
-        el = get_element(klass, args)
+        get_element(klass, args)
       else
         raise BuilderUndefinedElement, nm
       end
-      el
     end
 
     def insert(node, &block)

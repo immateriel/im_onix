@@ -1,6 +1,6 @@
 module ONIX
   # flattened supplies extractor
-  module ProductSuppliesExtractor
+  module ProductSuppliesMethods
     # class must define a product_supplies returning an Array of objects responding to :
     # - availability_date (Date)
     # - countries (country code Array)
@@ -112,7 +112,7 @@ module ONIX
 
       # merge by territories
       grouped_territories_supplies = {}
-      grouped_supplies.each do |ksup, supply|
+      grouped_supplies.values.each do |supply|
         fsupply = supply.first
         pr_key = "#{fsupply[:available]}_#{fsupply[:including_tax]}_#{fsupply[:currency]}"
         supply.each do |s|
@@ -124,7 +124,7 @@ module ONIX
 
       supplies = []
 
-      grouped_territories_supplies.each do |ksup, supply|
+      grouped_territories_supplies.values.each do |supply|
         fsupply = supply.first.first
         supplies << {:including_tax => fsupply[:including_tax], :currency => fsupply[:currency],
                      :territory => supply.map { |fs| fs.map { |s| s[:territory] } }.flatten.uniq,

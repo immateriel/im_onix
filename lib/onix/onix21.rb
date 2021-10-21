@@ -2,26 +2,28 @@ module ONIX
   module ONIX21
     class ShortToRef
       def self.names
-        @shortnames ||= YAML.load(File.open(File.dirname(__FILE__) + "/../../data/onix21/shortnames.yml"))
+        @shortnames ||= YAML.load(File.open(File.dirname(__FILE__) + "/../../data/onix21/shortnames.yml")).freeze
       end
     end
 
     class RefToShort
       def self.names
-        @refnames ||= ShortToRef.names.invert
+        @refnames ||= ShortToRef.names.invert.freeze
       end
     end
 
     class SubsetDSL < ONIX::SubsetDSL
-      def self.short_to_ref(name)
-        ONIX::ONIX21::ShortToRef.names[name]
+      class << self
+        def short_to_ref(name)
+          ONIX::ONIX21::ShortToRef.names[name]
+        end
+
+        def ref_to_short(name)
+          ONIX::ONIX21::RefToShort.names[name]
+        end
       end
 
-      def self.ref_to_short(name)
-        ONIX::ONIX21::RefToShort.names[name]
-      end
-
-      def self.get_class(name)
+      def get_class(name)
         if ONIX::ONIX21.const_defined?(name, false)
           ONIX::ONIX21.const_get(name)
         else
@@ -34,11 +36,11 @@ module ONIX
 
     class CodeFromYaml < Code
       def self.hash
-        @hash ||= YAML.load(File.open(File.dirname(__FILE__) + "/../../data/onix21/codelists/codelist-#{self.code_ident}.yml"))[:codelist]
+        @hash ||= YAML.load(File.open(File.dirname(__FILE__) + "/../../data/onix21/codelists/codelist-#{self.code_ident}.yml"))[:codelist].freeze
       end
 
       def self.list
-        self.hash.to_a.map { |h| h.first }
+        self.hash.keys
       end
 
       def self.code_ident
@@ -131,8 +133,8 @@ module ONIX
     class Price < SubsetDSL
       element "PriceTypeCode", :subset, :klass => "PriceType"
       element "PriceAmount", :float, {
-          :shortcut => :amount,
-          :parse_lambda => lambda { |v| (v * 100).round }
+        :shortcut => :amount,
+        :parse_lambda => lambda { |v| (v * 100).round }
       }
       element "PriceQualifier", :subset, :shortcut => :qualifier
       element "DiscountCoded", :subset
@@ -196,8 +198,8 @@ module ONIX
       element "AvailabilityCode", :text
       element "ProductAvailability", :text
       element "OnSaleDate", :text, {
-          :shortcut => :availability_date,
-          :parse_lambda => lambda { |v| Date.strptime(v, "%Y%m%d") }
+        :shortcut => :availability_date,
+        :parse_lambda => lambda { |v| Date.strptime(v, "%Y%m%d") }
       }
       elements "Price", :subset
 
@@ -232,8 +234,8 @@ module ONIX
     end
 
     class RelatedProduct < SubsetDSL
-      include EanMethods
-      include ProprietaryIdMethods
+      include IdentifiersMethods::Ean
+      include IdentifiersMethods::ProprietaryId
 
       element "RelationCode", :text, :shortcut => :code
       elements "ProductIdentifier", :subset, :shortcut => :identifiers
@@ -246,17 +248,17 @@ module ONIX
       element "SubjectCode", :text, :shortcut => :code
       element "SubjectHeadingText", :text, :shortcut => :heading_text
       element "MainSubjectSchemeIdentifier", :subset, {
-          :shortcut => :scheme_identifier,
-          :klass => "SubjectSchemeIdentifier"
+        :shortcut => :scheme_identifier,
+        :klass => "SubjectSchemeIdentifier"
       }
       element "SubjectSchemeName", :text, :shortcut => :scheme_name
       element "SubjectSchemeVersion", :text, :shortcut => :scheme_version
     end
 
     class Product < SubsetDSL
-      include EanMethods
-      include IsbnMethods
-      include ProprietaryIdMethods
+      include IdentifiersMethods::Ean
+      include IdentifiersMethods::Isbn
+      include IdentifiersMethods::ProprietaryId
 
       element "RecordReference", :text
       elements "ProductIdentifier", :subset, :shortcut => :identifiers
@@ -281,7 +283,7 @@ module ONIX
 
       elements "OtherText", :subset
 
-      elements "SalesRights", :subset, {:pluralize => false}
+      elements "SalesRights", :subset, { :pluralize => false }
       elements "NotForSale", :subset
 
       element "BASICMainSubject", :text
@@ -289,7 +291,7 @@ module ONIX
       elements "Subject", :subset
 
       element "PublishingStatus", :text
-      element "PublicationDate", :text, {:parse_lambda => lambda { |v| Date.strptime(v, "%Y%m%d") }}
+      element "PublicationDate", :text, { :parse_lambda => lambda { |v| Date.strptime(v, "%Y%m%d") } }
 
       elements "RelatedProduct", :subset, :shortcut => :related
 
@@ -440,7 +442,7 @@ module ONIX
         nil
       end
 
-      include ProductSuppliesExtractor
+      include ProductSuppliesMethods
 
       # doesn't apply
       def parts

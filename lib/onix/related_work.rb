@@ -1,6 +1,7 @@
 module ONIX
   class RelatedWork < SubsetDSL
-    include EanMethods
+    include IdentifiersMethods::Ean
+
     element "WorkRelationCode", :subset, :shortcut => :code, :cardinality => 0..n
     elements "WorkIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
 

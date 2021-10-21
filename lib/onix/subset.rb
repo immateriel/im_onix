@@ -4,13 +4,13 @@ require 'cgi'
 module ONIX
   class ShortToRef
     def self.names
-      @shortnames ||= YAML.load(File.open(File.dirname(__FILE__) + "/../../data/shortnames.yml"))
+      @shortnames ||= YAML.load(File.open(File.dirname(__FILE__) + "/../../data/shortnames.yml")).freeze
     end
   end
 
   class RefToShort
     def self.names
-      @refnames ||= ShortToRef.names.invert
+      @refnames ||= ShortToRef.names.invert.freeze
     end
   end
 
@@ -93,6 +93,7 @@ module ONIX
 
     # instanciate Subset form Nokogiri::XML::Element
     # @param [Nokogiri::XML::Element] n
+    # @return [Subset]
     def self.parse(n)
       o = self.new
       o.parse(n)
@@ -101,18 +102,17 @@ module ONIX
 
     # parse Nokogiri::XML::Element
     # @param [Nokogiri::XML::Element] n
+    # @return [void]
     def parse(n) end
 
+    # called when tag is not defined
+    # @param [String] tag
     def unsupported(tag)
       # raise SubsetUnsupported, [self.class, tag.name]
       # puts "WARN subset tag unsupported #{self.class}##{tag.name} (#{self.class.short_to_ref(tag.name)})"
     end
 
     def tag_match(v)
-      TagNameMatcher.new(v)
-    end
-
-    def self.tag_match(v)
       TagNameMatcher.new(v)
     end
   end
@@ -192,16 +192,9 @@ module ONIX
       @array
     end
 
-    def _underscore_name
-      if @array and @pluralize
-        pluralize(underscore(@name))
-      else
-        underscore(@name)
-      end
-    end
-
+    # @return [String]
     def underscore_name
-      @underscore_name ||= _underscore_name
+      @underscore_name ||= (@array && @pluralize) ? pluralize(underscore(@name)) : underscore(@name)
     end
 
     def class_name
@@ -236,6 +229,9 @@ module ONIX
   end
 
   class SubsetArray < Array
+    # @param [Symbol] k
+    # @param [String] p
+    # @return [SubsetArray]
     def human_code_match(k, p)
       case p
       when Regexp
@@ -256,6 +252,9 @@ module ONIX
       end
     end
 
+    # @param [Symbol] k
+    # @param [String] p
+    # @return [SubsetArray]
     def code_match(k, p)
       case p
       when Regexp
@@ -279,139 +278,155 @@ module ONIX
 
   # DSL
   class SubsetDSL < Subset
-    def self.scope(name, lambda)
-      @scopes ||= {}
-      @scopes[name] = lambda
-    end
-
-    def self._ancestor_registered_scopes
-      els = self.registered_scopes
-      sup = self
-      while sup.respond_to?(:registered_scopes)
-        els.merge!(sup.registered_scopes) if sup.registered_scopes
-        sup = sup.superclass
-      end
-      els
-    end
-
-    def self.ancestor_registered_scopes
-      @ancestors_registered_scopes ||= _ancestor_registered_scopes
-    end
-
-    def self.registered_scopes
-      @scopes || {}
-    end
-
-    def self.element(name, type, options = {})
-      @elements ||= {}
-      @elements[name] = ElementParser.new(name, type, options)
-      short_name = self.ref_to_short(name)
-      if short_name
-        @elements[short_name] = @elements[name].dup
-        @elements[short_name].short = true
+    class << self
+      # convert short name notation to reference
+      # @param [String] name
+      # @return [String]
+      def short_to_ref(name)
+        ShortToRef.names[name]
       end
 
-      attr_accessor @elements[name].to_sym
+      # convert reference name notation to short
+      # @param [String] name
+      # @return [String]
+      def ref_to_short(name)
+        RefToShort.names[name]
+      end
 
-      alias_method "#{@elements[name].underscore_name}_with_attributes".to_sym, @elements[name].to_sym
+      # infinity constant for cardinality
+      def n
+        Float::INFINITY
+      end
 
-      current_element = @elements[name]
-      define_method current_element.to_sym do |args = nil|
-        val = instance_variable_get(current_element.to_instance)
-        if val.respond_to?(:__getobj__)
-          val.__getobj__
-        else
-          if val.is_a?(SubsetArray) and val.first and val.first.is_a?(TextWithAttributes)
-            val.map{|v| v.respond_to?(:__getobj__) ? v.__getobj__ : v}
+      # define a scope
+      # @param [Symbol] name
+      # @param [Lambda] lambda
+      # @return [void]
+      def scope(name, lambda)
+        @scopes ||= {}
+        @scopes[name] = lambda
+      end
+
+      def registered_scopes
+        @scopes || {}
+      end
+
+      def register_scopes(scopes)
+        @scopes ||= {}
+        @scopes = scopes.merge(@scopes)
+      end
+
+      # define unique element
+      # @param [String] name
+      # @param [Symbol] type
+      # @param [Hash] options
+      # @return [void]
+      def element(name, type, options = {})
+        @elements ||= {}
+        @elements[name] = ElementParser.new(name, type, options)
+        short_name = self.ref_to_short(name)
+        if short_name
+          @elements[short_name] = @elements[name].dup
+          @elements[short_name].short = true
+        end
+
+        attr_accessor @elements[name].to_sym
+
+        alias_method "#{@elements[name].underscore_name}_with_attributes".to_sym, @elements[name].to_sym
+
+        current_element = @elements[name]
+        define_method current_element.to_sym do |args = nil|
+          val = instance_variable_get(current_element.to_instance)
+          if val.respond_to?(:__getobj__)
+            val.__getobj__
           else
-            val
+            if val.is_a?(SubsetArray) and val.first and val.first.is_a?(TextWithAttributes)
+              val.map { |v| v.respond_to?(:__getobj__) ? v.__getobj__ : v }
+            else
+              val
+            end
           end
         end
+
+        if @elements[name].shortcut
+          current_element = @elements[name]
+          alias_method "#{current_element.shortcut.to_s}_with_attributes".to_sym, "#{@elements[name].underscore_name}_with_attributes".to_sym
+          alias_method current_element.shortcut, @elements[name].to_sym
+        end
+
+        @elements[name]
       end
 
-      if @elements[name].shortcut
-        current_element = @elements[name]
-        alias_method "#{current_element.shortcut.to_s}_with_attributes".to_sym, "#{@elements[name].underscore_name}_with_attributes".to_sym
-        alias_method current_element.shortcut, @elements[name].to_sym
+      # define multiple elements
+      # shortcut for element :array=>true
+      # @param [String] name
+      # @param [Symbol] type
+      # @param [Hash] options
+      # @return [void]
+      def elements(name, type, options = {})
+        self.element(name, type, options.merge(:array => true))
       end
-    end
 
-    # shortcut for element :array=>true
-    def self.elements(name, type, options = {})
-      self.element(name, type, options.merge(:array => true))
-    end
-
-    def self._ancestors_registered_elements
-      els = self.registered_elements
-      sup = self
-      while sup.respond_to?(:registered_elements)
-        els.merge!(sup.registered_elements) if sup.registered_elements
-        sup = sup.superclass
+      # registered elements for this subset
+      # @return [Hash]
+      def registered_elements
+        @elements || {}
       end
-      els
-    end
 
-    # registered elements including inherited
-    def self.ancestors_registered_elements
-      @ancestors_registered_elements ||= _ancestors_registered_elements
-    end
+      def register_elements(elements)
+        @elements ||= {}
+        @elements.merge!(elements)
+      end
 
-    # registered elements for this subset only
-    def self.registered_elements
-      @elements || {}
+      def get_class(name)
+        ONIX.const_get(name) if ONIX.const_defined?(name)
+      end
+
+      def inherited(sublass)
+        sublass.register_scopes(self.registered_scopes)
+        sublass.register_elements(self.registered_elements)
+      end
     end
 
     def initialize
       # initialize plural as Array
-      self.class.ancestors_registered_elements.each do |k, e|
+      self.registered_elements.values.each do |e|
         if e.is_array?
-          # register a contextual SubsetArray object
-          subset_array = SubsetArray.new
-          subset_klass = self.class.get_class(e.class_name)
-          if subset_klass.respond_to? :registered_scopes
-            subset_klass.registered_scopes.each do |n, l|
-              unless subset_array.respond_to? n.to_s
-                subset_array.define_singleton_method(n.to_s) do
-                  instance_exec(&l)
-                end
-              end
-            end
-          end
-          instance_variable_set(e.to_instance, subset_array)
+          register_subset_array(e)
         end
       end
     end
 
-    def self.short_to_ref(name)
-      ShortToRef.names[name]
+    def register_subset_array(e)
+      # register a contextual SubsetArray object
+      subset_array = SubsetArray.new
+      subset_klass = self.get_class(e.class_name)
+      if subset_klass.respond_to?(:registered_scopes)
+        subset_klass.registered_scopes.each do |n, l|
+          unless subset_array.respond_to?(n.to_s)
+            subset_array.define_singleton_method(n.to_s) do
+              instance_exec(&l)
+            end
+          end
+        end
+      end
+      instance_variable_set(e.to_instance, subset_array)
     end
 
-    def self.ref_to_short(name)
-      RefToShort.names[name]
-    end
-
-    def self.get_class(name)
-      ONIX.const_get(name) if ONIX.const_defined? name
-    end
-
-    # infinity constant for cardinality
-    def self.n
-      Float::INFINITY
-    end
-
-    def get_registered_element(name)
-      self.class.ancestors_registered_elements[name]
+    def registered_elements
+      self.class.registered_elements
     end
 
     def get_class(name)
       self.class.get_class(name)
     end
 
+    # @param [Nokogiri::XML::Element] n
+    # @return [void]
     def parse(n)
       parse_attributes(n.attributes)
       n.elements.each do |t|
-        name = t.name
-        e = self.get_registered_element(name)
+        e = self.registered_elements[t.name]
         if e
           primitive = true
           case e.type
@@ -471,7 +486,6 @@ module ONIX
               instance_variable_set(e.to_instance, e.parse_lambda(val))
             end
           end
-
         else
           unsupported(t)
         end
