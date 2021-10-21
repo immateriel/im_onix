@@ -13,15 +13,15 @@ require 'onix/product_supply'
 require 'onix/content_detail'
 require 'onix/territory'
 require 'onix/error'
-require 'onix/product_supplies_extractor'
+require 'onix/product_supplies_methods'
 
 module ONIX
   class Product < SubsetDSL
     extend Forwardable
-    include EanMethods
-    include IsbnMethods
-    include ProprietaryIdMethods
-    include ProductSuppliesExtractor
+    include IdentifiersMethods::Ean
+    include IdentifiersMethods::Isbn
+    include IdentifiersMethods::ProprietaryId
+    include ProductSuppliesMethods
 
     element "RecordReference", :text, :cardinality => 1
     element "NotificationType", :subset, :cardinality => 1

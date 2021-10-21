@@ -1,8 +1,8 @@
 module ONIX
   # product part use full Product to provide file protection and file size
   class ProductPart < SubsetDSL
-    include EanMethods
-    include ProprietaryIdMethods
+    include IdentifiersMethods::Ean
+    include IdentifiersMethods::ProprietaryId
 
     element "PrimaryPart", :bool, :cardinality => 0..1
     elements "ProductIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n

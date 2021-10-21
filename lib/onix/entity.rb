@@ -7,7 +7,7 @@ module ONIX
   end
 
   class Entity < SubsetDSL
-    include GlnMethods
+    include IdentifiersMethods::Gln
     include EntityHelper
 
     # @return [String]
@@ -60,7 +60,8 @@ module ONIX
   end
 
   class Imprint < SubsetDSL
-    include GlnMethods
+    include IdentifiersMethods::Gln
+
     elements "ImprintIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
     element "ImprintName", :text, :shortcut => :name, :cardinality => 0..1
   end

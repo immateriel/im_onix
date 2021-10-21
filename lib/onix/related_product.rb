@@ -1,7 +1,7 @@
 module ONIX
   class RelatedProduct < SubsetDSL
-    include EanMethods
-    include ProprietaryIdMethods
+    include IdentifiersMethods::Ean
+    include IdentifiersMethods::ProprietaryId
 
     elements "ProductRelationCode", :subset, :shortcut => :codes, :cardinality => 1..n
     elements "ProductIdentifier", :subset, :shortcut => :identifiers, :cardinality => 1..n
