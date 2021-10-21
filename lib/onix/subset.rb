@@ -194,12 +194,7 @@ module ONIX
 
     # @return [String]
     def underscore_name
-      return @underscore_name if @underscore_name
-      if @array and @pluralize
-        @underscore_name = pluralize(underscore(@name))
-      else
-        @underscore_name = underscore(@name)
-      end
+      @underscore_name ||= (@array && @pluralize) ? pluralize(underscore(@name)) : underscore(@name)
     end
 
     def class_name
