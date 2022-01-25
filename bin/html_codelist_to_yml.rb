@@ -4,7 +4,6 @@
 require 'im_onix'
 require 'nokogiri'
 require 'yaml'
-require 'unidecoder'
 
 # html_codelist_to_yml.rb html_codelist_dir dest_dir
 
@@ -28,7 +27,7 @@ class HTMLCodelist
 
   # from rails
   def self.rename(term)
-    result = term.to_ascii.gsub(/\(|\)|\,|'|’|\/|“|”|‘|\.|\:|–|\||\+/, "").gsub(/\-/," ").gsub(/\;/, " Or ").gsub(/\s+/, " ").split(" ").map { |t| t.capitalize }.join("")
+    result = I18n.transliterate(term).gsub(/\(|\)|\,|'|’|\/|“|”|‘|\.|\:|–|\||\+/, "").gsub(/\-/," ").gsub(/\;/, " Or ").gsub(/\s+/, " ").split(" ").map { |t| t.capitalize }.join("")
     if result.length > 63
       puts "WARN: #{result} (#{term}) to long"
     end
