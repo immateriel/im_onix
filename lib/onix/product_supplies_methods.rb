@@ -41,11 +41,11 @@ module ONIX
               supply[:price] = price.amount
               supply[:qualifier] = price.qualifier.human if price.qualifier
               supply[:including_tax] = price.including_tax?
-              if !price.territory || price.territory.countries.length == 0
+              if !price.territory || price.territory.countries.none?
                 supply[:territory] = []
                 supply[:territory] = product_supply.countries
 
-                if supply[:territory].length == 0
+                if supply[:territory].none?
                   if @publishing_detail
                     supply[:territory] = self.countries_rights
                   end
