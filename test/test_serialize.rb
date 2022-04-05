@@ -231,7 +231,7 @@ class TestSerialize < Minitest::Test
         end
       end
 
-      assert_equal builder.to_xml, File.read(@filename)
+      assert_equal File.read(@filename), builder.to_xml
     end
   end
 
@@ -246,7 +246,7 @@ class TestSerialize < Minitest::Test
       builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         ONIX::Serializer::Default.serialize(xml, @product, "Product")
       end
-      assert_equal builder.to_xml.sub("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n", ""), File.read(@filename)
+      assert_equal File.read(@filename), builder.to_xml.sub("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n", "")
     end
   end
 
@@ -261,7 +261,7 @@ class TestSerialize < Minitest::Test
       builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
         ONIX::Serializer::Default.serialize(xml, @message)
       end
-      assert_equal Nokogiri::XML.parse(builder.to_xml, &:noblanks).to_xml, Nokogiri::XML.parse(File.read(@filename), &:noblanks).to_xml
+      assert_equal Nokogiri::XML.parse(File.read(@filename), &:noblanks).to_xml, Nokogiri::XML.parse(builder.to_xml, &:noblanks).to_xml
     end
   end
 

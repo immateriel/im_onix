@@ -25,25 +25,25 @@ module ONIX
 
       # add territories if missing
       if self.product_supplies
-        self.product_supplies.each do |ps|
-          ps.supply_details.each do |sd|
-            sd.prices.each do |p|
+        self.product_supplies.each do |product_supply|
+          product_supply.supply_details.each do |supply_detail|
+            supply_detail.prices.each do |price|
               supply = {}
-              supply[:suppliers] = sd.suppliers
-              supply[:available] = sd.available?
-              supply[:availability_date] = sd.availability_date
+              supply[:suppliers] = supply_detail.suppliers.map(&:name)
+              supply[:available] = supply_detail.available?
+              supply[:availability_date] = supply_detail.availability_date
 
               unless supply[:availability_date]
-                if ps.availability_date
-                  supply[:availability_date] = ps.market_publishing_detail.availability_date
+                if product_supply.availability_date
+                  supply[:availability_date] = product_supply.market_publishing_detail.availability_date
                 end
               end
-              supply[:price] = p.amount
-              supply[:qualifier] = p.qualifier.human if p.qualifier
-              supply[:including_tax] = p.including_tax?
-              if !p.territory or p.territory.countries.length == 0
+              supply[:price] = price.amount
+              supply[:qualifier] = price.qualifier.human if price.qualifier
+              supply[:including_tax] = price.including_tax?
+              if !price.territory || price.territory.countries.length == 0
                 supply[:territory] = []
-                supply[:territory] = ps.countries
+                supply[:territory] = product_supply.countries
 
                 if supply[:territory].length == 0
                   if @publishing_detail
@@ -51,12 +51,12 @@ module ONIX
                   end
                 end
               else
-                supply[:territory] = p.territory.countries
+                supply[:territory] = price.territory.countries
               end
-              supply[:from_date] = p.from_date
-              supply[:until_date] = p.until_date
-              supply[:currency] = p.currency
-              supply[:tax] = p.tax
+              supply[:from_date] = price.from_date
+              supply[:until_date] = price.until_date
+              supply[:currency] = price.currency
+              supply[:tax] = price.tax
 
               unless supply[:availability_date]
                 if @publishing_detail
@@ -74,34 +74,37 @@ module ONIX
       supplies.each do |supply|
         supply[:territory].each do |territory|
           pr_key = "#{supply[:available]}_#{supply[:including_tax]}_#{supply[:currency]}_#{territory}"
+          territory_supply = supply.dup
+          territory_supply[:territory] = [territory]
+
           grouped_supplies[pr_key] ||= []
-          grouped_supplies[pr_key] << supply
+          grouped_supplies[pr_key] << territory_supply
         end
       end
 
-      nb_suppliers = supplies.map { |s| s[:suppliers][0].name }.uniq.length
+      nb_suppliers = supplies.map { |s| s[:suppliers].first }.uniq.length
       # render prices sequentially with dates
-      grouped_supplies.each do |ksup, supply|
-        if supply.length > 1
-          global_price = supply.select { |p| not p[:from_date] and not p[:until_date] }
+      grouped_supplies.each do |ksup, supplies|
+        if supplies.length > 1
+          global_price = supplies.select { |p| !p[:from_date] && !p[:until_date] }
           global_price = global_price.first
 
           if global_price
             if nb_suppliers > 1
-              grouped_supplies[ksup] += self.prices_with_periods(supply, global_price)
+              grouped_supplies[ksup] += self.prices_with_periods(supplies, global_price)
             else
-              grouped_supplies[ksup] = self.prices_with_periods(supply, global_price)
+              grouped_supplies[ksup] = self.prices_with_periods(supplies, global_price)
             end
             grouped_supplies[ksup].uniq!
           else
             # remove explicit from date
-            explicit_from = supply.select { |p| p[:from_date] and not supply.select { |sp| sp[:until_date] and sp[:until_date] <= p[:from_date] }.first }.first
+            explicit_from = supplies.select { |p| p[:from_date] && !supplies.select { |sp| sp[:until_date] && sp[:until_date] <= p[:from_date] }.first }.first
             if explicit_from
               explicit_from[:from_date] = nil unless keep_all_prices_dates
             end
           end
         else
-          supply.each do |s|
+          supplies.each do |s|
             if s[:from_date] and s[:availability_date] and s[:from_date] >= s[:availability_date]
               s[:availability_date] = s[:from_date]
             end
@@ -112,27 +115,27 @@ module ONIX
 
       # merge by territories
       grouped_territories_supplies = {}
-      grouped_supplies.values.each do |supply|
-        fsupply = supply.first
-        pr_key = "#{fsupply[:available]}_#{fsupply[:including_tax]}_#{fsupply[:currency]}"
-        supply.each do |s|
+      grouped_supplies.values.each do |supplies|
+        supply = supplies.first
+
+        pr_key = "#{supply[:available]}_#{supply[:including_tax]}_#{supply[:currency]}"
+        supplies.each do |s|
           pr_key += "_#{s[:price]}_#{s[:from_date]}_#{s[:until_date]}"
         end
         grouped_territories_supplies[pr_key] ||= []
-        grouped_territories_supplies[pr_key] << supply
+        grouped_territories_supplies[pr_key] << supplies
       end
 
-      supplies = []
+      final_supplies = []
 
-      grouped_territories_supplies.values.each do |supply|
-        fsupply = supply.first.first
-        supplies << {:including_tax => fsupply[:including_tax], :currency => fsupply[:currency],
-                     :territory => supply.map { |fs| fs.map { |s| s[:territory] } }.flatten.uniq,
+      grouped_territories_supplies.values.each do |supplies|
+        fsupply = supplies.first.first
+        final_supplies << {:including_tax => fsupply[:including_tax], :currency => fsupply[:currency],
+                     :territory => supplies.map { |fs| fs.map { |s| s[:territory] } }.flatten.uniq,
                      :available => fsupply[:available],
                      :availability_date => fsupply[:availability_date],
                      :suppliers => fsupply[:suppliers],
-                     :prices => supply.first.map { |s|
-
+                     :prices => supplies.first.map { |s|
                        s[:amount] = s[:price]
                        s.delete(:price)
                        s.delete(:available)
@@ -140,11 +143,12 @@ module ONIX
                        s.delete(:availability_date)
                        s.delete(:including_tax)
                        s.delete(:territory)
+                       s.delete(:suppliers)
                        s
                      }}
       end
 
-      supplies
+      final_supplies
     end
 
     # add missing periods when they can be guessed

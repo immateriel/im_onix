@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "im_onix"
-  spec.version       = "1.3.0"
+  spec.version       = "1.3.1"
   spec.authors       = ["Julien Boulnois"]
   spec.email         = ["jboulnois@immateriel.fr"]
 
