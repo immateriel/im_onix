@@ -324,4 +324,32 @@ class TestPrices < Minitest::Test
       assert_equal nil, prices[2][:until_date]
     end
   end
+
+  context "shared promotional price" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/shared_promotional.xml')
+
+      @product = message.products.last
+    end
+
+    should "have 2 EUR supplies with 3 prices each" do
+      eur_supplies = @product.supplies.select { |supply| supply[:currency] == "EUR" }
+      assert_equal 2, eur_supplies.size
+      assert_equal 3, eur_supplies[0][:prices].size
+      assert_equal 3, eur_supplies[1][:prices].size
+
+      assert eur_supplies[0][:territory].include?("FR")
+      assert eur_supplies[1][:territory].include?("BL")
+
+      assert_equal 849, eur_supplies[0][:prices][0][:amount]
+      assert_equal 399, eur_supplies[0][:prices][1][:amount]
+      assert_equal 849, eur_supplies[0][:prices][2][:amount]
+
+      assert_equal 899, eur_supplies[1][:prices][0][:amount]
+      assert_equal 399, eur_supplies[1][:prices][1][:amount]
+      assert_equal 899, eur_supplies[1][:prices][2][:amount]
+    end
+  end
+
 end

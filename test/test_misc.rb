@@ -159,7 +159,7 @@ class TestMisc < Minitest::Test
     end
 
     should "have supplier named" do
-      assert_equal "immatériel·fr", @product.supplies_for_country("FR", "EUR").first[:suppliers].first.name
+      assert_equal "immatériel·fr", @product.supplies_for_country("FR", "EUR").first[:suppliers].first
     end
 
     should "be available in France" do
