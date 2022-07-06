@@ -1,0 +1,17 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        rubies: [ '2.4', '2.5', '2.6', '2.7', '3.0', '3.1' ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.rubies }}
+          bundler: '1.17.3'
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically.
+      - run: bundle exec rake test
