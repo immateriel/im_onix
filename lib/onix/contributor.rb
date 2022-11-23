@@ -6,7 +6,7 @@ require 'onix/contributor_place'
 module ONIX
   class Contributor < SubsetDSL
     element "SequenceNumber", :integer, :cardinality => 0..1
-    element "ContributorRole", :subset, :shortcut => :role, :cardinality => 1..n
+    elements "ContributorRole", :subset, :shortcut => :roles, :cardinality => 1..n
     elements "FromLanguage", :subset, :klass => "LanguageCode", :cardinality => 0..n
     elements "ToLanguage", :subset, :klass => "LanguageCode", :cardinality => 0..n
 
