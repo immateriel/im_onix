@@ -50,6 +50,11 @@ module ONIX
       self.places.first
     end
 
+    # @return [ContributorRole]
+    def role
+      self.roles.first
+    end
+
     # !@endgroup
 
     # @!group High level
