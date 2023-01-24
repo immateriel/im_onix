@@ -6,8 +6,8 @@
   '05': Tif
   '06': Realaudio288
   '07': Mp3
-  08: Mpeg4
-  09: Png
+  '08': Mpeg4
+  '09': Png
   '10': Wma
   '11': Aac
   '12': Wav

@@ -32,15 +32,15 @@
   B101: MassMarketRackPaperback
   B102: TradePaperbackUs
   B103: DigestFormatPaperback
-  B104: AformatPaperback
-  B105: BformatPaperback
+  B104: AFormatPaperback
+  B105: BFormatPaperback
   B106: TradePaperbackUk
   B107: TallRackPaperbackUs
   B108: A5SizeTankobon
   B109: JisB5SizeTankobon
   B110: JisB6SizeTankobon
   B111: A6SizeBunko
-  B112: B40doriShinsho
+  B112: B40DoriShinsho
   B113: PocketSwedenNorway
   B114: StorpocketSweden
   B115: KartonnageSweden
@@ -48,31 +48,31 @@
   B117: Mook
   B118: Dwarsligger
   B119: 46Size
-  B120: 46henkeiSize
+  B120: 46HenkeiSize
   B121: A4
-  B122: A4henkeiSize
-  B123: A5henkeiSize
-  B124: B5henkeiSize
-  B125: B6henkeiSize
+  B122: A4HenkeiSize
+  B123: A5HenkeiSize
+  B124: B5HenkeiSize
+  B125: B6HenkeiSize
   B126: AbSize
   B127: JisB7Size
   B128: KikuSize
-  B129: KikuhenkeiSize
+  B129: KikuHenkeiSize
   B130: JisB4Size
   B131: PaperbackDe
-  B201: ColoringJointhedotBook
-  B202: LifttheflapBook
+  B201: ColoringJoinTheDotBook
+  B202: LiftTheFlapBook
   B204: MiniatureBook
   B205: MovingPictureFlickerBook
-  B206: PopupBook
+  B206: PopUpBook
   B207: ScentedSmellyBook
   B208: SoundStoryNoisyBook
   B209: StickerBook
-  B210: TouchandfeelBook
-  B212: DiecutBook
-  B213: Bookastoy
-  B214: SofttotouchBook
-  B215: FuzzyfeltBook
+  B210: TouchAndFeelBook
+  B212: DieCutBook
+  B213: BookAsToy
+  B214: SoftToTouchBook
+  B215: FuzzyFeltBook
   B221: PictureBook
   B222: CarouselBook
   B301: LooseLeafSheetsAndBinder
@@ -84,9 +84,9 @@
   B307: ReinforcedBinding
   B308: HalfBound
   B309: QuarterBound
-  B310: Saddlesewn
+  B310: SaddleSewn
   B311: CombBound
-  B312: Wireo
+  B312: WireO
   B313: ConcealedWire
   B401: ClothOverBoards
   B402: PaperOverBoards
@@ -98,8 +98,8 @@
   B410: ImitationCloth
   B411: Velvet
   B412: FlexiblePlasticvinylCover
-  B413: Plasticcovered
-  B414: Vinylcovered
+  B413: PlasticCovered
+  B414: VinylCovered
   B415: LaminatedCover
   B501: WithDustJacket
   B502: WithPrintedDustJacket
@@ -113,7 +113,7 @@
   B510: RoughFront
   B511: Foldout
   B512: WideMargin
-  B601: TurnaroundBook
+  B601: TurnAroundBook
   B602: UnflippedMangaFormat
   B610: Syllabification
   B701: UkUncontractedBraille
@@ -128,7 +128,7 @@
   D103: AviFormat
   D104: WindowsMediaVideoFormat
   D105: Mpeg4
-  D201: Msdos
+  D201: MsDos
   D202: Windows
   D203: Macintosh
   D204: UnixLinux

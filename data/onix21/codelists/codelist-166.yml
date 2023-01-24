@@ -1,6 +1,6 @@
 ---
 :codelist:
   '02': EmbargoDate
-  08: ExpectedAvailabilityDate
+  '08': ExpectedAvailabilityDate
   '18': LastDateForReturns
   '25': ReservationOrderDeadline

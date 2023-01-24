@@ -1,24 +1,12 @@
 module ONIX
   class RelatedWork < SubsetDSL
-    include EanMethods
-    element "WorkRelationCode", :subset
-    elements "WorkIdentifier", :subset
+    include IdentifiersMethods::Ean
 
-    def code
-      @work_relation_code
-    end
-
-    def identifiers
-      @work_identifiers
-    end
+    element "WorkRelationCode", :subset, :shortcut => :code, :cardinality => 0..n
+    elements "WorkIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
 
     # full Product if referenced in ONIXMessage
-    def product
-      @product
-    end
-
-    def product=v
-      @product=v
-    end
+    # @return [Product]
+    attr_accessor :product
   end
 end

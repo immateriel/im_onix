@@ -1,8 +1,8 @@
 ---
 :codelist:
-  '01': AformatPaperback
-  '02': BformatPaperback
-  '03': CformatPaperback
+  '01': AFormatPaperback
+  '02': BFormatPaperback
+  '03': CFormatPaperback
   '04': PaperOverBoards
   '05': Cloth
   '06': WithDustJacket

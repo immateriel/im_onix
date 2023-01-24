@@ -1,14 +1,16 @@
 module ONIX
   class SalesOutlet < SubsetDSL
-    element "SalesOutletIdentifier", :subset
-    element "SalesOutletName", :text
+    elements "SalesOutletIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
+    element "SalesOutletName", :text, :shortcut => :name, :cardinality => 0..1
 
-    def identifier
-      @sales_outlet_identifier
+    # @return [SalesOutletIdentifier]
+    def sales_outlet_identifier
+      self.sales_outlet_identifiers.first
     end
 
-    def name
-      @sales_outlet_name
+    # @return [SalesOutletIdentifier]
+    def identifier
+      self.identifiers.first
     end
   end
 end

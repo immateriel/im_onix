@@ -1,7 +1,11 @@
 ---
 :codelist:
+  Adlm: Adlam
   Afak: Afaka
+  Aghb: CaucasianAlbanian
+  Ahom: AhomTaiAhom
   Arab: Arabic
+  Aran: ArabicNastaliqVariant
   Armi: ImperialAramaic
   Armn: Armenian
   Avst: Avestan
@@ -9,7 +13,8 @@
   Bamu: Bamun
   Bass: BassaVah
   Batk: Batak
-  Beng: Bengali
+  Beng: BengaliBangla
+  Bhks: Bhaiksuki
   Blis: Blissymbols
   Bopo: Bopomofo
   Brah: Brahmi
@@ -27,6 +32,7 @@
   Cyrl: Cyrillic
   Cyrs: CyrillicOldChurchSlavonicVariant
   Deva: DevanagariNagari
+  Dogr: Dogra
   Dsrt: DeseretMormon
   Dupl: DuployanShorthandDuployanStenography
   Egyd: EgyptianDemotic
@@ -35,43 +41,52 @@
   Elba: Elbasan
   Ethi: EthiopicGeez
   Geok: KhutsuriAsomtavruliAndKhutsuri
-  Geor: GeorgianMkhedruli
+  Geor: GeorgianMkhedruliAndMtavruli
   Glag: Glagolitic
+  Gong: GunjalaGondi
+  Gonm: MasaramGondi
   Goth: Gothic
   Gran: Grantha
   Grek: Greek
   Gujr: Gujarati
   Guru: Gurmukhi
-  Hang: HangulHangŭlHangeul
+  Hanb: HanWithBopomofo
+  Hang: HangulHangulHangeul
   Hani: HanHanziKanjiHanja
-  Hano: HanunooHanunóo
+  Hano: HanunooHanunoo
   Hans: HanSimplifiedVariant
   Hant: HanTraditionalVariant
+  Hatr: Hatran
   Hebr: Hebrew
   Hira: Hiragana
+  Hluw: AnatolianHieroglyphsLuwianHieroglyphsHittiteHieroglyphs
   Hmng: PahawhHmong
   Hrkt: JapaneseSyllabariesAliasForHiraganaKatakana
-  Hung: OldHungarian
+  Hung: OldHungarianHungarianRunic
   Inds: IndusHarappan
   Ital: OldItalicEtruscanOscanEtc
+  Jamo: JamoAliasForJamoSubsetOfHangul
   Java: Javanese
-  Jpan: JapaneseSyllabariesAliasForHanHiraganaKatakana
+  Jpan: JapaneseAliasForHanHiraganaKatakana
   Jurc: Jurchen
   Kali: KayahLi
   Kana: Katakana
   Khar: Kharoshthi
   Khmr: Khmer
   Khoj: Khojki
+  Kitl: KhitanLargeScript
+  Kits: KhitanSmallScript
   Knda: Kannada
   Kore: KoreanAliasForHangulHan
   Kpel: Kpelle
   Kthi: Kaithi
-  Lana: LannaTaiTham
+  Lana: TaiThamLanna
   Laoo: Lao
   Latf: LatinFrakturVariant
   Latg: LatinGaelicVariant
   Latn: Latin
-  Lepc: LepchaRóng
+  Leke: Leke
+  Lepc: LepchaRong
   Limb: Limbu
   Lina: LinearA
   Linb: LinearB
@@ -79,36 +94,46 @@
   Loma: Loma
   Lyci: Lycian
   Lydi: Lydian
+  Mahj: Mahajani
+  Maka: Makasar
   Mand: MandaicMandaean
   Mani: Manichaean
+  Marc: Marchen
   Maya: MayanHieroglyphs
-  Mend: Mende
+  Medf: MedefaidrinOberiOkaimeOberiOkaime
+  Mend: MendeKikakui
   Merc: MeroiticCursive
   Mero: MeroiticHieroglyphs
   Mlym: Malayalam
+  Modi: ModiModi
   Mong: Mongolian
   Moon: MoonMoonCodeMoonScriptMoonType
   Mroo: MroMru
   Mtei: MeiteiMayekMeitheiMeetei
+  Mult: Multani
   Mymr: MyanmarBurmese
   Narb: OldNorthArabianAncientNorthArabian
   Nbat: Nabatean
-  Nkgb: NakhiGebaNakhi²ggŏ¹bawNaxiGeba
+  Newa: NewaNewarNewariNepalaLipi
+  Nkgb: NakhiGebaNaKhi2ggo1bawNaxiGeba
   Nkoo: Nko
-  Nshu: Nüshu
+  Nshu: Nushu
   Ogam: Ogham
   Olck: OlChikiOlCemetOlSantali
   Orkh: OldTurkicOrkhonRunic
-  Orya: Oriya
+  Orya: OriyaOdia
+  Osge: Osage
   Osma: Osmanya
   Palm: Palmyrene
+  Pauc: PauCinHau
   Perm: OldPermic
-  Phag: Phagspa
+  Phag: PhagsPa
   Phli: InscriptionalPahlavi
   Phlp: PsalterPahlavi
   Phlv: BookPahlavi
   Phnx: Phoenician
   Plrd: MiaoPollard
+  Piqd: KlingonKliPlqad
   Prti: InscriptionalParthian
   Qaaa: ReservedForPrivateUseStart
   Qabx: ReservedForPrivateUseEnd
@@ -121,10 +146,12 @@
   Saur: Saurashtra
   Sgnw: Signwriting
   Shaw: ShavianShaw
-  Shrd: SharadaŚāradā
+  Shrd: SharadaSarada
+  Sidd: SiddhamSiddhamSiddhamatrka
   Sind: KhudawadiSindhi
   Sinh: Sinhala
   Sora: SoraSompeng
+  Soyo: Soyombo
   Sund: Sundanese
   Sylo: SylotiNagri
   Syrc: Syriac
@@ -132,7 +159,7 @@
   Syrj: SyriacWesternVariant
   Syrn: SyriacEasternVariant
   Tagb: Tagbanwa
-  Takr: TakriṬākrīṬāṅkrī
+  Takr: TakriTakriTankri
   Tale: TaiLe
   Talu: NewTaiLue
   Taml: Tamil
@@ -145,17 +172,19 @@
   Thaa: Thaana
   Thai: Thai
   Tibt: Tibetan
-  Tirh: Tiruta
+  Tirh: Tirhuta
   Ugar: Ugaritic
   Vaii: Vai
   Visp: VisibleSpeech
   Wara: WarangCitiVarangKshiti
   Wole: Woleai
   Xpeo: OldPersian
-  Xsux: CuneiformSumeroakkadian
+  Xsux: CuneiformSumeroAkkadian
   Yiii: Yi
+  Zanb: ZanabazarSquareZanabazarinDorboljinUsegXewteeDorboljinBicigHorizontalSquareScript
   Zinh: CodeForInheritedScript
   Zmth: MathematicalNotation
+  Zsye: SymbolsEmojiVariant
   Zsym: Symbols
   Zxxx: CodeForUnwrittenDocuments
   Zyyy: CodeForUndeterminedScript

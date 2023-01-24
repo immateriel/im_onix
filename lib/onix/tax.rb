@@ -1,23 +1,20 @@
 module ONIX
-
   class Tax < SubsetDSL
-    element "TaxType", :subset
-    element "TaxRateCode", :subset
-    element "TaxRatePercent", :float
-    element "TaxableAmount", :float, {:parse_lambda=>lambda{|v| (v*100).round}}
-    element "TaxAmount", :float, {:parse_lambda=>lambda{|v| (v*100).round}}
-
-    # shortcuts
-    def rate_code
-      @tax_rate_code
-    end
-
-    def amount
-      @tax_amount
-    end
-
-    def rate_percent
-      @tax_rate_percent
-    end
+    elements "ProductIdentifier", :subset, :cardinality => 0..n
+    elements "PricePartDescription", :text, :cardinality => 0..n
+    element "TaxType", :subset, :cardinality => 0..1
+    element "TaxRateCode", :subset, :shortcut => :rate_code, :cardinality => 0..1
+    element "TaxRatePercent", :float, :shortcut => :rate_percent, :cardinality => 0..1
+    element "TaxableAmount", :float, {
+        :parse_lambda => lambda { |v| (v * 100).round },
+        :serialize_lambda => lambda { |v| format("%.2f", v / 100.0) },
+        :cardinality => 0..1
+    }
+    element "TaxAmount", :float, {
+        :shortcut => :amount,
+        :parse_lambda => lambda { |v| (v * 100).round },
+        :serialize_lambda => lambda { |v| format("%.2f", v / 100.0) },
+        :cardinality => 0..1
+    }
   end
 end

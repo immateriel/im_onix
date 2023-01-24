@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ONIXMessage xmlns="http://www.editeur.org/onix/3.0/reference" release="3.0">
+  <Product>
+    <RecordReference>immateriel.fr-O192530</RecordReference>
+    <NotificationType>03</NotificationType>
+    <CollateralDetail>
+      <TextContent>
+        <TextType>02</TextType>
+        <ContentAudience>00</ContentAudience>
+        <Text>Japon, 1919. Un bateau quitte l’Empire du Levant avec à son bord plusieurs dizaines de jeunes femmes promises à des Japonais travaillant aux États-Unis, toutes mariées par procuration. À la façon d’un chœur antique, leurs voix s'élèvent et racontent leurs misérables vies d’exilées... leur nuit de noces, souvent brutale, ...</Text>
+      </TextContent>
+      <TextContent>
+        <TextType>03</TextType>
+        <ContentAudience>00</ContentAudience>
+        <Text textformat="05">&lt;p&gt;Japon, 1919. Un bateau quitte l’Empire du Levant avec à son bord plusieurs dizaines de jeunes femmes promises à des Japonais travaillant aux États-Unis, toutes mariées par procuration. À la façon d’un chœur antique, leurs voix s'élèvent et racontent leurs misérables vies d’exilées... leur nuit de noces, souvent brutale, leurs rudes journées de travail dans les champs, leurs combats pour apprivoiser une langue inconnue, l’humiliation des Blancs, le rejet par leur progéniture de leur patrimoine et de leur histoire... Une véritable clameur jusqu’au silence de la guerre. Et l'oubli.&lt;/p&gt;
+&lt;p&gt;
+  &lt;strong&gt;Prix Femina étranger 2012&lt;/strong&gt;
+&lt;/p&gt;</Text>
+      </TextContent>
+    </CollateralDetail>
+  </Product>
+</ONIXMessage>

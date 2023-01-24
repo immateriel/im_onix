@@ -8,8 +8,8 @@
   '05': Yyyy
   '06': Yyyymmddyyyymmdd
   '07': Yyyymmyyyymm
-  08: Yyyywwyyyyww
-  09: Yyyyqyyyyq
+  '08': Yyyywwyyyyww
+  '09': Yyyyqyyyyq
   '10': Yyyysyyyys
   '11': Yyyyyyyy
   '12': TextString

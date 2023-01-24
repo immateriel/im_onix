@@ -5,52 +5,27 @@ require 'onix/website'
 module ONIX
   module EntityHelper
   end
-  class Entity < SubsetDSL
-    # entity name
-    attr_accessor :name
-    # entity role
-    attr_accessor :role
-    # entity Identifier list
-    attr_accessor :identifiers
 
-    include GlnMethods
+  class Entity < SubsetDSL
+    include IdentifiersMethods::Gln
     include EntityHelper
 
-    def initialize
-      super
-      @identifiers = []
-    end
-
+    # @return [String]
     def self.role_tag
       "#{self.prefix}Role"
     end
 
+    # @return [String]
     def self.name_tag
       "#{self.prefix}Name"
     end
 
+    # @return [String]
     def self.identifier_tag
       "#{self.prefix}Identifier"
     end
 
-    def parse(n)
-      super
-      n.children.each do |t|
-        case t
-          when tag_match(self.class.name_tag)
-            @name=t.text
-          when tag_match(self.class.role_tag)
-            if self.class.role_class
-              @role=self.class.role_class.parse(t)
-            end
-          when tag_match(self.class.identifier_tag)
-            if self.class.identifier_class
-              @identifiers << self.class.identifier_class.parse(t)
-            end
-        end
-      end
-    end
-
+    # @return [String]
     def self.prefix
     end
 
@@ -60,76 +35,52 @@ module ONIX
 
     def self.role_class
       nil
+    end
+
+    def self.entity_setup prefix, identifier, role = nil
+      define_singleton_method :prefix do
+        return prefix
+      end
+      define_singleton_method :identifier_class do
+        return identifier
+      end
+      define_singleton_method :role_class do
+        return role
+      end
+
+      self.element self.role_tag, :subset, :klass => self.role_class.to_s, :shortcut => :role, :cardinality => 1
+      self.elements self.identifier_tag, :subset, :klass => self.identifier_class.to_s, :shortcut => :identifiers, :cardinality => 0..n
+      self.element self.name_tag, :text, :shortcut => :name, :cardinality => 0..1
     end
   end
 
   class Agent < Entity
-    def self.prefix
-      "Agent"
-    end
-
-    def self.identifier_class
-      AgentIdentifier
-    end
-
-    def self.role_class
-      AgentRole
-    end
+    entity_setup "Agent", AgentIdentifier, AgentRole
+    elements "Website", :subset, :cardinality => 0..n
   end
 
-  class Imprint < Entity
-    def self.prefix
-      "Imprint"
-    end
+  class Imprint < SubsetDSL
+    include IdentifiersMethods::Gln
 
-    def self.identifier_class
-      ImprintIdentifier
-    end
-
-    def self.role_class
-      nil
-    end
+    elements "ImprintIdentifier", :subset, :shortcut => :identifiers, :cardinality => 0..n
+    element "ImprintName", :text, :shortcut => :name, :cardinality => 0..1
   end
 
   class Supplier < Entity
-    elements "Website", :subset
-
-    def self.prefix
-      "Supplier"
-    end
-
-    def self.identifier_class
-      SupplierIdentifier
-    end
-
-    def self.role_class
-      SupplierRole
-    end
+    entity_setup "Supplier", SupplierIdentifier, SupplierRole
+    elements "TelephoneNumber", :text, :cardinality => 0..n
+    elements "FaxNumber", :text, :cardinality => 0..n
+    elements "EmailAddress", :text, :cardinality => 0..n
+    elements "Website", :subset, :cardinality => 0..n
   end
 
   class Publisher < Entity
-    elements "Website", :subset
-
-    def initialize
-      super
-      @websites = []
-    end
-
-    def self.prefix
-      "Publisher"
-    end
-
+    # @note role tag is not PublisherRole but PublishingRole
     def self.role_tag
       "PublishingRole"
     end
 
-    def self.identifier_class
-      PublisherIdentifier
-    end
-
-    def self.role_class
-      PublishingRole
-    end
+    entity_setup "Publisher", PublisherIdentifier, PublishingRole
+    elements "Website", :subset, :cardinality => 0..n
   end
-
 end

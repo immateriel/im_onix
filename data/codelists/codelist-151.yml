@@ -1,5 +1,6 @@
 ---
 :codelist:
+  '00': AssociatedWith
   '01': BornIn
   '02': DiedIn
   '03': FormerlyResidedIn
@@ -7,4 +8,6 @@
   '05': EducatedIn
   '06': WorkedIn
   '07': FlourishedIn
-  08: CitizenOf
+  '08': CitizenOf
+  '09': RegisteredIn
+  '10': OperatingFrom

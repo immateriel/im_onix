@@ -7,10 +7,10 @@
   '05': InternationalEditionUs
   '06': LibraryAudioEdition
   '07': UsOpenMarketEdition
-  08: LivreScolaireDéclaréParLéditeur
-  09: LivreScolaireNonSpécifié
+  '08': LivreScolaireDeclareParLediteur
+  '09': LivreScolaireNonSpecifie
   '10': SupplementToNewspaper
   '11': PrecioLibreTextbook
   '12': NewsOutletEdition
   '13': UsTextbook
-  '14': EbookShort
+  '14': EBookShort

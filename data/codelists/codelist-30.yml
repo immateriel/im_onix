@@ -8,7 +8,7 @@
   '18': ReadingAgeYears
   '19': SpanishSchoolGrade
   '20': Skoletrinn
-  '21': Nivå
+  '21': Niva
   '22': ItalianSchoolGrade
   '23': Schulform
   '24': Bundesland
@@ -16,4 +16,8 @@
   '26': CanadianSchoolGradeRange
   '27': FinnishSchoolGradeRange
   '28': FinnishUpperSecondarySchoolCourse
-  '29': ChineseSchoolGradeCode
+  '29': ChineseSchoolGradeRange
+  '30': NomenclatureNiveauxEducatifDetaille
+  '31': BrazilEducationLevel
+  '32': NomenclatureNiveauxEducatifDeBase
+  '33': FinnishUpperSecondarySchoolCourse2021

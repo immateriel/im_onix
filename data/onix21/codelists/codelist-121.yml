@@ -42,9 +42,9 @@
   Grek: Greek
   Gujr: Gujarati
   Guru: Gurmukhi
-  Hang: HangulHangŭlHangeul
+  Hang: HangulHangulHangeul
   Hani: HanHanziKanjiHanja
-  Hano: HanunooHanunóo
+  Hano: HanunooHanunoo
   Hans: HanSimplifiedVariant
   Hant: HanTraditionalVariant
   Hebr: Hebrew
@@ -71,7 +71,7 @@
   Latf: LatinFrakturVariant
   Latg: LatinGaelicVariant
   Latn: Latin
-  Lepc: LepchaRóng
+  Lepc: LepchaRong
   Limb: Limbu
   Lina: LinearA
   Linb: LinearB
@@ -93,9 +93,9 @@
   Mymr: MyanmarBurmese
   Narb: OldNorthArabianAncientNorthArabian
   Nbat: Nabatean
-  Nkgb: NakhiGebaNakhi²ggŏ¹bawNaxiGeba
+  Nkgb: NakhiGebaNaKhi2ggo1bawNaxiGeba
   Nkoo: Nko
-  Nshu: Nüshu
+  Nshu: Nushu
   Ogam: Ogham
   Olck: OlChikiOlCemetOlSantali
   Orkh: OldTurkicOrkhonRunic
@@ -103,7 +103,7 @@
   Osma: Osmanya
   Palm: Palmyrene
   Perm: OldPermic
-  Phag: Phagspa
+  Phag: PhagsPa
   Phli: InscriptionalPahlavi
   Phlp: PsalterPahlavi
   Phlv: BookPahlavi
@@ -121,7 +121,7 @@
   Saur: Saurashtra
   Sgnw: Signwriting
   Shaw: ShavianShaw
-  Shrd: SharadaŚāradā
+  Shrd: SharadaSarada
   Sind: KhudawadiSindhi
   Sinh: Sinhala
   Sora: SoraSompeng
@@ -132,7 +132,7 @@
   Syrj: SyriacWesternVariant
   Syrn: SyriacEasternVariant
   Tagb: Tagbanwa
-  Takr: TakriṬākrīṬāṅkrī
+  Takr: TakriTakriTankri
   Tale: TaiLe
   Talu: NewTaiLue
   Taml: Tamil
@@ -152,7 +152,7 @@
   Wara: WarangCitiVarangKshiti
   Wole: Woleai
   Xpeo: OldPersian
-  Xsux: CuneiformSumeroakkadian
+  Xsux: CuneiformSumeroAkkadian
   Yiii: Yi
   Zinh: CodeForInheritedScript
   Zmth: MathematicalNotation

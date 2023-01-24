@@ -1,18 +1,11 @@
 module ONIX
   class Identifier < SubsetDSL
-    element "IDValue", :text
-    element "IDTypeName", :text
-
-    def value
-      @id_value
-    end
-
-    def name
-      @id_type_name
-    end
-
-    def type
-      nil
+    class << self
+      def identifier_elements(id_type)
+        element id_type, :subset, :shortcut => :type, :cardinality => 1
+        element "IDTypeName", :text, :shortcut => :name, :cardinality => 0..1
+        element "IDValue", :text, :shortcut => :value, :cardinality => 1
+      end
     end
 
     def uniq_id
@@ -21,138 +14,128 @@ module ONIX
   end
 
   class SenderIdentifier < Identifier
-    element "SenderIDType", :subset
-    def type
-      @sender_id_type
-    end
+    identifier_elements "SenderIDType"
   end
 
   class AddresseeIdentifier < Identifier
-    element "AddresseeIDType", :subset
-    def type
-      @addressee_id_type
-    end
+    identifier_elements "AddresseeIDType"
+  end
+
+  class RecordSourceIdentifier < Identifier
+    identifier_elements "RecordSourceIDType"
   end
 
   class AgentIdentifier < Identifier
-    element "AgentIDType", :subset
-    def type
-      @agent_id_type
-    end
+    identifier_elements "AgentIDType"
   end
 
   class ImprintIdentifier < Identifier
-    element "ImprintIDType", :subset
-    def type
-      @imprint_id_type
-    end
+    identifier_elements "ImprintIDType"
   end
 
   class PublisherIdentifier < Identifier
-    element "PublisherIDType", :subset
-    def type
-      @publisher_id_type
-    end
+    identifier_elements "PublisherIDType"
   end
 
   class SupplierIdentifier < Identifier
-    element "SupplierIDType", :subset
-    def type
-      @supplier_id_type
-    end
+    identifier_elements "SupplierIDType"
   end
 
   class NameIdentifier < Identifier
-    element "NameIDType", :subset
-    def type
-      @name_id_type
-    end
+    identifier_elements "NameIDType"
   end
 
   class CollectionIdentifier < Identifier
-    element "CollectionIDType", :subset
-    def type
-      @collection_id_type
-    end
+    identifier_elements "CollectionIDType"
   end
 
   class ProductIdentifier < Identifier
-    element "ProductIDType", :subset
-    def type
-      @product_id_type
-    end
+    identifier_elements "ProductIDType"
+  end
+
+  class ProductContactIdentifier < Identifier
+    identifier_elements "ProductContactIDType"
   end
 
   class SalesOutletIdentifier < Identifier
-    element "SalesOutletIDType", :subset
-    def type
-      @sales_outlet_id_type
-    end
+    identifier_elements "SalesOutletIDType"
   end
 
   class WorkIdentifier < Identifier
-    element "WorkIDType", :subset
-    def type
-      @work_id_type
-    end
+    identifier_elements "WorkIDType"
   end
 
-  module EanMethods
-    # EAN string identifier from identifiers
-    def ean
-      if ean_identifier
-        ean_identifier.value
-      else
-        nil
-      end
-    end
-
-    private
-    def ean_identifier
-      self.identifiers.select { |id| id.type.human=="Gtin13" }.first || self.identifiers.select { |id| id.type.human=="Isbn13" }.first
-    end
+  class SupplyContactIdentifier < Identifier
+    identifier_elements "SupplyContactIDType"
   end
 
-  module IsbnMethods
-    # ISBN-13 string identifier from identifiers
-    def isbn13
-      if isbn13_identifier
-        isbn13_identifier.value
-      else
-        nil
-      end
-    end
-
-    private
-    def isbn13_identifier
-      self.identifiers.select{|id| id.type.human=="Isbn13"}.first
-    end
+  class TextItemIdentifier < Identifier
+    identifier_elements "TextItemIDType"
   end
 
-  module GlnMethods
-    # GLN string identifier from identifiers
-    def gln
-      if gln_identifier
-        if gln_identifier.value =~ /\d{13}/
-          gln_identifier.value
+  module IdentifiersMethods
+    module Ean
+      # EAN string identifier from identifiers
+      # @return [String]
+      def ean
+        if ean_identifier
+          ean_identifier.value
         else
-          puts "Invalid GLN #{gln_identifier.value}"
           nil
         end
-      else
-        nil
+      end
+
+      private
+
+      def ean_identifier
+        self.identifiers.select { |id| id.type.human == "Gtin13" }.first || self.identifiers.select { |id| id.type.human == "Isbn13" }.first
       end
     end
 
-    # private
-    def gln_identifier
-      self.identifiers.select { |id| id.type.human=="Gln" }.first
-    end
-  end
+    module Isbn
+      # ISBN-13 string identifier from identifiers
+      # @return [String]
+      def isbn13
+        if isbn13_identifier
+          isbn13_identifier.value
+        else
+          nil
+        end
+      end
 
-  module ProprietaryIdMethods
-    def proprietary_ids
-      self.identifiers.select { |id| id.type.human=="Proprietary" }
+      private
+
+      def isbn13_identifier
+        self.identifiers.select { |id| id.type.human == "Isbn13" }.first
+      end
+    end
+
+    module Gln
+      # GLN string identifier from identifiers
+      # @return [String]
+      def gln
+        if gln_identifier
+          if gln_identifier.value =~ /\d{13}/
+            gln_identifier.value
+          else
+            # puts "WARN Invalid GLN #{gln_identifier.value}"
+            nil
+          end
+        else
+          nil
+        end
+      end
+
+      # private
+      def gln_identifier
+        self.identifiers.select { |id| id.type.human == "Gln" }.first
+      end
+    end
+
+    module ProprietaryId
+      def proprietary_ids
+        self.identifiers.select { |id| id.type.human == "Proprietary" }
+      end
     end
   end
 end

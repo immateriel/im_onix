@@ -7,7 +7,7 @@
   '05': ImageWholeCoverHighQuality
   '06': ImageFrontCoverHighQuality
   '07': ImageFrontCoverThumbnail
-  08: ImageContributors
+  '08': ImageContributors
   '10': ImageForSeries
   '11': ImageSeriesLogo
   '12': ImageProductLogo

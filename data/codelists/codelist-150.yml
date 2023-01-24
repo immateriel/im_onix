@@ -3,21 +3,24 @@
   '00': Undefined
   AA: Audio
   AB: AudioCassette
-  AC: Cdaudio
+  AC: CdAudio
   AD: Dat
   AE: AudioDisc
   AF: AudioTape
   AG: Minidisc
-  AH: Cdextra
+  AH: CdExtra
   AI: DvdAudio
   AJ: DownloadableAudioFile
-  AK: PrerecordedDigitalAudioPlayer
-  AL: PrerecordedSdCard
+  AK: PreRecordedDigitalAudioPlayer
+  AL: PreRecordedSdCard
+  AM: Lp
+  AN: DownloadableAndOnlineAudioFile
+  AO: OnlineAudioFile
   AZ: OtherAudioFormat
   BA: Book
   BB: Hardback
   BC: PaperbackSoftback
-  BD: Looseleaf
+  BD: LooseLeaf
   BE: SpiralBound
   BF: Pamphlet
   BG: LeatherFineBinding
@@ -27,8 +30,8 @@
   BK: NoveltyBook
   BL: SlideBound
   BM: BigBook
-  BN: PartworkFascículo
-  BO: FoldoutBookOrChart
+  BN: PartWorkFasciculo
+  BO: FoldOutBookOrChart
   BP: FoamBook
   BZ: OtherBookFormat
   CA: SheetMap
@@ -38,16 +41,17 @@
   CE: Globe
   CZ: OtherCartographic
   DA: DigitalOnPhysicalCarrier
-  DB: Cdrom
-  DC: Cdi
+  DB: CdRom
+  DC: CdI
   DE: GameCartridge
   DF: Diskette
-  DI: Dvdrom
+  DI: DvdRom
   DJ: SecureDigitalSdMemoryCard
   DK: CompactFlashMemoryCard
   DL: MemoryStickMemoryCard
   DM: UsbFlashDrive
-  DN: DoublesidedCddvd
+  DN: DoubleSidedCddvd
+  DO: BrRom
   DZ: OtherDigitalCarrier
   EA: DigitalDeliveredElectronically
   EB: DigitalDownloadAndOnline
@@ -71,7 +75,7 @@
   PC: Calendar
   PD: Cards
   PE: Copymasters
-  PF: Diary
+  PF: DiaryOrJournal
   PG: Frieze
   PH: Kit
   PI: SheetMusic
@@ -82,17 +86,19 @@
   PN: PicturesOrPhotographs
   PO: Wallchart
   PP: Stickers
-  PQ: PlateLámina
+  PQ: PlateLamina
   PR: NotebookBlankBook
   PS: Organizer
   PT: Bookmark
+  PU: Leaflet
+  PV: BookPlates
   PZ: OtherPrintedItem
-  SA: MultipleitemRetailProduct
-  SB: MultipleitemRetailProductBoxed
-  SC: MultipleitemRetailProductSlipcased
-  SD: MultipleitemRetailProductShrinkwrapped
-  SE: MultipleitemRetailProductLoose
-  SF: MultipleitemRetailProductPartsEnclosed
+  SA: MultipleComponentRetailProduct
+  SB: MultipleComponentRetailProductBoxed
+  SC: MultipleComponentRetailProductSlipCased
+  SD: MultipleComponentRetailProductShrinkWrapped
+  SE: MultipleComponentRetailProductLoose
+  SF: MultipleComponentRetailProductPartsEnclosed
   VA: Video
   VF: Videodisc
   VI: DvdVideo
@@ -101,10 +107,11 @@
   VL: Vcd
   VM: Svcd
   VN: HdDvd
-  VO: Bluray
+  VO: BluRay
   VP: UmdVideo
+  VQ: Cbhd
   VZ: OtherVideoFormat
-  XA: TradeonlyMaterial
+  XA: TradeOnlyMaterial
   XB: DumpbinEmpty
   XC: DumpbinFilled
   XD: CounterpackEmpty
@@ -113,16 +120,29 @@
   XG: ShelfStrip
   XH: WindowPiece
   XI: Streamer
-  XJ: Spinner
+  XJ: SpinnerEmpty
   XK: LargeBookDisplay
-  XL: ShrinkwrappedPack
+  XL: ShrinkWrappedPack
+  XM: BoxedPack
+  XN: PackOuterPackagingUnspecified
+  XO: SpinnerFilled
+  XY: OtherPointOfSaleIncludingRetailProduct
   XZ: OtherPointOfSale
   ZA: GeneralMerchandise
-  ZB: Doll
+  ZB: DollOrFigure
   ZC: SoftToy
   ZD: Toy
   ZE: Game
-  ZF: Tshirt
-  ZG: EbookReader
+  ZF: TShirt
+  ZG: EBookReader
   ZH: TabletComputer
+  ZI: AudiobookPlayer
+  ZJ: Jigsaw
+  ZK: Mug
+  ZL: ToteBag
+  ZM: Tableware
+  ZN: Umbrella
+  ZO: PaintsCrayonsPencils
+  ZX: OtherToygameAccessories
+  ZY: OtherApparel
   ZZ: OtherMerchandise

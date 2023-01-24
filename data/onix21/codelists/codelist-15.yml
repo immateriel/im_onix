@@ -8,7 +8,7 @@
   '05': AbbreviatedTitle
   '06': TitleInOtherLanguage
   '07': ThematicTitleOfJournalIssue
-  08: FormerTitle
+  '08': FormerTitle
   '10': DistributorsTitle
   '11': AlternativeTitleOnCover
   '12': AlternativeTitleOnBack
