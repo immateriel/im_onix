@@ -8,15 +8,15 @@
   '05': OnlineResourceAvailableContentPage
   '06': ContributorsOwnWebsite
   '07': PublishersWebsiteRelatingToSpecifiedContributor
-  '08': OtherPublishersWebsiteRelatingToSpecifiedContributor
-  '09': ThirdPartyWebsiteRelatingToSpecifiedContributor
+  08: OtherPublishersWebsiteRelatingToSpecifiedContributor
+  09: ThirdpartyWebsiteRelatingToSpecifiedContributor
   '10': ContributorsOwnWebsiteForSpecifiedWork
   '11': OtherPublishersWebsiteRelatingToSpecifiedWork
-  '12': ThirdPartyWebsiteRelatingToSpecifiedWork
+  '12': ThirdpartyWebsiteRelatingToSpecifiedWork
   '13': ContributorsOwnWebsiteForGroupOrSeriesOfWorks
   '14': PublishersWebsiteRelatingToGroupOrSeriesOfWorks
   '15': OtherPublishersWebsiteRelatingToGroupOrSeriesOfWorks
-  '16': ThirdPartyWebsiteRelatingToGroupOrSeriesOfWorksEgAFanSite
+  '16': ThirdpartyWebsiteRelatingToGroupOrSeriesOfWorksEgAFanSite
   '17': PublishersB2bWebsite
   '18': PublishersB2cWebsite
   '23': AuthorBlog
@@ -27,7 +27,7 @@
   '28': WebPageForSampleContent
   '29': WebPageForFullContent
   '30': WebPageForOtherCommentaryDiscussion
-  '31': TransferUrl
+  '31': Transferurl
   '32': DoiWebsiteLink
   '33': SuppliersCorporateWebsite
   '34': SuppliersB2bWebsite
@@ -41,5 +41,3 @@
   '42': AuthorsSocialNetworkingUrl
   '43': PublishersSocialNetworkingUrl
   '44': SocialNetworkingUrlForSpecificArticleChapterOrContentItem
-  '45': PublishersOrThirdPartyWebsiteForPermissionsRequests
-  '46': PublishersOrThirdPartyWebsiteForPrivacyStatement

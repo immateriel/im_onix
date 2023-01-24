@@ -1,8 +1,8 @@
 ---
 :codelist:
-  '00': SingleComponentRetailProduct
-  '10': MultipleComponentRetailProduct
-  '11': MultipleItemCollectionRetailedAsSeparateParts
-  '20': TradeOnlyProduct
-  '30': MultipleItemTradeOnlyPack
-  '31': MultipleItemPack
+  '00': SingleitemRetailProduct
+  '10': MultipleitemRetailProduct
+  '11': MultipleitemCollectionRetailedAsSeparateParts
+  '20': TradeonlyProduct
+  '30': MultipleitemTradePack
+  '31': MultipleitemPack

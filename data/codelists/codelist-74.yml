@@ -6,7 +6,7 @@
   ach: Acoli
   ada: Adangme
   ady: Adygei
-  afa: AfroAsiaticLanguages
+  afa: AfroasiaticLanguages
   afh: Afrihili
   afr: Afrikaans
   ain: Ainu
@@ -88,16 +88,13 @@
   chu: ChurchSlavicOrOldSlavonicOrChurchSlavonicOrOldBulgarianOrOldChurchSlavonic
   chv: Chuvash
   chy: Cheyenne
-  ckb: CentralKurdishSorani
   cmc: ChamicLanguages
-  cmn: Mandarin
-  cnr: Montenegrin
   cop: Coptic
   cor: Cornish
   cos: Corsican
-  cpe: CreolesAndPidginsEnglishBased
-  cpf: CreolesAndPidginsFrenchBased
-  cpp: CreolesAndPidginsPortugueseBased
+  cpe: CreolesAndPidginsEnglishbased
+  cpf: CreolesAndPidginsFrenchbased
+  cpp: CreolesAndPidginsPortuguesebased
   cre: Cree
   crh: CrimeanTurkishOrCrimeanTatar
   crp: CreolesAndPidgins
@@ -122,7 +119,6 @@
   dyu: Dyula
   dzo: Dzongkha
   efi: Efik
-  egl: Emilian
   egy: EgyptianAncient
   eka: Ekajuk
   elx: Elamite
@@ -138,9 +134,7 @@
   fij: Fijian
   fil: FilipinoOrPilipino
   fin: Finnish
-  fit: MeankieliTornedalenFinnish
-  fiu: FinnoUgrianLanguages
-  fkv: Kvensk
+  fiu: FinnougrianLanguages
   fon: Fon
   fre: French
   frm: FrenchMiddleCa14001600
@@ -150,7 +144,7 @@
   fry: WesternFrisian
   ful: Fulah
   fur: Friulian
-  gaa: Ga
+  gaa: Gã
   gay: Gayo
   gba: Gbaya
   gem: GermanicLanguages
@@ -202,7 +196,7 @@
   ina: InterlinguaInternationalAuxiliaryLanguageAssociation
   inc: IndicLanguages
   ind: Indonesian
-  ine: IndoEuropeanLanguages
+  ine: IndoeuropeanLanguages
   inh: Ingush
   ipk: Inupiaq
   ira: IranianLanguages
@@ -211,12 +205,12 @@
   jav: Javanese
   jbo: Lojban
   jpn: Japanese
-  jpr: JudeoPersian
-  jrb: JudeoArabic
-  kaa: KaraKalpak
+  jpr: Judeopersian
+  jrb: Judeoarabic
+  kaa: Karakalpak
   kab: Kabyle
   kac: KachinOrJingpho
-  kal: KalatdlisutOrGreenlandic
+  kal: KalâtdlisutOrGreenlandic
   kam: Kamba
   kan: Kannada
   kar: KarenLanguages
@@ -225,7 +219,6 @@
   kaw: Kawi
   kaz: Kazakh
   kbd: KabardianCircassian
-  kdr: Karaim
   kha: Khasi
   khi: KhoisanLanguages
   khm: CentralKhmer
@@ -240,7 +233,7 @@
   kor: Korean
   kos: KusaieanCarolineIslands
   kpe: Kpelle
-  krc: KarachayBalkar
+  krc: Karachaybalkar
   krl: Karelian
   kro: KruLanguages
   kru: Kurukh
@@ -255,18 +248,16 @@
   lat: Latin
   lav: Latvian
   lez: Lezgian
-  lij: Ligurian
   lim: Limburgish
   lin: Lingala
   lit: Lithuanian
-  lmo: Lombard
-  lol: MongoNkundu
+  lol: Mongonkundu
   loz: Lozi
   ltz: LuxembourgishOrLetzeburgesch
-  lua: LubaLulua
-  lub: LubaKatanga
+  lua: Lubalulua
+  lub: Lubakatanga
   lug: Ganda
-  lui: Luiseno
+  lui: Luiseño
   lun: Lunda
   luo: LuoKenyaAndTanzania
   lus: Lushai
@@ -290,7 +281,7 @@
   mic: MikmaqOrMicmac
   min: Minangkabau
   mis: UncodedLanguages
-  mkh: MonKhmerLanguages
+  mkh: MonkhmerLanguages
   mlg: Malagasy
   mlt: Maltese
   mnc: Manchu
@@ -299,11 +290,10 @@
   moh: Mohawk
   mol: MoldavianOrMoldovan
   mon: Mongolian
-  mos: MooreOrMossi
+  mos: MooréOrMossi
   mul: MultipleLanguages
   mun: MundaLanguages
   mus: Creek
-  mwf: MurrinhPatha
   mwl: Mirandese
   mwr: Marwari
   myn: MayanLanguages
@@ -320,15 +310,14 @@
   nep: Nepali
   new: NewariOrNepalBhasa
   nia: Nias
-  nic: NigerKordofanianLanguages
+  nic: NigerkordofanianLanguages
   niu: Niuean
   nno: NorwegianNynorsk
-  nob: NorwegianBokmal
+  nob: NorwegianBokmål
   nog: Nogai
   non: OldNorse
   nor: Norwegian
   nqo: Nko
-  nrf: GuernesiaisJerriais
   nso: PediOrSepediOrNorthernSotho
   nub: NubianLanguages
   nwc: ClassicalNewariOrOldNewariOrClassicalNepalBhasa
@@ -338,9 +327,7 @@
   nyo: Nyoro
   nzi: Nzima
   oci: OccitanPost1500
-  odt: OldDutchOldLowFranconianCa4001050
   oji: Ojibwa
-  omq: OtoMangueanLanguages
   ori: Oriya
   orm: Oromo
   osa: Osage
@@ -355,35 +342,28 @@
   pap: Papiamento
   pau: Palauan
   peo: OldPersianCa600400Bc
-  per: PersianOrFarsi
-  pes: IranianPersianOrParsi
+  per: Persian
   phi: PhilippineLanguages
   phn: Phoenician
   pli: Pali
-  pms: Piedmontese
   pol: Polish
   pon: Ponapeian
   por: Portuguese
   pra: PrakritLanguages
-  pro: ProvencalOldTo1500OrOccitanOldTo1500
-  prs: DariOrAfghanPersian
+  pro: ProvençalOldTo1500OrOccitanOldTo1500
   pus: PushtoOrPashto
-  qar: Aranes
+  qar: Aranés
   qav: Valencian
-  qlk: Lemko
-  qls: NeutralLatinAmericanSpanish
   que: Quechua
   raj: Rajasthani
   rap: Rapanui
   rar: RarotonganOrCookIslandsMaori
-  rcf: ReunionCreoleFrench
-  rgn: Romagnol
   roa: RomanceLanguages
   roh: Romansh
   rom: Romany
   rum: Romanian
   run: Rundi
-  rup: AromanianOrArumanianOrMacedoRomanian
+  rup: AromanianOrArumanianOrMacedoromanian
   rus: Russian
   sad: Sandawe
   sag: Sango
@@ -396,10 +376,8 @@
   sat: Santali
   scc: Serbian
   scn: Sicilian
-  sco: Scots
+  sco: ScotsLallans
   scr: Croatian
-  sdc: Sassarese
-  sdn: Gallurese
   sel: Selkup
   sem: SemiticLanguages
   sga: IrishOldTo1100
@@ -408,7 +386,7 @@
   sid: Sidamo
   sin: SinhalaOrSinhalese
   sio: SiouanLanguages
-  sit: SinoTibetanLanguages
+  sit: SinotibetanLanguages
   sla: SlavicLanguages
   slo: Slovak
   slv: Slovenian
@@ -429,10 +407,9 @@
   spa: Spanish
   srd: Sardinian
   srn: SrananTongo
-  sro: Campidanese
   srp: Serbian
   srr: Serer
-  ssa: NiloSaharanLanguages
+  ssa: NilosaharanLanguages
   ssw: SwaziOrSwati
   suk: Sukuma
   sun: Sundanese
@@ -450,15 +427,15 @@
   tem: TemneOrTime
   ter: Terena
   tet: Tetum
-  tgk: TajikOrTajikiPersian
+  tgk: Tajik
   tgl: Tagalog
   tha: Thai
   tib: Tibetan
-  tig: Tigre
+  tig: Tigré
   tir: Tigrinya
   tiv: Tiv
   tkl: Tokelauan
-  tlh: KlingonOrTlhinganHol
+  tlh: KlingonOrTlhinganhol
   tli: Tlingit
   tmh: Tamashek
   tog: TongaNyasa
@@ -475,7 +452,6 @@
   tvl: Tuvaluan
   twi: Twi
   tyv: Tuvinian
-  tzo: Tzotzil
   udm: Udmurt
   uga: Ugaritic
   uig: UighurOrUyghur
@@ -485,10 +461,9 @@
   urd: Urdu
   uzb: Uzbek
   vai: Vai
-  vec: Venetianvenetan
   ven: Venda
   vie: Vietnamese
-  vol: Volapuk
+  vol: Volapük
   vot: Votic
   wak: WakashanLanguages
   wal: WolaittaOrWolaytta
@@ -500,17 +475,14 @@
   wol: Wolof
   xal: Kalmyk
   xho: Xhosa
-  xuu: KhwedamKxoe
   yao: Yao
   yap: Yapese
   yid: Yiddish
   yor: Yoruba
   ypk: YupikLanguages
-  yue: Cantonese
   zap: Zapotec
   zbl: BlissymbolsOrBlissymbolicsOrBliss
   zen: Zenaga
-  zgh: StandardMoroccanTamazight
   zha: ZhuangOrChuang
   znd: ZandeLanguages
   zul: Zulu

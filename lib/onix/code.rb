@@ -1,108 +1,85 @@
+# -*- encoding : utf-8 -*-
 require 'yaml'
 
 module ONIX
-  class InvalidCodeAlias < StandardError
-  end
-
-  module CodeMethods
+  module CodeHelper
     def parse(n)
-      parse_attributes(n.attributes)
-      @code = n.text
-      @human = self.class.hash[n.text]
+      @code=n.text
+      @human=self.class.hash[n.text]
     end
 
     # Humanized string code
-    # @return [String]
     def human
       @human
     end
 
     # ONIX code
-    # @return [String]
     def onix
       @code
     end
   end
 
   class Code < Subset
-    # @!attribute code
-    #   @return [String] code as defined in ONIX documentation codelist
+    # code as defined in ONIX documentation codelist
     attr_accessor :code
-    # @!attribute human
-    #   @return [String] humanized string (eg: "Digital watermarking" become DigitalWatermarking, "PDF" become Pdf, "BISAC Subject Heading" become BisacSubjectHeading, etc)
+    # humanized string (eg: "Digital watermarking" become DigitalWatermarking, "PDF" become Pdf, "BISAC Subject Heading" become BisacSubjectHeading, etc)
     attr_accessor :human
 
-    include CodeMethods
+    include CodeHelper
 
-    class << self
-      # create Code from ONIX code
-      # @param [String] code ONIX code
-      # @return [Code]
-      def from_code(code)
-        obj = self.new
-        obj.code = code
-        obj.human = self.hash[code]
-        obj
-      end
-
-      # create Code from human readable code
-      # @param [String] human human readable code
-      # @return [Code]
-      def from_human(human)
-        obj = self.new
-        obj.human = human
-        obj.code = self.hash.key(human)
-        unless obj.code
-          raise InvalidCodeAlias, [self.to_s, human]
-        end
-        obj
-      end
-
-      def hash
-        {}
-      end
+    # create Code from string ONIX code
+    def self.from_code(code)
+      o=self.new
+      o.code=code
+      o.human=self.hash[code]
+      o
     end
+
+    # create Code from humanized string code
+    def self.from_human(human)
+      o=self.new
+      o.human=human
+      o.code=self.hash.key(human)
+      o
+    end
+
+    private
+    def self.hash
+      {}
+    end
+
   end
 
   class CodeFromYaml < Code
-    class << self
-      def hash
-        @hash ||= YAML.load(File.open(File.dirname(__FILE__) + "/../../data/codelists/codelist-#{self.code_ident}.yml"))[:codelist].freeze
-      end
+    def self.hash
+      @hash||=YAML.load(File.open(File.dirname(__FILE__) + "/../../data/codelists/codelist-#{self.code_ident}.yml"))[:codelist]
+    end
 
-      def list
-        self.hash.keys
-      end
+    def self.list
+      self.hash.to_a.map{|h| h.first}
+    end
 
-      def code_ident
-        nil
-      end
-
-      def code_identifier code
-        define_singleton_method :code_ident do
-          return code
-        end
-      end
+    def self.code_ident
+      nil
     end
   end
 
   class CodeFromYamlWithMime < CodeFromYaml
     # main formats
-    # @return [String]
     def mimetype
       case self.human
-      when "Epub"
-        "application/epub"
-      when "Pdf"
-        "application/pdf"
-      when "Mobipocket"
-        "application/x-mobipocket-ebook"
-      when "Gif"
-        "image/gif"
-      when "Jpeg"
-        "image/jpeg"
-      when "Png"
-        "image/png"
+        when "Epub"
+          "application/epub"
+        when "Pdf"
+          "application/pdf"
+        when "Mobipocket"
+          "application/x-mobipocket-ebook"
+        when "Gif"
+          "image/gif"
+        when "Jpeg"
+          "image/jpeg"
+        when "Png"
+          "image/png"
       end
     end
   end
@@ -115,132 +92,107 @@ module ONIX
   end
 
   class NotificationType < CodeFromYaml
-    code_identifier 1
+    private
+    def self.code_ident
+      1
+    end
   end
 
   class ProductComposition < CodeFromYaml
-    code_identifier 2
-  end
-
-  class RecordSourceType < CodeFromYaml
-    code_identifier 3
+    private
+    def self.code_ident
+      2
+    end
   end
 
   class ProductIDType < CodeFromYaml
-    code_identifier 5
-  end
-
-  class ProductClassificationType < CodeFromYaml
-    code_identifier 9
-  end
-
-  class TradeCategory < CodeFromYaml
-    code_identifier 12
+    private
+    def self.code_ident
+      5
+    end
   end
 
   class CollectionIDType < CodeFromYaml
-    code_identifier 13
-  end
-
-  class TextCase < CodeFromYaml
-    code_identifier 14
+    private
+    def self.code_ident
+      13
+    end
   end
 
   class TitleType < CodeFromYaml
-    code_identifier 15
+    private
+    def self.code_ident
+      15
+    end
   end
 
   class WorkIDType < CodeFromYaml
-    code_identifier 16
+    private
+    def self.code_ident
+      16
+    end
   end
 
   class ContributorRole < CodeFromYaml
-    code_identifier 17
-  end
-
-  class NameType < CodeFromYaml
-    code_identifier 18
-  end
-
-  class UnnamedPersons < CodeFromYaml
-    code_identifier 19
-  end
-
-  class ConferenceRole < CodeFromYaml
-    code_identifier 20
+    private
+    def self.code_ident
+      17
+    end
   end
 
   class EditionType < CodeFromYaml
-    code_identifier 21
+    private
+    def self.code_ident
+      21
+    end
   end
 
   class LanguageRole < CodeFromYaml
-    code_identifier 22
+    private
+    def self.code_ident
+      22
+    end
   end
 
   class ExtentType < CodeFromYaml
-    code_identifier 23
+    private
+    def self.code_ident
+      23
+    end
   end
 
   class ExtentUnit < CodeFromYaml
-    code_identifier 24
-  end
-
-  class AncillaryContentType < CodeFromYaml
-    code_identifier 25
+    private
+    def self.code_ident
+      24
+    end
   end
 
   class SubjectSchemeIdentifier < CodeFromYaml
-    code_identifier 27
+    private
+    def self.code_ident
+      27
+    end
   end
 
   class AudienceCode < CodeFromYaml
-    code_identifier 28
-  end
-
-  class AudienceCodeType < CodeFromYaml
-    code_identifier 29
-  end
-
-  class AudienceRangeQualifier < CodeFromYaml
-    code_identifier 30
-  end
-
-  class AudienceRangePrecision < CodeFromYaml
-    code_identifier 31
-  end
-
-  class ComplexitySchemeIdentifier < CodeFromYaml
-    code_identifier 32
-  end
-
-  class TextFormat < CodeFromYaml
-    code_identifier 34
-  end
-
-  class PrizeCode < CodeFromYaml
-    code_identifier 41
-  end
-
-  class TextItemType < CodeFromYaml
-    code_identifier 42
-  end
-
-  class TextItemIDType < CodeFromYaml
-    code_identifier 43
+    private
+    def self.code_ident
+      28
+    end
   end
 
   class IDType < CodeFromYaml
-    code_identifier 44
+    private
+    def self.code_ident
+      44
+    end
   end
 
   class SenderIDType < IDType
   end
 
   class AddresseeIDType < IDType
-  end
-
-  class RecordSourceIDType < IDType
   end
 
   class PublisherIDType < IDType
@@ -252,405 +204,347 @@ module ONIX
   class NameIDType < IDType
   end
 
-  class NameIDType < IDType
-  end
-
-  class ProductContactIDType < IDType
-  end
-
   class PublishingRole < CodeFromYaml
-    code_identifier 45
+    private
+    def self.code_ident
+      45
+    end
   end
 
   class SalesRightsType < CodeFromYaml
-    code_identifier 46
-  end
-
-  class MeasureType < CodeFromYaml
-    code_identifier 48
+    private
+    def self.code_ident
+      46
+    end
   end
 
   class RegionCode < CodeFromYaml
-    code_identifier 49
-  end
-
-  class MeasureUnitCode < CodeFromYaml
-    code_identifier 50
+    private
+    def self.code_ident
+      49
+    end
   end
 
   class ProductRelationCode < CodeFromYaml
-    code_identifier 51
-  end
-
-  class ReturnsCodeType < CodeFromYaml
-    code_identifier 53
+    private
+    def self.code_ident
+      51
+    end
   end
 
   class DateFormat < CodeFromYaml
-    code_identifier 55
+    private
+    def self.code_ident
+      55
+    end
   end
 
   class UnpricedItemType < CodeFromYaml
-    code_identifier 57
+    private
+    def self.code_ident
+      57
+    end
   end
 
   class PriceType < CodeFromYaml
-    code_identifier 58
+    private
+    def self.code_ident
+      58
+    end
   end
 
   class PriceQualifier < CodeFromYaml
-    code_identifier 59
-  end
-
-  class PricePer < CodeFromYaml
-    code_identifier 60
+    private
+    def self.code_ident
+      59
+    end
   end
 
   class PriceStatus < CodeFromYaml
-    code_identifier 61
+    private
+    def self.code_ident
+      61
+    end
   end
 
   class TaxRateCode < CodeFromYaml
-    code_identifier 62
+    private
+    def self.code_ident
+      62
+    end
   end
 
   class PublishingStatus < CodeFromYaml
-    code_identifier 64
+    private
+    def self.code_ident
+      64
+    end
   end
 
   class ProductAvailability < CodeFromYaml
-    code_identifier 65
+    private
+    def self.code_ident
+      65
+    end
   end
 
   class MarketPublishingStatus < CodeFromYaml
-    code_identifier 68
+    private
+    def self.code_ident
+      68
+    end
   end
 
   class AgentRole < CodeFromYaml
-    code_identifier 69
-  end
-
-  class StockQuantityCodeType < CodeFromYaml
-    code_identifier 70
+    private
+    def self.code_ident
+      69
+    end
   end
 
   class SalesRestrictionType < CodeFromYaml
-    code_identifier 71
-  end
-
-  class ThesisType < CodeFromYaml
-    code_identifier 72
+    private
+    def self.code_ident
+      71
+    end
   end
 
   class WebsiteRole < CodeFromYaml
-    code_identifier 73
+    private
+    def self.code_ident
+      73
+    end
   end
 
   class LanguageCode < CodeFromYaml
-    code_identifier 74
+    private
+    def self.code_ident
+      74
+    end
   end
 
   class ProductFormFeatureType < CodeFromYaml
-    code_identifier 79
-  end
-
-  class ProductPackaging < CodeFromYaml
-    code_identifier 80
+    private
+    def self.code_ident
+      79
+    end
   end
 
   class ProductContentType < CodeFromYaml
-    code_identifier 81
-  end
-
-  class BibleContents < CodeFromYaml
-    code_identifier 82
-  end
-
-  class BibleVersion < CodeFromYaml
-    code_identifier 83
-  end
-
-  class StudyBibleType < CodeFromYaml
-    code_identifier 84
-  end
-
-  class BiblePurpose < CodeFromYaml
-    code_identifier 85
-  end
-
-  class BibleTextOrganization < CodeFromYaml
-    code_identifier 86
-  end
-
-  class BibleReferenceLocation < CodeFromYaml
-    code_identifier 87
-  end
-
-  class ReligiousTextIdentifier < CodeFromYaml
-    code_identifier 88
-  end
-
-  class ReligiousTextFeatureType < CodeFromYaml
-    code_identifier 89
-  end
-
-  class ReligiousTextFeatureCode < CodeFromYaml
-    code_identifier 90
+    private
+    def self.code_ident
+      81
+    end
   end
 
   class CountryCode < CodeFromYaml
-    code_identifier 91
+    private
+    def self.code_ident
+      91
+    end
   end
 
   class SupplierIDType < CodeFromYaml
-    code_identifier 92
+    private
+    def self.code_ident
+      92
+    end
   end
 
   class AgentIDType < CodeFromYaml
-    code_identifier 92
+    private
+    def self.code_ident
+      92
+    end
   end
 
   class SupplierRole < CodeFromYaml
-    code_identifier 93
-  end
-
-  class BibleTextFeature < CodeFromYaml
-    code_identifier 97
-  end
-
-  class DiscountCodeType < CodeFromYaml
-    code_identifier 100
+    private
+    def self.code_ident
+      93
+    end
   end
 
   class SalesOutletIDType < CodeFromYaml
-    code_identifier 102
-  end
-
-  class ScriptCode < CodeFromYaml
-    code_identifier 121
-  end
-
-  class BarcodeType < CodeFromYaml
-    code_identifier 141
-  end
-
-  class PositionOnProduct < CodeFromYaml
-    code_identifier 142
+    private
+    def self.code_ident
+      102
+    end
   end
 
   class EpubTechnicalProtection < CodeFromYaml
-    code_identifier 144
+    private
+    def self.code_ident
+      144
+    end
   end
 
   class EpubUsageType < CodeFromYaml
-    code_identifier 145
+    private
+    def self.code_ident
+      145
+    end
   end
 
   class EpubUsageStatus < CodeFromYaml
-    code_identifier 146
+    private
+    def self.code_ident
+      146
+    end
   end
 
   class EpubUsageUnit < CodeFromYaml
-    code_identifier 147
+    private
+    def self.code_ident
+      147
+    end
   end
 
   class CollectionType < CodeFromYaml
-    code_identifier 148
-  end
-
-  class TitleElementLevel < CodeFromYaml
-    code_identifier 149
-  end
-
-  class ProductForm < CodeFromYaml
-    code_identifier 150
-  end
-
-  class ContributorPlaceRelator < CodeFromYaml
-    code_identifier 151
-  end
-
-  class Illustrated < CodeFromYaml
-    code_identifier 152
-  end
-
-  class TextType < CodeFromYaml
-    code_identifier 153
-  end
-
-  class ContentAudience < CodeFromYaml
-    code_identifier 154
-  end
-
-  class ContentDateRole < CodeFromYaml
-    code_identifier 155
-  end
-
-  class CitedContentType < CodeFromYaml
-    code_identifier 156
-  end
-
-  class SourceType < CodeFromYaml
-    code_identifier 157
-  end
-
-  class ResourceContentType < CodeFromYaml
-    code_identifier 158
-  end
-
-  class ResourceMode < CodeFromYaml
-    code_identifier 159
-  end
-
-  class ResourceFeatureType < CodeFromYaml
-    code_identifier 160
-  end
-
-  class ResourceForm < CodeFromYaml
-    code_identifier 161
-  end
-
-  class ResourceVersionFeatureType < CodeFromYaml
-    code_identifier 162
-  end
-
-  class MarketDateRole < CodeFromYaml
-    code_identifier 163
-  end
-
-  class PublishingDateRole < CodeFromYaml
-    code_identifier 163
-  end
-
-  class WorkRelationCode < CodeFromYaml
-    code_identifier 164
-  end
-
-  class SupplierCodeType < CodeFromYaml
-    code_identifier 165
-  end
-
-  class SupplyDateRole < CodeFromYaml
-    code_identifier 166
-  end
-
-  class PriceConditionType < CodeFromYaml
-    code_identifier 167
-  end
-
-  class PriceConditionQuantityType < CodeFromYaml
-    code_identifier 168
-  end
-
-  class QuantityUnit < CodeFromYaml
-    code_identifier 169
-  end
-
-  class DiscountType < CodeFromYaml
-    code_identifier 170
-  end
-
-  class TaxType < CodeFromYaml
-    code_identifier 171
-  end
-
-  class CurrencyZone < CodeFromYaml
-    code_identifier 172
-  end
-
-  class PriceDateRole < CodeFromYaml
-    code_identifier 173
-  end
-
-  class PrintedOnProduct < CodeFromYaml
-    code_identifier 174
-  end
-
-  class ProductFormDetail < CodeFromYamlWithMime
-    code_identifier 175
-  end
-
-  class ContributorDateRole < CodeFromYaml
-    code_identifier 177
-  end
-
-  class SupportingResourceFileFormat < CodeFromYamlWithMime
-    code_identifier 178
-  end
-
-  class PriceCodeType < CodeFromYaml
-    code_identifier 179
+    private
+    def self.code_ident
+      148
+    end
   end
 
   class CollectionSequenceType < CodeFromYaml
-    code_identifier 197
+    private
+    def self.code_ident
+      197
+    end
   end
 
-  class ProductContactRole < CodeFromYaml
-    code_identifier 198
+  class TitleElementLevel < CodeFromYaml
+    private
+    def self.code_ident
+      149
+    end
   end
 
-  class ReturnsCode < CodeFromYaml
-    code_identifier 204
+  class ProductForm < CodeFromYaml
+    private
+    def self.code_ident
+      150
+    end
   end
 
-  class Proximity < CodeFromYaml
-    code_identifier 215
+  class ContributorPlaceRelator < CodeFromYaml
+    private
+    def self.code_ident
+      151
+    end
   end
 
-  class VelocityMetric < CodeFromYaml
-    code_identifier 216
+  class TextType < CodeFromYaml
+    private
+    def self.code_ident
+      153
+    end
   end
 
-  class PriceIDType < CodeFromYaml
-    code_identifier 217
+  class ContentAudience < CodeFromYaml
+    private
+    def self.code_ident
+      154
+    end
   end
 
-  class EpubLicenseExpressionType < CodeFromYaml
-    code_identifier 218
+  class ContentDateRole < CodeFromYaml
+    private
+    def self.code_ident
+      155
+    end
   end
 
-  class CopyrightType < CodeFromYaml
-    code_identifier 219
+  class ResourceContentType < CodeFromYaml
+    private
+    def self.code_ident
+      158
+    end
   end
 
-  class FundingIDType < CodeFromYaml
-    code_identifier 228
+  class ResourceMode < CodeFromYaml
+    private
+    def self.code_ident
+      159
+    end
   end
 
-  class Gender < CodeFromYaml
-    code_identifier 229
+  class ResourceFeatureType < CodeFromYaml
+    private
+    def self.code_ident
+      160
+    end
   end
 
-  class PriceConstraintType < CodeFromYaml
-    code_identifier 230
+  class ResourceForm < CodeFromYaml
+    private
+    def self.code_ident
+      161
+    end
   end
 
-  class SupplyContactRole < CodeFromYaml
-    code_identifier 239
+  class ResourceVersionFeatureType < CodeFromYaml
+    private
+    def self.code_ident
+      162
+    end
   end
 
-  class AVItemType < CodeFromYaml
-    code_identifier 240
+  class MarketDateRole < CodeFromYaml
+    private
+    def self.code_ident
+      163
+    end
   end
 
-  class AVItemIDType < CodeFromYaml
-    code_identifier 241
+  class PublishingDateRole < CodeFromYaml
+    private
+    def self.code_ident
+      163
+    end
   end
 
-  class EventIDType < CodeFromYaml
-    code_identifier 244
+  class WorkRelationCode < CodeFromYaml
+    private
+    def self.code_ident
+      164
+    end
   end
 
-  class EventType < CodeFromYaml
-    code_identifier 245
+  class SupplyDateRole < CodeFromYaml
+    private
+    def self.code_ident
+      166
+    end
   end
 
-  class EventStatus < CodeFromYaml
-    code_identifier 246
+  class TaxType < CodeFromYaml
+    private
+    def self.code_ident
+      171
+    end
   end
 
-  class OccurrenceDateRole < CodeFromYaml
-    code_identifier 247
+  class PriceDateRole < CodeFromYaml
+    private
+    def self.code_ident
+      173
+    end
   end
+
+  class ProductFormDetail < CodeFromYamlWithMime
+    private
+    def self.code_ident
+      175
+    end
+  end
+
+  class SupportingResourceFileFormat < CodeFromYamlWithMime
+    private
+    def self.code_ident
+      178
+    end
+  end
+
 end

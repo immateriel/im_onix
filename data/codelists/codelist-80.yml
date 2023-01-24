@@ -1,14 +1,14 @@
 ---
 :codelist:
   '00': NoOuterPackaging
-  '01': SlipSleeve
+  '01': Slipsleeve
   '02': Clamshell
   '03': KeepCase
   '05': JewelCase
   '06': Digipak
-  '09': InBox
-  '10': SlipCased
-  '11': SlipCasedSet
+  09: InBox
+  '10': Slipcased
+  '11': SlipcasedSet
   '12': Tube
   '13': Binder
   '14': InWalletOrFolder
@@ -18,7 +18,6 @@
   '18': Pouch
   '19': RigidPlasticCase
   '20': CardboardCase
-  '21': ShrinkWrapped
+  '21': Shrinkwrapped
   '22': BlisterPack
   '23': CarryCase
-  '24': InTin

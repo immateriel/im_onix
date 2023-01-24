@@ -1,10 +1,9 @@
 ---
 :codelist:
-  '10': TextEyeReadable
+  '10': TextEyereadable
   '15': ExtensiveLinksBetweenInternalContent
   '14': ExtensiveLinksToExternalContent
-  '16': AdditionalEyeReadableTextNotPartOfMainWork
-  '41': AdditionalEyeReadableLinksToExternalContent
+  '16': AdditionalEyereadableTextNotPartOfMainWork
   '17': PromotionalTextForOtherBookProduct
   '11': MusicalNotation
   '07': StillImagesGraphics
@@ -12,7 +11,6 @@
   '19': FiguresDiagramsChartsGraphs
   '20': AdditionalImagesGraphicsNotPartOfMainWork
   '12': MapsAndorOtherCartographicContent
-  '42': AssessmentMaterial
   '01': Audiobook
   '02': PerformanceSpokenWord
   '13': OtherSpeechContent
@@ -32,13 +30,12 @@
   '31': PromotionalVideoForOtherBookProduct
   '05': GamePuzzle
   '32': Contest
-  '08': Software
-  '09': Data
+  08: Software
+  09: Data
   '33': DataSetPlusSoftware
-  '34': BlankPagesOrSpaces
+  '34': BlankPages
   '35': AdvertisingContent
   '37': AdvertisingFirstParty
   '36': AdvertisingCoupons
   '38': AdvertisingThirdPartyDisplay
   '39': AdvertisingThirdPartyTextual
-  '40': Scripting

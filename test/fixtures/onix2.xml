@@ -78,12 +78,6 @@
       <TextFormat>02</TextFormat>
       <Text><![CDATA[<p>L’esprit étant l’ensemble des fonctions de relation de l’être vivant et des manières d’être internes qui s’y rapportent le plus directement, peut être considéré, à un certain point de vue, comme l’expression de l’organisme. Il est en quelque sorte l’activité même de cet organisme, et c’est de son nom que nous appelons cet ensemble de fonctions qui reçoit les impressions du dehors, qui les trie, les analyse, puis les classe, les compare, les synthétise et réagit selon sa nature propre, en des manières très diverses.</p><p>Fruit d’une sélection réalisée au sein des fonds de la Bibliothèque nationale de France, <i>Collection XIX</i> a pour ambition de faire découvrir des textes classiques et moins classiques dans les meilleures éditions du XIX<sup>e</sup> siècle.</p>]]></Text>
     </OtherText>
-    <OtherText>
-      <TextTypeCode>23</TextTypeCode>
-      <TextFormat>14</TextFormat>
-      <TextLinkType>01</TextLinkType>
-      <TextLink>https://dummy.excerpt.link</TextLink>
-    </OtherText>
     <SupplyDetail>
       <SupplierName>Jouve</SupplierName>
       <ProductAvailability>20</ProductAvailability>

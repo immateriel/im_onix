@@ -7,8 +7,8 @@
   '05': Percentage
   '06': Devices
   '07': ConcurrentUsers
-  '08': PercentagePerTimePeriod
-  '09': Days
+  08: PercentagePerTimePeriod
+  09: Days
   '13': Weeks
   '14': Months
   '10': Times

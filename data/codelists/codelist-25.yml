@@ -8,8 +8,8 @@
   '05': LineDrawingsBlackAndWhite
   '06': LineDrawingsColor
   '07': TablesBlackAndWhite
-  '08': TablesColor
-  '09': IllustrationsUnspecified
+  08: TablesColor
+  09: IllustrationsUnspecified
   '10': HalftonesUnspecified
   '11': TablesUnspecified
   '12': LineDrawingsUnspecified
@@ -29,5 +29,3 @@
   '26': Bibliography
   '27': InsetMaps
   '28': GpsGrids
-  '29': Glossary
-  '30': TableOfContents

@@ -5,8 +5,8 @@
   '03': Thickness
   '04': PageTrimHeight
   '05': PageTrimWidth
-  '08': UnitWeight
-  '09': DiameterSphere
+  08: UnitWeight
+  09: DiameterSphere
   '10': UnfoldedunrolledSheetHeight
   '11': UnfoldedunrolledSheetWidth
   '12': DiameterTubeOrCylinder

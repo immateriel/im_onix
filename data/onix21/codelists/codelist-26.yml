@@ -7,8 +7,8 @@
   '05': NlmClassification
   '06': MeshHeading
   '07': NalSubjectHeading
-  '08': Aat
-  '09': Udc
+  08: Aat
+  09: Udc
   '10': BisacSubjectHeading
   '11': BisacRegionCode
   '12': BicSubjectCategory
@@ -17,7 +17,7 @@
   '15': BicTimePeriodQualifier
   '16': BicEducationalPurposeQualifier
   '17': BicReadingLevelAndSpecialInterestQualifier
-  '18': DdcSachgruppenDerDeutschenNationalbibliografie
+  '18': DdcsachgruppenDerDeutschenNationalbibliografie
   '19': LcFictionGenreHeading
   '20': Keywords
   '21': BicChildrensBookMarketingCategory
@@ -25,11 +25,11 @@
   '23': PublishersOwnCategoryCode
   '24': ProprietarySubjectScheme
   '25': TablaDeMateriasIsbn
-  '26': WarengruppenSystematikDesDeutschenBuchhandels
+  '26': WarengruppensystematikDesDeutschenBuchhandels
   '27': Swd
-  '28': ThemesElectre
+  '28': ThèmesElectre
   '29': Clil
-  '30': DnbSachgruppen
+  '30': Dnbsachgruppen
   '31': Nugi
   '32': Nur
   '33': EcpaChristianBookCategory
@@ -38,18 +38,18 @@
   '36': DdcDeutsch22
   '37': Bokgrupper
   '38': Varegrupper
-  '39': Laereplaner
+  '39': Læreplaner
   '40': NipponDecimalClassification
   '41': Bsq
   '42': AneleMaterias
   '43': Skolefag
-  '44': Videregaende
+  '44': Videregående
   '45': Undervisningsmateriell
   '46': NorskDdk
   '47': Varugrupper
   '48': Sab
-  '49': Laromedel
-  '50': Forhandsbeskrivning
+  '49': Läromedel
+  '50': Förhandsbeskrivning
   '51': SpanishIsbnUdcSubset
   '52': EciSubjectCategories
   '53': SoggettoCce
@@ -57,14 +57,14 @@
   '55': QualificatoreDiLinguaCce
   '56': QualificatoreDiPeriodoStoricoCce
   '57': QualificatoreDiLivelloScolasticoCce
-  '58': QualificatoreDiEtaDiLetturaCce
-  '59': VdsBildungsmedienFacher
+  '58': QualificatoreDiEtàDiLetturaCce
+  '59': VdsBildungsmedienFächer
   '60': Fagkoder
   '61': JelClassification
   '62': Csh
   '63': Rvm
   '64': Ysa
-  '65': Allars
+  '65': Allärs
   '66': Ykl
   '67': Musa
   '68': Cilla
@@ -72,14 +72,14 @@
   '70': Bella
   '71': Yso
   '72': PaikkatietoOntologia
-  '73': SuomalainenKirjaAlanLuokitus
+  '73': SuomalainenKirjaalanLuokitus
   '74': Sears
   '75': BicE4l
   '76': Csr
   '77': SuomalainenOppiaineluokitus
-  '78': JapaneseBookTradeCCode
+  '78': JapaneseBookTradeCcode
   '79': JapaneseBookTradeGenreCode
-  '80': FiktiivisenAineistonLisaluokitus
+  '80': FiktiivisenAineistonLisäluokitus
   '85': PostalCode
   '86': GeonamesId
   '87': NewbooksSubjectClassification
@@ -92,8 +92,8 @@
   '97': ThemaEducationalPurposeQualifier
   '98': ThemaInterestAgeSpecialInterestQualifier
   '99': ThemaStyleQualifier
-  A2: Amnesord
-  A3: StatystykaKsiazekPapierowychMowionychIElektronicznych
+  A2: "Ämnesord"
+  A3: StatystykaKsiążekPapierowychMówionychIElektronicznych
   A4: Ccss
   A5: Rameau
   A6: NomenclatureDisciplineScolaire

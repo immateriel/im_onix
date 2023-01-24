@@ -7,8 +7,8 @@
   '05': SeriesImageArtwork
   '06': SeriesLogo
   '07': ProductImageArtwork
-  '08': ProductLogo
-  '09': PublisherLogo
+  08: ProductLogo
+  09: PublisherLogo
   '10': ImprintLogo
   '11': ContributorInterview
   '12': ContributorPresentation

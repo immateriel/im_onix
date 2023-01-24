@@ -39,7 +39,7 @@
   A38: OriginalAuthor
   A39: MapsBy
   A40: InkedOrColoredBy
-  A41: PopUpsBy
+  A41: PopupsBy
   A42: ContinuedBy
   A43: Interviewer
   A44: Interviewee
@@ -54,7 +54,7 @@
   B08: TranslatedWithCommentaryBy
   B09: SeriesEditedBy
   B10: EditedAndTranslatedBy
-  B11: EditorInChief
+  B11: Editorinchief
   B12: GuestEditor
   B13: VolumeEditor
   B14: EditorialBoardMember

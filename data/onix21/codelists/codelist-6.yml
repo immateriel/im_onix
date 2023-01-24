@@ -6,58 +6,58 @@
   '03': Ean135UsDollarPriceEncoded
   '04': Upc12
   '05': Upc125
-  '06': Upc12ItemSpecific
-  '07': Upc125ItemSpecific
-  '08': Upc12PricePoint
-  '09': Upc125PricePoint
+  '06': Upc12Itemspecific
+  '07': Upc125Itemspecific
+  08: Upc12Pricepoint
+  09: Upc125Pricepoint
   '10': Ean13OnCover4
   '11': Ean135OnCover4UsDollarPriceEncoded
-  '12': Upc12ItemSpecificOnCover4
-  '13': Upc125ItemSpecificOnCover4
-  '14': Upc12PricePointOnCover4
-  '15': Upc125PricePointOnCover4
+  '12': Upc12ItemspecificOnCover4
+  '13': Upc125ItemspecificOnCover4
+  '14': Upc12PricepointOnCover4
+  '15': Upc125PricepointOnCover4
   '16': Ean13OnCover3
   '17': Ean135OnCover3UsDollarPriceEncoded
-  '18': Upc12ItemSpecificOnCover3
-  '19': Upc125ItemSpecificOnCover3
-  '20': Upc12PricePointOnCover3
-  '21': Upc125PricePointOnCover3
+  '18': Upc12ItemspecificOnCover3
+  '19': Upc125ItemspecificOnCover3
+  '20': Upc12PricepointOnCover3
+  '21': Upc125PricepointOnCover3
   '22': Ean13OnCover2
   '23': Ean135OnCover2UsDollarPriceEncoded
-  '24': Upc12ItemSpecificOnCover2
-  '25': Upc125ItemSpecificOnCover2
-  '26': Upc12PricePointOnCover2
-  '27': Upc125PricePointOnCover2
+  '24': Upc12ItemspecificOnCover2
+  '25': Upc125ItemspecificOnCover2
+  '26': Upc12PricepointOnCover2
+  '27': Upc125PricepointOnCover2
   '28': Ean13OnBox
   '29': Ean135OnBoxUsDollarPriceEncoded
-  '30': Upc12ItemSpecificOnBox
-  '31': Upc125ItemSpecificOnBox
-  '32': Upc12PricePointOnBox
-  '33': Upc125PricePointOnBox
+  '30': Upc12ItemspecificOnBox
+  '31': Upc125ItemspecificOnBox
+  '32': Upc12PricepointOnBox
+  '33': Upc125PricepointOnBox
   '34': Ean13OnTag
   '35': Ean135OnTagUsDollarPriceEncoded
-  '36': Upc12ItemSpecificOnTag
-  '37': Upc125ItemSpecificOnTag
-  '38': Upc12PricePointOnTag
-  '39': Upc125PricePointOnTag
+  '36': Upc12ItemspecificOnTag
+  '37': Upc125ItemspecificOnTag
+  '38': Upc12PricepointOnTag
+  '39': Upc125PricepointOnTag
   '40': Ean13OnBottom
   '41': Ean135OnBottomUsDollarPriceEncoded
-  '42': Upc12ItemSpecificOnBottom
-  '43': Upc125ItemSpecificOnBottom
-  '44': Upc12PricePointOnBottom
-  '45': Upc125PricePointOnBottom
+  '42': Upc12ItemspecificOnBottom
+  '43': Upc125ItemspecificOnBottom
+  '44': Upc12PricepointOnBottom
+  '45': Upc125PricepointOnBottom
   '46': Ean13OnBack
   '47': Ean135OnBackUsDollarPriceEncoded
-  '48': Upc12ItemSpecificOnBack
-  '49': Upc125ItemSpecificOnBack
-  '50': Upc12PricePointOnBack
-  '51': Upc125PricePointOnBack
+  '48': Upc12ItemspecificOnBack
+  '49': Upc125ItemspecificOnBack
+  '50': Upc12PricepointOnBack
+  '51': Upc125PricepointOnBack
   '52': Ean13OnOuterSleeveback
   '53': Ean135OnOuterSleevebackUsDollarPriceEncoded
-  '54': Upc12ItemSpecificOnOuterSleeveback
-  '55': Upc125ItemSpecificOnOuterSleeveback
-  '56': Upc12PricePointOnOuterSleeveback
-  '57': Upc125PricePointOnOuterSleeveback
+  '54': Upc12ItemspecificOnOuterSleeveback
+  '55': Upc125ItemspecificOnOuterSleeveback
+  '56': Upc12PricepointOnOuterSleeveback
+  '57': Upc125PricepointOnOuterSleeveback
   '58': Ean135NoPriceEncoded
   '59': Ean135OnCover4NoPriceEncoded
   '60': Ean135OnCover3NoPriceEncoded

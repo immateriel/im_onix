@@ -4,10 +4,9 @@
   BLU: Blue
   BRN: Brown
   BUR: Burgundymaroon
-  CEL: CeladonpaleGreen
   CRE: Cream
-  FCO: FourColor
-  FCS: FourColorAndSpotColor
+  FCO: Fourcolor
+  FCS: FourcolorAndSpotcolor
   GLD: Gold
   GRN: Green
   GRY: Grey
@@ -17,10 +16,8 @@
   PNK: Pink
   PUR: Purple
   RED: Red
-  SKY: SkypaleBlue
   SLV: Silver
-  TAN: TanlightBrown
-  TEA: TealturquoiseGreen
+  TAN: Tan
   WHI: White
   YEL: Yellow
   ZZZ: Other

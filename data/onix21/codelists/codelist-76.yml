@@ -9,6 +9,6 @@
   '6': DvdRegion6
   '7': DvdRegion7
   '8': DvdRegion8
-  A: BluRayRegionA
-  B: BluRayRegionB
-  C: BluRayRegionC
+  A: BlurayRegionA
+  B: BlurayRegionB
+  C: BlurayRegionC

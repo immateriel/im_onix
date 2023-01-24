@@ -7,8 +7,8 @@
   '05': TotalNumberedPages
   '06': ProductionPageCount
   '07': AbsolutePageCount
-  '08': NumberOfPagesInPrintCounterpart
-  '09': Duration
+  08: NumberOfPagesInPrintCounterpart
+  09: Duration
   '10': NotionalNumberOfPagesInDigitalProduct
   '11': ContentPageCount
   '12': TotalUnnumberedInsertPageCount

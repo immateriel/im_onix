@@ -10,9 +10,11 @@
   '08': IsAncillaryTo
   '09': IsRemainderedAs
   '10': IsRemainderOf
-  '11': IsOtherLanguageVersionOf
+  '11': IsOtherlanguageVersionOf
   '12': PublishersSuggestedAlternative
   '13': EpublicationBasedOnPrintProduct
+  '14': EpublicationIsDistributedAs
+  '15': EpublicationIsARenderingOf
   '16': PodReplacementFor
   '17': ReplacedByPod
   '18': IsSpecialEditionOf
@@ -28,16 +30,8 @@
   '28': EnhancedVersionAvailableAs
   '29': BasicVersionAvailableAs
   '30': ProductInSameCollection
-  '31': HasAlternativeInADifferentMarketSector
-  '32': HasEquivalentIntendedForADifferentMarket
+  '31': HasAlternativeInDifferentMarketSector
+  '32': HasEquivalentIntendedForDifferentMarket
   '33': HasAlternativeIntendedForDifferentMarket
   '34': Cites
   '35': IsCitedBy
-  '37': IsSignedVersionOf
-  '38': HasSignedVersion
-  '39': HasRelatedStudentMaterial
-  '40': HasRelatedTeacherMaterial
-  '41': SomeContentSharedWith
-  '42': IsLaterEditionOfFirstEdition
-  '43': AdaptedFrom
-  '44': AdaptedAs

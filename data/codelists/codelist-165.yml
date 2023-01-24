@@ -4,6 +4,3 @@
   '02': SuppliersBonusEligibility
   '03': PublishersSalesClassification
   '04': SuppliersPricingRestrictionClassification
-  '05': SuppliersSalesExpectation
-  '06': PublishersSalesExpectation
-  '07': SuppliersOrderRoutingEligibility

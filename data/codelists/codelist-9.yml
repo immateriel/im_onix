@@ -3,13 +3,9 @@
   '01': WcoHarmonizedSystem
   '02': Unspsc
   '03': Hmrc
-  '04': WarenverzeichnisFurDieAussenhandelsstatistik
+  '04': WarenverzeichnisFürDieAußenhandelsstatistik
   '05': Taric
   '06': Fondsgroep
   '07': SendersProductCategory
-  '08': GappProductClass
-  '09': Cpa
-  '10': Ncm
-  '11': Cpv
-  '12': Pkwiu
-  '50': ElectreGenre
+  08: GappProductClass
+  09: Cpa

@@ -1,11 +1,6 @@
 ---
 :codelist:
-  '02': SalesEmbargoDate
-  '08': ExpectedAvailabilityDate
+  '02': EmbargoDate
+  08: ExpectedAvailabilityDate
   '18': LastDateForReturns
   '25': ReservationOrderDeadline
-  '29': LastRedownloadDate
-  '30': LastTpmDate
-  '34': ExpectedWarehouseDate
-  '50': NewSupplierStartDate
-  '51': SupplierEndDate

@@ -3,9 +3,9 @@
   '00': Unrestricted
   '01': Restricted
   '02': Booktrade
-  '03': EndCustomers
+  '03': Endcustomers
   '04': Librarians
   '05': Teachers
   '06': Students
   '07': Press
-  '08': ShoppingComparisonService
+  08: ShoppingComparisonService

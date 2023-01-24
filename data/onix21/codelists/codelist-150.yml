@@ -3,21 +3,21 @@
   '00': Undefined
   AA: Audio
   AB: AudioCassette
-  AC: CdAudio
+  AC: Cdaudio
   AD: Dat
   AE: AudioDisc
   AF: AudioTape
   AG: Minidisc
-  AH: CdExtra
+  AH: Cdextra
   AI: DvdAudio
   AJ: DownloadableAudioFile
-  AK: PreRecordedDigitalAudioPlayer
-  AL: PreRecordedSdCard
+  AK: PrerecordedDigitalAudioPlayer
+  AL: PrerecordedSdCard
   AZ: OtherAudioFormat
   BA: Book
   BB: Hardback
   BC: PaperbackSoftback
-  BD: LooseLeaf
+  BD: Looseleaf
   BE: SpiralBound
   BF: Pamphlet
   BG: LeatherFineBinding
@@ -27,8 +27,8 @@
   BK: NoveltyBook
   BL: SlideBound
   BM: BigBook
-  BN: PartWorkFasciculo
-  BO: FoldOutBookOrChart
+  BN: PartworkFascículo
+  BO: FoldoutBookOrChart
   BP: FoamBook
   BZ: OtherBookFormat
   CA: SheetMap
@@ -38,16 +38,16 @@
   CE: Globe
   CZ: OtherCartographic
   DA: DigitalOnPhysicalCarrier
-  DB: CdRom
-  DC: CdI
+  DB: Cdrom
+  DC: Cdi
   DE: GameCartridge
   DF: Diskette
-  DI: DvdRom
+  DI: Dvdrom
   DJ: SecureDigitalSdMemoryCard
   DK: CompactFlashMemoryCard
   DL: MemoryStickMemoryCard
   DM: UsbFlashDrive
-  DN: DoubleSidedCddvd
+  DN: DoublesidedCddvd
   DZ: OtherDigitalCarrier
   EA: DigitalDeliveredElectronically
   EB: DigitalDownloadAndOnline
@@ -82,17 +82,17 @@
   PN: PicturesOrPhotographs
   PO: Wallchart
   PP: Stickers
-  PQ: PlateLamina
+  PQ: PlateLámina
   PR: NotebookBlankBook
   PS: Organizer
   PT: Bookmark
   PZ: OtherPrintedItem
-  SA: MultipleItemRetailProduct
-  SB: MultipleItemRetailProductBoxed
-  SC: MultipleItemRetailProductSlipCased
-  SD: MultipleItemRetailProductShrinkwrapped
-  SE: MultipleItemRetailProductLoose
-  SF: MultipleItemRetailProductPartsEnclosed
+  SA: MultipleitemRetailProduct
+  SB: MultipleitemRetailProductBoxed
+  SC: MultipleitemRetailProductSlipcased
+  SD: MultipleitemRetailProductShrinkwrapped
+  SE: MultipleitemRetailProductLoose
+  SF: MultipleitemRetailProductPartsEnclosed
   VA: Video
   VF: Videodisc
   VI: DvdVideo
@@ -101,11 +101,11 @@
   VL: Vcd
   VM: Svcd
   VN: HdDvd
-  VO: BluRay
+  VO: Bluray
   VP: UmdVideo
   VQ: Cbhd
   VZ: OtherVideoFormat
-  XA: TradeOnlyMaterial
+  XA: TradeonlyMaterial
   XB: DumpbinEmpty
   XC: DumpbinFilled
   XD: CounterpackEmpty
@@ -116,7 +116,7 @@
   XI: Streamer
   XJ: Spinner
   XK: LargeBookDisplay
-  XL: ShrinkWrappedPack
+  XL: ShrinkwrappedPack
   XM: BoxedPack
   XZ: OtherPointOfSale
   ZA: GeneralMerchandise
@@ -124,8 +124,8 @@
   ZC: SoftToy
   ZD: Toy
   ZE: Game
-  ZF: TShirt
-  ZG: EBookReader
+  ZF: Tshirt
+  ZG: EbookReader
   ZH: TabletComputer
   ZI: AudiobookPlayer
   ZJ: Jigsaw

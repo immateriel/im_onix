@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/ruby
 require 'im_onix'
 
 filename=ARGV[0]

@@ -3,13 +3,13 @@
   '00': Unspecified
   '01': PublisherToRetailers
   '02': PublishersExclusiveDistributorToRetailers
-  '03': PublishersNonExclusiveDistributorToRetailers
+  '03': PublishersNonexclusiveDistributorToRetailers
   '04': Wholesaler
   '05': SalesAgent
   '06': PublishersDistributorToRetailers
   '07': PodSupplier
-  '08': Retailer
-  '09': PublisherToEndCustomers
-  '10': ExclusiveDistributorToEndCustomers
-  '11': NonExclusiveDistributorToEndCustomers
-  '12': DistributorToEndCustomers
+  08: Retailer
+  09: PublisherToEndcustomers
+  '10': ExclusiveDistributorToEndcustomers
+  '11': NonexclusiveDistributorToEndcustomers
+  '12': DistributorToEndcustomers

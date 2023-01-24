@@ -7,10 +7,10 @@
   '05': ReplacedBy
   '06': AlternativeFormat
   '07': HasAncillaryProduct
-  '08': IsAncillaryTo
-  '09': IsRemainderedAs
+  08: IsAncillaryTo
+  09: IsRemainderedAs
   '10': IsRemainderOf
-  '11': IsOtherLanguageVersionOf
+  '11': IsOtherlanguageVersionOf
   '12': PublishersSuggestedAlternative
   '13': EpublicationBasedOnPrintProduct
   '14': EpublicationIsDistributedAs

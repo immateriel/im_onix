@@ -1,7 +1,6 @@
 ---
 :codelist:
   '01': Cancelled
-  '09': NotYetAvailablePostponedIndefinitely
   '10': NotYetAvailable
   '11': AwaitingStock
   '12': NotYetAvailableWillBePod

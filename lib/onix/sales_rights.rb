@@ -1,11 +1,12 @@
 require 'onix/sales_restriction'
-
 module ONIX
   class SalesRights < SubsetDSL
-    element "SalesRightsType", :subset, :shortcut => :type, :cardinality => 1
-    element "Territory", :subset, :cardinality => 1
-    elements "SalesRestriction", :subset, :cardinality => 0..n
-    elements "ProductIdentifier", :subset, :cardinality => 0..n
-    element "PublisherName", :text, :cardinality => 0..1
+    element "SalesRightsType", :subset
+    element "Territory", :subset
+    elements "SalesRestriction", :subset
+
+    def type
+      @sales_rights_type
+    end
   end
 end

@@ -1,4 +1,4 @@
 ---
 :codelist:
   '00': PerCopyOfWholeProduct
-  '01': PerPageForPrintedLooseLeafContentOnly
+  '01': PerPageForPrintedLooseleafContentOnly

@@ -12,9 +12,9 @@
   '17': LegalDepositNumber
   '22': Urn
   '23': OclcNumber
-  '24': CoPublishersIsbn13
+  '24': CopublishersIsbn13
   '25': Ismn13
-  '26': IsbnA
-  '27': JpECode
+  '26': Isbna
+  '27': JpEcode
   '28': OlccNumber
   '29': JpMagazineId

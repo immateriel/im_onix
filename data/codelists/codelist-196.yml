@@ -1,31 +1,19 @@
 ---
 :codelist:
-  '00': AccessibilitySummary
   '01': LiaComplianceScheme
-  '02': EpubAccessibilitySpecification10A
-  '03': EpubAccessibilitySpecification10Aa
-  '05': Pdfua
-  '09': Inaccessible
   '10': NoReadingSystemAccessibilityOptionsDisabledExcept
   '11': TableOfContentsNavigation
   '12': IndexNavigation
   '13': ReadingOrder
   '14': ShortAlternativeDescriptions
   '15': FullAlternativeDescriptions
-  '16': VisualisedDataAlsoAvailableAsNonGraphicalData
+  '16': VisualisedDataAlsoAvailableAsNongraphicalData
   '17': AccessibleMathContent
   '18': AccessibleChemContent
-  '19': PrintEquivalentPageNumbering
-  '20': SynchronisedPreRecordedAudio
-  '21': TextToSpeechHintingProvided
+  '19': PrintequivalentPageNumbering
+  '20': SynchronisedPrerecordedAudio
+  '21': TexttospeechHintingProvided
   '22': LanguageTaggingProvided
-  '24': DyslexiaReadability
-  '25': UseOfColor
-  '26': UseOfContrast
-  '27': UseOfAudio
-  '28': FullAlternativeAudioDescriptions
-  '29': NextPreviousNavigation
-  '93': ComplianceCertificationBy
   '94': ComplianceWebPageForDetailedAccessibilityInformation
   '95': TrustedIntermediarysWebPageForDetailedAccessibilityInformation
   '96': PublishersWebPageForDetailedAccessibilityInformation

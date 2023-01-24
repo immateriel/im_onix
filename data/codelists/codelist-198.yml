@@ -1,11 +1,4 @@
 ---
 :codelist:
-  '00': MetadataContact
   '01': AccessibilityRequestContact
   '02': PromotionalContact
-  '03': AdvertisingContact
-  '04': ReviewCopyContact
-  '05': EvaluationCopyContact
-  '06': PermissionsContact
-  '07': ReturnAuthorisationContact
-  '08': CipLegalDepositContact

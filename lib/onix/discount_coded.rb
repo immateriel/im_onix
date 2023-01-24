@@ -1,7 +1,20 @@
 module ONIX
   class DiscountCoded < SubsetDSL
-    element "DiscountCodeType", :text, :shortcut => :code_type, :cardinality => 1
-    element "DiscountCodeTypeName", :text, :shortcut => :code_type_name, :cardinality => 0..1
-    element "DiscountCode", :text, :shortcut => :code, :cardinality => 1
+    element "DiscountCodeType", :text
+    element "DiscountCodeTypeName", :text
+    element "DiscountCode", :text
+
+    # shortcuts
+    def code_type
+      @discount_code_type
+    end
+
+    def code_type_name
+      @discount_code_type_name
+    end
+
+    def code
+      @discount_code
+    end
   end
 end

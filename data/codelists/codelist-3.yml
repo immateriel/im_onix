@@ -8,9 +8,6 @@
   '05': LibraryBookseller
   '06': PublishersSalesAgent
   '07': PublishersConversionServiceProvider
-  '08': ConversionServiceProvider
-  '09': IsbnRegistrationAgency
+  08: ConversionServiceProvider
+  09: IsbnRegistrationAgency
   '10': IstcRegistrationAgency
-  '11': RetailBookseller
-  '12': EducationBookseller
-  '13': Library

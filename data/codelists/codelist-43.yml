@@ -3,8 +3,6 @@
   '01': Proprietary
   '03': Gtin13
   '06': Doi
-  '09': Pii
+  09: Pii
   '10': Sici
-  '11': Istc
   '15': Isbn13
-  '39': Iscc

@@ -3,10 +3,9 @@
   '01': LanguageOfText
   '02': OriginalLanguageOfATranslatedText
   '03': LanguageOfAbstracts
+  '04': RightsLanguage
+  '05': RightsexcludedLanguage
   '06': OriginalLanguageInAMultilingualEdition
   '07': TranslatedLanguageInAMultilingualEdition
-  '08': LanguageOfAudioTrack
-  '09': LanguageOfSubtitles
-  '10': LanguageOfOriginalAudioTrack
-  '11': OriginalLanguageAudioTrackInAMultilingualProduct
-  '12': LanguageOfNotes
+  08: LanguageOfAudioTrack
+  09: LanguageOfSubtitles

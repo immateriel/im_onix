@@ -1,12 +1,12 @@
 ---
 :codelist:
   '01': PublicationDate
-  '02': SalesEmbargoDate
-  '09': PublicAnnouncementDate
+  '02': EmbargoDate
+  09: PublicAnnouncementDate
   '10': TradeAnnouncementDate
   '11': DateOfFirstPublication
   '12': LastReprintDate
-  '13': OutOfPrintDeletionDate
+  '13': OutofprintDeletionDate
   '16': LastReissueDate
   '19': PublicationDateOfPrintCounterpart
   '20': DateOfFirstPublicationInOriginalLanguage
@@ -16,8 +16,3 @@
   '25': PublishersReservationOrderDeadline
   '26': ForthcomingReprintDate
   '27': PreorderEmbargoDate
-  '28': TransferDate
-  '29': DateOfProduction
-  '30': StreamingEmbargoDate
-  '31': SubscriptionEmbargoDate
-  '35': CipDate

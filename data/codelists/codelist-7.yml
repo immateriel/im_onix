@@ -3,21 +3,21 @@
   '00': Undefined
   AA: Audio
   AB: AudioCassette
-  AC: CdAudio
+  AC: Cdaudio
   AD: Dat
   AE: AudioDisc
   AF: AudioTape
   AG: Minidisc
-  AH: CdExtra
+  AH: Cdextra
   AI: DvdAudio
   AJ: DownloadableAudioFile
-  AK: PreRecordedDigitalAudioPlayer
-  AL: PreRecordedSdCard
+  AK: PrerecordedDigitalAudioPlayer
+  AL: PrerecordedSdCard
   AZ: OtherAudioFormat
   BA: Book
   BB: Hardback
   BC: PaperbackSoftback
-  BD: LooseLeaf
+  BD: Looseleaf
   BE: SpiralBound
   BF: Pamphlet
   BG: LeatherFineBinding
@@ -27,8 +27,8 @@
   BK: NoveltyBook
   BL: SlideBound
   BM: BigBook
-  BN: PartWorkFasciculo
-  BO: FoldOutBookOrChart
+  BN: PartworkFascículo
+  BO: FoldoutBookOrChart
   BP: FoamBook
   BZ: OtherBookFormat
   CA: SheetMap
@@ -38,19 +38,19 @@
   CE: Globe
   CZ: OtherCartographic
   DA: Digital
-  DB: CdRom
-  DC: CdI
+  DB: Cdrom
+  DC: Cdi
   DD: Dvd
   DE: GameCartridge
   DF: Diskette
   DG: ElectronicBookText
   DH: OnlineResource
-  DI: DvdRom
+  DI: Dvdrom
   DJ: SecureDigitalSdMemoryCard
   DK: CompactFlashMemoryCard
   DL: MemoryStickMemoryCard
   DM: UsbFlashDrive
-  DN: DoubleSidedCddvd
+  DN: DoublesidedCddvd
   DO: DigitalProductLicenseKey
   DZ: OtherDigital
   FA: FilmOrTransparency
@@ -80,7 +80,7 @@
   PN: PicturesOrPhotographs
   PO: Wallchart
   PP: Stickers
-  PQ: PlateLamina
+  PQ: PlateLámina
   PR: NotebookBlankBook
   PS: Organizer
   PT: Bookmark
@@ -99,12 +99,12 @@
   VL: Vcd
   VM: Svcd
   VN: HdDvd
-  VO: BluRay
+  VO: Bluray
   VP: UmdVideo
   VZ: OtherVideoFormat
   WW: MixedMediaProduct
   WX: MultipleCopyPack
-  XA: TradeOnlyMaterial
+  XA: TradeonlyMaterial
   XB: DumpbinEmpty
   XC: DumpbinFilled
   XD: CounterpackEmpty
@@ -115,18 +115,14 @@
   XI: Streamer
   XJ: Spinner
   XK: LargeBookDisplay
-  XL: ShrinkWrappedPack
-  XM: BoxedPack
+  XL: ShrinkwrappedPack
   XZ: OtherPointOfSale
   ZA: GeneralMerchandise
   ZB: Doll
   ZC: SoftToy
   ZD: Toy
   ZE: Game
-  ZF: TShirt
-  ZG: EBookReader
+  ZF: Tshirt
+  ZG: EbookReader
   ZH: TabletComputer
-  ZI: AudiobookPlayer
-  ZJ: Jigsaw
-  ZY: OtherApparel
   ZZ: OtherMerchandise

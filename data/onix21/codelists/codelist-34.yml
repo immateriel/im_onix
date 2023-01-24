@@ -8,8 +8,8 @@
   '05': Xhtml
   '06': DefaultTextFormat
   '07': BasicAsciiText
-  '08': Pdf
-  '09': MicrosoftRichTextFormatRtf
+  08: Pdf
+  09: MicrosoftRichTextFormatRtf
   '10': MicrosoftWordBinaryFormatDoc
   '11': Ecma376Wordprocessingml
   '12': Iso26300Odf

@@ -7,21 +7,21 @@
   '05': SuppliersNetPriceExcludingTax
   '06': SuppliersNetPriceExcludingTaxRentalGoods
   '07': SuppliersNetPriceIncludingTax
-  '08': SuppliersAlternativeNetPriceExcludingTax
-  '09': SuppliersAlternativeNetPriceIncludingTax
+  08: SuppliersAlternativeNetPriceExcludingTax
+  09: SuppliersAlternativeNetPriceIncludingTax
   '11': SpecialSaleRrpExcludingTax
   '12': SpecialSaleRrpIncludingTax
   '13': SpecialSaleFixedRetailPriceExcludingTax
   '14': SpecialSaleFixedRetailPriceIncludingTax
   '15': SuppliersNetPriceForSpecialSaleExcludingTax
   '17': SuppliersNetPriceForSpecialSaleIncludingTax
-  '21': PrePublicationRrpExcludingTax
-  '22': PrePublicationRrpIncludingTax
-  '23': PrePublicationFixedRetailPriceExcludingTax
-  '24': PrePublicationFixedRetailPriceIncludingTax
-  '25': SuppliersPrePublicationNetPriceExcludingTax
-  '27': SuppliersPrePublicationNetPriceIncludingTax
-  '31': FreightPassThroughRrpExcludingTax
-  '32': FreightPassThroughBillingPriceExcludingTax
+  '21': PrepublicationRrpExcludingTax
+  '22': PrepublicationRrpIncludingTax
+  '23': PrepublicationFixedRetailPriceExcludingTax
+  '24': PrepublicationFixedRetailPriceIncludingTax
+  '25': SuppliersPrepublicationNetPriceExcludingTax
+  '27': SuppliersPrepublicationNetPriceIncludingTax
+  '31': FreightpassthroughRrpExcludingTax
+  '32': FreightpassthroughBillingPriceExcludingTax
   '41': PublishersRetailPriceExcludingTax
   '42': PublishersRetailPriceIncludingTax

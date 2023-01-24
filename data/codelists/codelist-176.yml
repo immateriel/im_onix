@@ -7,8 +7,8 @@
   '05': MacOs
   '06': MacOsX
   '07': PalmOs
-  '08': Webos
-  '09': Symbian
+  08: Webos
+  09: Symbian
   '10': Windows
   '11': WindowsCe
   '12': WindowsMobile

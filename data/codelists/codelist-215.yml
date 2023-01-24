@@ -1,9 +1,0 @@
----
-:codelist:
-  '01': LessThan
-  '02': NotMoreThan
-  '03': Exactly
-  '04': Approximately
-  '05': About
-  '06': NotLessThan
-  '07': MoreThan

@@ -19,7 +19,7 @@
   BCA: BookClubAssociates
   BSH: Bookish
   BKP: Bookpeople
-  BKM: BooksAMillion
+  BKM: Booksamillion
   BRD: Borders
   BRB: BordersbooksEtc
   BRT: BritishBookshops
@@ -37,7 +37,7 @@
   ESN: Eason
   EBC: EbooksCorp
   ECH: Echristian
-  ECI: ElCorteIngles
+  ECI: ElCorteInglés
   ELE: Electre
   ELB: Elibse
   EMP: Empik
@@ -51,11 +51,11 @@
   HST: HastingsEntertainment
   HMV: Hmv
   HMD: HomeDepot
-  IMM: Immaterielfr
-  IND: IndigoChapters
+  IMM: Immatérielfr
+  IND: Indigochapters
   IZN: Izneo
   JSM: JohnSmithAndSon
-  KMT: KMart
+  KMT: Kmart
   KNB: Knfbblio
   KNO: KnoInc
   KBO: Kobo
@@ -100,7 +100,7 @@
   VRG: VirginMegastores
   WHS: WHSmith
   WTR: Waitrose
-  WLM: WalMart
+  WLM: Walmart
   WST: Waterstones
   WHT: Whitcouls
   WLS: WilliamsSonoma

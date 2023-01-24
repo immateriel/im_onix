@@ -7,8 +7,8 @@
   '05': BondedBuffaloGrain
   '06': BondedCalfGrain
   '07': BondedCordova
-  '08': BondedEelskin
-  '09': BondedOstraleg
+  08: BondedEelskin
+  09: BondedOstraleg
   '10': BondedOstrich
   '11': BondedReptileGrain
   '12': BondedLeather
@@ -20,7 +20,7 @@
   '18': SofthideLeather
   '19': Metal
   '20': Velvet
-  '21': MotherOfPearl
+  '21': Motherofpearl
   '22': Papyrus
-  '23': Geltex
+  '23': Géltex
   '24': Guaflex

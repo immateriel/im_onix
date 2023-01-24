@@ -3,18 +3,13 @@
   '01': UkOpenMarketEdition
   '02': AirportEdition
   '03': Sonderausgabe
-  '04': PocketBook
+  '04': PocketPaperback
   '05': InternationalEditionUs
   '06': LibraryAudioEdition
   '07': UsOpenMarketEdition
-  '08': LivreScolaireDeclareParLediteur
-  '09': LivreScolaireNonSpecifie
+  08: LivreScolaireDéclaréParLéditeur
+  09: LivreScolaireNonSpécifié
   '10': SupplementToNewspaper
   '11': PrecioLibreTextbook
   '12': NewsOutletEdition
   '13': UsTextbook
-  '14': EBookShort
-  '15': SuperpocketBook
-  '16': BeauLivre
-  '17': Podcast
-  '18': Periodical

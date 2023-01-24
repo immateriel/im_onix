@@ -7,5 +7,3 @@
   '05': ApproximateDownloadFileSizeInMegabytes
   '06': Md5HashValue
   '07': ExactDownloadFileSizeInBytes
-  '08': Sha256HashValue
-  '09': Iscc

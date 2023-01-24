@@ -8,7 +8,7 @@
   '05': RetailerOwnBrand
   '06': LibraryEdition
   '07': SchoolsOnlyEdition
-  '08': Indiziert
-  '09': NotForSaleToLibraries
+  08: Indiziert
+  09: NotForSaleToLibraries
   '10': NewsOutletEdition
   '11': RetailerException

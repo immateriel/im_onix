@@ -7,14 +7,3 @@
   '05': WarningChokingHazardThisToyIsAMarbleNotForChildrenUnder3Yrs
   '06': WarningChokingHazardToyContainsAMarbleNotForChildrenUnder3Yrs
   '07': NoChokingHazardWarningNecessary
-  '11': WarningMagnetHazardProductContainsASmallMagnets
-  '12': NoMagnetHazardWarningNecessary
-  '13': WarningFlashingHazard
-  '14': NoFlashingHazardWarningNecessary
-  '15': WarningSoundHazard
-  '16': NoSoundHazardWarningNecessary
-  '17': WarningMotionSimulationHazard
-  '18': NoMotionSimulationHazardWarningNecessary
-  '21': WarningCaliforniaProposition65CarcinogenicTeratogenicOrOtherReproductivelyHarmfulChemicalHazard
-  '22': NoCaliforniaProposition65HazardWarningNecessary
-  '23': CaliforniaProposition65ChemicalName

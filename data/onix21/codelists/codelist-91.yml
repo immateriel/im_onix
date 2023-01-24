@@ -15,7 +15,7 @@
   AT: Austria
   AU: Australia
   AW: Aruba
-  AX: AlandIslands
+  AX: "ÅlandIslands"
   AZ: Azerbaijan
   BA: BosniaAndHerzegovina
   BB: Barbados
@@ -26,7 +26,7 @@
   BH: Bahrain
   BI: Burundi
   BJ: Benin
-  BL: SaintBarthelemy
+  BL: SaintBarthélemy
   BM: Bermuda
   BN: BruneiDarussalam
   BO: BoliviaPlurinationalStateOf
@@ -54,7 +54,7 @@
   CS: SerbiaAndMontenegro
   CU: Cuba
   CV: CapeVerde
-  CW: Curacao
+  CW: Curaçao
   CX: ChristmasIsland
   CY: Cyprus
   CZ: CzechRepublic
@@ -94,7 +94,7 @@
   GS: SouthGeorgiaAndTheSouthSandwichIslands
   GT: Guatemala
   GU: Guam
-  GW: GuineaBissau
+  GW: Guineabissau
   GY: Guyana
   HK: HongKong
   HM: HeardIslandAndMcdonaldIslands
@@ -189,7 +189,7 @@
   PW: Palau
   PY: Paraguay
   QA: Qatar
-  RE: Reunion
+  RE: Réunion
   RO: Romania
   RS: Serbia
   RU: RussianFederation
@@ -222,7 +222,7 @@
   TH: Thailand
   TJ: Tajikistan
   TK: Tokelau
-  TL: TimorLeste
+  TL: Timorleste
   TM: Turkmenistan
   TN: Tunisia
   TO: Tonga

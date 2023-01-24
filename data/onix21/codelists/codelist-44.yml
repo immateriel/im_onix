@@ -3,13 +3,13 @@
   '01': Proprietary
   '02': Proprietary
   '03': DnbPublisherIdentifier
-  '04': BorsenvereinVerkehrsnummer
+  '04': BörsenvereinVerkehrsnummer
   '05': GermanIsbnAgencyPublisherIdentifier
   '06': Gln
   '07': San
   '10': CentraalBoekhuisRelatieId
   '13': FondscodeBoekenbank
-  '15': YTunnus
+  '15': Ytunnus
   '16': Isni
   '17': Pnd
   '18': Lccn

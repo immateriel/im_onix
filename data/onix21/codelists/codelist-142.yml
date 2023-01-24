@@ -8,7 +8,7 @@
   '05': OnSpine
   '06': OnBox
   '07': OnTag
-  '08': OnBottom
-  '09': OnBack
+  08: OnBottom
+  09: OnBack
   '10': OnOuterSleeveBack
   '11': OnRemovableWrapping

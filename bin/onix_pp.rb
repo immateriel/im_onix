@@ -1,13 +1,13 @@
-#!/usr/bin/env ruby
+#!/usr/bin/ruby
 require 'im_onix'
 
-filename = ARGV[0]
-version = ARGV[1]
-encoding = ARGV[2]
+filename=ARGV[0]
+version=ARGV[1]
+encoding=ARGV[2]
 
 if filename
-  msg = ONIX::ONIXMessage.new
-  msg.parse(filename, encoding, version)
+  msg=ONIX::ONIXMessage.new
+  msg.parse(filename,encoding,version)
 
   puts "Release: #{msg.release}"
 
@@ -18,10 +18,11 @@ if filename
     end
   end
   if msg.sent_date_time
-    puts "Sent date: #{msg.sent_date_time.human}"
+    puts "Sent date: #{msg.sent_date_time}"
   end
 
   msg.products.each do |product|
+#  pp product
     puts "---"
     puts " EAN: #{product.ean}"
     puts " Title: #{product.title}"
@@ -74,6 +75,7 @@ if filename
       puts " Publisher: #{product.publisher_name}"
     end
 
+#  puts " Publisher: #{product.publisher_name}"
     if product.imprint_name
       puts " Imprint: #{product.imprint_name}"
     end
@@ -113,8 +115,8 @@ if filename
           if part.file_description
             puts "  Description: #{part.raw_file_description}"
           end
-          product.protections.each do |protection|
-            puts " Protection: #{protection}"
+          if part.protection_type
+            puts "  Protection: #{part.protection_type}"
           end
           if part.filesize
             puts "  Filesize: #{part.filesize} bytes"
@@ -127,8 +129,8 @@ if filename
         if product.file_description
           puts " Description: #{product.raw_file_description}"
         end
-        product.protections.each do |protection|
-          puts " Protection: #{protection}"
+        if product.protection_type
+          puts " Protection: #{product.protection_type}"
         end
         if product.filesize
           puts " Filesize: #{product.filesize} bytes"
@@ -140,9 +142,11 @@ if filename
       end
     end
 
-    current_price = product.current_price_amount_for('EUR', 'FR')
+#  pp product.supplies
+
+    current_price=product.current_price_amount_for('EUR', 'FR')
     if current_price
-      puts " Current EUR price for FR: #{current_price / 100.0} EUR"
+      puts " Current EUR price for FR: #{current_price/100.0} EUR"
     end
 
     if product.sold_separately?
@@ -150,26 +154,26 @@ if filename
       puts " Supplies:"
 
       product.supplies_with_default_tax.each do |supply|
-        #    if supply[:availability_date]
-        #      puts " Availability date : #{supply[:availability_date]}"
-        #    end
-        output = "  "
+#    if supply[:availability_date]
+#      puts " Availability date : #{supply[:availability_date]}"
+#    end
+        output="  "
 
         if supply[:available]
-          output += "Available in "
+          output+="Available in "
         else
-          output += "Not available in "
+          output+="Not available in "
         end
 
         if ONIX::Territory.worldwide?(supply[:territory])
-          output += "WORLD"
+          output+="WORLD"
         else
-          output += supply[:territory].join(", ")
+          output+=supply[:territory].join(", ")
         end
 
         if supply[:availability_date]
-          output += " starting #{supply[:availability_date]}"
-          output += " (#{supply[:availability_date].to_date})" if supply[:availability_date].class == Time
+          output+=" starting #{supply[:availability_date]}"
+          output+=" (#{supply[:availability_date].to_date})" if supply[:availability_date].class==Time
 
         end
 
@@ -178,23 +182,23 @@ if filename
         puts "  Prices:"
 
         supply[:prices].each do |price|
-          output = "   "
+          output="   "
 
-          output += "#{price[:amount].to_f / 100.0} #{supply[:currency]}"
+          output+="#{price[:amount].to_f/100.0} #{supply[:currency]}"
 
           if supply[:including_tax]
-            output += " tax included"
+            output+=" tax included"
           else
-            output += " tax excluded"
+            output+=" tax excluded"
           end
 
           if price[:from_date]
-            output += " from #{price[:from_date]}"
-            output += " (#{price[:from_date].to_date})" if price[:from_date].class == Time
+            output+=" from #{price[:from_date]}"
+            output+=" (#{price[:from_date].to_date})" if price[:from_date].class==Time
           end
           if price[:until_date]
-            output += " until #{price[:until_date]}"
-            output += " (#{price[:until_date].to_date})" if price[:until_date].class == Time
+            output+=" until #{price[:until_date]}"
+            output+=" (#{price[:until_date].to_date})" if price[:until_date].class==Time
           end
           puts output
         end

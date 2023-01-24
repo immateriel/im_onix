@@ -4,3 +4,15 @@
   '02': FrontMatter
   '03': BodyMatter
   '04': BackMatter
+  '10': SerialItemMiscellaneousOrUnspecified
+  '11': ResearchArticle
+  '12': ReviewArticle
+  '13': Letter
+  '14': ShortCommunication
+  '15': Erratum
+  '16': Abstract
+  '17': BookReviewOrReviewOfOtherPublication
+  '18': Editorial
+  '19': ProductReview
+  '20': Index
+  '21': Obituary

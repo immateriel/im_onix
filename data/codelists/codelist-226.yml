@@ -1,7 +1,0 @@
----
-:codelist:
-  '00': NoRecordErrors
-  '01': NoRecordErrorsErrorsInCollateral
-  '02': RecordWithErrors
-  '03': RecordRejected
-  '09': ReportedPreviously
