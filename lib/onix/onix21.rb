@@ -167,8 +167,8 @@ module ONIX
         Territory.new(@country_codes)
       end
 
-      def tax
-        nil
+      def taxes
+        []
       end
     end
 

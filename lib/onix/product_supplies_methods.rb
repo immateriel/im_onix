@@ -56,7 +56,7 @@ module ONIX
               supply[:from_date] = price.from_date
               supply[:until_date] = price.until_date
               supply[:currency] = price.currency
-              supply[:tax] = price.tax
+              supply[:taxes] = price.taxes
 
               unless supply[:availability_date]
                 if @publishing_detail
