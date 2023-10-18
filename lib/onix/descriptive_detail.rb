@@ -57,7 +57,7 @@ module ONIX
     # element "ReligiousText", :subset, :cardinality => 0..1
 
 
-    elements "Language", :subset, :cardinality => 0..1
+    elements "Language", :subset, :cardinality => 0..n
     elements "Extent", :subset, :cardinality => 0..n
     element "Illustrated", :subset, :cardinality => 0..1
     element "NumberOfIllustrations", :integer, :cardinality => 0..1
@@ -234,10 +234,13 @@ module ONIX
     # language of text
     # @return [String]
     def language_of_text
-      l = @languages.of_text.first
-      if l
-        l.code
-      end
+      @languages.of_text.first&.code
+    end
+
+    # language of the original text (only for translated texts)
+    # @return [String]
+    def language_of_original_text
+      @languages.of_original_text.first&.code
     end
 
     # publisher collection title
