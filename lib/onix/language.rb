@@ -7,5 +7,6 @@ module ONIX
     element "ScriptCode", :subset, :cardinality => 0..1
 
     scope :of_text, lambda { human_code_match(:language_role, "LanguageOfText") }
+    scope :of_original_text, lambda { human_code_match(:language_role, "OriginalLanguageOfATranslatedText") }
   end
 end

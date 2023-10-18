@@ -140,6 +140,24 @@ module ONIX
       end
     end
 
+    # product LanguageCode of the original text (only for translated texts)
+    # @return [String]
+    def language_of_original_text
+      @descriptive_detail.language_of_original_text
+    end
+
+    # product language code string of the original text (only for translated texts)
+    # @return [String]
+    def language_code_of_original_text
+      self.language_of_original_text&.code
+    end
+
+    # product language name string of the original text (only for translated texts)
+    # @return [String]
+    def language_name_of_original_text
+      self.language_of_original_text&.human
+    end
+
     # product can be sold separately ?
     # @return [Boolean]
     def sold_separately?
