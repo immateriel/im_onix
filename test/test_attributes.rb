@@ -20,6 +20,14 @@ class TestAttributes < Minitest::Test
       assert @product.contributors.first.biographies_with_attributes.first.attributes["textformat"]
       assert_equal "Xhtml", @product.contributors.first.biographies_with_attributes.first.attributes["textformat"].human
     end
+
+    should "have two languages (one for the current translated text and another for the original)" do
+      assert_equal "eng", @product.language_code_of_text
+      assert_equal "English", @product.language_name_of_text
+
+      assert_equal "swe", @product.language_code_of_original_text
+      assert_equal "Swedish", @product.language_name_of_original_text
+    end
   end
 end
 
