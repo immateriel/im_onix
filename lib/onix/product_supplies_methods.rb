@@ -22,22 +22,31 @@ module ONIX
     #                :tax=>{:amount=>int, :rate_percent=>float}}]}]
     def supplies(keep_all_prices_dates = false)
       supplies = []
+      free_items = []
 
       # add territories if missing
       if self.product_supplies
         self.product_supplies.each do |product_supply|
           product_supply.supply_details.each do |supply_detail|
+
+            availability_date = supply_detail.availability_date
+            unless availability_date
+              if product_supply.availability_date
+                availability_date = product_supply.market_publishing_detail.availability_date
+              end
+            end
+            unless availability_date
+              if @publishing_detail
+                availability_date = @publishing_detail.publication_date
+              end
+            end
+
             supply_detail.prices.each do |price|
               supply = {}
               supply[:suppliers] = supply_detail.suppliers.map(&:name)
               supply[:available] = supply_detail.available?
-              supply[:availability_date] = supply_detail.availability_date
+              supply[:availability_date] = availability_date
 
-              unless supply[:availability_date]
-                if product_supply.availability_date
-                  supply[:availability_date] = product_supply.market_publishing_detail.availability_date
-                end
-              end
               supply[:price] = price.amount
               supply[:qualifier] = price.qualifier.human if price.qualifier
               supply[:including_tax] = price.including_tax?
@@ -58,17 +67,32 @@ module ONIX
               supply[:currency] = price.currency
               supply[:tax] = price.tax
 
-              unless supply[:availability_date]
-                if @publishing_detail
-                  supply[:availability_date] = @publishing_detail.publication_date
-                end
-              end
-
               supplies << supply
+            end
+
+            if supply_detail.unpriced_item_type && supply_detail.unpriced_item_type.human == "FreeOfCharge"
+              free_items << {
+                :suppliers => supply_detail.suppliers,
+                :available => supply_detail.available?,
+                :availability_date => availability_date,
+                :currency => "EUR",
+                :including_tax => true,
+                :price => 0,
+                :from_date => nil,
+                :until_date => nil,
+                :territory => product_supply.markets ? product_supply.markets.map { |m| m.territory.countries }.flatten.uniq : []
+              }
             end
           end
         end
       end
+
+      # filter on availability, date, type and territories because suppliers are always the same
+      free_items.uniq! do |i|
+        i.select { |k, v| [:available, :availability_date, :territory].include?(k) }.hash
+      end
+
+      supplies += free_items
 
       grouped_supplies = {}
       supplies.each do |supply|
@@ -130,22 +154,22 @@ module ONIX
 
       grouped_territories_supplies.values.each do |supplies|
         fsupply = supplies.first.first
-        final_supplies << {:including_tax => fsupply[:including_tax], :currency => fsupply[:currency],
-                     :territory => supplies.map { |fs| fs.map { |s| s[:territory] } }.flatten.uniq,
-                     :available => fsupply[:available],
-                     :availability_date => fsupply[:availability_date],
-                     :suppliers => fsupply[:suppliers],
-                     :prices => supplies.first.map { |s|
-                       s[:amount] = s[:price]
-                       s.delete(:price)
-                       s.delete(:available)
-                       s.delete(:currency)
-                       s.delete(:availability_date)
-                       s.delete(:including_tax)
-                       s.delete(:territory)
-                       s.delete(:suppliers)
-                       s
-                     }}
+        final_supplies << { :including_tax => fsupply[:including_tax], :currency => fsupply[:currency],
+                            :territory => supplies.map { |fs| fs.map { |s| s[:territory] } }.flatten.uniq,
+                            :available => fsupply[:available],
+                            :availability_date => fsupply[:availability_date],
+                            :suppliers => fsupply[:suppliers],
+                            :prices => supplies.first.map { |s|
+                              s[:amount] = s[:price]
+                              s.delete(:price)
+                              s.delete(:available)
+                              s.delete(:currency)
+                              s.delete(:availability_date)
+                              s.delete(:including_tax)
+                              s.delete(:territory)
+                              s.delete(:suppliers)
+                              s
+                            } }
       end
 
       final_supplies
@@ -245,7 +269,7 @@ module ONIX
         # exclusive
         sup = sups.first[:prices].select { |p|
           (!p[:from_date] or p[:from_date].to_date <= time.to_date) and
-              (!p[:until_date] or p[:until_date].to_date > time.to_date)
+            (!p[:until_date] or p[:until_date].to_date > time.to_date)
         }.first
 
         if sup
@@ -254,7 +278,7 @@ module ONIX
           # or inclusive
           sup = sups.first[:prices].select { |p|
             (!p[:from_date] or p[:from_date].to_date <= time.to_date) and
-                (!p[:until_date] or p[:until_date].to_date >= time.to_date)
+              (!p[:until_date] or p[:until_date].to_date >= time.to_date)
           }.first
 
           if sup

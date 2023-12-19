@@ -273,17 +273,17 @@ class TestPrices < Minitest::Test
       assert_equal Date.new(2016, 7, 8), prices[1][:from_date]
       assert_equal Date.new(2016, 7, 8), prices[1][:until_date]
 
-      #the third one: 8.99 € (default price) from 2016-07-09 to 2016-07-31
+      # the third one: 8.99 € (default price) from 2016-07-09 to 2016-07-31
       assert_equal 899, prices[2][:amount]
       assert_equal Date.new(2016, 7, 9), prices[2][:from_date]
       assert_equal Date.new(2016, 7, 31), prices[2][:until_date]
 
-      #the fourth one: 3.99 € (promo 2) from 2016-08-01 to 2016-08-15
+      # the fourth one: 3.99 € (promo 2) from 2016-08-01 to 2016-08-15
       assert_equal 399, prices[3][:amount]
       assert_equal Date.new(2016, 8, 1), prices[3][:from_date]
       assert_equal Date.new(2016, 8, 15), prices[3][:until_date]
 
-      #the fifth one: 8.99 € (default) from 2016-08-16
+      # the fifth one: 8.99 € (default) from 2016-08-16
       assert_equal 899, prices[4][:amount]
       assert_equal Date.new(2016, 8, 16), prices[4][:from_date]
       assert_equal nil, prices[4][:until_date]
@@ -349,6 +349,31 @@ class TestPrices < Minitest::Test
       assert_equal 899, eur_supplies[1][:prices][0][:amount]
       assert_equal 399, eur_supplies[1][:prices][1][:amount]
       assert_equal 899, eur_supplies[1][:prices][2][:amount]
+    end
+  end
+
+  context "product that contains a supply free of charge" do
+    setup do
+      @message = ONIX::ONIXMessage.new
+      @message.parse("test/fixtures/test_prices_unpriced.xml")
+      @product = @message.products.last
+    end
+
+    should "have a supply with a price for 3 other countries" do
+      priced_supply = @product.supplies.first
+      assert_equal 1, priced_supply[:prices].size
+      assert_equal 3, priced_supply[:territory].size
+    end
+
+    should "have a supply free of charge for 8 countries" do
+      free_supply = @product.supplies.last
+      assert_equal 1, free_supply[:prices].length
+      assert_equal 0, free_supply[:prices].first[:amount]
+      assert_equal 8, free_supply[:territory].size
+    end
+
+    should "merge similar free of charge supplies" do
+      assert_equal 2, @product.supplies.size
     end
   end
 
