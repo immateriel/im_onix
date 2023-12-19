@@ -201,6 +201,7 @@ module ONIX
         :shortcut => :availability_date,
         :parse_lambda => lambda { |v| Date.strptime(v, "%Y%m%d") }
       }
+      element "UnpricedItemType", :subset, :cardinality => 0..1
       elements "Price", :subset
 
       def available?
