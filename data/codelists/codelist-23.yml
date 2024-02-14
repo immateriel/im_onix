@@ -16,4 +16,7 @@
   '14': DurationOfMainContent
   '15': DurationOfBackMatter
   '16': ProductionDuration
+  '17': NumberOfCards
+  '18': NumberOfWriteInPages
   '22': Filesize
+  '23': StorageFilesize

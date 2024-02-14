@@ -32,11 +32,18 @@
   A305: SynchronisedAudio
   A310: SoundEffects
   A311: BackgroundMusic
+  A312: WithoutBackgroundSounds
+  A400: 64kbitss
+  A401: 128kbitss
+  A402: 192kbitss
+  A403: 256kbitss
+  A404: 320kbitss
   A410: Mono
   A420: Stereo
   A421: Stereo21
   A441: Surround41
   A451: Surround51
+  A471: DolbyAtmos
   B101: MassMarketRackPaperback
   B102: TradePaperbackUs
   B103: DigestFormatPaperback
@@ -72,6 +79,9 @@
   B133: PocketSized
   B134: A5
   B135: MassMarketMaxPaperback
+  B139: ComicBookSizeUs
+  B140: ComicAlbumSizeEuro
+  B141: B4HenkeiSize
   B201: ColoringJoinTheDotBook
   B202: LiftTheFlapBook
   B204: MiniatureBook
@@ -89,6 +99,7 @@
   B221: PictureBook
   B222: CarouselBook
   B223: PullTheTabBook
+  B224: WordlessBook
   B301: LooseLeafOrPartworkSheetsPartsAndBinderWallet
   B302: LooseLeafOrPartworkBinderWalletOnly
   B303: LooseLeafOrPartworkSheetsPartsOnly
@@ -106,6 +117,7 @@
   B315: TradeBinding
   B316: SwissBinding
   B317: NotchedBinding
+  B318: LayFlatBinding
   B400: SelfCovered
   B401: ClothOverBoards
   B402: PaperOverBoards
@@ -113,6 +125,8 @@
   B404: LeatherImitation
   B405: LeatherBonded
   B406: Vellum
+  B407: HeadAndTailBands
+  B408: DecoratedEndpapers
   B409: Cloth
   B410: ImitationCloth
   B411: Velvet
@@ -122,6 +136,7 @@
   B415: LaminatedCover
   B416: CardCover
   B417: DuplexPrintedCover
+  B420: DelicateCoverJacketFinish
   B501: WithDustJacket
   B502: WithPrintedDustJacket
   B503: WithTranslucentDustCover
@@ -141,10 +156,20 @@
   B517: WithElasticatedStrap
   B518: WithSerializedAuthenticityToken
   B519: WithDustJacketPoster
+  B520: RoundedCorners
+  B521: Splashproof
+  B522: MineralPaper
   B601: TurnAroundBook
   B602: UnflippedMangaFormat
   B603: BackToBackBook
+  B604: FlippedMangaFormat
+  B605: VariantTurnAroundBook
+  B606: PageProgressionLtr
+  B607: PageProgressionRtl
+  B608: PageProgressionTtb
+  B609: PageProgressionOther
   B610: Syllabification
+  B611: UpperCaseOnly
   B701: UkUncontractedBraille
   B702: UkContractedBraille
   B703: UsBraille
@@ -154,6 +179,10 @@
   B707: Moon
   B708: UnifiedEnglishUncontractedBraille
   B709: UnifiedEnglishContractedBraille
+  B750: TactileImages
+  B751: LenticularImages
+  B752: AnaglyphImages
+  C750: Raised3dRelief
   D101: RealVideoFormat
   D102: QuicktimeFormat
   D103: AviFormat
@@ -243,14 +272,26 @@
   E202: ReadableOffline
   E203: RequiresNetworkConnection
   E204: ContentRemoved
+  E205: VisiblePageNumbering
+  E206: NoPreferredPageProgression
   E210: Landscape
   E211: Portrait
+  E212: Square
+  E213: VerticalScrolling
   E221: '54'
   E222: '43'
   E223: '32'
   E224: '1610'
   E225: '169'
+  E226: '189'
+  E227: '219'
   L101: Laminated
+  P091: CalendarWithWriteInSpace
+  P092: CalendarWithoutWriteInSpace
+  P096: MultipleMonthsPerPage
+  P097: OneMonthPerPage
+  P098: OneWeekPerPage
+  P099: OneDayPerPage
   P101: DeskCalendarOrDiary
   P102: MiniCalendarOrPocketDiary
   P103: EngagementCalendarOrAppointmentDiary
@@ -267,23 +308,33 @@
   P114: OtherCalendarOrOrganiserProduct
   P115: FamilyPlanner
   P116: PostcardCalendar
+  P131: BlankCalendar
+  P132: PanoramicCalendar
+  P133: ColumnarCalendar
+  P134: SquareCalendar
   P120: PictureStoryCards
   P121: FlashCards
   P122: ReferenceCards
   P123: RecreationCards
   P124: Postcards
   P125: GreetingCards
+  P126: GiftCards
+  P127: CertificateCards
   P201: HardbackStationery
   P202: PaperbackSoftbackStationery
   P203: SpiralBoundStationery
   P204: LeatherFineBindingStationery
   P301: WithHangingStrips
+  P305: SingleSided
+  P306: DoubleSided
   V201: Pal
   V202: Ntsc
   V203: Secam
   V205: Hd
   V206: Uhd
   V207: 3dVideo
+  V210: ClosedCaptions
+  V211: OpenCaptions
   V220: HomeUse
   V221: ClassroomUse
   Z101: Wooden

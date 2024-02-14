@@ -1,6 +1,7 @@
 ---
 :codelist:
   '00': NoConstraints
+  '01': Preview
   '06': Lend
   '07': TimeLimitedLicense
   '08': LoanRenewal

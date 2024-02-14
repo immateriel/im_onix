@@ -18,11 +18,13 @@
   AUD: Audible
   AUC: Audiobookscom
   ATK: Audioteka
+  ELU: AxiellElibu
   BDL: BDalton
   BNO: BarnesAndNoble
   BDZ: Bdbuzz
   BBB: BedBathAndBeyond
   BST: BestBuy
+  BOD: BiblioOnDemand
   MMM: Bibliotheca
   BIL: Bilbary
   BLG: Billigbook
@@ -30,11 +32,18 @@
   BLA: BlackstoneAudio
   BLK: Blackwells
   GOS: Blinkbox
+  BGI: Bog&Ide
+  BSK: Boksnok
+  BSY: Boksy
   BKU: Bokus
   BLD: Bolinda
   BCA: BookClubAssociates
+  BDO: BookDoreille
+  BSL: BookSolutions
   BOO: Bookbeat
+  BBI: Bookbites
   BSH: Bookish
+  BMA: Bookmate
   BKP: Bookpeople
   BRB: BooksEtc
   BKM: BooksAMillion
@@ -43,9 +52,12 @@
   BKY: Bookyfi
   BRD: Borders
   BRT: BritishBookshops
+  CAI: Cairn
   CDL: CasaDelLibro
   CDN: Cdoncom
   CEB: Ceebo
+  CFU: CfuDanmark
+  CHP: Chapter
   CHD: Christianbookcom
   CYM: Citymarket
   CMX: Comixology
@@ -55,6 +67,7 @@
   CVS: CvsDrugStores
   CVM: CvsMediatheques
   CYB: Cyberlibris
+  DAU: DauntBooks
   DEM: DeMarque
   DSG: DicksSportingGoods
   DIL: Dilicom
@@ -68,11 +81,16 @@
   ECI: ElCorteIngles
   ELE: Electre
   ELB: Elibse
+  ELI: ElibLibrary
   ELS: Elisa
+  ELK: ElisaKirjaKuukausitilaus
   ELL: Ellibscom
   EMP: Empik
   ENH: EnglishHeritage
   EPC: Epic!
+  ELN: Ereolendk
+  EVB: Everybook
+  FAI: Fairyloot
   FDB: Feedbooks
   FIN: Findaway
   FSP: Fishpond
@@ -81,6 +99,7 @@
   FOL: Follett
   FRY: FrysElectronics
   GMS: Gamestop
+  GAR: Gardners
   GLO: Glose
   GOO: GoogleBooks
   HST: HastingsEntertainment
@@ -88,23 +107,33 @@
   HMD: HomeDepot
   IMM: Immaterielfr
   IND: IndigoChapters
+  INF: Infofi
+  ILT: Inlasningstjanst
   IBS: InternetBookshopItalia
   IZN: Izneo
+  JAM: Jamera
   JBH: JbHifi
   JSM: JohnSmithAndSon
   KMT: KMart
+  KIP: Kipa
   KID: Kirja&idea
   KPV: Kirjastopalvelu
+  KRJ: Kirjafi
   KNB: Knfbblio
   KNO: KnoInc
   KBO: Kobo
   KOO: Koorong
   KOR: Kortext
   KRG: Kroger
+  LDL: Lidl
+  LEG: Legiblecom
+  LEX: Lexplore
   LTP: Lehtipiste
+  LMB: Loadmybook
   LWE: Lowes
   MAC: Mackin
   MAG: Magzter
+  MNO: Maneno
   MKS: MarksAndSpencer
   MAT: Matras
   MMS: MediaMarktsaturn
@@ -117,8 +146,10 @@
   MYB: Myboox
   MYI: Myilibrary
   NTR: NationalTrust
+  NEX: Next
   NXT: Nextory
   NUM: Numilog
+  ODL: Odilous
   OFD: OfficeDepot
   OFM: OfficeMax
   OLF: Olf
@@ -127,7 +158,10 @@
   PST: PastTimes
   PTS: PetSmart
   PTC: Petco
+  PIC: Piccoma
   PLY: Playcom
+  POD: Podimo
+  POY: PoditOy
   POK: Pokkaritukku
   PTB: PotteryBarn
   RDB: Readbooks
@@ -138,17 +172,22 @@
   RMB: RmBooks
   RBD: Rosebud
   SGR: SGroup
+  SAC: Sacrum
   SAF: Safari
   SFW: Safeway
   SNS: Sainsburys
+  SAX: Saxo
   SCR: Scribd
   SLF: Selfridges
   SEQ: Sequencity
+  SES: Sesamy
   SBT: ShanghaiBookTraders
   SKB: Skoobe
   SMW: Smashwords
   SNY: Sony
+  SPO: Spotify
   STP: Staples
+  STH: Storyhouse
   STT: Storytel
   SKK: SuomalainenKirjakauppa
   SPL: SuomalainenPlus
@@ -156,13 +195,15 @@
   SSK: SuuriSuomalainenKirjakerho
   TRG: Target
   TES: Tesco
-  TEA: TheEbookAlternative
+  TOK: Tokmanni
   TOL: Tolino
   TSR: ToysRUs
   TSO: TsoTheStationeryOffice
+  TKK: TurunKansallinenKirjakauppa
   TXR: Txtr
   UBH: UgglanBokhandel
   VRG: VirginMegastores
+  TEA: TheEbookAlternative
   WHS: WHSmith
   WTR: Waitrose
   WLM: WalMart
@@ -171,6 +212,7 @@
   WLS: WilliamsSonoma
   WLW: Woolworths
   YOU: Youboox
+  YSC: Youscribe
   ZVV: Zavvi
   PUB: PublishersOwnDirectSales
   ZZZ: Other

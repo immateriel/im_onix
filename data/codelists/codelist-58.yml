@@ -25,5 +25,7 @@
   '32': FreightPassThroughBillingPriceExcludingTax
   '33': ImportersFixedRetailPriceExcludingTax
   '34': ImportersFixedRetailPriceIncludingTax
+  '35': NominalGratisCopyValueForCustomsPurposesExcludingTax
+  '36': NominalValueForClaimsPurposesExcludingTax
   '41': PublishersRetailPriceExcludingTax
   '42': PublishersRetailPriceIncludingTax

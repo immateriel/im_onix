@@ -99,6 +99,7 @@
   SD: MultipleComponentRetailProductShrinkWrapped
   SE: MultipleComponentRetailProductLoose
   SF: MultipleComponentRetailProductPartsEnclosed
+  SG: MultipleComponentRetailProductEntirelyDigital
   VA: Video
   VF: Videodisc
   VI: DvdVideo
@@ -143,6 +144,7 @@
   ZM: Tableware
   ZN: Umbrella
   ZO: PaintsCrayonsPencils
+  ZP: HandicraftKit
   ZX: OtherToygameAccessories
   ZY: OtherApparel
   ZZ: OtherMerchandise

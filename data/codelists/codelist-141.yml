@@ -10,3 +10,6 @@
   '07': Upc125ItemSpecific
   '08': Upc12PricePoint
   '09': Upc125PricePoint
+  '10': Gtin135UkPoundSterlingPriceEncoded
+  '11': Gtin135OtherPriceEncoded
+  '12': Gtin132

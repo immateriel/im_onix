@@ -1,0 +1,15 @@
+---
+:codelist:
+  A411: 2205khz
+  A412: 441khz
+  A413: 48khz
+  A416: 16BitsPerSample
+  A418: 24BitsPerSample
+  A424: Id3v1
+  A425: Id3v2
+  B001: PrintedLongGrain
+  B002: PrintedShortGrain
+  B003: Monochrome
+  B004: PrintedCmyk
+  B005: PrintedHigherQualityCmyk
+  B006: PrintedWithBleed

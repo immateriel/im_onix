@@ -1,0 +1,9 @@
+---
+:codelist:
+  '04': Filename
+  '21': AudioLoudness
+  '41': PaperType
+  '42': PaperWeight
+  '43': PaperColor
+  '44': InkColors
+  '45': SpecialFinish

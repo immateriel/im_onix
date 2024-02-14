@@ -10,3 +10,6 @@
   '10': LanguageOfOriginalAudioTrack
   '11': OriginalLanguageAudioTrackInAMultilingualProduct
   '12': LanguageOfNotes
+  '13': LanguageOfIntroductionEndMatter
+  '14': TargetLanguageOfTeachingLearning
+  '15': AdditionalVocabularyTextInThisLanguage

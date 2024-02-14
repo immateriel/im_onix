@@ -5,3 +5,28 @@
   '03': RelatedWorkIsDerivedFromThis
   '04': OtherWorkInSameCollection
   '05': OtherWorkBySameContributor
+  '06': ManifestationOfOriginalWork
+  '21': DerivedFromByAbridgement
+  '22': DerivedFromByAnnotation
+  '23': DerivedFromByCompilation
+  '24': DerivedFromByCriticism
+  '25': DerivedFromByExcerption
+  '26': DerivedFromByExpurgation
+  '27': DerivedFromByAdditionOfNonTextMaterial
+  '28': DerivedFromByRevision
+  '29': DerivedFromViaTranslation
+  '30': DerivedFromViaAdaptation
+  '31': DerivedFromBySubtractionOfNonTextMaterial
+  '41': RelatedWorkIsDerivedFromThisByAbridgement
+  '42': RelatedWorkIsDerivedFromThisByAnnotation
+  '43': RelatedWorkIsDerivedFromThisByCompilation
+  '44': RelatedWorkIsDerivedFromThisByCriticism
+  '45': RelatedWorkIsDerivedFromThisByExcerption
+  '46': RelatedWorkIsDerivedFromThisByExpurgation
+  '47': RelatedWorkIsDerivedFromThisByAdditionOfNonTextMaterial
+  '48': RelatedWorkIsDerivedFromThisByRevision
+  '49': RelatedWorkIsDerivedFromThisViaTranslation
+  '50': RelatedWorkIsDerivedFromThisViaAdaptation
+  '51': DerivedFromThisBySubtractionOfNonTextMaterial
+  '98': ManifestationOfLrmWork
+  '99': ManifestationOfLrmExpression

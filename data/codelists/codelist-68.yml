@@ -17,3 +17,5 @@
   '14': ActiveWithMarketRestrictions
   '15': Recalled
   '16': TemporarilyWithdrawnFromSale
+  '17': PermanentlyWithdrawnFromSale
+  '18': ActiveButNotSoldAsSet

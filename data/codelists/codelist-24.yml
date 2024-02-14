@@ -1,5 +1,6 @@
 ---
 :codelist:
+  '00': PhysicalPieces
   '01': Characters
   '02': Words
   '03': Pages

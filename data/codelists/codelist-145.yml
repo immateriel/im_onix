@@ -1,5 +1,6 @@
 ---
 :codelist:
+  '00': NoConstraints
   '01': Preview
   '02': Print
   '03': CopyPaste
@@ -10,3 +11,4 @@
   '08': LoanRenewal
   '09': MultiUserLicense
   '10': PreviewOnPremises
+  '11': TextAndDataMining

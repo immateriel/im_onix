@@ -6,3 +6,7 @@
   '04': LengthInMinutes
   '05': IsniOfResourceContributor
   '06': ProprietaryIdOfResourceContributor
+  '07': ResourceAlternativeText
+  '08': BackgroundColorOfImageResource
+  '09': AttributeOfProductImageResource
+  '10': BackgroundColorOfPage

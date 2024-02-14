@@ -1,6 +1,8 @@
 ---
 :codelist:
   '01': ColorOfCover
+  '26': ColorOfSpine
+  '27': ColorOfFoil
   '02': ColorOfPageEdge
   '03': TextFont
   '04': SpecialCoverMaterial
@@ -23,6 +25,7 @@
   '22': GamePieces
   '23': GamePlayers
   '24': GamePlayTime
+  '25': PersonalDataRequirements
   '30': NotFscOrPefcCertified
   '31': FscCertifiedPure
   '32': FscCertifiedMixedSources
@@ -31,4 +34,12 @@
   '35': PefcRecycled
   '36': FscOrPefcCertifiedPreAndPostConsumerWastePcwPercentage
   '37': ClaimedPreAndPostConsumerWastePcwPercentage
+  '38': GreenInks
+  '39': GreenAdhesives
   '40': PaperProducedByGreenTechnology
+  '41': CarbonghgEmissionCertificationScheme
+  '42': CarbonghgEmissionCertificationLicenseNumber
+  '43': CarbonghgEmissionCertificationUrl
+  '44': CarbonghgScope3CertifiedCarbonDioxideEquivalentEmission
+  '45': CarbonghgScope2CertifiedCarbonDioxideEquivalentEmission
+  '46': CarbonghgScope1CertifiedCarbonDioxideEquivalentEmission

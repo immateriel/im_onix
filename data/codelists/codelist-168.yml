@@ -3,3 +3,6 @@
   '01': TimePeriod
   '02': NumberOfUpdates
   '03': NumberOfLinkedProducts
+  '04': NumberOfCopiesOfThisProduct
+  '05': MinimumNumberOfLinkedProducts
+  '06': MaximumNumberOfCopiesOfThisProduct

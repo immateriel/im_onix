@@ -1,0 +1,22 @@
+---
+:codelist:
+  '01': ImageShowsProductInPackaging
+  '02': ImageShowsProductWithoutPackaging
+  '03': ImageShowsProductAndAccessories
+  '04': ImageShowsAssembledProduct
+  '05': ImageShowsProductInUse
+  '06': ImageShowsMultipleProducts
+  '07': ImageShowsDetailOfProduct
+  '21': 3dPerspectiveFront
+  '22': 3dPerspectiveBack
+  '23': 3dPerspectiveFrontForedge
+  '24': 3dPerspectiveBackForedge
+  '33': 3dPerspectiveFrontLow
+  '34': 3dPerspectiveBackLow
+  '35': 3dPerspectiveFrontForedgeLow
+  '36': 3dPerspectiveBackForedgeLow
+  '41': 2dFront
+  '42': 2dBack
+  '43': 2dSpine
+  '47': 3dPerspectiveHorizontal
+  '48': 3dPerspectiveVertical

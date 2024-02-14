@@ -4,8 +4,12 @@
   '02': Childrenjuvenile
   '03': YoungAdult
   '04': PrimaryAndSecondaryelementaryAndHighSchool
+  '11': PrePrimaryEducation
+  '12': PrimaryEducation
+  '13': LowerSecondaryEducation
+  '14': UpperSecondaryEducation
   '05': CollegehigherEducation
   '06': ProfessionalAndScholarly
-  '07': Eltesl
   '08': AdultEducation
+  '07': Eltesl
   '09': SecondLanguageTeaching

@@ -20,4 +20,6 @@
   '17': ThroughInventorylessPod
   '18': ThroughStockProtectionPod
   '19': ExceptThoughPod
+  '20': ExceptToSomeSubscriptionServices
+  '21': SubscriptionServiceExclusive
   '99': NoRestrictionsOnSales
