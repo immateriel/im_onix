@@ -4,6 +4,7 @@
   '01': Includes
   '02': IsPartOf
   '03': Replaces
+  '04': HasCompanionProduct
   '05': ReplacedBy
   '06': AlternativeFormat
   '07': HasAncillaryProduct
@@ -41,3 +42,7 @@
   '42': IsLaterEditionOfFirstEdition
   '43': AdaptedFrom
   '44': AdaptedAs
+  '45': HasLinkedProductOffer
+  '46': MayBeSubstitutedBy
+  '47': MayBeSubstitutedFor
+  '48': IsLinkedProductOffer

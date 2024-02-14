@@ -1,0 +1,5 @@
+---
+:codelist:
+  '14': ValidFrom
+  '15': ValidUntil
+  '24': FromUntilDate

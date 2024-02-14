@@ -26,12 +26,15 @@
   Cari: Carian
   Cham: Cham
   Cher: Cherokee
+  Chrs: Chorasmian
   Cirt: Cirth
   Copt: Coptic
+  Cpmn: CyproMinoan
   Cprt: Cypriot
   Cyrl: Cyrillic
   Cyrs: CyrillicOldChurchSlavonicVariant
   Deva: DevanagariNagari
+  Diak: DivesAkuru
   Dogr: Dogra
   Dsrt: DeseretMormon
   Dupl: DuployanShorthandDuployanStenography
@@ -39,6 +42,7 @@
   Egyh: EgyptianHieratic
   Egyp: EgyptianHieroglyphs
   Elba: Elbasan
+  Elym: Elymaic
   Ethi: EthiopicGeez
   Geok: KhutsuriAsomtavruliAndKhutsuri
   Geor: GeorgianMkhedruliAndMtavruli
@@ -61,6 +65,7 @@
   Hira: Hiragana
   Hluw: AnatolianHieroglyphsLuwianHieroglyphsHittiteHieroglyphs
   Hmng: PahawhHmong
+  Hmnp: NyiakengPuachueHmong
   Hrkt: JapaneseSyllabariesAliasForHiraganaKatakana
   Hung: OldHungarianHungarianRunic
   Inds: IndusHarappan
@@ -71,6 +76,7 @@
   Jurc: Jurchen
   Kali: KayahLi
   Kana: Katakana
+  Kawi: Kawi
   Khar: Kharoshthi
   Khmr: Khmer
   Khoj: Khojki
@@ -112,6 +118,8 @@
   Mtei: MeiteiMayekMeitheiMeetei
   Mult: Multani
   Mymr: MyanmarBurmese
+  Nagm: NagMundari
+  Nand: Nandinagari
   Narb: OldNorthArabianAncientNorthArabian
   Nbat: Nabatean
   Newa: NewaNewarNewariNepalaLipi
@@ -124,6 +132,7 @@
   Orya: OriyaOdia
   Osge: Osage
   Osma: Osmanya
+  Ougr: OldUyghur
   Palm: Palmyrene
   Pauc: PauCinHau
   Perm: OldPermic
@@ -132,10 +141,12 @@
   Phlp: PsalterPahlavi
   Phlv: BookPahlavi
   Phnx: Phoenician
-  Plrd: MiaoPollard
   Piqd: KlingonKliPlqad
+  Plrd: MiaoPollard
   Prti: InscriptionalParthian
   Qaaa: ReservedForPrivateUseStart
+  Qabp: PictureCommunicationSymbolsPcs
+  Qabw: WidgitSymbols
   Qabx: ReservedForPrivateUseEnd
   Rjng: RejangRedjangKaganga
   Roro: Rongorongo
@@ -150,6 +161,8 @@
   Sidd: SiddhamSiddhamSiddhamatrka
   Sind: KhudawadiSindhi
   Sinh: Sinhala
+  Sogd: Sogdian
+  Sogo: OldSogdian
   Sora: SoraSompeng
   Soyo: Soyombo
   Sund: Sundanese
@@ -173,19 +186,24 @@
   Thai: Thai
   Tibt: Tibetan
   Tirh: Tirhuta
+  Tnsa: Tangsa
+  Toto: Toto
   Ugar: Ugaritic
   Vaii: Vai
   Visp: VisibleSpeech
+  Vith: Vithkuqi
   Wara: WarangCitiVarangKshiti
+  Wcho: Wancho
   Wole: Woleai
   Xpeo: OldPersian
   Xsux: CuneiformSumeroAkkadian
+  Yezi: Yezidi
   Yiii: Yi
   Zanb: ZanabazarSquareZanabazarinDorboljinUsegXewteeDorboljinBicigHorizontalSquareScript
-  Zinh: CodeForInheritedScript
   Zmth: MathematicalNotation
   Zsye: SymbolsEmojiVariant
   Zsym: Symbols
   Zxxx: CodeForUnwrittenDocuments
+  Zinh: CodeForInheritedScript
   Zyyy: CodeForUndeterminedScript
   Zzzz: CodeForUncodedScript

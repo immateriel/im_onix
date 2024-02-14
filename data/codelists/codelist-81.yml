@@ -3,7 +3,9 @@
   '10': TextEyeReadable
   '15': ExtensiveLinksBetweenInternalContent
   '14': ExtensiveLinksToExternalContent
+  '51': LinksToExternalInteractiveContent
   '16': AdditionalEyeReadableTextNotPartOfMainWork
+  '45': TextWithinImages
   '41': AdditionalEyeReadableLinksToExternalContent
   '17': PromotionalTextForOtherBookProduct
   '11': MusicalNotation
@@ -12,17 +14,22 @@
   '19': FiguresDiagramsChartsGraphs
   '20': AdditionalImagesGraphicsNotPartOfMainWork
   '12': MapsAndorOtherCartographicContent
+  '47': ChemicalContent
+  '48': MathematicalContent
+  '46': DecorativeImagesOrGraphics
   '42': AssessmentMaterial
   '01': Audiobook
   '02': PerformanceSpokenWord
   '13': OtherSpeechContent
   '03': MusicRecording
   '04': OtherAudio
+  '49': ImagesOfText
   '21': PartialPerformanceSpokenWord
   '22': AdditionalAudioContentNotPartOfMainWork
   '23': PromotionalAudioForOtherBookProduct
   '06': Video
   '26': VideoRecordingOfAReading
+  '50': VideoContentWithoutAudio
   '27': PerformanceVisual
   '24': AnimatedInteractiveIllustrations
   '25': NarrativeAnimation
@@ -42,3 +49,5 @@
   '38': AdvertisingThirdPartyDisplay
   '39': AdvertisingThirdPartyTextual
   '40': Scripting
+  '43': ScriptedPopUps
+  '44': SequentialArt

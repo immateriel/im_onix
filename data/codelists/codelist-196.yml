@@ -4,7 +4,9 @@
   '01': LiaComplianceScheme
   '02': EpubAccessibilitySpecification10A
   '03': EpubAccessibilitySpecification10Aa
+  '04': EpubAccessibilitySpecification11
   '05': Pdfua
+  '08': UnknownAccessibility
   '09': Inaccessible
   '10': NoReadingSystemAccessibilityOptionsDisabledExcept
   '11': TableOfContentsNavigation
@@ -25,6 +27,29 @@
   '27': UseOfAudio
   '28': FullAlternativeAudioDescriptions
   '29': NextPreviousNavigation
+  '30': AriaRolesProvided
+  '31': AccessibleControlsProvided
+  '32': LandmarkNavigation
+  '34': AccessibleChemistryContentAsMathml
+  '35': AccessibleMathContentAsLatex
+  '36': AllTextualContentCanBeModified
+  '37': UseOfUltraHighContrastBetweenTextForegroundAndBackground
+  '38': UnusualWordsOrAbbreviationsExplained
+  '39': SupplementaryMaterialToAnAudiobookIsAccessible
+  '40': LinkPurposesClear
+  '51': AllNonDecorativeContentSupportsReadingViaPreRecordedAudio
+  '52': AllNonDecorativeContentSupportsReadingWithoutSight
+  '75': EeaException1MicroEnterprises
+  '76': EaaException2DisproportionateBurden
+  '77': EaaException3FundamentalModification
+  '80': WcagV20
+  '81': WcagV21
+  '82': WcagV22
+  '84': WcagLevelA
+  '85': WcagLevelAa
+  '86': WcagLevelAaa
+  '91': LatestAccessibilityAssessmentDate
+  '92': AccessibilityAddendum
   '93': ComplianceCertificationBy
   '94': ComplianceWebPageForDetailedAccessibilityInformation
   '95': TrustedIntermediarysWebPageForDetailedAccessibilityInformation

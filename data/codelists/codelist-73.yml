@@ -43,3 +43,8 @@
   '44': SocialNetworkingUrlForSpecificArticleChapterOrContentItem
   '45': PublishersOrThirdPartyWebsiteForPermissionsRequests
   '46': PublishersOrThirdPartyWebsiteForPrivacyStatement
+  '47': PublishersWebsiteForDigitalPreservation
+  '48': ThirdPartyWebsiteForDigitalPreservation
+  '49': ProductWebsiteForEnvironmentalResponsibilityStatement
+  '50': OrganizationsWebsiteForEnvironmentalResponsibilityStatement
+  '51': LegalDepositWebsiteForDigitalPreservation

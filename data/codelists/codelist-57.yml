@@ -6,3 +6,5 @@
   '04': ContactSupplier
   '05': NotSoldAsSet
   '06': RevenueShare
+  '07': CalculatedFromContents
+  '08': SupplierDoesNotSupply

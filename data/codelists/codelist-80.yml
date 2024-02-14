@@ -6,6 +6,7 @@
   '03': KeepCase
   '05': JewelCase
   '06': Digipak
+  '08': ShrinkWrappedBiodegradable
   '09': InBox
   '10': SlipCased
   '11': SlipCasedSet
@@ -22,3 +23,4 @@
   '22': BlisterPack
   '23': CarryCase
   '24': InTin
+  '25': WithBrowsePreventionTape

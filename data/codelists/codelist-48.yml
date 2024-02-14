@@ -21,6 +21,7 @@
   '19': AssembledLength
   '20': AssembledWidth
   '21': AssembledHeight
+  '22': UnpackagedUnitWeight
   '23': CartonLength
   '24': CartonWidth
   '25': CartonHeight

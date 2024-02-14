@@ -4,6 +4,8 @@
   AMP: Amplified
   ANM: AntonioMartini
   ASV: AmericanStandard
+  BLA: BibliaDeLasAmericas
+  BLB: NuevaBibliaDeLasAmericas
   CEB: CommonEnglishBible
   CEI: ConferenzaEpiscopaleItaliana
   CEN: ConferenzaEpiscopaleItaliana2008
@@ -46,6 +48,9 @@
   NBG: Bibelen1988
   NBH: Bibelen197885rev2005
   NBI: Bibelen2011
+  NBJ: NorskBibel88rev2007
+  NBK: Fauskanger2015
+  NBP: Pollestad2023
   NCV: NewCentury
   NEB: NewEnglish
   NGO: BibelenGudsOrd

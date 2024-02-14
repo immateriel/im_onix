@@ -9,6 +9,7 @@
   '07': San
   '08': MarcOrganizationCode
   '10': CentraalBoekhuisRelatieId
+  '12': DistributeurscodeBoekenbank
   '13': FondscodeBoekenbank
   '15': YTunnus
   '16': Isni
@@ -33,3 +34,10 @@
   '35': Ark
   '36': NasjonaltAutoritetsregister
   '37': Grid
+  '38': Idref
+  '39': Ipi
+  '40': Ror
+  '41': Eori
+  '42': Lei
+  '43': Siren
+  '44': Siret

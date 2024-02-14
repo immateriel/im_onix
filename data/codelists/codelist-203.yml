@@ -8,3 +8,6 @@
   '05': ContentWarningDrugTaking
   '06': ContentWarningLanguage
   '07': ContentWarningIntolerance
+  '08': ContentWarningAbuse
+  '09': ContentWarningSelfHarm
+  '10': ContentWarningAnimalCruelty

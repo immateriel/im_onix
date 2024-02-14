@@ -1,51 +1,56 @@
 ---
 :codelist:
-  aar: Afar
   abk: Abkhaz
   ace: Achinese
   ach: Acoli
   ada: Adangme
   ady: Adygei
-  afa: AfroAsiaticLanguages
+  aar: Afar
   afh: Afrihili
   afr: Afrikaans
+  afa: AfroAsiaticLanguages
   ain: Ainu
   aka: Akan
   akk: Akkadian
   alb: Albanian
   ale: Aleut
   alg: AlgonquianLanguages
-  alt: SouthernAltai
+  alq: Algonquin
+  tut: AltaicLanguages
   amh: Amharic
-  ang: EnglishOldCa4501100
   anp: Angika
   apa: ApacheLanguages
   ara: Arabic
-  arc: OfficialAramaicOrImperialAramaic700300Bce
   arg: Aragonese
-  arm: Armenian
-  arn: MapudungunOrMapuche
+  qar: Aranes
   arp: Arapaho
-  art: ArtificialLanguages
   arw: Arawak
+  arm: Armenian
+  rup: AromanianOrArumanianOrMacedoRomanian
+  art: ArtificialLanguages
   asm: Assamese
   ast: AsturianOrBableOrLeoneseOrAsturleonese
   ath: AthapascanLanguages
+  atj: Atikamekw
   aus: AustralianLanguages
+  aav: AustroAsiaticLanguages
+  map: AustronesianLanguages
   ava: Avaric
   ave: Avestan
   awa: Awadhi
   aym: Aymara
   aze: Azerbaijani
-  bad: BandaLanguages
-  bai: BamilekeLanguages
-  bak: Bashkir
+  ban: Balinese
+  bat: BalticLanguages
   bal: Baluchi
   bam: Bambara
-  ban: Balinese
-  baq: Basque
+  bai: BamilekeLanguages
+  bad: BandaLanguages
+  bnt: BantuLanguages
   bas: Basa
-  bat: BalticLanguages
+  bak: Bashkir
+  baq: Basque
+  btk: BatakLanguages
   bej: BejaOrBedawiyet
   bel: Belarusian
   bem: Bemba
@@ -56,114 +61,122 @@
   bik: Bikol
   bin: BiniOrEdo
   bis: Bislama
-  bla: Siksika
-  bnt: BantuLanguages
+  byn: BlinOrBilin
+  zbl: BlissymbolsOrBlissymbolicsOrBliss
+  brx: BodoIndia
   bos: Bosnian
   bra: Braj
   bre: Breton
-  btk: BatakLanguages
-  bua: Buriat
   bug: Buginese
   bul: Bulgarian
+  bum: BuluCameroon
+  bua: Buriat
   bur: Burmese
-  byn: BlinOrBilin
   cad: Caddo
-  cai: CentralAmericanIndianLanguages
-  car: GalibiCarib
+  sro: Campidanese
+  yue: Cantonese
   cat: Catalan
   cau: CaucasianLanguages
+  cay: Cayuga
   ceb: Cebuano
   cel: CelticLanguages
-  cha: Chamorro
-  chb: Chibcha
-  che: Chechen
-  chg: Chagatai
-  chi: Chinese
-  chk: ChuukeseTruk
-  chm: Mari
-  chn: ChinookJargon
-  cho: Choctaw
-  chp: ChipewyanOrDeneSuline
-  chr: Cherokee
-  chu: ChurchSlavicOrOldSlavonicOrChurchSlavonicOrOldBulgarianOrOldChurchSlavonic
-  chv: Chuvash
-  chy: Cheyenne
+  cai: CentralAmericanIndianLanguages
+  tzm: CentralAtlasTamazight
+  khm: CentralKhmer
   ckb: CentralKurdishSorani
+  chg: Chagatai
   cmc: ChamicLanguages
-  cmn: Mandarin
-  cnr: Montenegrin
+  cha: Chamorro
+  che: Chechen
+  chr: Cherokee
+  chy: Cheyenne
+  chb: Chibcha
+  nya: ChichewaOrChewaOrNyanja
+  cic: Chickasaw
+  chi: Chinese
+  chn: ChinookJargon
+  chp: ChipewyanOrDeneSuline
+  cho: Choctaw
+  chu: ChurchSlavicOrOldSlavonicOrChurchSlavonicOrOldBulgarianOrOldChurchSlavonic
+  chk: ChuukeseTruk
+  chv: Chuvash
+  nwc: ClassicalNewariOrOldNewariOrClassicalNepalBhasa
+  syc: ClassicalSyriac
   cop: Coptic
   cor: Cornish
   cos: Corsican
+  cre: Cree
+  mus: Creek
+  crp: CreolesAndPidgins
   cpe: CreolesAndPidginsEnglishBased
   cpf: CreolesAndPidginsFrenchBased
   cpp: CreolesAndPidginsPortugueseBased
-  cre: Cree
   crh: CrimeanTurkishOrCrimeanTatar
-  crp: CreolesAndPidgins
-  csb: Kashubian
+  hrv: Croatian
+  scr: Croatian
   cus: CushiticLanguages
   cze: Czech
   dak: Dakota
   dan: Danish
   dar: Dargwa
-  day: LandDayakLanguages
+  prs: DariOrAfghanPersian
   del: Delaware
-  den: SlaveAthapascan
-  dgr: Dogrib
   din: Dinka
   div: DivehiOrDhivehiOrMaldivian
   doi: Dogri
+  dgr: Dogrib
   dra: DravidianLanguages
-  dsb: LowerSorbian
   dua: Duala
   dum: DutchMiddleCa10501350
   dut: DutchOrFlemish
   dyu: Dyula
   dzo: Dzongkha
+  ike: EasternCanadianInuktitut
+  frs: EasternFrisian
   efi: Efik
-  egl: Emilian
   egy: EgyptianAncient
   eka: Ekajuk
   elx: Elamite
+  egl: Emilian
   eng: English
   enm: EnglishMiddle11001500
+  ang: EnglishOldCa4501100
+  myv: Erzya
+  esx: EskaleutLanguages
   epo: Esperanto
   est: Estonian
+  gez: EthiopicGeez
   ewe: Ewe
   ewo: Ewondo
   fan: Fang
-  fao: Faroese
   fat: Fanti
+  fao: Faroese
   fij: Fijian
   fil: FilipinoOrPilipino
   fin: Finnish
-  fit: MeankieliTornedalenFinnish
   fiu: FinnoUgrianLanguages
-  fkv: Kvensk
   fon: Fon
   fre: French
   frm: FrenchMiddleCa14001600
   fro: FrenchOldCa8421400
-  frr: NorthernFrisian
-  frs: EasternFrisian
-  fry: WesternFrisian
-  ful: Fulah
   fur: Friulian
+  ful: Fulah
   gaa: Ga
+  car: GalibiCarib
+  glg: Galician
+  qgl: Gallo
+  sdn: Gallurese
+  lug: Ganda
+  grt: Garo
   gay: Gayo
   gba: Gbaya
-  gem: GermanicLanguages
   geo: Georgian
   ger: German
-  gez: EthiopicGeez
-  gil: Gilbertese
-  gla: ScottishGaelic
-  gle: Irish
-  glg: Galician
-  glv: Manx
   gmh: GermanMiddleHighCa10501500
   goh: GermanOldHighCa7501050
+  gem: GermanicLanguages
+  gil: Gilbertese
+  git: Gitxsan
   gon: Gondi
   gor: Gorontalo
   got: Gothic
@@ -171,7 +184,7 @@
   grc: GreekAncientTo1453
   gre: GreekModern1453
   grn: Guarani
-  gsw: SwissGermanOrAlemannic
+  nrf: GuernesiaisJerriais
   guj: Gujarati
   gwi: Gwichin
   hai: Haida
@@ -183,195 +196,220 @@
   hil: Hiligaynon
   him: HimachaliLanguagesOrWesternPahariLanguages
   hin: Hindi
-  hit: Hittite
-  hmn: HmongOrMong
   hmo: HiriMotu
-  hrv: Croatian
-  hsb: UpperSorbian
+  hit: Hittite
+  hmx: HmongMienLanguages
+  hmn: HmongOrMong
+  hop: Hopi
   hun: Hungarian
   hup: Hupa
   iba: Iban
-  ibo: Igbo
   ice: Icelandic
   ido: Ido
-  iii: SichuanYiOrNuosu
+  ibo: Igbo
   ijo: IjoLanguages
-  iku: Inuktitut
-  ile: InterlingueOrOccidental
   ilo: Iloko
-  ina: InterlinguaInternationalAuxiliaryLanguageAssociation
+  smn: InariSami
   inc: IndicLanguages
-  ind: Indonesian
   ine: IndoEuropeanLanguages
+  ind: Indonesian
   inh: Ingush
+  moe: InnuMontagnais
+  ina: InterlinguaInternationalAuxiliaryLanguageAssociation
+  ile: InterlingueOrOccidental
+  ikt: Inuinnaqtun
+  iku: Inuktitut
   ipk: Inupiaq
+  qiv: Inuvialuktun
   ira: IranianLanguages
+  pes: IranianPersianOrParsi
+  gle: Irish
+  mga: IrishMiddleCa11001550
+  sga: IrishOldTo1100
   iro: IroquoianLanguages
   ita: Italian
-  jav: Javanese
-  jbo: Lojban
   jpn: Japanese
-  jpr: JudeoPersian
+  jpx: JapaneseLanguages
+  jav: Javanese
+  jow: Jowulu
   jrb: JudeoArabic
-  kaa: KaraKalpak
+  jpr: JudeoPersian
+  kbd: KabardianCircassian
   kab: Kabyle
   kac: KachinOrJingpho
   kal: KalatdlisutOrGreenlandic
+  xal: Kalmyk
   kam: Kamba
   kan: Kannada
+  kau: Kanuri
+  kaa: KaraKalpak
+  krc: KarachayBalkar
+  kdr: Karaim
+  krl: Karelian
   kar: KarenLanguages
   kas: Kashmiri
-  kau: Kanuri
+  csb: Kashubian
   kaw: Kawi
   kaz: Kazakh
-  kbd: KabardianCircassian
-  kdr: Karaim
   kha: Khasi
   khi: KhoisanLanguages
-  khm: CentralKhmer
   kho: KhotaneseOrSakan
+  xuu: KhwedamKxoe
   kik: KikuyuOrGikuyu
+  kmb: Kimbundu
   kin: Kinyarwanda
   kir: KirghizOrKyrgyz
-  kmb: Kimbundu
-  kok: Konkani
+  kqs: KissiNorthern
+  kss: KissiSouthern
+  tlh: KlingonOrTlhinganHol
   kom: Komi
   kon: Kongo
+  kok: Konkani
   kor: Korean
-  kos: KusaieanCarolineIslands
   kpe: Kpelle
-  krc: KarachayBalkar
-  krl: Karelian
   kro: KruLanguages
-  kru: Kurukh
   kua: Kuanyama
   kum: Kumyk
   kur: Kurdish
+  kru: Kurukh
+  kos: KusaieanCarolineIslands
   kut: Kutenai
+  fkv: Kvensk
+  kwk: Kwakiutl
   lad: Ladino
   lah: Lahnda
+  lkt: Lakota
   lam: Lamba
+  day: LandDayakLanguages
   lao: Lao
   lat: Latin
   lav: Latvian
+  qlk: Lemko
   lez: Lezgian
   lij: Ligurian
   lim: Limburgish
   lin: Lingala
   lit: Lithuanian
+  jbo: Lojban
   lmo: Lombard
-  lol: MongoNkundu
+  nds: LowGermanOrLowSaxon
+  dsb: LowerSorbian
   loz: Lozi
-  ltz: LuxembourgishOrLetzeburgesch
-  lua: LubaLulua
   lub: LubaKatanga
-  lug: Ganda
+  lua: LubaLulua
   lui: Luiseno
+  smj: LuleSami
   lun: Lunda
   luo: LuoKenyaAndTanzania
   lus: Lushai
+  ltz: LuxembourgishOrLetzeburgesch
   mac: Macedonian
   mad: Madurese
   mag: Magahi
-  mah: Marshallese
   mai: Maithili
   mak: Makasar
-  mal: Malayalam
-  man: Mandingo
-  mao: Maori
-  map: AustronesianLanguages
-  mar: Marathi
-  mas: Masai
-  may: Malay
-  mdf: Moksha
-  mdr: Mandar
-  men: Mende
-  mga: IrishMiddleCa11001550
-  mic: MikmaqOrMicmac
-  min: Minangkabau
-  mis: UncodedLanguages
-  mkh: MonKhmerLanguages
   mlg: Malagasy
+  may: Malay
+  mal: Malayalam
+  poz: MalayoPolynesianLanguages
   mlt: Maltese
   mnc: Manchu
+  mdr: Mandar
+  cmn: Mandarin
+  man: Mandingo
   mni: Manipuri
   mno: ManoboLanguages
-  moh: Mohawk
-  mol: MoldavianOrMoldovan
-  mon: Mongolian
-  mos: MooreOrMossi
-  mul: MultipleLanguages
-  mun: MundaLanguages
-  mus: Creek
-  mwf: MurrinhPatha
-  mwl: Mirandese
+  glv: Manx
+  mao: Maori
+  arn: MapudungunOrMapuche
+  mar: Marathi
+  chm: Mari
+  mah: Marshallese
   mwr: Marwari
+  mas: Masai
   myn: MayanLanguages
-  myv: Erzya
+  fit: MeankieliTornedalenFinnish
+  men: Mende
+  mic: MikmaqOrMicmac
+  crg: Michif
+  gml: MiddleLowGerman
+  min: Minangkabau
+  mwl: Mirandese
+  moh: Mohawk
+  mdf: Moksha
+  mol: MoldavianOrMoldovan
+  mkh: MonKhmerLanguages
+  lol: MongoNkundu
+  mon: Mongolian
+  cnr: Montenegrin
+  mos: MooreOrMossi
+  crm: MooseCree
+  mun: MundaLanguages
+  mwf: MurrinhPatha
+  nqo: Nko
   nah: NahuatlLanguages
-  nai: NorthAmericanIndianLanguages
-  nap: Neapolitan
+  nsk: Naskapi
   nau: Nauruan
   nav: Navajo
-  nbl: NdebeleSouth
   nde: NdebeleNorth
+  nbl: NdebeleSouth
   ndo: Ndonga
-  nds: LowGermanOrLowSaxon
+  nap: Neapolitan
   nep: Nepali
+  qls: NeutralLatinAmericanSpanish
   new: NewariOrNepalBhasa
   nia: Nias
   nic: NigerKordofanianLanguages
+  ssa: NiloSaharanLanguages
   niu: Niuean
-  nno: NorwegianNynorsk
-  nob: NorwegianBokmal
   nog: Nogai
-  non: OldNorse
+  qnf: NormanFrench
+  nai: NorthAmericanIndianLanguages
+  crl: NorthernEastCree
+  frr: NorthernFrisian
+  sme: NorthernSami
   nor: Norwegian
-  nqo: Nko
-  nrf: GuernesiaisJerriais
-  nso: PediOrSepediOrNorthernSotho
+  nob: NorwegianBokmal
+  nno: NorwegianNynorsk
   nub: NubianLanguages
-  nwc: ClassicalNewariOrOldNewariOrClassicalNepalBhasa
-  nya: ChichewaOrChewaOrNyanja
   nym: Nyamwezi
   nyn: Nyankole
   nyo: Nyoro
   nzi: Nzima
   oci: OccitanPost1500
-  odt: OldDutchOldLowFranconianCa4001050
+  arc: OfficialAramaicOrImperialAramaic700300Bce
   oji: Ojibwa
-  omq: OtoMangueanLanguages
+  odt: OldDutchOldLowFranconianCa4001050
+  non: OldNorse
+  peo: OldPersianCa600400Bc
   ori: Oriya
   orm: Oromo
   osa: Osage
   oss: OssetianOrOssetic
-  ota: TurkishOttoman
+  omq: OtoMangueanLanguages
   oto: OtomianLanguages
-  paa: PapuanLanguages
-  pag: Pangasinan
   pal: Pahlavi
+  pau: Palauan
+  pli: Pali
   pam: PampangaOrKapampangan
+  pag: Pangasinan
   pan: Panjabi
   pap: Papiamento
-  pau: Palauan
-  peo: OldPersianCa600400Bc
+  paa: PapuanLanguages
+  nso: PediOrSepediOrNorthernSotho
   per: PersianOrFarsi
-  pes: IranianPersianOrParsi
   phi: PhilippineLanguages
   phn: Phoenician
-  pli: Pali
+  pcd: Picard
+  qsp: PictureCommunicationSymbolsPcs
   pms: Piedmontese
+  crk: PlainsCree
   pol: Polish
   pon: Ponapeian
   por: Portuguese
   pra: PrakritLanguages
   pro: ProvencalOldTo1500OrOccitanOldTo1500
-  prs: DariOrAfghanPersian
   pus: PushtoOrPashto
-  qar: Aranes
-  qav: Valencian
-  qlk: Lemko
-  qls: NeutralLatinAmericanSpanish
   que: Quechua
   raj: Rajasthani
   rap: Rapanui
@@ -379,141 +417,155 @@
   rcf: ReunionCreoleFrench
   rgn: Romagnol
   roa: RomanceLanguages
+  rum: Romanian
   roh: Romansh
   rom: Romany
-  rum: Romanian
   run: Rundi
-  rup: AromanianOrArumanianOrMacedoRomanian
   rus: Russian
-  sad: Sandawe
-  sag: Sango
-  sah: Yakut
-  sai: SouthAmericanIndianLanguages
   sal: SalishanLanguages
   sam: SamaritanAramaic
+  smi: SamiLanguages
+  smo: Samoan
+  sad: Sandawe
+  sag: Sango
   san: Sanskrit
-  sas: Sasak
   sat: Santali
-  scc: Serbian
-  scn: Sicilian
-  sco: Scots
-  scr: Croatian
+  srm: Saramaccan
+  srd: Sardinian
+  sas: Sasak
   sdc: Sassarese
-  sdn: Gallurese
+  sco: Scots
+  gla: ScottishGaelic
   sel: Selkup
   sem: SemiticLanguages
-  sga: IrishOldTo1100
-  sgn: SignLanguages
+  scc: Serbian
+  srp: Serbian
+  srr: Serer
+  ojs: SevernOjibwa
   shn: Shan
+  sna: Shona
+  shs: Shuswap
+  iii: SichuanYiOrNuosu
+  scn: Sicilian
   sid: Sidamo
+  sgn: SignLanguages
+  bla: Siksika
+  szl: Silesian
+  snd: Sindhi
   sin: SinhalaOrSinhalese
-  sio: SiouanLanguages
+  zhx: SiniticLanguages
   sit: SinoTibetanLanguages
+  sio: SiouanLanguages
+  sms: SkoltSami
+  den: SlaveAthapascan
   sla: SlavicLanguages
   slo: Slovak
   slv: Slovenian
-  sma: SouthernSami
-  sme: NorthernSami
-  smi: SamiLanguages
-  smj: LuleSami
-  smn: InariSami
-  smo: Samoan
-  sms: SkoltSami
-  sna: Shona
-  snd: Sindhi
-  snk: Soninke
   sog: Sogdian
   som: Somali
   son: SonghaiLanguages
+  snk: Soninke
+  wen: SorbianLanguages
   sot: SothoOrSesotho
+  sai: SouthAmericanIndianLanguages
+  alt: SouthernAltai
+  crj: SouthernEastCree
+  sma: SouthernSami
   spa: Spanish
-  srd: Sardinian
   srn: SrananTongo
-  sro: Campidanese
-  srp: Serbian
-  srr: Serer
-  ssa: NiloSaharanLanguages
-  ssw: SwaziOrSwati
+  zgh: StandardMoroccanTamazight
+  sto: Stoney
   suk: Sukuma
+  sux: Sumerian
   sun: Sundanese
   sus: Susu
-  sux: Sumerian
   swa: Swahili
+  csw: SwampyCree
+  ssw: SwaziOrSwati
   swe: Swedish
-  syc: ClassicalSyriac
+  gsw: SwissGermanOrAlemannic
   syr: Syriac
+  tgl: Tagalog
   tah: Tahitian
   tai: TaiLanguages
+  tgk: TajikOrTajikiPersian
+  tmh: Tamashek
   tam: Tamil
+  shi: TashelhitOrShilha
   tat: Tatar
   tel: Telugu
   tem: TemneOrTime
   ter: Terena
   tet: Tetum
-  tgk: TajikOrTajikiPersian
-  tgl: Tagalog
   tha: Thai
+  thp: Thompson
   tib: Tibetan
   tig: Tigre
   tir: Tigrinya
   tiv: Tiv
-  tkl: Tokelauan
-  tlh: KlingonOrTlhinganHol
   tli: Tlingit
-  tmh: Tamashek
+  tpi: TokPisin
+  tkl: Tokelauan
   tog: TongaNyasa
   ton: Tongan
-  tpi: TokPisin
+  rmg: TravelerNorwegian
+  tsd: Tsakonian
   tsi: Tsimshian
-  tsn: Tswana
   tso: Tsonga
-  tuk: Turkmen
+  tsn: Tswana
   tum: Tumbuka
   tup: TupiLanguages
   tur: Turkish
-  tut: AltaicLanguages
+  ota: TurkishOttoman
+  tuk: Turkmen
   tvl: Tuvaluan
-  twi: Twi
   tyv: Tuvinian
+  twi: Twi
   tzo: Tzotzil
   udm: Udmurt
   uga: Ugaritic
   uig: UighurOrUyghur
   ukr: Ukrainian
   umb: Umbundu
-  und: UndeterminedLanguage
+  hsb: UpperSorbian
+  urj: UralicLanguages
   urd: Urdu
   uzb: Uzbek
   vai: Vai
-  vec: Venetianvenetan
+  qav: Valencian
   ven: Venda
+  vec: Venetianvenetan
   vie: Vietnamese
   vol: Volapuk
   vot: Votic
   wak: WakashanLanguages
-  wal: WolaittaOrWolaytta
+  wls: Wallisian
+  wln: Walloon
   war: Waray
   was: Washo
+  guc: Wayuu
   wel: Welsh
-  wen: SorbianLanguages
-  wln: Walloon
+  fry: WesternFrisian
+  qsw: WidgitSymbols
+  wal: WolaittaOrWolaytta
   wol: Wolof
-  xal: Kalmyk
+  cwd: WoodsCree
+  wym: Wymysorys
   xho: Xhosa
-  xuu: KhwedamKxoe
+  sah: Yakut
   yao: Yao
   yap: Yapese
   yid: Yiddish
   yor: Yoruba
   ypk: YupikLanguages
-  yue: Cantonese
-  zap: Zapotec
-  zbl: BlissymbolsOrBlissymbolicsOrBliss
-  zen: Zenaga
-  zgh: StandardMoroccanTamazight
-  zha: ZhuangOrChuang
   znd: ZandeLanguages
+  zap: Zapotec
+  zza: ZazaOrDimiliOrDimliOrKirdkiOrKirmanjkiOrZazaki
+  zen: Zenaga
+  zha: ZhuangOrChuang
   zul: Zulu
   zun: Zuni
+  mis: UncodedLanguages
+  und: UndeterminedLanguage
+  mul: MultipleLanguages
   zxx: NoLinguisticContent
-  zza: ZazaOrDimiliOrDimliOrKirdkiOrKirmanjkiOrZazaki

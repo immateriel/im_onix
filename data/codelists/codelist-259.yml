@@ -1,0 +1,15 @@
+---
+:codelist:
+  u: Unknown
+  i: Irregular
+  e: Biennial
+  a: Annual
+  b: Biannual
+  t: Triannual
+  q: Quarterly
+  s: Bimonthly
+  m: Monthly
+  f: Fortnightly
+  w: Weekly
+  d: MoreFrequentlyThanWeekly
+  x: NoFuturePublications

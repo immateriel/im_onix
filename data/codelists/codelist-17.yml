@@ -47,7 +47,10 @@
   A46: Inker
   A47: Colorist
   A48: Letterer
+  A49: CoverInker
+  A50: CoverColorist
   A51: ResearchBy
+  A52: OriginalCharacterDesign
   A99: OtherPrimaryCreator
   B01: EditedBy
   B02: RevisedBy
@@ -80,6 +83,7 @@
   B29: ScientificEditor
   B30: HistoricalAdvisor
   B31: OriginalEditor
+  B32: TranslationRevisedBy
   B99: OtherAdaptationBy
   C01: CompiledBy
   C02: SelectedBy
@@ -101,6 +105,7 @@
   E08: PerformedByOrchestraBandEnsemble
   E09: Speaker
   E10: Presenter
+  E11: IntroductionReadBy
   E99: PerformedBy
   F01: FilmedphotographedBy
   F02: EditorFilmOrVideo
@@ -109,5 +114,6 @@
   Z02: HonoreddedicatedTo
   Z03: EnactingJurisdiction
   Z04: PeerReviewed
+  Z05: PosthumouslyCompletedBy
   Z98: VariousRoles
   Z99: Other

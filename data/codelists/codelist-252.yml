@@ -1,0 +1,26 @@
+---
+:codelist:
+  A410: Mono
+  A411: 2205khz
+  A412: 441khz
+  A413: 48khz
+  A414: 882khz
+  A415: 96khz
+  A416: 16BitsPerSample
+  A417: 20BitsPerSample
+  A418: 24BitsPerSample
+  A419: 32BitsPerSampleFp
+  A420: Stereo
+  A421: Stereo21
+  A422: Id3v1
+  A423: Id3v2
+  A441: Surround41
+  A451: Surround51
+  B001: WithCropMarks
+  B002: WithoutCropMarks
+  B003: Monochrome
+  B004: Preseparated2Channels
+  B005: Preseparated3Channels
+  B006: Preseparated4Channels
+  B010: CompositeCmyk
+  B011: CompositeRgb

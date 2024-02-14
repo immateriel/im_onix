@@ -8,12 +8,14 @@
   BLL: BilingualEdition
   BLP: BilingualFacingPageEdition
   BRL: BrailleEdition
+  BUD: BudgetEdition
   CMB: CombinedVolume
   CRI: CriticalEdition
   CSP: Coursepack
   DGO: DigitalOriginal
   ENH: EnhancedEdition
   ENL: EnlargedEdition
+  ETR: EasyToReadEdition
   EXP: ExpurgatedEdition
   FAC: FacsimileEdition
   FST: Festschrift
@@ -26,6 +28,7 @@
   MLL: MultilingualEdition
   NED: NewEdition
   NUM: EditionWithNumberedCopies
+  PBO: PaperbackOriginal
   PRB: PreboundEdition
   REV: RevisedEdition
   SCH: SchoolEdition
@@ -39,3 +42,4 @@
   UNN: EditionWithUnnumberedCopies
   UXP: UnexpurgatedEdition
   VAR: VariorumEdition
+  VOR: Vorlesebucher
