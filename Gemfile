@@ -1,11 +1,11 @@
 source "https://rubygems.org"
 
-gem 'nokogiri'
+gem "nokogiri"
 
 group :development do
   gem "shoulda", ">= 0"
-  gem "rdoc", "~> 3.12"
+  gem "rdoc", "~> 6.7"
   gem "bundler"
-  gem "jeweler", "~> 1.8.4"
+  gem "jeweler", "~> 2.3"
   gem "simplecov", ">= 0"
 end
