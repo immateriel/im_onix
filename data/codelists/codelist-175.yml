@@ -100,6 +100,7 @@
   B222: CarouselBook
   B223: PullTheTabBook
   B224: WordlessBook
+  B225: CutOutPieces
   B301: LooseLeafOrPartworkSheetsPartsAndBinderWallet
   B302: LooseLeafOrPartworkBinderWalletOnly
   B303: LooseLeafOrPartworkSheetsPartsOnly
@@ -118,6 +119,9 @@
   B316: SwissBinding
   B317: NotchedBinding
   B318: LayFlatBinding
+  B319: FlushCutBinding
+  B320: RoundedSpine
+  B321: SquareSpine
   B400: SelfCovered
   B401: ClothOverBoards
   B402: PaperOverBoards
@@ -126,6 +130,7 @@
   B405: LeatherBonded
   B406: Vellum
   B407: HeadAndTailBands
+  B419: DecoratedPageEdges
   B408: DecoratedEndpapers
   B409: Cloth
   B410: ImitationCloth
@@ -136,7 +141,9 @@
   B415: LaminatedCover
   B416: CardCover
   B417: DuplexPrintedCover
+  B418: PaperCover
   B420: DelicateCoverJacketFinish
+  B421: EmbossedCover
   B501: WithDustJacket
   B502: WithPrintedDustJacket
   B503: WithTranslucentDustCover
@@ -159,6 +166,7 @@
   B520: RoundedCorners
   B521: Splashproof
   B522: MineralPaper
+  B523: WithAccessibilityClaimTicket
   B601: TurnAroundBook
   B602: UnflippedMangaFormat
   B603: BackToBackBook
@@ -267,6 +275,7 @@
   E147: Erudit
   E148: AmazonKindlePrintReplica
   E149: ComicBookArchive
+  E150: Epuba
   E200: Reflowable
   E201: FixedFormat
   E202: ReadableOffline
@@ -335,6 +344,10 @@
   V207: 3dVideo
   V210: ClosedCaptions
   V211: OpenCaptions
+  V212: Transcript
+  V213: SignLanguageInterpretation
+  V214: TextualDescriptionOfAudio
+  V215: AudioDescriptionOfVideo
   V220: HomeUse
   V221: ClassroomUse
   Z101: Wooden

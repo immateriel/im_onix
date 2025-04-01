@@ -20,3 +20,5 @@
   '43': 2dSpine
   '47': 3dPerspectiveHorizontal
   '48': 3dPerspectiveVertical
+  '49': 3dPerspectiveOpen
+  '50': 3dPerspectiveClosed

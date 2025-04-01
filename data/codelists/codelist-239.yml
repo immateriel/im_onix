@@ -1,4 +1,6 @@
 ---
 :codelist:
   '07': ReturnAuthorisationContact
+  '10': ProductSafetyContact
+  '11': ProductRawMaterialsContact
   '99': CustomerServicesContact

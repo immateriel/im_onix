@@ -1,5 +1,6 @@
 ---
 :codelist:
+  '01': PublisherActsAsOwnSalesAgent
   '05': ExclusiveSalesAgent
   '06': NonExclusiveSalesAgent
   '07': LocalPublisher

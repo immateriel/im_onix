@@ -27,6 +27,7 @@
   A25: FootnotesBy
   A26: MemoirBy
   A27: ExperimentsBy
+  A28: InterpretedThrough
   A29: IntroductionAndNotesBy
   A30: SoftwareWrittenBy
   A31: BookAndLyricsBy
@@ -84,6 +85,9 @@
   B30: HistoricalAdvisor
   B31: OriginalEditor
   B32: TranslationRevisedBy
+  B33: TranscribedBy
+  B34: SensitivityReaderEditor
+  B35: ImageDescriptionsBy
   B99: OtherAdaptationBy
   C01: CompiledBy
   C02: SelectedBy
@@ -115,5 +119,6 @@
   Z03: EnactingJurisdiction
   Z04: PeerReviewed
   Z05: PosthumouslyCompletedBy
+  Z06: InAssociationWith
   Z98: VariousRoles
   Z99: Other
