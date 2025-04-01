@@ -10,3 +10,5 @@
   '13': FondscodeBoekenbank
   '16': Isni
   '23': VatIdentityNumber
+  '41': Eori
+  '45': ChineseParticipantIdentifier

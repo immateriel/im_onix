@@ -10,3 +10,6 @@
   '07': ReturnAuthorisationContact
   '08': CipLegalDepositContact
   '09': RightsAndLicensingContact
+  '10': ProductSafetyContact
+  '11': ProductRawMaterialsContact
+  '99': CustomerServicesContact

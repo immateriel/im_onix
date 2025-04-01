@@ -6,6 +6,7 @@
   '03': EpubAccessibilitySpecification10Aa
   '04': EpubAccessibilitySpecification11
   '05': Pdfua
+  '06': Pdfua2
   '08': UnknownAccessibility
   '09': Inaccessible
   '10': NoReadingSystemAccessibilityOptionsDisabledExcept
@@ -37,8 +38,11 @@
   '38': UnusualWordsOrAbbreviationsExplained
   '39': SupplementaryMaterialToAnAudiobookIsAccessible
   '40': LinkPurposesClear
+  '41': PageListNavigation
   '51': AllNonDecorativeContentSupportsReadingViaPreRecordedAudio
   '52': AllNonDecorativeContentSupportsReadingWithoutSight
+  '53': DescribedMathContent
+  '54': AccessibleChemistryContentAsLatex
   '75': EeaException1MicroEnterprises
   '76': EaaException2DisproportionateBurden
   '77': EaaException3FundamentalModification
@@ -48,6 +52,7 @@
   '84': WcagLevelA
   '85': WcagLevelAa
   '86': WcagLevelAaa
+  '90': ComplianceCertificationByName
   '91': LatestAccessibilityAssessmentDate
   '92': AccessibilityAddendum
   '93': ComplianceCertificationBy

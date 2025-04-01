@@ -21,3 +21,6 @@
   '21': WarningCaliforniaProposition65CarcinogenicTeratogenicOrOtherReproductivelyHarmfulChemicalHazard
   '22': NoCaliforniaProposition65HazardWarningNecessary
   '23': CaliforniaProposition65ChemicalName
+  '24': FlashingRiskUnknown
+  '25': SoundRiskUnknown
+  '26': MotionSimulationRiskUnknown

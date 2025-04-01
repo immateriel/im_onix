@@ -4,6 +4,7 @@
   '26': ColorOfSpine
   '27': ColorOfFoil
   '02': ColorOfPageEdge
+  '55': ColorOfEndpapers
   '03': TextFont
   '04': SpecialCoverMaterial
   '05': DvdRegion
@@ -43,3 +44,11 @@
   '44': CarbonghgScope3CertifiedCarbonDioxideEquivalentEmission
   '45': CarbonghgScope2CertifiedCarbonDioxideEquivalentEmission
   '46': CarbonghgScope1CertifiedCarbonDioxideEquivalentEmission
+  '47': EudrRawMaterialLocationInteriorOrFullProduct
+  '48': EudrRawMaterialLocationBinding
+  '49': EudrRawMaterialLocationOther
+  '50': EudrDueDiligenceReference
+  '51': EudrAssociatedDueDiligenceReferences
+  '52': EudrCompliantWithNationalLawAttestation
+  '53': EudrDeforestationFreeAttestation
+  '54': EudrStockPresentAttestation

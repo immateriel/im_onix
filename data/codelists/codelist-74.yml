@@ -235,6 +235,7 @@
   jrb: JudeoArabic
   jpr: JudeoPersian
   kbd: KabardianCircassian
+  kbp: Kabiye
   kab: Kabyle
   kac: KachinOrJingpho
   kal: KalatdlisutOrGreenlandic
@@ -291,6 +292,7 @@
   lin: Lingala
   lit: Lithuanian
   jbo: Lojban
+  lom: LomaLiberia
   lmo: Lombard
   nds: LowGermanOrLowSaxon
   dsb: LowerSorbian
@@ -320,6 +322,7 @@
   mni: Manipuri
   mno: ManoboLanguages
   glv: Manx
+  swb: MaoreComorian
   mao: Maori
   arn: MapudungunOrMapuche
   mar: Marathi
@@ -379,6 +382,7 @@
   oci: OccitanPost1500
   arc: OfficialAramaicOrImperialAramaic700300Bce
   oji: Ojibwa
+  oka: OkanaganOrNsyilxcnNsyilxc@n
   odt: OldDutchOldLowFranconianCa4001050
   non: OldNorse
   peo: OldPersianCa600400Bc
@@ -409,6 +413,7 @@
   por: Portuguese
   pra: PrakritLanguages
   pro: ProvencalOldTo1500OrOccitanOldTo1500
+  fuf: Pular
   pus: PushtoOrPashto
   que: Quechua
   raj: Rajasthani
@@ -506,6 +511,7 @@
   tli: Tlingit
   tpi: TokPisin
   tkl: Tokelauan
+  tod: Toma
   tog: TongaNyasa
   ton: Tongan
   rmg: TravelerNorwegian

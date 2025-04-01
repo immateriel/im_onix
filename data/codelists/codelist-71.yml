@@ -22,4 +22,6 @@
   '19': ExceptThoughPod
   '20': ExceptToSomeSubscriptionServices
   '21': SubscriptionServiceExclusive
+  '22': ToEducationOnly
+  '23': ExceptToEducation
   '99': NoRestrictionsOnSales

@@ -25,6 +25,8 @@
   D506: Jp2
   D507: Psd
   D508: Eps
+  D509: Webp
+  D510: Svg
   E101: Epub
   E105: Html
   E107: Pdf

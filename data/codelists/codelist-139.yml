@@ -5,14 +5,17 @@
   AAP: Aandp
   ADL: Adlibris
   ACB: Akademibokhandeln
+  AKA: Akademika
   AKK: AkateeminenKirjakauppa
   ALB: Albertsons
+  ALV: Allvit
   ALT: Almatalent
   AMZ: Amazon
   ANR: AngusAndRobertson
   ANB: Anobii
   APA: Apabi
   APC: Apple
+  ARK: Ark
   ASD: Asda
   ASB: AsiaBooks
   AUD: Audible
@@ -52,6 +55,7 @@
   BKY: Bookyfi
   BRD: Borders
   BRT: BritishBookshops
+  BSU: BsUndervisning
   CAI: Cairn
   CDL: CasaDelLibro
   CDN: Cdoncom
@@ -72,15 +76,16 @@
   DSG: DicksSportingGoods
   DIL: Dilicom
   DYM: Dymocks
+  EKJ: EKirjasto
   EPA: EPagine
   ERD: EReads
   ELC: EarlyLearningCentre
   ESN: Eason
+  EBK: EbokPremium
   EBC: EbooksCorp
   ECH: Echristian
   ECI: ElCorteIngles
   ELE: Electre
-  ELB: Elibse
   ELI: ElibLibrary
   ELS: Elisa
   ELK: ElisaKirjaKuukausitilaus
@@ -90,6 +95,7 @@
   EPC: Epic!
   ELN: Ereolendk
   EVB: Everybook
+  FAB: Fabel
   FAI: Fairyloot
   FDB: Feedbooks
   FIN: Findaway
@@ -105,6 +111,7 @@
   HST: HastingsEntertainment
   HMV: Hmv
   HMD: HomeDepot
+  ILU: Illumicrate
   IMM: Immaterielfr
   IND: IndigoChapters
   INF: Infofi
@@ -116,19 +123,19 @@
   JSM: JohnSmithAndSon
   KMT: KMart
   KIP: Kipa
+  KRJ: Kirjafi
   KID: Kirja&idea
   KPV: Kirjastopalvelu
-  KRJ: Kirjafi
   KNB: Knfbblio
   KNO: KnoInc
   KBO: Kobo
   KOO: Koorong
   KOR: Kortext
   KRG: Kroger
-  LDL: Lidl
   LEG: Legiblecom
-  LEX: Lexplore
   LTP: Lehtipiste
+  LEX: Lexplore
+  LDL: Lidl
   LMB: Loadmybook
   LWE: Lowes
   MAC: Mackin
@@ -148,22 +155,28 @@
   NTR: NationalTrust
   NEX: Next
   NXT: Nextory
+  NOL: Norli
   NUM: Numilog
   ODL: Odilous
   OFD: OfficeDepot
   OFM: OfficeMax
   OLF: Olf
+  OSS: Osloskolen
   OVD: Overdrive
   OYS: Oyster
   PST: PastTimes
+  PER: Perlego
   PTS: PetSmart
   PTC: Petco
   PIC: Piccoma
   PLY: Playcom
   POD: Podimo
   POY: PoditOy
+  PDM: Podme
   POK: Pokkaritukku
   PTB: PotteryBarn
+  PLO: Publio
+  ELB: Elibse
   RDB: Readbooks
   RCL: Readcloud
   RST: RestorationHardware
@@ -182,6 +195,7 @@
   SEQ: Sequencity
   SES: Sesamy
   SBT: ShanghaiBookTraders
+  SKL: Skolon
   SKB: Skoobe
   SMW: Smashwords
   SNY: Sony
@@ -195,6 +209,7 @@
   SSK: SuuriSuomalainenKirjakerho
   TRG: Target
   TES: Tesco
+  TIK: TiktokShop
   TOK: Tokmanni
   TOL: Tolino
   TSR: ToysRUs
