@@ -1,5 +1,6 @@
 require 'forwardable'
 require 'cgi'
+require 'delegate'
 
 module ONIX
   class ShortToRef
