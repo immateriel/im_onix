@@ -919,4 +919,32 @@
       </Price>
     </SupplyDetail>
   </ProductSupply>
+  <ProductSupply>
+    <MarketPublishingDetail>
+      <MarketPublishingStatus>04</MarketPublishingStatus>
+      <MarketDate>
+        <MarketDateRole>01</MarketDateRole>
+        <Date>20250309</Date>
+      </MarketDate>
+    </MarketPublishingDetail>
+    <SupplyDetail>
+      <Supplier>
+        <SupplierRole>06</SupplierRole>
+        <SupplierName>XXX</SupplierName>
+      </Supplier>
+      <ProductAvailability>20</ProductAvailability>
+      <SupplyDate>
+        <SupplyDateRole>08</SupplyDateRole>
+        <Date>20250207</Date>
+      </SupplyDate>
+      <Price>
+        <PriceType>03</PriceType>
+        <PriceAmount>14.99</PriceAmount>
+        <CurrencyCode>CAD</CurrencyCode>
+        <Territory>
+          <CountriesIncluded>CA</CountriesIncluded>
+        </Territory>
+      </Price>
+    </SupplyDetail>
+  </ProductSupply>
 </Product>

@@ -29,17 +29,9 @@ module ONIX
         self.product_supplies.each do |product_supply|
           product_supply.supply_details.each do |supply_detail|
 
-            availability_date = supply_detail.availability_date
-            unless availability_date
-              if product_supply.availability_date
-                availability_date = product_supply.market_publishing_detail.availability_date
-              end
-            end
-            unless availability_date
-              if @publishing_detail
-                availability_date = @publishing_detail.publication_date
-              end
-            end
+            availability_date = product_supply.market_publishing_detail&.availability_date ||
+                                supply_detail.availability_date ||
+                                @publishing_detail&.publication_date
 
             supply_detail.prices.each do |price|
               supply = {}

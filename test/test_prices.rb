@@ -27,6 +27,10 @@ class TestPrices < Minitest::Test
     should "not have a price to be announced" do
       assert_equal false, @product.price_to_be_announced?
     end
+
+    should "use MarketDate instead of SupplyDate for Canada availability date" do
+      assert_equal Date.new(2025, 3, 9), @product.supplies_for_country("CA", "CAD").first[:availability_date]
+    end
   end
 
   context "prices starting free with date" do
