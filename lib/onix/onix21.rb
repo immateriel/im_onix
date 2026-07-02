@@ -443,6 +443,10 @@ module ONIX
         nil
       end
 
+      def market_publishing_detail
+        nil
+      end
+
       include ProductSuppliesMethods
 
       # doesn't apply
