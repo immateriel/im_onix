@@ -104,6 +104,19 @@ module ONIX
       xml
     end
 
+    def reader(file_path)
+      @reader = Nokogiri::XML::Reader(File.open(file_path, 'r'))
+    end
+
+    def each(&block)
+      @reader.each do |node|
+        if @reader.node_type == 1 && @reader.name == "Product"
+          element = Nokogiri::XML(@reader.outer_xml).at('Product')
+          yield self.product_klass.parse(element)
+        end
+      end
+    end
+
     # release as an integer eg: 210, 300, 301
     # @return [Number]
     def version
@@ -125,12 +138,14 @@ module ONIX
     end
 
     def set_release_from_xml(node, force_release)
+      if force_release
+        @release = force_release.to_s
+        return
+      end
+
       @release = node["release"]
       unless @release
         @release = detect_release(node)
-      end
-      if force_release
-        @release = force_release.to_s
       end
     end
 
