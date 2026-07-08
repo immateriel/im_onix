@@ -36,7 +36,7 @@ module ONIX
               :serialize_lambda => lambda { |v| format("%.2f", v / 100.0) },
               :cardinality => 0..1
             }
-    element "Tax", :subset, :cardinality => 0..n
+    elements "Tax", :subset, :cardinality => 0..n
     element "TaxExempt", :bool, :cardinality => 0..1
     element "UnpricedItemType", :subset, :cardinality => 0..1
     element "CurrencyCode", :text, :shortcut => :currency, :cardinality => 0..1
