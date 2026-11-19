@@ -1144,4 +1144,21 @@ class TestImOnix < Minitest::Test
      end
   end
 
+  context "with a price without PriceType" do
+    setup do
+      message = ONIX::ONIXMessage.new
+      message.parse('test/fixtures/price_without_price_type.xml')
+
+      @product = message.products.last
+    end
+
+    should "not raise when computing the supplies" do
+      @product.supplies
+    end
+
+    should "not be considered as including tax" do
+      assert_equal false, @product.supplies.first[:including_tax]
+    end
+  end
+
 end

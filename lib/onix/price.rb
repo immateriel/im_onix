@@ -62,7 +62,11 @@ module ONIX
       end
     end
 
+    # PriceType is optional when a DefaultPriceType is set in the message header (ONIX 3):
+    # without it we can't tell if the price includes tax.
     def including_tax?
+      return false if self.type.nil?
+
       if self.type.human=~/IncludingTax/
         true
       else
